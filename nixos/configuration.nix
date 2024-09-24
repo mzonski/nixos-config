@@ -77,8 +77,15 @@
 
   # Desktop Environment and Display Configuration
   services.xserver.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+
+  # Gnome
+  services.xserver.displayManager.gdm.enable = false;
+  services.xserver.desktopManager.gnome.enable = false;
+
+  # KDE
+  services.displayManager.sddm.enable = true;
+  services.displayManager.sddm.wayland.enable = true;
+  services.desktopManager.plasma6.enable = true;
 
   # Audio Configuration
   hardware.pulseaudio.enable = false;
@@ -104,6 +111,14 @@
     curl
     lshw
     gnumake
+    pciutils
+    aha
+    clinfo
+    libglvnd
+    glxinfo
+    vulkan-tools
+    wayland-utils
+    fwupd
   ];
 
   # Programs Configuration

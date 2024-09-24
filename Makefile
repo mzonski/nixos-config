@@ -11,7 +11,9 @@ FLAKE := .
 USERNAME := zonni
 HOSTNAME := pc-linux
 
-.PHONY: all update system home  
+.PHONY: all home system update
+
+all: home system
 
 update:
 	@echo "Updating flake inputs..."
@@ -28,6 +30,7 @@ system:
 
 help:
 	@echo "Available targets:"
+	@echo "  all     - Run both home and system targets (default)"
 	@echo "  update  - Update flake inputs"
 	@echo "  home    - Rebuild and switch home-manager configuration"
 	@echo "  system  - Rebuild and switch NixOS configuration"

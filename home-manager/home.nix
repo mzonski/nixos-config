@@ -1,7 +1,7 @@
 {
   _inputs,
   _lib,
-  config,
+  _config,
   pkgs,
   ...
 }:
@@ -33,17 +33,25 @@
     };
   };
 
-  home = {
-    username = "zonni";
-    homeDirectory = "/home/zonni";
-    packages = with pkgs; [
+  home.packages = (
+    with pkgs;
+    [
       vscode
       cowsay
       nixfmt-rfc-style
       nil
       python312
       python312Packages.pip
-    ];
+      nordic
+      jetbrains.pycharm-professional
+      jetbrains.datagrip
+    ]
+  );
+  # ++ (with unstable; [ ]);
+
+  home = {
+    username = "zonni";
+    homeDirectory = "/home/zonni";
 
     # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
     stateVersion = "24.05";
