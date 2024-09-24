@@ -6,7 +6,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   # You can import other NixOS modules here
   imports = [
     # If you want to use modules from other flakes (such as nixos-hardware):
@@ -18,12 +19,10 @@
 
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
+    ./nvidia.nix
+    ./users.nix
+    ./boot.nix
   ];
-   
-    # Bootloader Configuration
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.luks.devices."luks-6b1c8646-f768-4c08-b5ba-77462f4b4d4e".device = "/dev/disk/by-uuid/6b1c8646-f768-4c08-b5ba-77462f4b4d4e";
 
   nixpkgs = {
     # You can add overlays here
@@ -45,25 +44,26 @@
     };
   };
 
-  nix = let
-    flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
-  in {
-    settings = {
-      # Enable flakes and new 'nix' command
-      experimental-features = "nix-command flakes";
-      # Opinionated: disable global registry
-      flake-registry = "";
-      # Workaround for https://github.com/NixOS/nix/issues/9574
-      nix-path = config.nix.nixPath;
+  nix =
+    let
+      flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
+    in
+    {
+      settings = {
+        # Enable flakes and new 'nix' command
+        experimental-features = "nix-command flakes";
+        # Opinionated: disable global registry
+        flake-registry = "";
+        # Workaround for https://github.com/NixOS/nix/issues/9574
+        nix-path = config.nix.nixPath;
+      };
+      # Opinionated: disable channels
+      channel.enable = false;
+
+      # Opinionated: make flake registry and nix path match flake inputs
+      registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
+      nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
     };
-    # Opinionated: disable channels
-    channel.enable = false;
-
-    # Opinionated: make flake registry and nix path match flake inputs
-    registry = lib.mapAttrs (_: flake: {inherit flake;}) flakeInputs;
-    nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
-  };
-
 
   networking = {
     firewall.enable = false;
@@ -76,18 +76,6 @@
     };
   };
 
-  users.users = {
-    # FIXME: Replace with your username
-    zonni = {
-      isNormalUser = true;
-      description = "Zonni";
-      extraGroups = [ "networkmanager" "wheel" "audio" ];
-      #openssh.authorizedKeys.keys = [
-        # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
-      #];
-    };
-  };
-  
   # Time and Locale Configuration
   time.timeZone = "Europe/Warsaw";
   i18n.defaultLocale = "en_GB.UTF-8";
@@ -103,17 +91,17 @@
     LC_TIME = "pl_PL.UTF-8";
   };
 
-  # Desktop Environment and Display Configuration
-  services.xserver.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-
   # Input Configuration
   services.xserver.xkb = {
     layout = "pl";
     variant = "";
   };
   console.keyMap = "pl2"; # Console keymap
+
+  # Desktop Environment and Display Configuration
+  services.xserver.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
 
   # Audio Configuration
   hardware.pulseaudio.enable = false;
@@ -145,23 +133,6 @@
     firefox.enable = true;
     git.enable = true;
     git.config.init.defaultBranch = "main";
-  };
-
-  # Graphics Configuration (Nvidia)
-  hardware.opengl.enable = true;
-  services.xserver.videoDrivers = ["nvidia"];
-  hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = false;
-    powerManagement.finegrained = false;
-    open = false;
-    nvidiaSettings = true;
-    prime = {
-      sync.enable = true;
-      intelBusId = "PCI:0:2:0";
-      nvidiaBusId = "PCI:1:0:0";
-    };
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
   # Services Configuration

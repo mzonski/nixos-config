@@ -2,14 +2,14 @@
   description = "Desktop PC NixOS Config";
 
   inputs = {
-    # Nixpkgs
+    nil-ls.url = "github:oxalica/nil";
+
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
 
-    # Home manager
     home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    nil-ls.url = "github:oxalica/nil";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
   outputs =
@@ -17,7 +17,7 @@
       self,
       nixpkgs,
       home-manager,
-      nil-ls,
+      nixos-hardware,
       ...
     }@inputs:
     let
@@ -29,7 +29,10 @@
           specialArgs = {
             inherit inputs outputs;
           };
-          modules = [ ./nixos/configuration.nix ];
+          modules = [
+            ./nixos/configuration.nix
+            nixos-hardware.nixosModules.common-pc-ssd
+          ];
         };
       };
 
