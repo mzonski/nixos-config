@@ -1,9 +1,4 @@
-{
-  lib,
-  config,
-  pkgs,
-  ...
-}:
+{ config, pkgs, ... }:
 {
   programs.vscode = {
     enable = true;
@@ -30,10 +25,13 @@
       editor.minimap.enabled = false;
       nixEnvSelector.nixFile = "${config.home.homeDirectory}/Projects/nixos-config/flake.nix";
       prettier.configPath = ".prettierrc";
-      nix.enableLanguageServer = true;
-      nix.serverPath = "nil";
-      nix.formatterPath = "nixfmt";
-      nix.serverSettings.nil.formatting.command = [ "nixfmt" ];
+      nix = {
+        enableLanguageServer = true;
+        serverPath = "nil";
+        formatterPath = "nixfmt";
+        serverSettings.nil.formatting.command = [ "nixfmt" ];
+      };
+      git.autofetch = true;
     };
     keybindings = [
       {

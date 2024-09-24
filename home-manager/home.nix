@@ -1,15 +1,15 @@
-# This is your home-manager configuration file
-# Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 {
-  inputs,
-  lib,
-  config,
+  _inputs,
+  _lib,
+  _config,
   pkgs,
   ...
 }:
 {
-  # You can import other home-manager modules here
-  imports = [ ./vscode.nix ];
+  imports = [
+    ./git.nix
+    ./vscode.nix
+  ];
 
   nixpkgs = {
     # You can add overlays here
@@ -50,7 +50,6 @@
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
-  programs.git.enable = true;
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
