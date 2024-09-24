@@ -10,14 +10,13 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-  };
+  };   
 
   outputs =
     {
       self,
       nixpkgs,
       home-manager,
-      nixos-hardware,
       ...
     }@inputs:
     let
@@ -29,10 +28,7 @@
           specialArgs = {
             inherit inputs outputs;
           };
-          modules = [
-            ./nixos/configuration.nix
-            nixos-hardware.nixosModules.common-pc-ssd
-          ];
+          modules = [ ./nixos/configuration.nix ];
         };
       };
 

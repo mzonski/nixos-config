@@ -10,8 +10,12 @@
       esbenp.prettier-vscode
       k--kato.intellij-idea-keybindings
       ms-vscode.makefile-tools
+      eamodio.gitlens
     ];
     userSettings = {
+      mutableExtensionsDir = false;
+      enableExtensionUpdateCheck = false;
+      enableUpdateCheck = false;
       editor = {
         formatOnSave = true;
         defaultFormatter = "esbenp.prettier-vscode";
@@ -25,13 +29,14 @@
       editor.minimap.enabled = false;
       nixEnvSelector.nixFile = "${config.home.homeDirectory}/Projects/nixos-config/flake.nix";
       prettier.configPath = ".prettierrc";
-      nix = {
-        enableLanguageServer = true;
-        serverPath = "nil";
-        formatterPath = "nixfmt";
-        serverSettings.nil.formatting.command = [ "nixfmt" ];
-      };
+
+      nix.enableLanguageServer = true;
+      nix.serverPath = "nil";
+      nix.formatterPath = "nixfmt";
+      nix.serverSettings.nil.formatting.command = [ "nixfmt" ];
+
       git.autofetch = true;
+      makefile.configureOnOpen = false;
     };
     keybindings = [
       {

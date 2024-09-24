@@ -14,15 +14,13 @@
     # inputs.hardware.nixosModules.common-cpu-amd
     # inputs.hardware.nixosModules.common-ssd
 
-    # You can also split up your configuration and import pieces of it here:
-    # ./users.nix
+    inputs.nixos-hardware.nixosModules.common-pc-ssd
 
-    # Import your generated (nixos-generate-config) hardware configuration
+    ./boot.nix
+    ./display.nix
     ./hardware-configuration.nix
     ./locale.nix
-    ./nvidia.nix
     ./users.nix
-    ./boot.nix
   ];
 
   nixpkgs = {
@@ -103,6 +101,7 @@
   # Package Configuration
   environment.systemPackages = with pkgs; [
     wget
+    curl
     lshw
     gnumake
   ];
@@ -117,6 +116,15 @@
   # Services Configuration
   services.openssh.enable = true;
   services.printing.enable = true;
+
+  services.acpid.enable = true;
+  services.thermald.enable = true;
+  services.power-profiles-daemon.enable = true;
+
+  powerManagement = {
+    enable = true;
+    cpuFreqGovernor = "ondemand";
+  };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "24.05";

@@ -9,7 +9,7 @@
 
     extraConfig = {
       core = {
-        editor = "vscode";
+        editor = "nano";
         whitespace = "fix,-indent-with-non-tab,trailing-space,cr-at-eol";
       };
       color = {

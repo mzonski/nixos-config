@@ -1,7 +1,7 @@
 {
   _inputs,
   _lib,
-  _config,
+  config,
   pkgs,
   ...
 }:
@@ -41,19 +41,18 @@
       cowsay
       nixfmt-rfc-style
       nil
+      python312
+      python312Packages.pip
     ];
-  };
 
-  # Add stuff for your user as you see fit:
-  # programs.neovim.enable = true;
-  # home.packages = with pkgs; [ steam ];
+    # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
+    stateVersion = "24.05";
+  };
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
+  programs.poetry.enable = true;
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
-
-  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  home.stateVersion = "24.05";
 }
