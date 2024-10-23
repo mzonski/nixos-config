@@ -2,18 +2,13 @@
 # Use this to configure your system environment (it replaces /etc/nixos/configuration.nix)
 {
   inputs,
+  pkgs,
   lib,
   config,
-  pkgs,
   ...
 }:
 {
-  # You can import other NixOS modules here
   imports = [
-    # If you want to use modules from other flakes (such as nixos-hardware):
-    # inputs.hardware.nixosModules.common-cpu-amd
-    # inputs.hardware.nixosModules.common-ssd
-
     inputs.nixos-hardware.nixosModules.common-pc-ssd
 
     ./boot.nix
@@ -24,7 +19,6 @@
   ];
 
   nixpkgs = {
-    # You can add overlays here
     overlays = [
       # If you want to use overlays exported from other flakes:
       # neovim-nightly-overlay.overlays.default
@@ -36,10 +30,9 @@
       #   });
       # })
     ];
-    # Configure your nixpkgs instance
     config = {
-      # Disable if you don't want unfree packages
       allowUnfree = true;
+      allowUnfreePredicate = _: true;
     };
   };
 
@@ -66,26 +59,15 @@
 
   networking = {
     firewall.enable = false;
-    networkmanager = {
-      enable = true;
-      connectionConfig = {
-        "ethernet.cloned-mac-address" = "preserve";
-        "ethernet.connection.id" = "HOME LAN";
-      };
-    };
+    networkmanager.enable = true;
   };
 
   # Desktop Environment and Display Configuration
   services.xserver.enable = true;
 
   # Gnome
-  services.xserver.displayManager.gdm.enable = false;
-  services.xserver.desktopManager.gnome.enable = false;
-
-  # KDE
-  services.displayManager.sddm.enable = true;
-  services.displayManager.sddm.wayland.enable = true;
-  services.desktopManager.plasma6.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
 
   # Audio Configuration
   hardware.pulseaudio.enable = false;
@@ -131,6 +113,7 @@
   # Services Configuration
   services.openssh.enable = true;
   services.printing.enable = true;
+  services.pcscd.enable = true;
 
   services.acpid.enable = true;
   services.thermald.enable = true;

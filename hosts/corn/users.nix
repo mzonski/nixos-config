@@ -1,10 +1,4 @@
-{
-  _config,
-  _lib,
-  _pkgs,
-  _modulesPath,
-  ...
-}:
+{ ... }:
 
 {
   users.users = {

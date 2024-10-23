@@ -1,15 +1,15 @@
 ################################################
 # Supported commands:
-# home-manager build --flake .#zonni@pc-linux
-# home-manager switch --flake .#zonni@pc-linux
+# home-manager build --flake .#zonni@corn
+# home-manager switch --flake .#zonni@corn
 # 
-# sudo nixos-rebuild switch --flake .#pc-linux
+# sudo nixos-rebuild switch --flake .#corn
 # nix flake update
 ################################################
 
 FLAKE := .
 USERNAME := zonni
-HOSTNAME := pc-linux
+HOSTNAME := corn
 
 .PHONY: all home system update
 

@@ -1,10 +1,4 @@
-{
-  config,
-  _lib,
-  _pkgs,
-  _modulesPath,
-  ...
-}:
+{ config, ... }:
 
 {
   boot.kernelParams = [ "nvidia_drm.fbdev=1" ];
@@ -40,7 +34,7 @@
     videoDrivers = [ "nvidia" ];
   };
 
-  hardware.opengl.enable = true;
+  hardware.graphics.enable = true;
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = true;
