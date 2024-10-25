@@ -7,7 +7,7 @@
     xrandrHeads = [
       {
         # Configure the LG 27UL850-W (primary monitor)
-        output = "HDMI-1";
+        output = "HDMI-5";
         primary = true;
 
         # DisplaySize based on the dimensions reported by xrandr: 600mm x 340mm
@@ -19,7 +19,7 @@
       }
       {
         # Configure the LG DualUp monitor
-        output = "DP-3";
+        output = "DP-2";
 
         # DisplaySize based on xrandr: 470mm x 520mm
         monitorConfig = ''

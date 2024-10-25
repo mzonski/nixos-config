@@ -81,9 +81,4 @@
         'POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true'
         source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/config/p10k-rainbow.zsh
       '';
-
-  home.sessionVariables = {
-    EDITOR = "nano"; # or your preferred editor
-    SHELL = "${pkgs.zsh}/bin/zsh";
-  };
 }

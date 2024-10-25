@@ -1,10 +1,12 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   imports = [
     ./bash.nix
     ./bat.nix
     ./direnv.nix
     ./gh.nix
     ./git.nix
+    ./nix-index.nix
   ];
   home.packages = with pkgs; [
     bc # Calculator
@@ -21,4 +23,4 @@
     nix-output-monitor
     nh # Nice wrapper for NixOS and HM
   ];
-} 
+}

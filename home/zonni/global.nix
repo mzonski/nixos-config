@@ -1,29 +1,35 @@
 {
   lib,
   config,
+  pkgs,
+  outputs,
   ...
 }:
 {
   imports = [
     ./features/cli
-  ];
+    ./features/desktop
+  ] ++ (builtins.attrValues outputs.homeManagerModules);
 
-  systemd.user.startServices = "sd-switch";
+  nix = {
+    package = lib.mkDefault pkgs.nix;
+    settings = {
+      experimental-features = [
+        "nix-command"
+        "flakes"
+        "ca-derivations"
+      ];
+      warn-dirty = false;
+    };
+  };
 
   nixpkgs = {
-    overlays = [
-      # If you want to use overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
-    ];
-    config.allowUnfree = true;
+    config = {
+      allowUnfree = true;
+    };
   };
+
+  systemd.user.startServices = "sd-switch";
 
   programs = {
     home-manager.enable = true;
@@ -36,6 +42,8 @@
     sessionPath = [ "$HOME/.local/bin" ];
     sessionVariables = {
       FLAKE = "$HOME/Projects/nixos-config";
+      EDITOR = "nano"; # or your preferred editor
+      SHELL = "${pkgs.zsh}/bin/zsh";
     };
   };
 }

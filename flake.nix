@@ -2,10 +2,10 @@
   description = "Desktop PC NixOS Config";
 
   inputs = {
-    nil-ls.url = "github:oxalica/nil";
-
+    # Nix ecosystem
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
+    systems.url = "github:nix-systems/default-linux";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -18,12 +18,15 @@
       inputs.nixpkgs-stable.follows = "nixpkgs";
     };
 
-    nix-index-database = {
-      url = "github:nix-community/nix-index-database";
+    hardware.url = "github:NixOS/nixos-hardware/master";
+
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nil-ls.url = "github:oxalica/nil";
+
   };
 
   outputs =
@@ -31,31 +34,41 @@
       self,
       nixpkgs,
       home-manager,
-      nix-index-database,
+      systems,
       ...
     }@inputs:
     let
       inherit (self) outputs;
+      lib = nixpkgs.lib // home-manager.lib;
+      forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
+      pkgsFor = lib.genAttrs (import systems) (
+        system:
+        import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        }
+      );
     in
     {
+      inherit lib;
+      homeManagerModules = import ./modules/home-manager/default.nix;
 
       nixosConfigurations = {
-        "corn" = nixpkgs.lib.nixosSystem {
+        corn = lib.nixosSystem {
           specialArgs = {
             inherit inputs outputs;
           };
-          modules = [ ./hosts/corn/configuration.nix ];
+          modules = [ ./hosts/corn/default.nix ];
         };
       };
 
       homeConfigurations = {
-        "zonni@corn" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        "zonni@corn" = lib.homeManagerConfiguration {
+          pkgs = pkgsFor.x86_64-linux;
           extraSpecialArgs = {
             inherit inputs outputs;
           };
           modules = [
-            nix-index-database.hmModules.nix-index
             ./home/zonni/default.nix
           ];
         };

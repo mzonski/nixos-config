@@ -21,6 +21,7 @@ update:
 
 home:
 	@echo "Switching home-manager configuration..."
+	export NIXPKGS_ALLOW_UNFREE=1
 	home-manager build --flake $(FLAKE)#$(USERNAME)@$(HOSTNAME)
 	home-manager switch --flake $(FLAKE)#$(USERNAME)@$(HOSTNAME)
 
