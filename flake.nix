@@ -26,7 +26,7 @@
     };
 
     nil-ls.url = "github:oxalica/nil";
-
+    catppuccin.url = "github:catppuccin/nix";
   };
 
   outputs =

@@ -3,30 +3,22 @@
   _lib,
   _config,
   pkgs,
+  inputs,
   ...
 }:
 {
   imports = [
+    inputs.catppuccin.homeManagerModules.catppuccin
+
     ./global.nix
-    ./features/vscode.nix
     ./shell.nix
   ];
 
   home.packages = (
     with pkgs;
     [
-      vscode
-      cowsay
-      nixfmt-rfc-style
-      nil
-      python312
-      python312Packages.pip
-      jetbrains.pycharm-professional
-      jetbrains.datagrip
-      gitkraken
+      hello
     ]
   );
   # ++ (with unstable; [ ]);
-
-  programs.poetry.enable = true;
 }

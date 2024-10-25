@@ -8,8 +8,6 @@
       displayManager.gdm.autoSuspend = false;
     };
 
-    gnome.games.enable = true;
-
     # Auto Login Configuration
     displayManager.autoLogin.enable = true;
     displayManager.autoLogin.user = "zonni";

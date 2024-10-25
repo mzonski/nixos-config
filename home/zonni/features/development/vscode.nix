@@ -1,5 +1,14 @@
 { config, pkgs, ... }:
 {
+  home.packages = (
+    with pkgs;
+    [
+      vscode
+      nixfmt-rfc-style
+      nil
+    ]
+  );
+
   programs.vscode = {
     enable = true;
     package = pkgs.vscode;
@@ -11,6 +20,8 @@
       k--kato.intellij-idea-keybindings
       ms-vscode.makefile-tools
       eamodio.gitlens
+      catppuccin.catppuccin-vsc
+      catppuccin.catppuccin-vsc-icons
     ];
     userSettings = {
       mutableExtensionsDir = false;
@@ -18,6 +29,7 @@
       enableUpdateCheck = false;
       editor = {
         formatOnSave = true;
+        semanticHighlighting.enabled = true; # // we try to make semantic highlighting look good
         defaultFormatter = "esbenp.prettier-vscode";
       };
       "[nix]".editor = {
@@ -25,7 +37,6 @@
         defaultFormatter = "jnoortheen.nix-ide";
       };
       files.autoSave = "onFocusChange";
-      workbench.colorTheme = "Default Dark+";
       editor.minimap.enabled = false;
       nixEnvSelector.nixFile = "${config.home.homeDirectory}/Projects/nixos-config/flake.nix";
       prettier.configPath = ".prettierrc";
@@ -37,6 +48,13 @@
 
       git.autofetch = true;
       makefile.configureOnOpen = false;
+
+      "workbench.colorTheme" = "Catppuccin Mocha";
+      "workbench.iconTheme" = "catppuccin-mocha";
+      terminal.integrated.minimumContrastRatio = 1; # prevent VSCode from modifying the terminal colors
+      window.titleBarStyle = "custom"; # make the window's titlebar use the workbench colors
+
+      "catppuccin.customUIColors".mocha."statusBar.foreground" = "accent";
     };
     keybindings = [
       {

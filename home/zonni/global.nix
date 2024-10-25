@@ -9,6 +9,7 @@
   imports = [
     ./features/cli
     ./features/desktop
+    ./features/development
   ] ++ (builtins.attrValues outputs.homeManagerModules);
 
   nix = {

@@ -5,6 +5,7 @@
 }:
 {
   imports = [
+    ./catpuccin.nix
     ./firefox.nix
     ./font.nix
     ./gtk.nix
