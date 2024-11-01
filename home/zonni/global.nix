@@ -31,6 +31,8 @@
     };
   };
 
+  news.display = "silent";
+
   systemd.user.startServices = "sd-switch";
 
   programs = {
