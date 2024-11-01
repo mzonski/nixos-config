@@ -58,7 +58,9 @@
           specialArgs = {
             inherit inputs outputs;
           };
-          modules = [ ./hosts/corn/default.nix ];
+          modules = [
+            ./hosts/corn/default.nix
+          ];
         };
       };
 
