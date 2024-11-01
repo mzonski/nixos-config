@@ -1,14 +1,11 @@
 {
   inputs,
-  modulesPath,
   lib,
   ...
 }:
 
 {
   imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-
     inputs.hardware.nixosModules.common-cpu-intel
     inputs.hardware.nixosModules.common-gpu-nvidia
     inputs.hardware.nixosModules.common-pc-ssd
@@ -18,6 +15,7 @@
     ./graphics.nix
 
     ../common/global
+    ../common/packages.nix
     ../common/users.nix
 
     ../common/optional/gnome.nix

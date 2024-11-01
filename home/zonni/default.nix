@@ -1,7 +1,4 @@
 {
-  _inputs,
-  _lib,
-  _config,
   pkgs,
   inputs,
   ...
@@ -18,7 +15,9 @@
     with pkgs;
     [
       hello
+      arandr
     ]
   );
   # ++ (with unstable; [ ]);
+
 }

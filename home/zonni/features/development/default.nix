@@ -10,6 +10,7 @@
     with pkgs;
     [
       cowsay
+      gnumake
     ]
   );
 }

@@ -10,6 +10,7 @@
     ./features/cli
     ./features/desktop
     ./features/development
+    ./features/partitioning
   ] ++ (builtins.attrValues outputs.homeManagerModules);
 
   nix = {
@@ -39,7 +40,7 @@
   home = {
     username = lib.mkDefault "zonni";
     homeDirectory = lib.mkDefault "/home/${config.home.username}";
-    stateVersion = lib.mkDefault "24.05";
+    stateVersion = lib.mkDefault "24.11";
     sessionPath = [ "$HOME/.local/bin" ];
     sessionVariables = {
       FLAKE = "$HOME/Projects/nixos-config";
