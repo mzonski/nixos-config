@@ -5,6 +5,7 @@
     [
       jetbrains.pycharm-professional
       jetbrains.datagrip
+      jetbrains.webstorm
     ]
   );
 }

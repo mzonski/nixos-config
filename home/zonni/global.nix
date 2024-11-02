@@ -45,7 +45,7 @@
     stateVersion = lib.mkDefault "24.11";
     sessionPath = [ "$HOME/.local/bin" ];
     sessionVariables = {
-      FLAKE = "$HOME/Projects/nixos-config";
+      FLAKE = "$HOME/Git/nixos-config";
       EDITOR = "nano"; # or your preferred editor
       SHELL = "${pkgs.zsh}/bin/zsh";
     };

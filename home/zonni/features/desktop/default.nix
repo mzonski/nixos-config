@@ -6,6 +6,7 @@
     ./firefox.nix
     ./font.nix
     ./gtk.nix
+    ./gnome
   ];
 
   home.packages = (
@@ -17,12 +18,6 @@
       dconf-editor # dconf gui config tool
     ]
   );
-
-  # Also sets org.freedesktop.appearance color-scheme
-  dconf.settings."org/gnome/desktop/interface" = {
-    color-scheme = "prefer-dark";
-    scaling-factor = lib.gvariant.mkUint32 2;
-  };
 
   # xdg.portal.enable = true;
 }

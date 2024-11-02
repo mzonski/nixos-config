@@ -25,7 +25,6 @@
           "command-not-found"
           "z"
         ];
-        theme = "powerlevel10k/powerlevel10k";
       };
 
       plugins = [
@@ -65,20 +64,18 @@
       nix-direnv.enable = true;
     };
 
-    nix-index = {
-      enable = true;
-      enableZshIntegration = true;
-    };
+    # nix-index = {
+    #   enable = false;
+    #   enableZshIntegration = false;
+    # };
   };
 
-  # Generate a default p10k configuration if it doesn't exist
-  home.file.".p10k.zsh".text =
-    if (builtins.pathExists ./p10k.zsh) then
-      builtins.readFile ./p10k.zsh
-    else
-      ''
-        # This is a basic p10k configuration. You can customize it later.
-        'POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true'
-        source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/config/p10k-rainbow.zsh
-      '';
+  #   home.file.".p10k.zsh".text =
+  #     if (builtins.pathExists ./p10k.zsh) then
+  #       builtins.readFile ./p10k.zsh
+  #     else
+  #       # load powerlevel10k config
+  #       ''
+  #         source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/config/p10k-rainbow.zsh
+  #       '';
 }

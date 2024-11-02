@@ -6,10 +6,10 @@
     pointerCursor.flavor = "mocha";
   };
   gtk.catppuccin = {
-    enable = true;
-    gnomeShellTheme = true;
+    enable = false;
+    gnomeShellTheme = false;
 
-    icon.enable = true;
+    icon.enable = false;
 
     tweaks = [ "normal" ];
   };

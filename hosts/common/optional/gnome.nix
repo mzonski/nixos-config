@@ -1,4 +1,40 @@
 {
+  inputs,
+  config,
+  pkgs,
+  ...
+}:
+{
+  environment.systemPackages = with pkgs; [
+    dconf
+    libnotify
+    alacritty
+  ];
+
+  environment.gnome.excludePackages = (
+    with pkgs;
+    [
+      gnome-photos
+      gnome-tour
+      cheese # webcam tool
+      gnome-music
+      epiphany # web browser
+      geary # email reader
+      evince # document viewer
+      gnome-characters
+      totem # video player
+      tali # poker game
+      iagno # go game
+      hitori # sudoku game
+      atomix # puzzle game
+      gnome-weather
+      gnome-maps
+    ]
+  );
+
+  services.gnome.core-utilities.enable = true;
+  services.udev.packages = with pkgs; [ gnome-settings-daemon ];
+
   services = {
     xserver = {
       enable = true;

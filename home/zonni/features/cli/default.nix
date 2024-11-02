@@ -6,7 +6,7 @@
     ./direnv.nix
     ./gh.nix
     ./git.nix
-    ./nix-index.nix
+    #./nix-index.nix
   ];
   home.packages = with pkgs; [
     bc # Calculator
