@@ -30,9 +30,10 @@
 
   programs.dconf.enable = true;
 
+  services.libinput.enable = true;
   services.openssh.enable = true;
   services.printing.enable = true;
-  services.pcscd.enable = true;
+  # services.pcscd.enable = true; # enable during key setup
 
   system.stateVersion = "24.11";
 }

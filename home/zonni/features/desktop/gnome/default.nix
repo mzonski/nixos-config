@@ -90,7 +90,7 @@ in
         theme = "Colloid-Purple-Dark-Compact-Catppuccin";
       };
       "org/gnome/settings-daemon/plugins/color" = {
-        night-light-enabled = true;
+        night-light-enabled = false;
         night-light-temperature = 3500;
         night-light-schedule-automatic = true;
         night-light-last-coordinates = mkTuple [
@@ -183,8 +183,8 @@ in
       };
       "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
         binding = "<Super>z";
-        command = "alacritty"; # TODO: use configured "default"
-        name = "Open Alacritty";
+        command = "gnome-terminal"; # TODO: use configured "default"
+        name = "Open Terminal";
       };
     };
   };

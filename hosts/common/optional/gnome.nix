@@ -8,12 +8,14 @@
   environment.systemPackages = with pkgs; [
     dconf
     libnotify
-    alacritty
+    gnome-terminal
   ];
 
   environment.gnome.excludePackages = (
     with pkgs;
     [
+      xterm
+      gnome-console
       gnome-photos
       gnome-tour
       cheese # webcam tool
