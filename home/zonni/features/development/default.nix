@@ -3,6 +3,7 @@
   imports = [
     ./gitkraken.nix
     ./jetbrains.nix
+    ./node.nix
     ./python.nix
     ./vscode.nix
   ];
