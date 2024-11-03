@@ -3,6 +3,7 @@
 {
   imports = [
     ./gnome
+    ./peazip
     ./templates
 
     ./catpuccin.nix
@@ -10,7 +11,6 @@
     ./font.nix
     ./gtk.nix
     ./image-manipulation.nix
-    ./peazip.nix
   ];
 
   home.packages = (

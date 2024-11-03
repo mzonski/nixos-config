@@ -66,14 +66,13 @@ let
         nativeBuildInputs = (oldAttrs.nativeBuildInputs or [ ]) ++ [ asmc ];
       });
 
-  peazip = pkgs.peazip.override {
+  peazip = pkgs.callPackage ./build.nix {
     _7zz = _7zz;
   };
 in
 
 {
   home.packages = [
-    asmc
     _7zz
     peazip
   ];
