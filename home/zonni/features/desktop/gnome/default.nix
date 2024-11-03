@@ -87,7 +87,7 @@ in
       "org/gnome/desktop/wm/preferences" = {
         num-workspaces = 4;
         focus-mode = "click";
-        theme = "Collopuccisharp-dark";
+        theme = "Colloid-Purple-Dark-Compact-Catppuccin";
       };
       "org/gnome/settings-daemon/plugins/color" = {
         night-light-enabled = false;
@@ -111,7 +111,7 @@ in
         hint-color-rgba = "rgba(203, 166, 247, 1)";
       };
       "org/gnome/shell/extensions/user-theme" = {
-        name = "Collopuccisharp-dark";
+        name = "Colloid-Purple-Dark-Compact-Catppuccin";
       };
 
       "org/gnome/nautilus/icon-view" = {
