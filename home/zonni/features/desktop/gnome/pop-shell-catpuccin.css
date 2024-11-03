@@ -1,7 +1,7 @@
 .pop-shell-active-hint {
 	border-style: solid;
 	border-color: #cba6f7;
-	border-radius: var(--active-hint-border-radius, 6px);
+	border-radius: 0px;
 	box-shadow: none;
 }
 
@@ -19,7 +19,7 @@
 
 .pop-shell-search-element:select {
 	background: rgba(239, 241, 245, 0.12);
-	border-radius: 6px;
+	border-radius: 0;
 	color: #cdd6f4;
 }
 
