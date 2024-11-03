@@ -2,11 +2,15 @@
 
 {
   imports = [
+    ./gnome
+    ./templates
+
     ./catpuccin.nix
     ./firefox.nix
     ./font.nix
     ./gtk.nix
-    ./gnome
+    ./image-manipulation.nix
+    ./peazip.nix
   ];
 
   home.packages = (
