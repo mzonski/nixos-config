@@ -1,27 +1,20 @@
 { pkgs, ... }:
 let
-  colloid-theme =
-    (pkgs.colloid-gtk-theme.override {
-      themeVariants = [ "purple" ];
-      colorVariants = [ "dark" ];
-      sizeVariants = [ "compact" ];
-      tweaks = [
-        "catppuccin"
-        "rimless"
-        "normal"
-        "black"
-      ];
-    }).overrideAttrs
-      (oldAttrs: {
-        preInstall = ''
-          ${oldAttrs.preInstall or ""}
-          cp -f ${./gnome/theme-variables.scss} src/sass/_variables.scss
-        '';
-      });
+  collopuccisharp-theme = pkgs.callPackage ./theme/collopuccisharp-gtk-theme.nix ({
+    # themeVariants = [ "purple" ];
+    # colorVariants = [ "dark" ];
+    # sizeVariants = [ "compact" ];
+    # tweaks = [
+    #   "catppuccin"
+    #   "rimless"
+    #   "normal"
+    #   "black"
+    # ];
+  });
 in
 {
 
-  home.packages = [ colloid-theme ];
+  home.packages = [ collopuccisharp-theme ];
   gtk = {
     enable = true;
     iconTheme = {
@@ -29,8 +22,8 @@ in
       package = pkgs.adwaita-icon-theme;
     };
     theme = {
-      name = "Colloid-Purple-Dark-Compact-Catppuccin";
-      package = colloid-theme;
+      name = "Collopuccisharp-dark";
+      package = collopuccisharp-theme;
     };
   };
 

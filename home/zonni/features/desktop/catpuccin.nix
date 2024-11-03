@@ -2,7 +2,7 @@
   catppuccin = {
     enable = true;
     flavor = "mocha";
-    pointerCursor.enable = true;
+    pointerCursor.enable = false;
     pointerCursor.flavor = "mocha";
   };
   gtk.catppuccin = {
