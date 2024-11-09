@@ -8,6 +8,7 @@
 
     ./catpuccin.nix
     ./firefox.nix
+    ./flameshot.nix
     ./font.nix
     ./gtk.nix
     ./image-manipulation.nix
