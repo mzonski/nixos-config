@@ -7,7 +7,7 @@
     xrandrHeads = [
       {
         # LG 27UL850
-        output = "DP-2";
+        output = "DP-4";
         primary = true;
 
         monitorConfig = ''
@@ -18,7 +18,7 @@
       }
       {
         # LG DualUp
-        output = "HDMI-1";
+        output = "HDMI-0";
 
         monitorConfig = ''
           DisplaySize 470 520
@@ -41,12 +41,12 @@
     powerManagement.finegrained = false;
     open = false;
 
-    forceFullCompositionPipeline = true;
+    forceFullCompositionPipeline = false;
     gsp.enable = true;
 
     prime = {
       offload.enable = false;
-      sync.enable = true;
+      sync.enable = false;
 
       intelBusId = "PCI:0:2:0";
       nvidiaBusId = "PCI:1:0:0";
