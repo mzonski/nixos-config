@@ -9,6 +9,8 @@
 
     ./global.nix
     ./shell.nix
+
+    ./features/yubikey
   ];
 
   home.packages = (

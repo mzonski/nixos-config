@@ -33,7 +33,7 @@
   services.libinput.enable = true;
   services.openssh.enable = true;
   services.printing.enable = true;
-  # services.pcscd.enable = true; # enable during key setup
+  services.pcscd.enable = true;
 
   system.stateVersion = "24.11";
 }
