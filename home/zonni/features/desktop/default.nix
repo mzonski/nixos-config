@@ -6,6 +6,7 @@
     ./peazip
     ./templates
 
+    ./bleachbit.nix
     ./catpuccin.nix
     ./firefox.nix
     ./flameshot.nix
