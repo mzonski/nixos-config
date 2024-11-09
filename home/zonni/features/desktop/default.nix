@@ -16,6 +16,7 @@
     ./image-manipulation.nix
     ./openvpn.nix
     ./qcad.nix
+    ./qdirstat.nix
     ./ulauncher.nix
     ./vlc.nix
   ];
