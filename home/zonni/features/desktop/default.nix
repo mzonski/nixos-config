@@ -8,6 +8,7 @@
 
     ./bleachbit.nix
     ./catpuccin.nix
+    ./clipboard-manager.nix
     ./firefox.nix
     ./flameshot.nix
     ./font.nix
