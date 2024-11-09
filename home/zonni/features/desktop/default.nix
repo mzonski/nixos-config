@@ -15,6 +15,7 @@
     ./gtk.nix
     ./image-manipulation.nix
     ./openvpn.nix
+    ./qcad.nix
     ./vlc.nix
   ];
 
