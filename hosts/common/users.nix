@@ -18,6 +18,7 @@ in
       "video"
       "wheel"
       "wireshark"
+      "libvirtd"
     ];
 
     packages = [ pkgs.home-manager ];

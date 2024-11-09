@@ -20,6 +20,7 @@
 
     ../common/optional/gnome.nix
     ../common/optional/pipewire.nix
+    ../common/optional/virtualisation.nix
   ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
