@@ -10,7 +10,6 @@ let
 in
 {
   home.packages = with pkgs; [
-    nautilus
     gnome-shell-extensions
     gnomeExtensions.appindicator
     pop-shell-extension
