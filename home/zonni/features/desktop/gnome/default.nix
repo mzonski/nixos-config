@@ -23,7 +23,10 @@ in
       "org/gnome/shell" = {
         disable-user-extensions = false;
         enabled-extensions = [
+          "apps-menu@gnome-shell-extensions.gcampax.github.com"
           "user-theme@gnome-shell-extensions.gcampax.github.com"
+          "system-monitor@gnome-shell-extensions.gcampax.github.com"
+          "places-menu@gnome-shell-extensions.gcampax.github.com"
           "appindicatorsupport@rgcjonas.gmail.com"
           "pop-shell@system76.com"
           "rounded-window-corners@fxgn"
