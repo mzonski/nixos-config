@@ -13,6 +13,7 @@
     ./gtk.nix
     ./image-manipulation.nix
     ./openvpn.nix
+    ./vlc.nix
   ];
 
   home.packages = (
