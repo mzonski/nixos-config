@@ -12,6 +12,7 @@
     ./font.nix
     ./gtk.nix
     ./image-manipulation.nix
+    ./openvpn.nix
   ];
 
   home.packages = (
