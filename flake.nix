@@ -1,24 +1,23 @@
 {
-  description = "Desktop PC NixOS Config";
+  description = "My Home NixOS configuration flake";
 
   inputs = {
-    # Nix ecosystem
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
-    systems.url = "github:nix-systems/default-linux";
+    nixpkgs.url = "github:nixos/nixpkgs/release-24.11";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    systems.url = "github:nix-systems/default-linux";
+    nixos-hardware.url = "github:nixos/nixos-hardware/master";
+    nixgl.url = "github:guibou/nixGL";
+
     sops-nix = {
       url = "github:mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-stable.follows = "nixpkgs";
     };
-
-    hardware.url = "github:NixOS/nixos-hardware/master";
 
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";

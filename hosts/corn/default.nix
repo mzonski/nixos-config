@@ -6,9 +6,9 @@
 
 {
   imports = [
-    inputs.hardware.nixosModules.common-cpu-intel-cpu-only
-    inputs.hardware.nixosModules.common-gpu-nvidia
-    inputs.hardware.nixosModules.common-pc-ssd
+    inputs.nixos-hardware.nixosModules.common-cpu-intel-cpu-only
+    inputs.nixos-hardware.nixosModules.common-gpu-nvidia
+    inputs.nixos-hardware.nixosModules.common-pc-ssd
 
     ./boot.nix
     ./file-system.nix
