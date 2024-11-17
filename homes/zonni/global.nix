@@ -2,7 +2,6 @@
   lib,
   config,
   pkgs,
-  outputs,
   ...
 }:
 {
@@ -11,7 +10,7 @@
     ./features/desktop
     ./features/development
     ./features/partitioning
-  ] ++ (builtins.attrValues outputs.homeManagerModules);
+  ];
 
   nix = {
     package = lib.mkDefault pkgs.nix;

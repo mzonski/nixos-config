@@ -63,19 +63,5 @@
       enable = true;
       nix-direnv.enable = true;
     };
-
-    # nix-index = {
-    #   enable = false;
-    #   enableZshIntegration = false;
-    # };
   };
-
-  #   home.file.".p10k.zsh".text =
-  #     if (builtins.pathExists ./p10k.zsh) then
-  #       builtins.readFile ./p10k.zsh
-  #     else
-  #       # load powerlevel10k config
-  #       ''
-  #         source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/config/p10k-rainbow.zsh
-  #       '';
 }

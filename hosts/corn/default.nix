@@ -14,13 +14,13 @@
     ./file-system.nix
     ./graphics.nix
 
-    ../common/global
-    ../common/packages.nix
-    ../common/users.nix
+    ./common/global
+    ./common/packages.nix
+    ./common/users.nix
 
-    ../common/optional/hyprland.nix
-    ../common/optional/pipewire.nix
-    ../common/optional/virtualisation.nix
+    ./common/optional/hyprland.nix
+    ./common/optional/pipewire.nix
+    ./common/optional/virtualisation.nix
   ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

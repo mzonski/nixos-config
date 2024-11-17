@@ -10,6 +10,9 @@
       glxinfo
       vulkan-tools
       lshw
+      mesa-demos
+      virtualgl
+      virtualglLib
     ]
   );
 }

@@ -21,8 +21,8 @@ update:
 
 home:
 	@echo "Switching home-manager configuration..."
-	home-manager build --flake $(FLAKE)#$(USERNAME)@$(HOSTNAME)
-	home-manager switch --flake $(FLAKE)#$(USERNAME)@$(HOSTNAME)
+	home-manager build --flake $(FLAKE)#$(USERNAME)
+	home-manager switch --flake $(FLAKE)#$(USERNAME)
 
 system:
 	@echo "Switching NixOS configuration..."

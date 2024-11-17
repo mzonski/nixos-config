@@ -29,50 +29,53 @@
   };
 
   outputs =
-    {
+    inputs@{
       self,
       nixpkgs,
-      home-manager,
-      systems,
+      nixpkgs-unstable,
       ...
-    }@inputs:
+    }:
     let
-      inherit (self) outputs;
-      lib = nixpkgs.lib // home-manager.lib;
-      forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
-      pkgsFor = lib.genAttrs (import systems) (
-        system:
-        import nixpkgs {
+      inherit (mylib)
+        mapModules
+        mapModulesRec
+        mapHosts
+        mapHomes
+        ;
+
+      system = "x86_64-linux";
+
+      mkPkgs =
+        pkgs: overlays:
+        import pkgs {
           inherit system;
           config.allowUnfree = true;
+          overlays = overlays;
+        };
+      pkgs = mkPkgs nixpkgs (lib.attrValues self.overlays);
+      pkgs' = mkPkgs nixpkgs-unstable [ ];
+
+      lib = nixpkgs.lib;
+      mylib = import ./lib { inherit pkgs inputs lib; };
+
+      overlay =
+        final: prev:
+        {
+          unstable = pkgs';
         }
-      );
+        // (import ./overlays { inherit inputs; }) final prev;
     in
     {
-      inherit lib;
-      homeManagerModules = import ./modules/home-manager/default.nix;
+      overlays.default = overlay;
 
-      nixosConfigurations = {
-        corn = lib.nixosSystem {
-          specialArgs = {
-            inherit inputs outputs;
-          };
-          modules = [
-            ./hosts/corn/default.nix
-          ];
-        };
-      };
+      packages."${system}" = mapModules ./packages (p: pkgs.callPackage p { inherit inputs; });
 
-      homeConfigurations = {
-        "zonni@corn" = lib.homeManagerConfiguration {
-          pkgs = pkgsFor.x86_64-linux;
-          extraSpecialArgs = {
-            inherit inputs outputs;
-          };
-          modules = [
-            ./home/zonni/default.nix
-          ];
-        };
-      };
+      nixosModules = {
+        dotfiles = import ./.;
+      } // mapModulesRec ./modules import;
+
+      nixosConfigurations = mapHosts ./hosts { };
+
+      homeConfigurations = mapHomes ./homes { };
     };
 }
