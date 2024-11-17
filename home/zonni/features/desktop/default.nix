@@ -2,22 +2,20 @@
 
 {
   imports = [
-    ./gnome
+    #./gnome
+    ./hyprland
     ./peazip
     ./templates
 
     ./bleachbit.nix
     ./catpuccin.nix
-    ./clipboard-manager.nix
     ./firefox.nix
-    ./flameshot.nix
     ./font.nix
     ./gtk.nix
     ./image-manipulation.nix
     ./openvpn.nix
     ./qcad.nix
     ./qdirstat.nix
-    ./ulauncher.nix
     ./vlc.nix
   ];
 

@@ -5,6 +5,9 @@
     pointerCursor.enable = false;
     pointerCursor.flavor = "mocha";
   };
+  qt.style.catppuccin.enable = true;
+  qt.style.catppuccin.apply = true;
+  programs.zsh.syntaxHighlighting.catppuccin.enable = true;
   gtk.catppuccin = {
     enable = false;
     gnomeShellTheme = false;

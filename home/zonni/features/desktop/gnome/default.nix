@@ -10,11 +10,15 @@ let
 in
 {
   home.packages = with pkgs; [
+    nautilus
     gnome-shell-extensions
-    gnomeExtensions.appindicator
     pop-shell-extension
+    gnomeExtensions.appindicator
     gnomeExtensions.rounded-window-corners-reborn
     gnomeExtensions.color-picker
+    gnomeExtensions.caffeine
+    gnomeExtensions.emoji-copy
+    gnomeExtensions.desktop-icons-ng-ding
   ];
 
   dconf = {
@@ -27,10 +31,14 @@ in
           "user-theme@gnome-shell-extensions.gcampax.github.com"
           "system-monitor@gnome-shell-extensions.gcampax.github.com"
           "places-menu@gnome-shell-extensions.gcampax.github.com"
+          "drive-menu@gnome-shell-extensions.gcampax.github.com"
           "appindicatorsupport@rgcjonas.gmail.com"
           "pop-shell@system76.com"
           "rounded-window-corners@fxgn"
           "color-picker@tuberry"
+          "caffeine@patapon.info"
+          "emoji-copy@felipeftn"
+          "ding@rastersoft.com"
         ];
       };
       "org/gnome/gnome-session" = {

@@ -4,11 +4,23 @@
   pkgs,
   ...
 }:
+
+# let
+#   catppuccin-qt5ct = (
+#     pkgs.catppuccin-qt5ct.override {
+#       flavour = [ "mocha" ];
+#       accents = [ "maroon" ];
+#     }
+#   );
+
+# in
 {
   environment.systemPackages = with pkgs; [
     dconf
     libnotify
     gnome-terminal
+    adwaita-qt
+    catppuccin-qt5ct
   ];
 
   environment.gnome.excludePackages = (
@@ -33,6 +45,20 @@
       gnome-maps
     ]
   );
+
+  qt = {
+    enable = true;
+    platformTheme = "qt5ct";
+    # style = "adwaita-dark";
+  };
+
+  environment.sessionVariables = {
+    QT_SCALE_FACTOR = 1;
+    QT_AUTO_SCREEN_SCALE_FACTOR = 0;
+    QT_SCREEN_SCALE_FACTORS = 2;
+    #QT_STYLE_OVERRIDE = "adwaita-dark";
+    #QT_QPA_PLATFORMTHEME="qt5ct";
+  };
 
   services.gnome.core-utilities.enable = true;
   services.udev.packages = with pkgs; [ gnome-settings-daemon ];

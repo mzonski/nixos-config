@@ -50,4 +50,11 @@
       SHELL = "${pkgs.zsh}/bin/zsh";
     };
   };
+
+  dconf.settings = {
+    "org/virt-manager/virt-manager/connections" = {
+      autoconnect = [ "qemu:///system" ];
+      uris = [ "qemu:///system" ];
+    };
+  };
 }

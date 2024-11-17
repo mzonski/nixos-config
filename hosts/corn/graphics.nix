@@ -39,9 +39,9 @@
 
     powerManagement.enable = true;
     powerManagement.finegrained = false;
-    open = false;
+    open = true;
 
-    forceFullCompositionPipeline = false;
+    forceFullCompositionPipeline = true;
     gsp.enable = true;
 
     prime = {

@@ -60,5 +60,5 @@
   ];
 
   # Cleanup stuff included by default
-  services.speechd.enable = lib.mkDefault false;
+  services.speechd.enable = lib.mkForce false;
 }

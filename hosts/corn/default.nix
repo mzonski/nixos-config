@@ -18,7 +18,7 @@
     ../common/packages.nix
     ../common/users.nix
 
-    ../common/optional/gnome.nix
+    ../common/optional/hyprland.nix
     ../common/optional/pipewire.nix
     ../common/optional/virtualisation.nix
   ];
