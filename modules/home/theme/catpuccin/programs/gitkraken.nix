@@ -10,9 +10,7 @@
 with lib;
 with mylib;
 let
-  enabled =
-    #config.hom.development.versioning.gitkraken && 
-    config.hom.theme.catpuccin.enable;
+  enabled = config.hom.development.versioning.gitkraken && config.hom.theme.catpuccin.enable;
 in
 {
   config = mkIf enabled {
