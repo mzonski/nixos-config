@@ -13,6 +13,7 @@ let
   cfg = config.hom.apps.cli;
 in
 {
+
   options.hom.apps.cli = {
     defaults = mkBoolOpt false;
     bash = mkBoolOpt false;
@@ -20,8 +21,8 @@ in
     direnv = mkBoolOpt false;
   };
 
-  config =
-    mkIf cfg.defaults {
+  config = mkMerge [
+    (mkIf cfg.defaults {
       home.packages = with pkgs; [
         bc # Calculator
         bottom # System viewer (btm)
@@ -36,22 +37,21 @@ in
         wget
         tree
       ];
-    }
-    // mkIf cfg.bash {
-      programs.bash = {
-        enable = true;
-      };
-    }
-    // mkIf cfg.bat {
-      programs.bat = {
-        enable = true;
-      };
-    }
-    // mkIf cfg.direnv {
+    })
+
+    (mkIf cfg.bash {
+      programs.bash.enable = true;
+    })
+
+    (mkIf cfg.bat {
+      programs.bat.enable = true;
+    })
+
+    (mkIf cfg.direnv {
       programs.direnv = {
         enable = mkDefault true;
         nix-direnv.enable = true;
       };
-    };
-
+    })
+  ];
 }
