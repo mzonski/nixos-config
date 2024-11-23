@@ -11,7 +11,7 @@
 with lib;
 with mylib;
 let
-  enabled = config.hom.shell.hyprland.waybar.enable;
+  enabled = config.hom.shell.panel.waybar.enable;
 in
 {
   config = mkIf enabled (

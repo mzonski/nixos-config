@@ -83,8 +83,8 @@
       zsh.enable = true;
       hyprland = {
         enable = true;
-        waybar.enable = true;
       };
+      panel.waybar.enable = true;
     };
     theme = {
       catpuccin.enable = true;
