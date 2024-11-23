@@ -30,6 +30,7 @@ in
 
     environment.systemPackages = with pkgs; [
       pavucontrol
+      pamixer
     ];
 
     sys.user.extraGroups = [ "audio" ];
