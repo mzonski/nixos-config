@@ -16,6 +16,9 @@ in
 {
   options.hom.shell.hyprland = {
     enable = mkBoolOpt false;
+    file-manager-cmd = mkStrOpt "pcmanfm";
+    app-launcher-cmd = mkStrOpt "rofi -show drun";
+    terminal = mkStrOpt "kitty";
   };
 
   config = mkIf cfg.enable {
@@ -23,7 +26,6 @@ in
       swaybg
       #inputs.hypr-contrib.packages.${pkgs.system}.grimblast
       hyprpicker
-      waybar
       grim
       slurp
       wl-clip-persist
@@ -60,29 +62,21 @@ in
           #"hyprlock"
         ];
 
-        input = {
-          kb_layout = "pl";
-          kb_options = "grp:alt_caps_toggle";
-          numlock_by_default = true;
-          follow_mouse = 1;
-          sensitivity = 0;
-          touchpad = {
-            natural_scroll = false;
+        general =
+          {
+            "$mainMod" = "SUPER";
+          }
+          // {
+            gaps_in = 4;
+            gaps_out = 8;
+            border_size = 2;
+            "col.active_border" = "rgb(cba6f7) rgb(94e2d5) 45deg";
+            "col.inactive_border" = "0x00000000";
+            border_part_of_window = false;
+            no_border_on_floating = false;
+            layout = "dwindle";
+            resize_on_border = true;
           };
-        };
-
-        general = {
-          "$mainMod" = "SUPER";
-          gaps_in = 4;
-          gaps_out = 8;
-          border_size = 2;
-          "col.active_border" = "rgb(cba6f7) rgb(94e2d5) 45deg";
-          "col.inactive_border" = "0x00000000";
-          border_part_of_window = false;
-          no_border_on_floating = false;
-          layout = "dwindle";
-          resize_on_border = true;
-        };
 
         misc = {
           disable_autoreload = true;
@@ -120,8 +114,6 @@ in
             enabled = true;
             size = 1;
             passes = 1;
-            # size = 4;
-            # passes = 2;
             brightness = 1;
             contrast = 1.4;
             ignore_opacity = true;
@@ -166,103 +158,6 @@ in
             "workspaces, 1, 4, easeOutCubic, fade" # styles: slide, slidevert, fade, slidefade, slidefadevert
           ];
         };
-
-        bind = [
-          # show keybinds list
-          #"$mainMod, F1, exec, show-keybinds"
-
-          # keybindings
-          "$mainMod, Return, exec, kitty"
-          "$mainMod ALT, Return, exec, kitty --title float_kitty"
-          "$mainMod SHIFT, Return, exec, kitty --start-as=fullscreen -o 'font_size=16'"
-          "$mainMod, B, exec, hyprctl dispatch exec '[workspace 1 silent] floorp'"
-          "$mainMod, Q, killactive,"
-          "$mainMod, F, fullscreen, 0"
-          "$mainMod SHIFT, F, fullscreen, 1"
-          "$mainMod, Space, togglefloating,"
-          "$mainMod, D, exec, fuzzel"
-          "$mainMod, R, exec, rofi -show drun"
-          #"$mainMod SHIFT, D, exec, hyprctl dispatch exec '[workspace 4 silent] discord --enable-features=UseOzonePlatform --ozone-platform=wayland'"
-          #"$mainMod SHIFT, S, exec, hyprctl dispatch exec '[workspace 5 silent] SoundWireServer'"
-          "$mainMod, Escape, exec, swaylock"
-          #"$mainMod SHIFT, Escape, exec, shutdown-script"
-          "$mainMod, P, pseudo,"
-          "$mainMod, J, togglesplit,"
-          "$mainMod, E, exec, pcmanfm"
-          #"$mainMod SHIFT, B, exec, pkill -SIGUSR1 .waybar-wrapped"
-          "$mainMod, C ,exec, hyprpicker -a"
-          #"$mainMod, W,exec, wallpaper-picker"
-          #"$mainMod SHIFT, W, exec, vm-start"
-
-          # screenshot
-          "$mainMod, Print, exec, grimblast --notify --cursor --freeze save area ~/Pictures/$(date +'%Y-%m-%d-At-%Ih%Mm%Ss').png"
-          ",Print, exec, grimblast --notify --cursor --freeze copy area"
-
-          # switch focus
-          "$mainMod, left, movefocus, l"
-          "$mainMod, right, movefocus, r"
-          "$mainMod, up, movefocus, u"
-          "$mainMod, down, movefocus, d"
-
-          # switch workspace
-          "$mainMod, 1, workspace, 1"
-          "$mainMod, 2, workspace, 2"
-          "$mainMod, 3, workspace, 3"
-          "$mainMod, 4, workspace, 4"
-          "$mainMod, 5, workspace, 5"
-          "$mainMod, 6, workspace, 6"
-          "$mainMod, 7, workspace, 7"
-          "$mainMod, 8, workspace, 8"
-          "$mainMod, 9, workspace, 9"
-          "$mainMod, 0, workspace, 10"
-
-          # same as above, but switch to the workspace
-          "$mainMod SHIFT, 1, movetoworkspacesilent, 1" # movetoworkspacesilent
-          "$mainMod SHIFT, 2, movetoworkspacesilent, 2"
-          "$mainMod SHIFT, 3, movetoworkspacesilent, 3"
-          "$mainMod SHIFT, 4, movetoworkspacesilent, 4"
-          "$mainMod SHIFT, 5, movetoworkspacesilent, 5"
-          "$mainMod SHIFT, 6, movetoworkspacesilent, 6"
-          "$mainMod SHIFT, 7, movetoworkspacesilent, 7"
-          "$mainMod SHIFT, 8, movetoworkspacesilent, 8"
-          "$mainMod SHIFT, 9, movetoworkspacesilent, 9"
-          "$mainMod SHIFT, 0, movetoworkspacesilent, 10"
-          "$mainMod CTRL, c, movetoworkspace, empty"
-
-          # window control
-          "$mainMod SHIFT, left, movewindow, l"
-          "$mainMod SHIFT, right, movewindow, r"
-          "$mainMod SHIFT, up, movewindow, u"
-          "$mainMod SHIFT, down, movewindow, d"
-          "$mainMod CTRL, left, resizeactive, -80 0"
-          "$mainMod CTRL, right, resizeactive, 80 0"
-          "$mainMod CTRL, up, resizeactive, 0 -80"
-          "$mainMod CTRL, down, resizeactive, 0 80"
-          "$mainMod ALT, left, moveactive,  -80 0"
-          "$mainMod ALT, right, moveactive, 80 0"
-          "$mainMod ALT, up, moveactive, 0 -80"
-          "$mainMod ALT, down, moveactive, 0 80"
-
-          # media and volume controls
-          ",XF86AudioRaiseVolume,exec, pamixer -i 2"
-          ",XF86AudioLowerVolume,exec, pamixer -d 2"
-          ",XF86AudioMute,exec, pamixer -t"
-          ",XF86AudioPlay,exec, playerctl play-pause"
-          ",XF86AudioNext,exec, playerctl next"
-          ",XF86AudioPrev,exec, playerctl previous"
-          ",XF86AudioStop, exec, playerctl stop"
-          "$mainMod, mouse_down, workspace, e-1"
-          "$mainMod, mouse_up, workspace, e+1"
-
-          # laptop brigthness
-          ",XF86MonBrightnessUp, exec, brightnessctl set 5%+"
-          ",XF86MonBrightnessDown, exec, brightnessctl set 5%-"
-          "$mainMod, XF86MonBrightnessUp, exec, brightnessctl set 100%+"
-          "$mainMod, XF86MonBrightnessDown, exec, brightnessctl set 100%-"
-
-          # clipboard manager
-          "$mainMod, V, exec, cliphist list | fuzzel --dmenu | cliphist decode | wl-copy"
-        ];
 
         # mouse binding
         bindm = [
@@ -337,10 +232,6 @@ in
       };
 
       extraConfig = "
-# See https://wiki.hyprland.org/Configuring/Monitors/
-monitor=DP-4,3840x2160@60.0,0x450,1.6
-monitor=HDMI-A-4,2560x2880@60.0,2400x0,1.6
-
 xwayland {
   force_zero_scaling = true
 }
