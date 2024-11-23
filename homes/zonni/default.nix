@@ -81,7 +81,10 @@
 
     shell = {
       zsh.enable = true;
-      hyprland.enable = true;
+      hyprland = {
+        enable = true;
+        waybar.enable = true;
+      };
     };
     theme = {
       catpuccin.enable = true;
