@@ -21,10 +21,13 @@
     };
     locale.ponglish.enable = true;
     locale.timezone.warsaw = true;
-
-    services.quietboot.enable = false;
     shell.zsh.enable = true;
-    services.virtualisation.enable = true;
+
+    services = {
+      quietboot.enable = false;
+      virtualisation.enable = true;
+      virtual-filesystem.gvfs = true;
+    };
   };
 
   networking.firewall.enable = false;
