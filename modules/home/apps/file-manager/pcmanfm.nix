@@ -20,6 +20,7 @@ in
   config = mkIf cfg.pcmanfm {
     home.packages = with pkgs; [
       pcmanfm
+      xarchiver
     ];
   };
 }
