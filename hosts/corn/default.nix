@@ -1,8 +1,4 @@
-{
-  inputs,
-  lib,
-  ...
-}:
+{ inputs, ... }:
 
 {
   imports = [
@@ -12,21 +8,25 @@
 
     ./boot.nix
     ./file-system.nix
-    ./graphics.nix
-
-    ./common/global
-    ./common/packages.nix
-    ./common/users.nix
 
     ./common/optional/hyprland.nix
-    ./common/optional/pipewire.nix
-    ./common/optional/virtualisation.nix
   ];
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  sys = {
+    username = "zonni";
+    domain = "local.zonni.pl";
+    hardware = {
+      audio.enable = true;
+      graphics.nvidia.enable = true;
+    };
+    locale.ponglish.enable = true;
+    locale.timezone.warsaw = true;
 
-  networking.hostName = "corn";
-  networking.useDHCP = true;
+    services.quietboot.enable = false;
+    shell.zsh.enable = true;
+    services.virtualisation.enable = true;
+  };
+
   networking.firewall.enable = false;
 
   programs.dconf.enable = true;
@@ -35,6 +35,4 @@
   services.openssh.enable = true;
   services.printing.enable = true;
   services.pcscd.enable = true;
-
-  system.stateVersion = "24.11";
 }

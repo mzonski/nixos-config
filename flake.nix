@@ -44,6 +44,7 @@
         ;
 
       system = "x86_64-linux";
+      stateVersion = "24.11";
 
       mkPkgs =
         pkgs: overlays:
@@ -62,6 +63,7 @@
         final: prev:
         {
           unstable = pkgs';
+          my = self.packages."${system}";
         }
         // (import ./overlays { inherit inputs; }) final prev;
     in
@@ -74,8 +76,8 @@
         dotfiles = import ./.;
       } // mapModulesRec ./modules import;
 
-      nixosConfigurations = mapHosts ./hosts { };
+      nixosConfigurations = mapHosts ./hosts { inherit system stateVersion; };
 
-      homeConfigurations = mapHomes ./homes { };
+      homeConfigurations = mapHomes ./homes { inherit system stateVersion; };
     };
 }

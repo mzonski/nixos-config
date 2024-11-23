@@ -17,4 +17,19 @@ rec {
       type = types.bool;
       example = true;
     };
+
+  mkStrOpt =
+    default:
+    mkOption {
+      inherit default;
+      type = types.str;
+      description = "This is a string option";
+    };
+
+  mkStrOpt' =
+    default: description:
+    mkOption {
+      inherit default description;
+      type = types.str;
+    };
 }

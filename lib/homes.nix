@@ -8,19 +8,18 @@
 
 with lib;
 with mylib;
-let
-  sys = "x86_64-linux";
-in
 {
   mkHome =
     path:
     attrs@{
-      system ? sys,
+      system,
+      stateVersion,
       ...
     }:
     let
       username = removeSuffix ".nix" (baseNameOf path);
       homeDirectory = "/home/${username}";
+
       defaults =
         {
           config,
@@ -29,11 +28,13 @@ in
           ...
         }:
         {
+          systemd.user.startServices = "sd-switch";
+          news.display = "silent";
           programs.home-manager.enable = true;
           xdg.enable = true;
           xdg.mime.enable = true;
           targets.genericLinux.enable = true;
-          home.stateVersion = "24.11";
+          home.stateVersion = stateVersion;
           home.username = username;
           home.homeDirectory = homeDirectory;
         };
@@ -42,18 +43,30 @@ in
       inherit pkgs;
       modules = (mapModulesRec' (toString ../modules/home) import) ++ [
         defaults
-        (filterAttrs (n: v: !elem n [ "system" ]) attrs)
+        (filterAttrs (
+          n: v:
+          !elem n [
+            "system"
+            "stateVersion"
+          ]
+        ) attrs)
         (import path)
       ];
       extraSpecialArgs = {
-        inherit inputs system mylib;
+        inherit
+          inputs
+          system
+          stateVersion
+          mylib
+          ;
       };
     };
 
   mapHomes =
     dir:
     attrs@{
-      system ? sys,
+      system,
+      stateVersion,
       ...
     }:
     mapModules dir (homePath: mkHome homePath attrs);

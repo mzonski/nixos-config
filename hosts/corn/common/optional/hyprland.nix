@@ -41,20 +41,10 @@
 
     };
 
-    # Auto Login Configuration
-    displayManager.autoLogin.enable = true;
-    displayManager.autoLogin.user = "zonni";
-
     displayManager.sddm.enable = true;
     displayManager.sddm.wayland.enable = true;
     # displayManager.sddm.theme = "where_is_my_sddm_theme";
   };
 
-  # GNOME Autologin Workaround
-  systemd.services."getty@tty1".enable = false;
-  systemd.services."autovt@tty1".enable = false;
-
-  # Fix broken stuff
-  services.avahi.enable = false;
   networking.networkmanager.enable = false;
 }

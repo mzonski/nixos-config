@@ -6,10 +6,10 @@
 }:
 {
   imports = [
-    ./features/cli
-    ./features/desktop
-    ./features/development
-    ./features/partitioning
+    #./features/cli
+    #./features/desktop
+    #./features/development
+    #./features/partitioning
   ];
 
   nix = {
