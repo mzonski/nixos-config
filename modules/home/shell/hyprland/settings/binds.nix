@@ -14,6 +14,10 @@ let
   enabled = config.hom.shell.hyprland.enable;
   cfg = config.hom.shell.hyprland;
 
+  variables = {
+    "$mainMod" = "SUPER";
+  };
+
   mouseEventBinds = [
     "$mainMod, mouse:272, movewindow"
     "$mainMod, mouse:273, resizewindow"
@@ -33,6 +37,11 @@ let
     "$mainMod, 8, workspace, 8"
     "$mainMod, 9, workspace, 9"
     "$mainMod, 0, workspace, 10"
+    "$mainMod CTRL, grave, movetoworkspace, empty"
+
+    "$mainMod ALT, 1, workspace, 8"
+    "$mainMod ALT, 2, workspace, 9"
+    "$mainMod ALT, 3, workspace, 10"
 
     # same as above, but switch to the workspace
     "$mainMod SHIFT, 1, movetoworkspacesilent, 1" # movetoworkspacesilent
@@ -55,8 +64,6 @@ let
   ];
 
   appLaunchers = [
-    "$mainMod, B, exec, hyprctl dispatch exec '[workspace 1 silent] floorp'"
-    "$mainMod, D, exec, fuzzel"
     "$mainMod, R, exec, rofi -show drun"
     "$mainMod, E, exec, pcmanfm"
     "$mainMod, C, exec, hyprpicker -a"
@@ -122,17 +129,20 @@ let
 in
 {
   config = mkIf enabled {
+    wayland.windowManager.hyprland.settings.general = variables;
     wayland.windowManager.hyprland.settings.bindm = mouseEventBinds;
 
-    wayland.windowManager.hyprland.settings.bind =
+    wayland.windowManager.hyprland.settings.bind = concatLists [
       workspaceNavigation
-      ++ moveWindowFocus
-      ++ terminalLauncher
-      ++ appLaunchers
-      ++ windowControl.layout
-      ++ windowControl.move
-      ++ windowControl.resize
-      ++ mediaControl
-      ++ system;
+      moveWindowFocus
+      terminalLauncher
+      appLaunchers
+      windowControl.layout
+      windowControl.move
+      windowControl.resize
+      mediaControl
+      system
+    ];
+
   };
 }
