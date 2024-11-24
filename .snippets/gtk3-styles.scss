@@ -1,0 +1,131 @@
+/* Basic Widget Styling */
+.complete-styling {
+	/* Colors and Backgrounds */
+	color: #ffffff;
+	background-color: rgb(50, 50, 50);
+	background-image: linear-gradient(to bottom, #404040, #202020);
+	opacity: 1;
+
+	/* Border Properties */
+	border: 1px solid #000000;
+	border-top: 2px solid #333333;
+	border-right: 2px solid #333333;
+	border-bottom: 2px solid #333333;
+	border-left: 2px solid #333333;
+	border-radius: 4px;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #000000;
+
+	/* Margin Properties */
+	margin: 5px;
+	margin-top: 5px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	margin-left: 5px;
+
+	/* Padding Properties */
+	padding: 5px;
+	padding-top: 5px;
+	padding-right: 5px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+
+	/* Font Properties */
+	font: 12px 'Sans';
+	font-family: 'Sans';
+	font-size: 12px;
+	font-style: normal;
+	font-weight: bold;
+	font-variant: normal;
+	text-shadow: 1px 1px rgba(0, 0, 0, 0.5);
+
+	/* Box Properties */
+	min-width: 100px;
+	min-height: 100px;
+
+	/* Position and Layout */
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+	-gtk-icon-shadow: 0 1px rgba(0, 0, 0, 0.5);
+	text-decoration: underline;
+	text-decoration-line: underline;
+	text-decoration-style: solid;
+	text-decoration-color: #ffffff;
+
+	/* Text Properties */
+	letter-spacing: 1px;
+
+	/* Cursor Properties */
+	caret-color: #ffffff;
+
+	/* Transition Properties */
+	transition: 200ms ease-in-out;
+	transition-property: background-color, color;
+	transition-duration: 200ms;
+	transition-timing-function: ease-in-out;
+	transition-delay: 0ms;
+
+	/* Animation Properties */
+	animation: spin 1s linear infinite;
+	animation-name: spin;
+	animation-duration: 1s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	animation-direction: normal;
+	animation-delay: 0s;
+	animation-fill-mode: none;
+	animation-play-state: running;
+
+	/* Transform Properties */
+
+	/* Visibility Properties */
+
+	/* Outline Properties */
+	outline-style: solid;
+	outline-width: 1px;
+	outline-color: #ffffff;
+	outline-offset: 1px;
+
+	/* Background Properties */
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+
+/* State-based Styling */
+.complete-styling:hover {
+	background-color: #505050;
+}
+
+.complete-styling:active {
+	background-color: #303030;
+}
+
+.complete-styling:disabled {
+	opacity: 0.5;
+}
+
+.complete-styling:checked {
+	background-color: #404040;
+}
+
+.complete-styling:focus {
+	outline: 2px solid #4a90d9;
+}
+
+/* Custom Keyframes for Animation */
+@keyframes spin {
+	from {
+		-gtk-icon-transform: rotate(0deg);
+	}
+	to {
+		-gtk-icon-transform: rotate(360deg);
+	}
+}
+
+/* Custom Color Definition */
+@define-color accent_color #4a90d9;

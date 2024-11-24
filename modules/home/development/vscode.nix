@@ -11,6 +11,7 @@ with lib;
 with mylib;
 let
   cfg = config.hom.development.vscode;
+  fontProfiles = config.hom.theme.fontProfiles;
 in
 {
   options.hom.development.vscode = {
@@ -71,6 +72,12 @@ in
 
         git.autofetch = true;
         makefile.configureOnOpen = false;
+
+        "editor.fontFamily" =
+          if fontProfiles.enable then
+            "${fontProfiles.monospace.name}, 'Droid Sans Mono', 'monospace', monospace"
+          else
+            "'Droid Sans Mono', 'monospace', monospace";
 
         "workbench.colorTheme" = "Catppuccin Mocha";
         "workbench.iconTheme" = "catppuccin-mocha";

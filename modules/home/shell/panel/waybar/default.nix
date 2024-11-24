@@ -21,6 +21,7 @@ in
   config = mkIf enabled {
     programs.waybar = {
       enable = true;
+      systemd.enable = true;
       package = pkgs.waybar.overrideAttrs (oa: {
         mesonFlags = (oa.mesonFlags or [ ]) ++ [ "-Dexperimental=true" ];
       });

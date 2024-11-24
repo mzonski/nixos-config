@@ -16,16 +16,50 @@ let
 
   variables = {
     "$mainMod" = "SUPER";
+    "$shiftMod" = "SUPER_SHIFT";
+    "$ctrlMod" = "SUPER_CTRL";
+    "$altMod" = "SUPER_ALT";
+
+    "$mouseLeft" = "mouse:272";
+    "$mouseRight" = "mouse:273";
+    "$mouseMiddle" = "mouse:274";
+    "$mouseForward" = "mouse:275";
+    "$mouseBack" = "mouse:276";
+    "$mouseWheelUp" = "mouse:278";
+    "$mouseWheelDown" = "mouse:279";
   };
 
   mouseEventBinds = [
-    "$mainMod, mouse:272, movewindow"
-    "$mainMod, mouse:273, resizewindow"
+    "$mainMod, $mouseLeft, movewindow" # Move windows
+    "$mainMod, $mouseRight, resizewindow" # Resize windows
+  ];
+
+  mouseWorkspaceNavigation = [
+    "$mainMod, $mouseWheelUp, workspace, e+1" # Next workspace
+    "$mainMod, $mouseWheelDown, workspace, e-1" # Previous workspace
+
+    "$mainMod, $mouseMiddle, togglefloating" # Toggle window floating state
+
+    # Window state management
+    "$shiftMod, $mouseLeft, togglegroup" # Toggle window grouping
+    "$shiftMod, $mouseRight, pin" # Pin window
+    "$shiftMod, $mouseMiddle, pseudo" # Toggle pseudo mode
+
+    #"$altMod, $mouseLeft, swapnext" # Swap with next window
+    #"$altMod, $mouseRight, swapprev" # Swap with previous window
+    "$altMod, $mouseMiddle, centerwindow" # Center window
+
+    # Advanced window management
+    "$ctrlMod, $mouseLeft, fullscreen, 1" # Toggle fullscreen (preserves workspaces)
+    "$ctrlMod, $mouseRight, fullscreen, 0" # Toggle fullscreen (no workspaces)
+    "$ctrlMod, $mouseMiddle, togglesplit" # Toggle split
+
+    #"$shiftMod, $mouseWheelUp, changegroupactive, f" # Next window in group
+    #"$shiftMod, $mouseWheelDown, changegroupactive, b" # Previous window in group
+
   ];
 
   workspaceNavigation = [
-    "$mainMod, mouse_up, workspace, e+1"
-    "$mainMod, mouse_down, workspace, e-1"
 
     "$mainMod, 1, workspace, 1"
     "$mainMod, 2, workspace, 2"
@@ -35,16 +69,15 @@ let
     "$mainMod, 6, workspace, 6"
     "$mainMod, 7, workspace, 7"
     "$mainMod, 8, workspace, 8"
-    "$mainMod, 9, workspace, 9"
-    "$mainMod, 0, workspace, 10"
-    "$mainMod CTRL, grave, movetoworkspace, empty"
+    "$mainMod, grave, movetoworkspace, empty"
 
-    "$mainMod ALT, 1, workspace, 8"
-    "$mainMod ALT, 2, workspace, 9"
-    "$mainMod ALT, 3, workspace, 10"
+    "$mainMod CTRL, 1, workspace, 5"
+    "$mainMod CTRL, 2, workspace, 6"
+    "$mainMod CTRL, 3, workspace, 7"
+    "$mainMod CTRL, 4, workspace, 8"
 
-    # same as above, but switch to the workspace
-    "$mainMod SHIFT, 1, movetoworkspacesilent, 1" # movetoworkspacesilent
+    # send window to other workspace
+    "$mainMod SHIFT, 1, movetoworkspacesilent, 1"
     "$mainMod SHIFT, 2, movetoworkspacesilent, 2"
     "$mainMod SHIFT, 3, movetoworkspacesilent, 3"
     "$mainMod SHIFT, 4, movetoworkspacesilent, 4"
@@ -52,9 +85,6 @@ let
     "$mainMod SHIFT, 6, movetoworkspacesilent, 6"
     "$mainMod SHIFT, 7, movetoworkspacesilent, 7"
     "$mainMod SHIFT, 8, movetoworkspacesilent, 8"
-    "$mainMod SHIFT, 9, movetoworkspacesilent, 9"
-    "$mainMod SHIFT, 0, movetoworkspacesilent, 10"
-    "$mainMod CTRL, c, movetoworkspace, empty"
   ];
 
   terminalLauncher = [
@@ -133,6 +163,7 @@ in
     wayland.windowManager.hyprland.settings.bindm = mouseEventBinds;
 
     wayland.windowManager.hyprland.settings.bind = concatLists [
+      mouseWorkspaceNavigation
       workspaceNavigation
       moveWindowFocus
       terminalLauncher

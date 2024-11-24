@@ -19,8 +19,24 @@ in
     enable = mkBoolOpt false;
     defaultLayout = mkStrOpt "dwindle";
     monitors = {
-      primary = mkStrOpt "DP-4";
-      secondary = mkStrOpt "HDMI-A-4";
+      primary = {
+        output = mkStrOpt "DP-4";
+        workspaces = [
+          1
+          2
+          3
+          4
+        ];
+      };
+      secondary = {
+        output = mkStrOpt "HDMI-A-4";
+        workspaces = [
+          5
+          6
+          7
+          8
+        ];
+      };
     };
   };
 
@@ -55,7 +71,7 @@ in
           #"swaybg -m fill -i $(find ~/Pictures/wallpapers/ -maxdepth 1 -type f) &"
           #"hyprctl setcursor Nordzy-cursors 22 &"
           #"poweralertd &"
-          "waybar &"
+          #"waybar &"
           #"swaync &"
           #"wl-paste --watch cliphist store &"
           #"hyprlock"
@@ -65,9 +81,9 @@ in
 
         monitor = [
           # Primary monitor - will be used if it's the only one connected
-          "${monitors.primary},3840x2160@60.0,0x450,1.6"
+          "${monitors.primary.output},3840x2160@60.0,0x450,1.6"
           # Secondary monitor - using preferred to handle disconnection gracefully
-          "${monitors.secondary},preferred,2400x0,1.6"
+          "${monitors.secondary.output},preferred,2400x0,1.6"
           # Catch-all rule for any other displays - disabled by default
           #",preferred,auto,1"
         ];

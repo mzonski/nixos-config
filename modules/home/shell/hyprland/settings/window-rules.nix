@@ -26,7 +26,8 @@ let
     ];
   };
 
-  # nor me or this guy had it installed XDDDD
+  # nor me or this guy had it installed XDDDD this config was *just* copied XDDD
+  # friking linux copyboiiiis
   # Media player (mpv) configurations
   mpv = {
     v1 = [

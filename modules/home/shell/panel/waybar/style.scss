@@ -1,0 +1,218 @@
+$catpuccin-blue: #89b4fa;
+$catpuccin-sky: #89dceb;
+$catpuccin-teal: #94e2d5;
+$catpuccin-green: #a6e3a1;
+$catpuccin-peach: #fab387;
+$catpuccin-red: #f38ba8;
+$catpuccin-mauve: #cba6f7;
+
+$catpuccin-surface2: #585b70;
+
+$catpuccin-crust: #11111b;
+$catpuccin-base: #1e1e2e;
+$catpuccin-overlay0: #6c7086;
+$catpuccin-text: #cdd6f4;
+$catpuccin-text-light: #b3b5c2;
+
+$primary-monitor: 'DP-4';
+$secondary-monitor: 'DP-4';
+$font-family: 'FiraCode Nerd Font';
+$default-transition: 300ms ease-in-out;
+$text-color: $catpuccin-text-light;
+$accent-color: $catpuccin-mauve;
+$inactive-color: $catpuccin-surface2;
+
+* {
+	border: none;
+	border-radius: 0px;
+	padding: 0;
+
+	min-height: 0px;
+
+	margin: 0;
+
+	font-family: $font-family;
+	font-weight: bold;
+
+	opacity: 1;
+}
+
+window#waybar {
+	background-color: #1e1e2e;
+	border-bottom: 1px solid #11111b;
+
+	font-size: 22px;
+}
+
+#workspaces {
+	font-size: 32px;
+	min-height: 42px;
+
+	button {
+		color: $text-color;
+		min-width: 38px;
+		min-height: 32px;
+		border: 2px solid transparent;
+		transition: $default-transition;
+
+		label {
+			margin-right: 7px;
+		}
+
+		&.empty {
+			color: #585b70;
+			border-color: transparent;
+			transition: $default-transition;
+		}
+
+		&.visible {
+			color: #b3b5c2;
+			border-color: #b3b5c2;
+			transition: $default-transition;
+		}
+
+		&.active {
+			color: #cba6f7;
+			border-color: #cba6f7;
+			transition: $default-transition;
+		}
+	}
+}
+
+window.#{$secondary-monitor} #workspaces button {
+	label {
+		margin-right: 7px; // Tiles icon
+	}
+}
+
+window.#{$primary-monitor} #workspaces button {
+	&:nth-child(1) label {
+		font-size: 27px; // Desktop icon
+		margin: 2px 12px 0 0;
+	}
+
+	&:nth-child(2) label {
+		margin-right: 5px; // Firefox icon
+	}
+
+	&:nth-child(3) label {
+		margin-right: 11px; // Terminal icon
+	}
+
+	&:nth-child(4) label {
+		margin-top: 1px;
+		margin-right: 9px; // Editor icon
+	}
+}
+
+.modules-left {
+	border-top: 1px solid transparent;
+	border-bottom: 1px solid transparent;
+
+	button {
+		margin: 1px;
+	}
+}
+
+.modules-right label {
+	font-size: 22px;
+	color: $catpuccin-crust;
+	padding-right: 8px;
+
+	&:first-child {
+		padding-left: 8px;
+	}
+}
+
+#cpu {
+	background-image: -gtk-gradient(linear, left center, right center, from($catpuccin-blue), to($catpuccin-sky));
+
+	&:hover {
+		background-image: -gtk-gradient(
+			linear,
+			left center,
+			right center,
+			from(shade($catpuccin-blue, 1.1)),
+			to(shade($catpuccin-sky, 1.1))
+		);
+	}
+}
+
+#memory {
+	background-image: -gtk-gradient(linear, left center, right center, from($catpuccin-sky), to($catpuccin-teal));
+	&:hover {
+		background-image: -gtk-gradient(
+			linear,
+			left center,
+			right center,
+			from(shade($catpuccin-sky, 1.1)),
+			to(shade($catpuccin-teal, 1.1))
+		);
+	}
+}
+
+#disk {
+	background-image: -gtk-gradient(linear, left center, right center, from($catpuccin-teal), to($catpuccin-green));
+	&:hover {
+		background-image: -gtk-gradient(
+			linear,
+			left center,
+			right center,
+			from(shade($catpuccin-teal, 1.1)),
+			to(shade($catpuccin-green, 1.1))
+		);
+	}
+}
+
+#pulseaudio {
+	background-image: -gtk-gradient(linear, left center, right center, from($catpuccin-green), to($catpuccin-peach));
+	&:hover {
+		background-image: -gtk-gradient(
+			linear,
+			left center,
+			right center,
+			from(shade($catpuccin-green, 1.1)),
+			to(shade($catpuccin-peach, 1.1))
+		);
+	}
+}
+
+#network {
+	background-image: -gtk-gradient(linear, left center, right center, from($catpuccin-peach), to($catpuccin-red));
+	&:hover {
+		background-image: -gtk-gradient(
+			linear,
+			left center,
+			right center,
+			from(shade($catpuccin-peach, 1.1)),
+			to(shade($catpuccin-red, 1.1))
+		);
+	}
+}
+
+#tray {
+	padding: 0 20px;
+	margin-left: 7px;
+}
+
+#battery {
+	padding-left: 9px;
+	padding-right: 9px;
+}
+
+#custom-notification {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+#custom-launcher {
+	font-size: 32px;
+	color: $catpuccin-text-light;
+	font-weight: bold;
+	transition: $default-transition;
+
+	&:hover {
+		color: $accent-color;
+		transition: $default-transition;
+	}
+}
