@@ -49,7 +49,7 @@ in
       };
 
       services.xsettingsd = {
-        enable = true;
+        enable = false; # on wayland we don't need x11, think what if you need to use x11
       };
 
       xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
