@@ -1,0 +1,256 @@
+$catpuccin-blue: #89b4fa;
+$catpuccin-sky: #89dceb;
+$catpuccin-teal: #94e2d5;
+$catpuccin-green: #a6e3a1;
+$catpuccin-peach: #fab387;
+$catpuccin-red: #f38ba8;
+$catpuccin-mauve: #cba6f7;
+
+$catpuccin-surface2: #585b70;
+$surface-wallpaper: #191926;
+
+$catpuccin-crust: #11111b;
+$catpuccin-base: #1e1e2e;
+$catpuccin-overlay0: #6c7086;
+$catpuccin-text: #cdd6f4;
+$catpuccin-text-light: #b3b5c2;
+
+$primary-monitor: 'DP-4';
+$secondary-monitor: 'DP-4';
+$font-family: 'FiraCode Nerd Font';
+$default-transition: 300ms ease-in-out;
+$text-color: $catpuccin-text-light;
+$accent-color: $catpuccin-mauve;
+$inactive-color: $catpuccin-surface2;
+
+* {
+	border: none;
+	border-radius: 0px;
+	padding: 0;
+
+	min-height: 0px;
+
+	margin: 0;
+
+	font-family: $font-family;
+	font-weight: bold;
+
+	opacity: 1;
+}
+
+window#waybar {
+	background-color: $catpuccin-base;
+	border-top: 1px solid $surface-wallpaper;
+	border-bottom: 1px solid $surface-wallpaper;
+
+	font-size: 22px;
+}
+
+#taskbar {
+	font-size: 32px;
+	min-height: 42px;
+
+	padding-left: 8px;
+	padding-right: 8px;
+
+	button {
+		color: $text-color;
+		min-width: 38px;
+		min-height: 32px;
+		border: 2px solid transparent;
+		transition: $default-transition;
+
+		image {
+			padding-left: 12px;
+			padding-right: 12px;
+		}
+
+		&.empty {
+			color: #585b70;
+			border-color: transparent;
+			transition: $default-transition;
+		}
+
+		&.minimized,
+		&.maximized,
+		&.fullscreen {
+			color: #b3b5c2;
+			border-color: #b3b5c2;
+			transition: $default-transition;
+		}
+
+		&.active {
+			color: #cba6f7;
+			border-color: #cba6f7;
+			transition: $default-transition;
+		}
+	}
+}
+
+#workspaces {
+	font-size: 32px;
+	min-height: 42px;
+
+	button {
+		color: $text-color;
+		min-width: 38px;
+		min-height: 32px;
+		border: 2px solid transparent;
+		transition: $default-transition;
+
+		padding-left: 8px;
+		padding-right: 8px;
+
+		label {
+			margin-right: 7px;
+		}
+
+		&.empty {
+			color: #585b70;
+			border-color: transparent;
+			transition: $default-transition;
+		}
+
+		&.visible {
+			color: #b3b5c2;
+			border-color: #b3b5c2;
+			transition: $default-transition;
+		}
+
+		&.active {
+			color: #cba6f7;
+			border-color: #cba6f7;
+			transition: $default-transition;
+		}
+	}
+}
+
+window.#{$secondary-monitor} #workspaces button {
+	label {
+		margin-right: 7px; // Tiles icon
+	}
+}
+
+window.#{$primary-monitor} #workspaces button {
+	&:nth-child(1) label {
+		font-size: 27px; // Desktop icon
+		margin: 2px 12px 0 0;
+	}
+
+	&:nth-child(2) label {
+		margin-right: 5px; // Firefox icon
+	}
+
+	&:nth-child(3) label {
+		margin-right: 11px; // Terminal icon
+	}
+
+	&:nth-child(4) label {
+		margin-top: 1px;
+		margin-right: 9px; // Editor icon
+	}
+}
+
+.modules-left {
+	border-top: 1px solid transparent;
+	border-bottom: 1px solid transparent;
+
+	button {
+		margin: 1px;
+	}
+}
+
+.modules-right label {
+	font-size: 22px;
+	color: $catpuccin-crust;
+
+	&:first-child {
+		padding-left: 8px;
+	}
+}
+
+// reset custom icon padding
+window.#{$primary-monitor} .modules-right label {
+	padding-right: 8px;
+	&:first-child {
+		padding-left: 8px;
+	}
+	&:last-child {
+		padding-right: 0px;
+	}
+}
+window.#{$secondary-monitor} .modules-right label {
+	padding-right: 8px;
+	&:first-child {
+		padding-left: 8px;
+	}
+}
+
+@mixin lr-gradient($color-start, $color-end) {
+	background-image: -gtk-gradient(linear, left center, right center, from($color-start), to($color-end));
+
+	&:hover {
+		background-image: -gtk-gradient(
+			linear,
+			left center,
+			right center,
+			from(shade($color-start, 1.1)),
+			to(shade($color-end, 1.1))
+		);
+	}
+}
+
+#cpu {
+	@include lr-gradient($catpuccin-blue, $catpuccin-sky);
+}
+
+#memory {
+	@include lr-gradient($catpuccin-sky, $catpuccin-teal);
+}
+
+#disk {
+	@include lr-gradient($catpuccin-teal, $catpuccin-green);
+}
+
+#network {
+	@include lr-gradient($catpuccin-green, $catpuccin-peach);
+}
+
+#pulseaudio {
+	@include lr-gradient($catpuccin-peach, $catpuccin-red);
+}
+
+#custom-notification {
+	@include lr-gradient($catpuccin-red, $catpuccin-mauve);
+}
+
+#custom-separator {
+	background-color: $surface-wallpaper;
+	// border-left: 2px solid $catpuccin-crust;
+	// border-right: 2px solid $catpuccin-crust;
+	border-top: 2px solid $surface-wallpaper;
+	margin-left: 10px;
+	// margin: 0 4px;
+}
+
+#tray {
+	padding: 0 8px;
+	margin-left: 8px;
+}
+
+#custom-notification {
+	padding-left: 8px;
+	padding-right: 2px;
+}
+
+#custom-launcher {
+	font-size: 32px;
+	color: $catpuccin-text-light;
+	font-weight: bold;
+	transition: $default-transition;
+
+	&:hover {
+		color: $accent-color;
+		transition: $default-transition;
+	}
+}

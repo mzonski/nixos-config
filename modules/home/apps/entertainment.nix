@@ -1,6 +1,5 @@
 {
   config,
-  options,
   lib,
   pkgs,
   mylib,
@@ -16,6 +15,7 @@ in
   options.hom.apps.entertainment = {
     vlc = mkBoolOpt false;
     streamlink = mkBoolOpt false;
+    tauon = mkBoolOpt false;
   };
 
   config = {

@@ -17,11 +17,12 @@
     domain = "local.zonni.pl";
     hardware = {
       audio.enable = true;
+      audio.codecs = true;
       graphics.nvidia.enable = true;
     };
     locale.ponglish.enable = true;
     locale.timezone.warsaw = true;
-    shell.zsh.enable = true;
+    apps.cli.zsh = true;
 
     services = {
       quietboot.enable = false;
@@ -30,9 +31,10 @@
     };
   };
 
-  networking.firewall.enable = false;
+  networking.firewall.enable = false; # Disable firewall
 
-  programs.dconf.enable = true;
+  programs.dconf.enable = true; # Enable DConf
+  services.tumbler.enable = true; # Enable thumbnail service
 
   services.libinput.enable = true;
   services.openssh.enable = true;

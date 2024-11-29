@@ -11,6 +11,7 @@ with lib;
 with mylib;
 let
   cfg = config.hom.development.vscode;
+  hyprlandEnabled = config.hom.wayland-wm.hyprland.enable;
   fontProfiles = config.hom.theme.fontProfiles;
 in
 {
@@ -69,6 +70,8 @@ in
         nix.serverPath = "nil";
         nix.formatterPath = "nixfmt";
         nix.serverSettings.nil.formatting.command = [ "nixfmt" ];
+        # TODO: Remove this frikin message -_-
+        # nix.hiddenLanguageServerErrors = [ "Request textDocument/formatting failed." ];
 
         git.autofetch = true;
         makefile.configureOnOpen = false;
@@ -82,7 +85,7 @@ in
         "workbench.colorTheme" = "Catppuccin Mocha";
         "workbench.iconTheme" = "catppuccin-mocha";
         terminal.integrated.minimumContrastRatio = 1; # prevent VSCode from modifying the terminal colors
-        window.titleBarStyle = "custom"; # make the window's titlebar use the workbench colors
+        window.titleBarStyle = if hyprlandEnabled then "native" else "custom";
 
         "catppuccin.customUIColors".mocha."statusBar.foreground" = "accent";
       };

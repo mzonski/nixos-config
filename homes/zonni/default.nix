@@ -36,26 +36,38 @@
         yubikey = true;
       };
       file-manager = {
-        pcmanfm = true;
+        pcmanfm = false;
+        thunar = true;
         templates = true;
       };
+      image-viewer.feh = true;
       maintenance = {
         bleachbit = true;
         qdirstat = true;
+        buttermanager = true;
       };
       cli = {
         defaults = true;
         bash = true;
         bat = true;
         direnv = true;
+        fastfetch = true;
+        zsh = true;
       };
       engineering.qcad = true;
       entertainment = {
         vlc = true;
         streamlink = true;
+        tauon = true;
       };
       hardware-info = true;
       image-manipulation = true;
+      productivity = {
+        geany = true;
+        qalculate = true;
+        obs = true;
+      };
+      terminal.kitty = true;
     };
 
     development = {
@@ -79,12 +91,19 @@
       vscode.enable = true;
     };
 
-    shell = {
-      zsh.enable = true;
+    wayland-wm = {
       hyprland = {
         enable = true;
       };
       panel.waybar.enable = true;
+      panel.swaync.enable = true;
+
+      idle = {
+        lockEnabled = false;
+        lockTimeout = 10 * 60; # 10 min
+        turnOffDisplayTimeout = 5 * 60; # 5 min
+        suspendTimeout = 30 * 60; # 30 min
+      };
     };
     theme = {
       catpuccin.enable = true;
@@ -93,12 +112,14 @@
         monospace = {
           name = "FiraCode Nerd Font";
           package = pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; };
+          size = 12;
         };
         regular = {
           name = "Fira Sans";
           package = pkgs.fira;
         };
       };
+      wallpaper = ./wallpaper.png;
     };
   };
 

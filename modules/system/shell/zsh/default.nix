@@ -9,14 +9,14 @@
 with lib;
 with mylib;
 let
-  cfg = config.sys.shell.zsh;
+  enabled = config.sys.apps.cli.zsh;
 in
 {
-  options.sys.shell.zsh = with types; {
-    enable = mkBoolOpt false;
+  options.sys.apps.cli = with types; {
+    zsh = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf enabled {
     users.defaultUserShell = pkgs.zsh;
     sys.user.shell = pkgs.zsh;
 

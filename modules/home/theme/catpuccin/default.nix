@@ -27,6 +27,7 @@ in
     qt.style.catppuccin.enable = true;
     qt.style.catppuccin.apply = true;
     programs.zsh.syntaxHighlighting.catppuccin.enable = true;
+    programs.kitty.catppuccin.enable = true;
     gtk.catppuccin = {
       enable = false;
       gnomeShellTheme = false;

@@ -32,4 +32,19 @@ rec {
       inherit default description;
       type = types.str;
     };
+
+  mkNumOpt =
+    default:
+    mkOption {
+      inherit default;
+      type = types.number;
+      description = "This is a number option";
+    };
+
+  mkNumOpt' =
+    default: description:
+    mkOption {
+      inherit default description;
+      type = types.number;
+    };
 }
