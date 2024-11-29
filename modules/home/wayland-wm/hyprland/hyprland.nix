@@ -51,18 +51,17 @@ in
 
         # autostart
         exec-once = [
-          "${pkgs.lxqt.lxqt-policykit}/bin/lxqt-policykit-agent" # Polkit
-          "${pkgs.swaybg}/bin/swaybg -i ${wallpaper} --mode fill"
+          "${pkgs.lxqt.lxqt-policykit}/bin/lxqt-policykit-agent &"
+          "${pkgs.swaybg}/bin/swaybg -i ${wallpaper} --mode fill &"
           "systemctl --user import-environment &"
           "hash dbus-update-activation-environment 2>/dev/null &"
           "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP &"
           #"nm-applet &"
-          "wl-clip-persist --clipboard both"
+          "wl-clip-persist --clipboard both &"
+          "wl-paste --watch cliphist store &"
           #"swaybg -m fill -i $(find ~/Pictures/wallpapers/ -maxdepth 1 -type f) &"
           #"hyprctl setcursor Nordzy-cursors 22 &"
-          #"poweralertd &"
-          "wl-paste --watch cliphist store &"
-          #"hyprlock"
+          #"poweralertd"
         ];
 
         general.layout = cfg.defaultLayout;
@@ -72,7 +71,7 @@ in
           "${monitors.primary.output},3840x2160@60.0,0x450,1.6"
           # Secondary monitor - using preferred to handle disconnection gracefully
           "${monitors.secondary.output},preferred,2400x0,1.6"
-          # Catch-all rule for any other displays - disabled by default
+          # Catch-all rule for any other displays
           #",preferred,auto,1"
         ];
 

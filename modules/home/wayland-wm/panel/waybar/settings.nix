@@ -253,10 +253,11 @@ in
             "privacy"
           ];
           modules-right = [
-            "group/hardware"
-            "systemd-failed-units"
+            #"group/hardware"
+            #"systemd-failed-units"
+
+            #"bluetooth"
             "tray"
-            "bluetooth"
             "pulseaudio"
             #"battery"
             "custom/notification"
