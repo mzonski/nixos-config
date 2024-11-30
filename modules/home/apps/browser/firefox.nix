@@ -47,6 +47,7 @@ in
 
         bookmarks = { };
         settings = {
+          "general.autoScroll" = true;
           "browser.startup.homepage" = "about:home";
 
           # Disable irritating first-run stuff
