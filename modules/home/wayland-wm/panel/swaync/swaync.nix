@@ -123,15 +123,15 @@ in
               position = "left";
               actions = [
                 {
-                  label = "  Lock";
-                  command = "swaylock";
+                  label = "󰒲  Suspend";
+                  command = "systemctl suspend";
                 }
                 {
                   label = "  Reboot";
                   command = "systemctl reboot";
                 }
                 {
-                  label = "  Shut down";
+                  label = "  Shutdown";
                   command = "systemctl poweroff";
                 }
               ];
