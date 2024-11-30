@@ -13,6 +13,7 @@ let
 
   wallpaper = config.hom.theme.wallpaper;
   enabled = config.hom.wayland-wm.hyprland.enable;
+  lockEnabled = config.hom.wayland-wm.idle.lockEnabled;
   cfg = config.hom.wayland-wm.idle;
 in
 {
@@ -22,11 +23,11 @@ in
       package = pkgs.hypridle;
       settings = {
         general = {
-          before_sleep_cmd = "${swaylock} -f -i ${wallpaper}";
+          before_sleep_cmd = if lockEnabled then "${swaylock} -f -i ${wallpaper}" else "";
           after_sleep_cmd = "${hyprctl} dispatch dpms on";
           ignore_dbus_inhibit = false;
           ignore_systemd_inhibit = false;
-          lock_cmd = "${swaylock}";
+          lock_cmd = if lockEnabled then "${swaylock}" else "";
         };
 
         listener =

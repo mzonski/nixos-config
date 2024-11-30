@@ -24,11 +24,18 @@ in
       # Auto Login Configuration
       displayManager.autoLogin.enable = true;
       displayManager.autoLogin.user = "zonni";
+
+      displayManager.sddm.settings = {
+        Autologin = {
+          Relogin = false;
+          Session = "hyprland";
+          User = username;
+        };
+      };
     };
 
     # GNOME Autologin Workaround
     systemd.services."getty@tty1".enable = false;
     systemd.services."autovt@tty1".enable = false;
-
   };
 }
