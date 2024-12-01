@@ -35,7 +35,11 @@ in
 
   config = mkIf cfg.enable {
     security.rtkit.enable = true;
-    hardware.pulseaudio.enable = false;
+    hardware.pulseaudio = {
+      enable = false;
+      package = pkgs.pulseaudioFull;
+    };
+
     services.pipewire = {
       enable = true;
       alsa.enable = true;
