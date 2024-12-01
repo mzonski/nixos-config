@@ -38,9 +38,6 @@ in
             key = "TimeStamp";
             format = "{1}-{3}-{11} {14}:{17}:{20}";
           }
-          "Host"
-          "Chassis"
-          "Bios"
           "Board"
           "OS"
           "Kernel"
