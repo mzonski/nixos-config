@@ -11,6 +11,7 @@ with lib;
 with mylib;
 let
   cfg = config.sys.services.autologin;
+  inherit (config.sys) username;
 in
 {
   options.sys.services.autologin = with types; {

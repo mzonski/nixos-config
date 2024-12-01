@@ -78,9 +78,11 @@ with mylib;
           }
         ];
 
-        # Use the latest kernel
         boot = {
-          kernelPackages = mkDefault pkgs.linuxPackages_latest;
+          # Use the latest kernel
+          # kernelPackages = mkDefault pkgs.linuxPackages_latest;
+          # Nvidia broken on 6.12, need to wait for fix: https://github.com/Arcohol/nix-config/commit/fea6eeebf2deddb654b45a8c28b5c04d3461531b#commitcomment-149332065
+          kernelPackages = mkDefault pkgs.linuxPackages_6_11;
           loader = {
             efi.canTouchEfiVariables = mkDefault true;
           };

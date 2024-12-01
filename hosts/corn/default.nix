@@ -25,6 +25,7 @@
     apps.cli.zsh = true;
 
     services = {
+      autologin.enable = true;
       quietboot.enable = false;
       virtualisation.enable = true;
       virtual-filesystem.gvfs = true;
