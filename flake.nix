@@ -59,10 +59,13 @@
       lib = nixpkgs.lib;
       mylib = import ./lib { inherit pkgs inputs lib; };
 
-      overlay = final: prev: {
-        unstable = pkgs';
-        my = self.packages."${system}";
-      }; # // (import ./overlays { inherit inputs; }) final prev;
+      overlay =
+        final: prev:
+        {
+          unstable = pkgs';
+          my = self.packages."${system}";
+        }
+        // (import ./overlays { inherit inputs; }) final prev;
     in
     {
       overlays.default = overlay;
