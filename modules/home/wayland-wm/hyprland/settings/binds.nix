@@ -97,6 +97,7 @@ let
     "$mainMod, R, exec, rofi -show drun"
     "$mainMod, E, exec, pcmanfm"
     "$mainMod, C, exec, hyprpicker -a"
+    "$mainMod, V, exec, nwg-clipman"
   ];
 
   windowControl = {

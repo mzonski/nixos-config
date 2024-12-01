@@ -12,14 +12,9 @@
 
   ];
 
-  home.packages = (
-    with pkgs;
-    [
-      hello
-      arandr # xrandr gui config tool
-      dconf-editor # dconf gui config tool
-    ]
-  );
+  home.packages = [
+    pkgs.dconf-editor # dconf gui config tool
+  ];
   # ++ (with unstable; [ ]);
 
   hom = {
