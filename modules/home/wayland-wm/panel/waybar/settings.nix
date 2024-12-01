@@ -13,6 +13,8 @@ with mylib;
 let
   enabled = config.hom.wayland-wm.panel.waybar.enable;
 
+  monitors = config.hom.wayland-wm.hyprland.monitors;
+
   commonSettings = {
     position = "top";
     layer = "top";
@@ -232,6 +234,16 @@ let
       tooltip = false;
     };
 
+    "custom/toggle-secondary" = {
+      exec = "${config.xdg.configHome}/waybar/scripts/monitor-toggle status -m ${monitors.secondary.output}";
+      return-type = "json";
+      exec-on-event = true;
+      interval = "once";
+      exec-if = "sleep 0.1";
+      on-click = "${config.xdg.configHome}/waybar/scripts/monitor-toggle toggle -m ${monitors.secondary.output} -p 2400x0 -s 1.6";
+      format = "{}";
+      tooltip = true;
+    };
   };
 in
 {
@@ -240,7 +252,8 @@ in
       (
         commonSettings
         // {
-          output = "DP-4";
+          output = monitors.primary.output;
+
           modules-left = [
             "custom/launcher"
             "hyprland/workspaces"
@@ -256,11 +269,12 @@ in
             #"group/hardware"
             #"systemd-failed-units"
 
-            #"bluetooth"
             "tray"
+
+            "custom/toggle-secondary"
             "pulseaudio"
-            #"battery"
             "custom/notification"
+
           ];
           "hyprland/workspaces" = commonSettings."hyprland/workspaces" // {
             persistent-workspaces = {
@@ -275,7 +289,7 @@ in
       (
         commonSettings
         // {
-          output = "HDMI-A-4";
+          output = monitors.secondary.output;
           modules-left = [
             "hyprland/workspaces"
             "custom/separator"

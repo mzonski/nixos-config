@@ -1,3 +1,59 @@
+// TODO: Extract this into a separate module...
+$catpuccin-colors: (
+	rosewater: #f5e0dc,
+	flamingo: #f2cdcd,
+	pink: #f5c2e7,
+	mauve: #cba6f7,
+	red: #f38ba8,
+	maroon: #eba0ac,
+	peach: #fab387,
+	yellow: #f9e2af,
+	green: #a6e3a1,
+	teal: #94e2d5,
+	sky: #89dceb,
+	sapphire: #74c7ec,
+	blue: #89b4fa,
+);
+
+$color-list: ();
+@each $name, $color in $catpuccin-colors {
+	$color-list: append($color-list, $color);
+}
+
+@mixin lr-gradient($color-start, $color-end) {
+	background-image: -gtk-gradient(linear, left center, right center, from($color-start), to($color-end));
+
+	&:hover {
+		background-image: -gtk-gradient(
+			linear,
+			left center,
+			right center,
+			from(shade($color-start, 1.1)),
+			to(shade($color-end, 1.1))
+		);
+	}
+}
+
+@function get-color-at-index($index) {
+	$adjusted-index: $index % length($color-list);
+	@if $adjusted-index <= 0 {
+		$adjusted-index: $adjusted-index + length($color-list);
+	}
+	@return nth($color-list, $adjusted-index);
+}
+
+@mixin generate-gradients($offset: 0, $ids...) {
+	@each $id in $ids {
+		$index: index($ids, $id) - 1 + $offset;
+		$start-color: get-color-at-index($index + 1);
+		$end-color: get-color-at-index($index + 2);
+
+		##{$id} {
+			@include lr-gradient($start-color, $end-color);
+		}
+	}
+}
+
 $catpuccin-blue: #89b4fa;
 $catpuccin-sky: #89dceb;
 $catpuccin-teal: #94e2d5;
@@ -22,6 +78,16 @@ $default-transition: 300ms ease-in-out;
 $text-color: $catpuccin-text-light;
 $accent-color: $catpuccin-mauve;
 $inactive-color: $catpuccin-surface2;
+
+$gradient-colors: (
+	$catpuccin-blue,
+	$catpuccin-sky,
+	$catpuccin-teal,
+	$catpuccin-green,
+	$catpuccin-peach,
+	$catpuccin-red,
+	$catpuccin-mauve
+);
 
 * {
 	border: none;
@@ -186,43 +252,8 @@ window.#{$secondary-monitor} .modules-right label {
 	}
 }
 
-@mixin lr-gradient($color-start, $color-end) {
-	background-image: -gtk-gradient(linear, left center, right center, from($color-start), to($color-end));
-
-	&:hover {
-		background-image: -gtk-gradient(
-			linear,
-			left center,
-			right center,
-			from(shade($color-start, 1.1)),
-			to(shade($color-end, 1.1))
-		);
-	}
-}
-
-#cpu {
-	@include lr-gradient($catpuccin-blue, $catpuccin-sky);
-}
-
-#memory {
-	@include lr-gradient($catpuccin-sky, $catpuccin-teal);
-}
-
-#disk {
-	@include lr-gradient($catpuccin-teal, $catpuccin-green);
-}
-
-#network {
-	@include lr-gradient($catpuccin-green, $catpuccin-peach);
-}
-
-#pulseaudio {
-	@include lr-gradient($catpuccin-peach, $catpuccin-red);
-}
-
-#custom-notification {
-	@include lr-gradient($catpuccin-red, $catpuccin-mauve);
-}
+@include generate-gradients(0, 'cpu', 'memory', 'disk', 'network');
+@include generate-gradients(4, 'custom-toggle-secondary', 'pulseaudio', 'custom-notification');
 
 #custom-separator {
 	background-color: $surface-wallpaper;
@@ -252,5 +283,31 @@ window.#{$secondary-monitor} .modules-right label {
 	&:hover {
 		color: $accent-color;
 		transition: $default-transition;
+	}
+}
+
+#custom-showcase-basic,
+#custom-showcase-advanced,
+#custom-showcase-animated,
+#custom-showcase-interactive,
+#custom-showcase-full {
+	padding: 0 10px;
+	margin: 3px 0px;
+	border-radius: 10px;
+}
+
+.custom-class {
+	background-color: #7851a9;
+	color: white;
+}
+
+.warning {
+	background-color: #ff9900;
+	color: black;
+}
+
+@keyframes blink {
+	50% {
+		opacity: 0.5;
 	}
 }

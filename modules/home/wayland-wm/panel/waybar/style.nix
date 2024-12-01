@@ -28,32 +28,6 @@ let
       warning = "#f9e2af";
       critical = "#f38ba8";
     };
-
-    fonts = {
-      family = "FiraCode Nerd Font";
-      sizes = {
-        normal = "15px";
-        large = "18px";
-        icon = "20px";
-      };
-      weight = "bold";
-    };
-
-    spacing = {
-      xs = "6px";
-      sm = "9px";
-      md = "15px";
-      lg = "20px";
-      xl = "30px";
-    };
-
-    layout = {
-      opacity = "0.98";
-      radius = "4px";
-      transition = "all 200ms ease-in-out";
-      shadow = "0 2px 4px rgba(0, 0, 0, 0.2)";
-      shadowInset = "inset 0 2px 4px rgba(0, 0, 0, 0.2)";
-    };
   };
 
   # Generate SCSS variables from theme

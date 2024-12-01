@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+
+DEFAULT_MONITOR="HDMI-A-4"
+DEFAULT_POSITION="2400x0"
+DEFAULT_SCALE="1.6"
+
+print_usage() {
+    echo "Usage: $0 [command] [options]"
+    echo ""
+    echo "Commands:"
+    echo "  status    - Get monitor status (for waybar)"
+    echo "  toggle    - Toggle monitor state"
+    echo ""
+    echo "Options:"
+    echo "  -m, --monitor  Monitor name (default: $DEFAULT_MONITOR)"
+    echo "  -p, --position Monitor position (default: $DEFAULT_POSITION)"
+    echo "  -s, --scale    Scale factor (default: $DEFAULT_SCALE)"
+    echo ""
+    echo "Example:"
+    echo "  $0 toggle -m HDMI-A-4 -p 2400x0 -s 1.6"
+    echo "  $0 status --monitor HDMI-A-4"
+}
+
+
+if [ $# -lt 1 ]; then
+    print_usage
+    exit 1
+fi
+
+COMMAND=$1
+shift  # Remove command from arguments
+
+# Parse options
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        -m|--monitor)
+            MONITOR="$2"
+            shift 2
+            ;;
+        -p|--position)
+            POSITION="$2"
+            shift 2
+            ;;
+        -s|--scale)
+            SCALE="$2"
+            shift 2
+            ;;
+        *)
+            echo "Unknown option: $1"
+            print_usage
+            exit 1
+            ;;
+    esac
+done
+
+# Set defaults if not provided
+MONITOR=${MONITOR:-$DEFAULT_MONITOR}
+POSITION=${POSITION:-$DEFAULT_POSITION}
+SCALE=${SCALE:-$DEFAULT_SCALE}
+
+# Function to check if monitor is enabled
+is_monitor_enabled() {
+    hyprctl monitors | grep "^Monitor $MONITOR" -A 20 | grep "disabled: false" > /dev/null
+}
+
+# Function to get monitor status for waybar
+get_status() {
+    if is_monitor_enabled; then
+        echo '{"text": "󰍺 ", "class": "enabled", "tooltip": "Monitor enabled"}'
+    else
+        echo '{"text": "󰍹 ", "class": "disabled", "tooltip": "Monitor disabled"}'
+    fi
+}
+
+# Function to toggle monitor
+toggle_monitor() {
+    if is_monitor_enabled; then
+        hyprctl keyword monitor "$MONITOR,disable"
+    else
+        hyprctl keyword monitor "$MONITOR,preferred,$POSITION,$SCALE"
+    fi
+}
+
+# Handle commands
+case "$COMMAND" in
+    "status")
+        get_status
+        ;;
+    "toggle")
+        toggle_monitor
+        ;;
+    *)
+        echo "Invalid command: $COMMAND"
+        print_usage
+        exit 1
+        ;;
+esac

@@ -62,6 +62,7 @@ in
           #"swaybg -m fill -i $(find ~/Pictures/wallpapers/ -maxdepth 1 -type f) &"
           #"hyprctl setcursor Nordzy-cursors 22 &"
           #"poweralertd"
+          # "waybar &" # systemd integration had some issues, chceck it and then other systemd
         ];
 
         general.layout = cfg.defaultLayout;
