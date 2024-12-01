@@ -14,6 +14,7 @@
 
   home.packages = [
     pkgs.dconf-editor # dconf gui config tool
+    pkgs.gnome-logs
   ];
   # ++ (with unstable; [ ]);
 
