@@ -80,9 +80,11 @@
         webstorm = true;
         pycharm-professional = true;
         datagrip = true;
+        rust-rover = true;
       };
       kubernetes = true;
       node = true;
+      rust = true;
       python3 = true;
       vscode.enable = true;
     };
