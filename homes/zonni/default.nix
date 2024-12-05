@@ -76,12 +76,7 @@
         gh = true;
         gitkraken = true;
       };
-      jetbrains = {
-        webstorm = true;
-        pycharm-professional = true;
-        datagrip = true;
-        rust-rover = true;
-      };
+      jetbrains.toolbox = true;
       kubernetes = true;
       node = true;
       rust = true;
