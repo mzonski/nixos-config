@@ -57,8 +57,6 @@ in
           "hash dbus-update-activation-environment 2>/dev/null &"
           "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP &"
           #"nm-applet &"
-          "wl-clip-persist --clipboard both &"
-          "wl-paste --watch cliphist store &"
           #"swaybg -m fill -i $(find ~/Pictures/wallpapers/ -maxdepth 1 -type f) &"
           #"hyprctl setcursor Nordzy-cursors 22 &"
           #"poweralertd"
