@@ -8,6 +8,7 @@ with lib;
 with mylib;
 let
   enabled = config.hom.wayland-wm.hyprland.enable;
+  cmds = config.commands;
 
   variables = {
     "$mainMod" = "SUPER";
@@ -84,16 +85,16 @@ let
   ];
 
   terminalLauncher = [
-    "$mainMod, Return, exec, kitty"
-    "$mainMod ALT, Return, exec, kitty --title float_kitty"
-    "$mainMod SHIFT, Return, exec, kitty --start-as=fullscreen -o 'font_size=16'"
+    "$mainMod, Return, exec, ${cmds.runTerminal}"
+    "$mainMod ALT, Return, exec, ${cmds.runTerminal} --title float_kitty"
+    "$mainMod SHIFT, Return, exec, ${cmds.runTerminal} --start-as=fullscreen -o 'font_size=16'"
   ];
 
   appLaunchers = [
-    "$mainMod, R, exec, rofi -show drun"
-    "$mainMod, E, exec, pcmanfm"
-    "$mainMod, C, exec, hyprpicker -a"
-    "$mainMod, V, exec, nwg-clipman"
+    "$mainMod, R, exec, ${cmds.runDrun}"
+    "$mainMod, E, exec, ${cmds.runFileManager}"
+    "$mainMod, C, exec, ${cmds.runColorPicker}"
+    "$mainMod, V, exec, ${cmds.runClipboardHistory}"
   ];
 
   windowControl = {
