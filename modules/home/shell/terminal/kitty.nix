@@ -24,6 +24,8 @@ in
       };
     };
 
+    commands.runTerminal = "${pkgs.kitty}/bin/kitty";
+
     # xdg.desktopEntries = {
     #   kitty = {
     #     name = "Kitty";
