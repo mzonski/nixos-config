@@ -10,6 +10,7 @@ with lib;
 let
   enabled = config.hom.wayland-wm.hyprland.enable;
   fontProfile = config.hom.theme.fontProfiles.regular;
+  commands = config.commands;
 in
 {
   config = mkIf enabled {
@@ -22,8 +23,19 @@ in
         rofi-systemd
       ];
       font = fontProfile.name;
-      #terminal = "${pkgs.kitty}/bin/kitty";
+      terminal = commands.runTerminal;
+      extraConfig = {
+        modi = "drun,window";
+        drun-show-actions = true;
+
+        click-to-exit = true;
+        global-kb = true;
+
+        window-thumbnail = true;
+        sidebar-mode = false;
+        disable-history = false;
+        icon-theme = config.gtk.iconTheme.name;
+      };
     };
   };
-
 }
