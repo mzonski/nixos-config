@@ -1,6 +1,5 @@
 {
   config,
-  options,
   lib,
   pkgs,
   mylib,
@@ -10,27 +9,16 @@
 with lib;
 with mylib;
 let
-  cfg = config.hom.development.versioning;
+  enabled = config.programs.git.enable;
 in
 {
-  options.hom.development.versioning.git = {
-    enable = mkBoolOpt false;
-    userName = mkStrOpt null;
-    userEmail = mkStrOpt null;
-  };
-
-  config = mkIf cfg.git.enable {
-
+  config = mkIf enabled {
     programs.git = {
-      enable = true;
       package = pkgs.git;
-
-      userName = cfg.git.userName;
-      userEmail = cfg.git.userEmail;
 
       extraConfig = {
         core = {
-          editor = "nano";
+          editor = "nano"; # TODO: Use config variable
           whitespace = "fix,-indent-with-non-tab,trailing-space,cr-at-eol";
         };
         color.ui = true;

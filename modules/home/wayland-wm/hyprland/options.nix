@@ -52,8 +52,6 @@ in
       slurp
 
       #wf-recorder
-      #wl-clipboard
-      #wl-clip-persist
 
       brightnessctl # Control brightness of monitor
 

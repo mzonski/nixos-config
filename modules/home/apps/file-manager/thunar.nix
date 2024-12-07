@@ -1,6 +1,5 @@
 {
   config,
-  options,
   lib,
   pkgs,
   mylib,
@@ -10,18 +9,18 @@
 with lib;
 with mylib;
 let
-  cfg = config.hom.apps.file-manager;
+  enabled = config.programs.file-manager.app == "thunar";
   thunarPlugins = with pkgs.xfce; [
     thunar-volman
     thunar-archive-plugin
   ];
 in
 {
-  options.hom.apps.file-manager = {
+  options.programs.file-manager = {
     thunar = mkBoolOpt false;
   };
 
-  config = mkIf cfg.thunar {
+  config = mkIf enabled {
     home.packages = with pkgs.xfce; [
       (thunar.override { inherit thunarPlugins; })
     ];

@@ -7,77 +7,18 @@
   imports = [
     inputs.catppuccin.homeManagerModules.catppuccin
 
+    ./packages.nix
+    ./programs.nix
+
     ./global.nix
     #./shell.nix
 
   ];
 
-  home.packages = [
-    pkgs.dconf-editor # dconf gui config tool
-    pkgs.gnome-logs
-  ];
-  # ++ (with unstable; [ ]);
-
   hom = {
-    apps = {
-      browser.firefox = {
-        enable = true;
-        firefoxProfiles = false;
-        rememberPasswords = true;
-      };
-      compression = true;
-      cryptography = {
-        certificate-manager = true;
-        smart-card = true;
-        yubikey = true;
-      };
-      file-manager = {
-        pcmanfm = false;
-        thunar = true;
-        templates = true;
-      };
-      image-viewer.feh = true;
-      maintenance = {
-        bleachbit = true;
-        qdirstat = true;
-        buttermanager = true;
-      };
-      cli = {
-        defaults = true;
-        bash = true;
-        bat = true;
-        direnv = true;
-        fastfetch = true;
-        zsh = true;
-      };
-      engineering.qcad = true;
-      entertainment = {
-        vlc = true;
-        streamlink = true;
-        tauon = true;
-      };
-      hardware-info = true;
-      image-manipulation = true;
-      productivity = {
-        geany = true;
-        qalculate = true;
-        obs = true;
-      };
-      terminal.kitty = true;
-    };
-
     development = {
-      versioning = {
-        git = {
-          enable = true;
-          userName = "Maciej Zonski";
-          userEmail = "me@zonni.pl";
-        };
-        gh = true;
-        gitkraken = true;
-      };
+
       jetbrains.toolbox = true;
-      kubernetes = true;
       node = true;
       rust = false;
       python3 = true;
@@ -115,5 +56,4 @@
       wallpaper = ./wallpaper.png;
     };
   };
-
 }

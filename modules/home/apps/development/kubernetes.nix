@@ -1,6 +1,5 @@
 {
   config,
-  options,
   lib,
   pkgs,
   mylib,
@@ -10,14 +9,14 @@
 with lib;
 with mylib;
 let
-  cfg = config.hom.development;
+  enabled = config.development.kubernetes.enable;
 in
 {
-  options.hom.development = {
-    kubernetes = mkBoolOpt false;
+  options.development.kubernetes = {
+    enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.kubernetes {
+  config = mkIf enabled {
     home.packages = with pkgs; [
       unstable.kubectx
       unstable.kubectl

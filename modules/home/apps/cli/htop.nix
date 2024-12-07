@@ -1,8 +1,6 @@
 {
   config,
-  options,
   lib,
-  pkgs,
   mylib,
   ...
 }:
@@ -10,17 +8,11 @@
 with lib;
 with mylib;
 let
-  enabled = config.hom.apps.cli.htop;
+  enabled = config.programs.htop.enable;
 in
 {
-
-  options.hom.apps.cli = {
-    htop = mkBoolOpt false;
-  };
-
   config = mkIf enabled {
     programs.htop = {
-      enable = true;
       settings = {
         fields = with config.lib.htop.fields; [
           PID

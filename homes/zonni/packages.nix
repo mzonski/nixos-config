@@ -1,0 +1,65 @@
+{ pkgs, ... }:
+{
+  home.packages = with pkgs; [
+    # GUI
+    ## SYSTEM
+    dconf-editor # gudconf gui config tool
+    gnome-logs # gui for system logs
+
+    ## ENTERTAINMENT
+    vlc
+    streamlink
+    tauon
+
+    ## ENGINERING
+    qcad
+
+    ## IMAGE MANIPULATION
+    inkscape-with-extensions
+    gimp-with-plugins
+
+    # CONSOLE / TUI
+    bc # Calculator
+    bottom # System viewer (btm)
+    ncdu # Calculates space usage of files
+    fd # Better find
+    jq # JSON pretty printer and manipulator
+
+    tldr # quick man
+
+    ## HARDWARE INFO
+    fwupd
+    pciutils # peek/edit PCI devices config
+    clinfo
+    libglvnd
+    glxinfo
+    vulkan-tools
+    lshw
+
+    ## ENCRYPTION/SIGNING
+    openssl # For certificate operations
+    paperkey # Backup tool for keys
+    kleopatra # Certificate manager and GUI for OpenPGP and CMS cryptography
+    opensc # Smart card utilities and libraries
+    pcsctools # PC/SC tools for smart card operations
+    ccid # Smart card driver
+    yubikey-manager # Main CLI tool for YubiKey management (ykman)
+    yubico-piv-tool # Specific tool for PIV operations
+
+    ## UTILS
+    # holywood # i'm cool boi so i need to compile it xd
+    timer
+    qalculate-qt # kalkulator
+
+    ## SYSTEM
+    curl
+    wget
+    tree
+
+    ## MAINTENANCE
+    bleachbit # Program to clean your computer
+    buttermanager # manage btrfs
+    qdirstat
+  ];
+  # ++ (with unstable; [ ]);
+}

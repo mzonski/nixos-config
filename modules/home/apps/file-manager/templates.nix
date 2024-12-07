@@ -1,8 +1,6 @@
 {
   config,
-  options,
   lib,
-  pkgs,
   mylib,
   ...
 }:
@@ -10,14 +8,10 @@
 with lib;
 with mylib;
 let
-  cfg = config.hom.apps.file-manager;
+  enabled = config.programs.file-manager.enable;
 in
 {
-  options.hom.apps.file-manager = {
-    templates = mkBoolOpt false;
-  };
-
-  config = mkIf cfg.templates {
+  config = mkIf enabled {
     home.file."Templates" = {
       source = ./templates;
       recursive = true;

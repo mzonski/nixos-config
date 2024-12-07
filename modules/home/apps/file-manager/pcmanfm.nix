@@ -1,6 +1,5 @@
 {
   config,
-  options,
   lib,
   pkgs,
   mylib,
@@ -10,14 +9,14 @@
 with lib;
 with mylib;
 let
-  cfg = config.hom.apps.file-manager;
+  enabled = config.programs.file-manager.app == "pcmanfm";
 in
 {
-  options.hom.apps.file-manager = {
+  options.programs.file-manager = {
     pcmanfm = mkBoolOpt false;
   };
 
-  config = mkIf cfg.pcmanfm {
+  config = mkIf enabled {
     home.packages = with pkgs; [
       pcmanfm
       xarchiver

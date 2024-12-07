@@ -1,8 +1,6 @@
 {
   config,
-  options,
   lib,
-  pkgs,
   mylib,
   ...
 }:
@@ -10,17 +8,11 @@
 with lib;
 with mylib;
 let
-  enabled = config.hom.apps.cli.fastfetch;
+  enabled = config.programs.fastfetch.enable;
 in
 {
-
-  options.hom.apps.cli = {
-    fastfetch = mkBoolOpt false;
-  };
-
   config = mkIf enabled {
     programs.fastfetch = {
-      enable = true;
       settings = {
         logo = {
           type = "auto";

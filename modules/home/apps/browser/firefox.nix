@@ -1,7 +1,6 @@
 {
   inputs,
   config,
-  options,
   lib,
   pkgs,
   mylib,
@@ -11,19 +10,18 @@
 with lib;
 with mylib;
 let
-  cfg = config.hom.apps.browser.firefox;
+  cfg = config.programs.firefox;
   username = config.home.username;
 in
 {
-  options.hom.apps.browser.firefox = {
-    enable = mkBoolOpt false;
+  options.programs.firefox = {
     firefoxProfiles = mkBoolOpt false;
     rememberPasswords = mkBoolOpt true;
   };
 
   config = mkIf cfg.enable {
     programs.firefox = {
-      enable = true;
+      package = pkgs.firefox;
       profiles.${username} = {
         search = {
           force = true;

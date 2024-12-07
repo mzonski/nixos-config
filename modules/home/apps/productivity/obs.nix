@@ -1,6 +1,5 @@
 {
   config,
-  options,
   lib,
   pkgs,
   mylib,
@@ -10,16 +9,11 @@
 with lib;
 with mylib;
 let
-  cfg = config.hom.apps.productivity;
+  enabled = config.programs.obs-studio.enable;
 in
 {
-  options.hom.apps.productivity = {
-    obs = mkBoolOpt false;
-  };
-
-  config = mkIf cfg.obs {
+  config = mkIf enabled {
     programs.obs-studio = {
-      enable = true;
       package = pkgs.obs-studio;
       plugins = with pkgs; [
         obs-studio-plugins.wlrobs

@@ -47,4 +47,21 @@ rec {
       inherit default description;
       type = types.number;
     };
+
+  mkEnumOpt =
+    enum: default:
+    mkOption {
+      inherit default;
+      type = types.nullOr (types.enum enum);
+      example = builtins.head enum;
+    };
+
+  mkEnumOpt' =
+    enum: default: description:
+    mkOption {
+      inherit default description;
+      type = types.nullOr (types.enum enum);
+      example = builtins.head enum;
+    };
+
 }

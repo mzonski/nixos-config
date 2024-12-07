@@ -1,0 +1,3 @@
+{
+  development.kubernetes.enable = true;
+}

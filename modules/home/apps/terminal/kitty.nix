@@ -1,6 +1,5 @@
 {
   config,
-  options,
   lib,
   pkgs,
   mylib,
@@ -10,18 +9,13 @@
 with lib;
 with mylib;
 let
-  cfg = config.hom.apps.terminal;
-  zshEnabled = config.hom.apps.cli.zsh;
+  enabled = config.programs.kitty.enable;
+  zshEnabled = config.programs.zsh.enable;
   fontProfile = config.hom.theme.fontProfiles.monospace;
 in
 {
-  options.hom.apps.terminal = {
-    kitty = mkBoolOpt false;
-  };
-
-  config = mkIf cfg.kitty {
+  config = mkIf enabled {
     programs.kitty = {
-      enable = true;
       package = pkgs.kitty;
       shellIntegration.enableZshIntegration = zshEnabled;
       font = {

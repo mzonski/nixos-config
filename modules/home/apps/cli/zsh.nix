@@ -1,6 +1,5 @@
 {
   config,
-  options,
   pkgs,
   lib,
   mylib,
@@ -9,23 +8,17 @@
 with lib;
 with mylib;
 let
-  enabled = config.hom.apps.cli.zsh;
+  enabled = config.programs.zsh.enable;
   inherit (pkgs) stdenv;
 in
 {
-  options.hom.apps.cli = with types; {
-    zsh = mkBoolOpt false;
-  };
-
   config = mkIf enabled {
-
     programs.fzf = {
       enable = true;
       enableZshIntegration = true;
     };
 
     programs.zsh = {
-      enable = true;
       autosuggestion.enable = true;
       enableCompletion = true;
       syntaxHighlighting.enable = true;

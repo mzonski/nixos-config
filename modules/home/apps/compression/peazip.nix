@@ -1,7 +1,5 @@
 {
   config,
-  options,
-  packages,
   lib,
   pkgs,
   mylib,
@@ -11,14 +9,14 @@
 with lib;
 with mylib;
 let
-  cfg = config.hom.apps;
+  enabled = config.programs.peazip.enable;
 in
 {
-  options.hom.apps = {
-    compression = mkBoolOpt false;
+  options.programs.peazip = {
+    enable = mkBoolOpt false;
   };
 
-  config = mkIf cfg.compression (
+  config = mkIf enabled (
     let
       _7zz = (
         pkgs._7zz.override {

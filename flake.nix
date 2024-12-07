@@ -72,9 +72,7 @@
 
       packages."${system}" = mapModules ./packages (p: pkgs.callPackage p { inherit inputs; });
 
-      nixosModules = {
-        dotfiles = import ./.;
-      } // mapModulesRec ./modules import;
+      nixosModules = mapModulesRec ./modules import;
 
       nixosConfigurations = mapHosts ./hosts { inherit system stateVersion; };
 
