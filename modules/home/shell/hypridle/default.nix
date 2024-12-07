@@ -43,7 +43,6 @@ in
               on-timeout = "systemctl suspend";
             }
           ]
-          # maybe lib.optionals
           ++ optionals cfg.lockEnabled [
             {
               timeout = cfg.lockTimeout;
