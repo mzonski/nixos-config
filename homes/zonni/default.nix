@@ -79,7 +79,7 @@
       jetbrains.toolbox = true;
       kubernetes = true;
       node = true;
-      rust = true;
+      rust = false;
       python3 = true;
       vscode.enable = true;
     };

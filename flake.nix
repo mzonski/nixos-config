@@ -24,11 +24,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    rust-overlay = {
-      url = "github:oxalica/rust-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nil-ls.url = "github:oxalica/nil";
     catppuccin.url = "github:catppuccin/nix";
   };
