@@ -1,13 +1,9 @@
 {
-  inputs,
   config,
-  options,
   lib,
-  pkgs,
   mylib,
   ...
 }:
-
 with lib;
 with mylib;
 let
@@ -143,8 +139,8 @@ let
   ];
 
   mediaControl = [
-    ",XF86AudioRaiseVolume,exec, pamixer -i 2"
-    ",XF86AudioLowerVolume,exec, pamixer -d 2"
+    ",XF86AudioRaiseVolume,exec, pamixer -i 10"
+    ",XF86AudioLowerVolume,exec, pamixer -d 10"
     ",XF86AudioMute,exec, pamixer -t"
     ",XF86AudioPlay,exec, playerctl play-pause"
     ",XF86AudioNext,exec, playerctl next"
