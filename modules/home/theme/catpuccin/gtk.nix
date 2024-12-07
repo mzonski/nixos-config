@@ -35,12 +35,22 @@ in
           });
     in
     {
-      home.packages = [ colloid-theme ];
+      home.packages =
+        [ colloid-theme ]
+        ++ (with pkgs; [
+          papirus-icon-theme
+          apple-cursor
+        ]);
       gtk = {
         enable = true;
         iconTheme = {
-          name = "Adwaita";
-          package = pkgs.adwaita-icon-theme;
+          name = "Papirus-Dark";
+          package = pkgs.papirus-icon-theme;
+        };
+        cursorTheme = {
+          package = pkgs.apple-cursor;
+          name = "macOS";
+          size = 24;
         };
         theme = {
           name = "Colloid-Purple-Dark-Compact-Catppuccin";
@@ -50,6 +60,10 @@ in
 
       services.xsettingsd = {
         enable = false; # on wayland we don't need x11, think what if you need to use x11
+        settings = {
+          "Net/ThemeName" = "${gtk.theme.name}";
+          "Net/IconThemeName" = "${gtk.iconTheme.name}";
+        };
       };
 
       xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];

@@ -161,7 +161,7 @@ let
     "wlr/taskbar" = {
       format = "{icon}";
       icon-size = 32;
-      icon-theme = "Numix-Circle"; # TODO: THEME
+      icon-theme = config.gtk.iconTheme.name; # TODO: THEME
       tooltip-format = "{title}";
       on-click = "minimize-raise";
       on-click-middle = "close";
@@ -173,7 +173,7 @@ let
       };
       rewrite = {
         "Firefox Web Browser" = "Firefox";
-        "Foot Server" = "Terminal";
+        "Kitty" = "Terminal";
       };
 
       bluetooth = {
