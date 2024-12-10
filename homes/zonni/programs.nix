@@ -27,6 +27,8 @@
     geany.enable = true;
     geany.colorScheme = "catppuccin-mocha";
 
+    kvantum.enable = true;
+
     git = {
       enable = true;
       userName = "Maciej Zonski";
