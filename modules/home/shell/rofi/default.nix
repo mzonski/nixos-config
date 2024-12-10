@@ -24,6 +24,7 @@ in
       ];
       font = fontProfile.name;
       terminal = commands.runTerminal;
+      cycle = false;
       extraConfig = {
         modi = "drun,window";
         drun-show-actions = true;

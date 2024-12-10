@@ -15,6 +15,9 @@
 
   ];
 
+  services.cliphist.enable = true;
+  services.hypridle.enable = true;
+
   hom = {
     development = {
 
