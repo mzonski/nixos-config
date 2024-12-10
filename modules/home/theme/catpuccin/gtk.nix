@@ -58,6 +58,14 @@ in
         };
       };
 
+      dconf.settings = {
+        "org/gnome/desktop/interface" = {
+          monospace-font-name = config.hom.theme.fontProfiles.monospace.name;
+          font-name = config.hom.theme.fontProfiles.regular.name;
+          color-scheme = "prefer-dark";
+        };
+      };
+
       services.xsettingsd = {
         enable = false; # on wayland we don't need x11, think what if you need to use x11
         settings = {
