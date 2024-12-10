@@ -1,6 +1,5 @@
 {
   config,
-  options,
   lib,
   pkgs,
   mylib,
@@ -36,16 +35,21 @@ in
     in
     {
       home.packages =
-        [ colloid-theme ]
+        [
+          colloid-theme
+        ]
         ++ (with pkgs; [
-          papirus-icon-theme
           apple-cursor
         ]);
       gtk = {
         enable = true;
         iconTheme = {
           name = "Papirus-Dark";
-          package = pkgs.papirus-icon-theme;
+          package = pkgs.catppuccin-papirus-folders.override {
+            flavor = "mocha";
+            accent = "mauve";
+            papirus-icon-theme = pkgs.papirus-icon-theme;
+          };
         };
         cursorTheme = {
           package = pkgs.apple-cursor;
