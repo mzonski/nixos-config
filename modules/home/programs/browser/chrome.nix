@@ -17,7 +17,7 @@ in
   };
 
   config = mkIf enabled {
-    home.packages = [
+    home.packages = with pkgs; [
       (google-chrome.override {
         commandLineArgs = [
           "--enable-features=MiddleClickAutoscroll"
