@@ -19,10 +19,6 @@ in
   };
 
   config = mkIf enabled {
-    home.packages = with pkgs; [
-      libnotify
-    ];
-
     services.swaync = {
       enable = true;
       package = pkgs.swaynotificationcenter;

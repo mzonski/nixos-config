@@ -4,7 +4,6 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-
     nixpkgs-jetbrains.url = "github:nixos/nixpkgs/1d0bae0d8d908c26c7c89025f694748e271fe58d";
 
     home-manager = {
@@ -28,6 +27,11 @@
 
     nil-ls.url = "github:oxalica/nil";
     catppuccin.url = "github:catppuccin/nix";
+
+    hyprland-contrib = {
+      url = "github:hyprwm/contrib";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -36,6 +40,7 @@
       nixpkgs,
       nixpkgs-unstable,
       nixpkgs-jetbrains,
+      hyprland-contrib,
       ...
     }:
     let
@@ -59,6 +64,7 @@
       pkgs = mkPkgs nixpkgs (lib.attrValues self.overlays);
       pkgs' = mkPkgs nixpkgs-unstable [ ];
       jbPkgs = mkPkgs nixpkgs-jetbrains [ ];
+      hyprContribPkgs = mkPkgs nixpkgs-jetbrains [ ];
 
       lib = nixpkgs.lib;
       mylib = import ./lib { inherit pkgs inputs lib; };
@@ -68,6 +74,7 @@
         {
           unstable = pkgs';
           jbPkgs = jbPkgs;
+          hyprContrib = hyprContribPkgs;
           my = self.packages."${system}";
         }
         // (import ./overlays) final prev;

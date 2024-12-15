@@ -95,6 +95,8 @@ let
     "$mainMod, E, exec, ${cmds.runFileManager}"
     "$mainMod, C, exec, ${cmds.runColorPicker}"
     "$mainMod, V, exec, ${cmds.runClipboardHistory}"
+    ", Print, exec, ${cmds.captureWholeScreen}"
+    "ALT, Print, exec, ${cmds.captureArea}"
   ];
 
   windowControl = {
