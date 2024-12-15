@@ -30,6 +30,7 @@
     ncdu # Calculates space usage of files
     fd # Better find
     jq # JSON pretty printer and manipulator
+    nurl # Generate Nix fetcher calls from repository URLs
 
     tldr # quick man
 
