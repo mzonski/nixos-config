@@ -65,7 +65,7 @@
           unstable = pkgs';
           my = self.packages."${system}";
         }
-        // (import ./overlays { inherit inputs; }) final prev;
+        // (import ./overlays) final prev;
     in
     {
       overlays.default = overlay;
