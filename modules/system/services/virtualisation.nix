@@ -11,6 +11,8 @@ with lib;
 with mylib;
 let
   cfg = config.sys.services.virtualisation;
+  inherit (config.sys) username;
+  virtdGroupName = "libvirtd";
 in
 {
   options.sys.services.virtualisation = with types; {
@@ -24,7 +26,12 @@ in
 
   config = mkIf cfg.enable {
 
-    sys.user.extraGroups = [ "libvirtd" ];
+    sys.user.extraGroups = [ virtdGroupName ];
+
+    boot.kernelParams = [
+      "intel_iommu=on"
+      "iommu=pt"
+    ];
 
     environment.systemPackages = with pkgs; [
       virt-manager
@@ -45,6 +52,15 @@ in
           swtpm.enable = true;
           ovmf.enable = true;
           ovmf.packages = [ pkgs.OVMFFull.fd ];
+          verbatimConfig = ''
+            user = "${username}"
+            group = "${virtdGroupName}"
+            nvram = ["/run/libvirt/nix-ovmf/OVMF_CODE.fd:/run/libvirt/nix-ovmf/OVMF_VARS.fd"]
+            gl = 1
+            egl_headless = 1
+            spice_gl = 1
+            display_gl = 1
+          '';
         };
       };
       spiceUSBRedirection.enable = true;
