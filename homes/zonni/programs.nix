@@ -1,11 +1,11 @@
 {
   programs = {
-    # BROWSER
     firefox = {
       enable = true;
       firefoxProfiles = false;
       rememberPasswords = true;
     };
+    chrome.enable = true;
     bash.enable = true;
     bat.enable = true;
     direnv.enable = true;
