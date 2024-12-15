@@ -85,12 +85,19 @@ with mylib;
         };
 
         environment.systemPackages = with pkgs; [
+          nix
           git
           nano
           wget
           gnumake
           unzip
           home-manager
+
+          openssl
+          sops
+          ssh-to-age
+          gnupg
+          age
         ];
 
         home-manager.useGlobalPkgs = mkDefault true;
