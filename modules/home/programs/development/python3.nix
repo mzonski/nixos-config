@@ -20,6 +20,9 @@ in
     home.packages = with pkgs; [
       python312
       python312Packages.pip
+      python312Packages.packaging
+      python312Packages.requests
+      python312Packages.xmltodict
     ];
   };
 }
