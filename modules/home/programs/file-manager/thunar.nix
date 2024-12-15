@@ -21,8 +21,13 @@ in
   };
 
   config = mkIf enabled {
-    home.packages = with pkgs.xfce; [
-      (thunar.override { inherit thunarPlugins; })
-    ];
+    home.packages =
+      with pkgs.xfce;
+      [
+        (thunar.override { inherit thunarPlugins; })
+      ]
+      ++ (with pkgs.mate; [
+        engrampa
+      ]);
   };
 }
