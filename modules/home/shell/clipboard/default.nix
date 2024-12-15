@@ -15,10 +15,10 @@ in
     services.cliphist = {
       package = pkgs.cliphist;
       allowImages = true;
-      extraOptions = [
-        "--max-items 100"
-        "--primary"
-      ];
+      # extraOptions = [
+      #   "--max-items 100"
+      #   "--primary"
+      # ];
     };
 
     systemd.user.services.cliphist-watch = {
