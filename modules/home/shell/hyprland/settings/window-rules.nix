@@ -114,6 +114,7 @@ let
           "Open File"
           "Confirm to replace files"
           "File Operation Progress"
+          "Extract"
         ];
       in
       concatLists [
