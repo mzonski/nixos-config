@@ -17,8 +17,11 @@ in
   };
 
   config = mkIf enabled {
-    home.packages = with pkgs; [
-      jetbrains-toolbox
+    home.packages = with pkgs.jbPkgs.jetbrains; [
+      webstorm
+      pycharm-professional
+      rust-rover
+      datagrip
     ];
   };
 }

@@ -5,6 +5,8 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    nixpkgs-jetbrains.url = "github:nixos/nixpkgs/1d0bae0d8d908c26c7c89025f694748e271fe58d";
+
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -33,6 +35,7 @@
       self,
       nixpkgs,
       nixpkgs-unstable,
+      nixpkgs-jetbrains,
       ...
     }:
     let
@@ -55,6 +58,7 @@
         };
       pkgs = mkPkgs nixpkgs (lib.attrValues self.overlays);
       pkgs' = mkPkgs nixpkgs-unstable [ ];
+      jbPkgs = mkPkgs nixpkgs-jetbrains [ ];
 
       lib = nixpkgs.lib;
       mylib = import ./lib { inherit pkgs inputs lib; };
@@ -63,6 +67,7 @@
         final: prev:
         {
           unstable = pkgs';
+          jbPkgs = jbPkgs;
           my = self.packages."${system}";
         }
         // (import ./overlays) final prev;
