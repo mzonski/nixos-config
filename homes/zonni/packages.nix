@@ -55,7 +55,7 @@
 
     ## UTILS
     # holywood # i'm cool boi so i need to compile it xd
-    # trek # nixos really don't have nice tui animations
+    trekscii
     timer
     qalculate-qt # kalkulator
 
