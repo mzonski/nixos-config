@@ -14,5 +14,7 @@
     initrd.kernelModules = [ ];
     kernelModules = [ "kvm-intel" ];
     extraModulePackages = [ ];
+
+    tmp.cleanOnBoot = true;
   };
 }
