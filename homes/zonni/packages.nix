@@ -6,6 +6,10 @@
     dconf-editor # gudconf gui config tool
     gnome-logs # gui for system logs
 
+    # COMMUNICATION
+    discord
+    thunderbird
+
     ## ENTERTAINMENT
     vlc
     streamlink
@@ -17,6 +21,8 @@
     ## IMAGE MANIPULATION
     inkscape-with-extensions
     gimp-with-plugins
+
+    ## MISC
 
     # CONSOLE / TUI
     bc # Calculator
@@ -56,6 +62,7 @@
     curl
     wget
     tree
+    glib
 
     ## MAINTENANCE
     bleachbit # Program to clean your computer
