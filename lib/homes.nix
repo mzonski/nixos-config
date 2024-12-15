@@ -32,7 +32,6 @@ with mylib;
           news.display = "silent";
           programs.home-manager.enable = true;
           xdg.enable = true;
-          xdg.mime.enable = true;
           targets.genericLinux.enable = true;
           home.stateVersion = stateVersion;
           home.username = username;
