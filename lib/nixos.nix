@@ -51,8 +51,7 @@ with mylib;
             gc = {
               automatic = true;
               dates = "weekly";
-              # Keep the last 3 generations
-              options = "--delete-older-than +3";
+              options = "--delete-old";
             };
           };
         system.configurationRevision = with inputs; mkIf (self ? rev) self.rev;

@@ -19,6 +19,10 @@ update:
 	@echo "Updating flake inputs..."
 	nix flake update
 
+clean:
+	@echo "Cleaning old generations..."
+	nix-collect-garbage --delete-old
+
 home:
 	@echo "Switching home-manager configuration..."
 	home-manager build --flake $(FLAKE)#$(USERNAME)
