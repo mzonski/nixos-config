@@ -25,9 +25,18 @@ in
     #   gpgconf --launch gpg-agent
     # '';
 
-    programs.gnupg.agent = {
-      enable = true;
-      enableSSHSupport = true;
+    environment.systemPackages = with pkgs; [
+      kleopatra
+    ];
+    programs.gnupg = {
+      agent = {
+        enable = true;
+        enableSSHSupport = true;
+        enableBrowserSocket = true;
+      };
+
+      dirmngr.enable = true;
     };
+
   };
 }

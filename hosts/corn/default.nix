@@ -30,6 +30,8 @@
       virtualisation.enable = true;
       virtual-filesystem.gvfs = true;
     };
+
+    shell.gnupg.enable = true;
   };
 
   networking.firewall.enable = false; # Disable firewall

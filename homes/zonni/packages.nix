@@ -44,13 +44,11 @@
     lshw
 
     ## ENCRYPTION/SIGNING
-    openssl # For certificate operations
-    paperkey # Backup tool for keys
-    kleopatra # Certificate manager and GUI for OpenPGP and CMS cryptography
     opensc # Smart card utilities and libraries
     pcsctools # PC/SC tools for smart card operations
     ccid # Smart card driver
     yubikey-manager # Main CLI tool for YubiKey management (ykman)
+    yubioath-flutter # Yubico Desktop Authenticator
     yubico-piv-tool # Specific tool for PIV operations
 
     ## UTILS
