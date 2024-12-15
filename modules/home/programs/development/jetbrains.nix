@@ -23,5 +23,9 @@ in
       rust-rover
       datagrip
     ];
+    # Fixes: Watcher terminated with exit code 3 // table error: collision
+    home.file."idea.properties".text =
+      "idea.filewatcher.executable.path = ${pkgs.fsnotifier}/bin/fsnotifier";
+
   };
 }
