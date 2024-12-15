@@ -24,17 +24,27 @@ in
         };
         modules = [
           "title"
-          "separator"
           {
             type = "datetime";
-            key = "TimeStamp";
+            key = "Timestamp";
             format = "{1}-{3}-{11} {14}:{17}:{20}";
           }
-          "Board"
-          "OS"
-          "Kernel"
           "Uptime"
-          "LocalIp"
+          "separator"
+          "Kernel"
+          "OS"
+          {
+            type = "command";
+            key = "NixOS Gen";
+            text = "nix-env --list-generations | tail -n1 | awk '{print $1}'";
+          }
+          {
+            type = "command";
+            key = "Home Gen";
+            text = "home-manager generations | tail -n1 | awk '{print $5}'";
+          }
+          "Break"
+          "Board"
           "CPU"
           "GPU"
           "Memory"
