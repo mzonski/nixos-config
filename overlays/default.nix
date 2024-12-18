@@ -9,6 +9,8 @@ final: prev:
 
   trekscii = prev.callPackage ../packages/trekscii { };
 
+  fsnotifier = prev.callPackage ../packages/fsnotifier { };
+
   discord = prev.discord.overrideAttrs (_: {
     src = builtins.fetchTarball {
       url = "https://discord.com/api/download?platform=linux&format=tar.gz"; # https://discordapp.com/api/download/canary?platform=linux&format=tar.gz
