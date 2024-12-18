@@ -32,6 +32,8 @@
       url = "github:hyprwm/contrib";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    hyprland.url = "github:hyprwm/Hyprland";
   };
 
   outputs =
@@ -41,6 +43,7 @@
       nixpkgs-unstable,
       nixpkgs-jetbrains,
       hyprland-contrib,
+      hyprland,
       ...
     }:
     let
@@ -65,6 +68,7 @@
       pkgs' = mkPkgs nixpkgs-unstable [ ];
       jbPkgs = mkPkgs nixpkgs-jetbrains [ ];
       hyprContribPkgs = mkPkgs nixpkgs-jetbrains [ ];
+      hyprPkgs = mkPkgs nixpkgs-jetbrains [ ];
 
       lib = nixpkgs.lib;
       mylib = import ./lib { inherit pkgs inputs lib; };
@@ -75,6 +79,7 @@
           unstable = pkgs';
           jbPkgs = jbPkgs;
           hyprContrib = hyprContribPkgs;
+          hypr = hyprPkgs;
           my = self.packages."${system}";
         }
         // (import ./overlays) final prev;

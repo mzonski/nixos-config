@@ -46,7 +46,6 @@ in
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      #inputs.hypr-contrib.packages.${pkgs.system}.grimblast
       hyprpicker
       grim
       slurp

@@ -47,12 +47,15 @@ with mylib;
               auto-optimise-store = true;
               warn-dirty = false;
               flake-registry = ""; # Disable global flake registry
+              substituters = [ "https://hyprland.cachix.org" ];
+              trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
             };
             gc = {
               automatic = true;
               dates = "weekly";
               options = "--delete-old";
             };
+
           };
         system.configurationRevision = with inputs; mkIf (self ? rev) self.rev;
         system.stateVersion = stateVersion;

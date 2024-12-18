@@ -42,7 +42,7 @@ in
           "systemctl --user start hyprland-session.target"
         ];
       };
-      package = pkgs.hyprland;
+      package = pkgs.hypr.hyprland;
 
       settings = {
         # autostart
