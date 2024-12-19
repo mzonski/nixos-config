@@ -41,7 +41,7 @@ in
           {
             type = "command";
             key = "Home Gen";
-            text = "home-manager generations | tail -n1 | awk '{print $5}'";
+            text = "home-manager generations | head -n1 | awk '{print $5}'";
           }
           "Break"
           "Board"
