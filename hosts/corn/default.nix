@@ -34,6 +34,8 @@
     shell.gnupg.enable = true;
   };
 
+  hardware.bluetooth.enable = true;
+
   networking.firewall.enable = false; # Disable firewall
 
   programs.dconf.enable = true; # Enable DConf
