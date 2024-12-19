@@ -21,6 +21,8 @@ in
     services.xserver.videoDrivers = [ "nvidia" ];
 
     hardware.graphics.enable = true;
+    hardware.graphics.enable32Bit = true;
+
     hardware.nvidia = {
       modesetting.enable = true;
 
@@ -40,6 +42,15 @@ in
       };
       package = config.boot.kernelPackages.nvidiaPackages.latest;
     };
+
+    hardware.nvidia-container-toolkit = {
+      enable = true;
+    };
+
+    virtualisation.docker = {
+      enableNvidia = true;
+    };
+
     sys.user.extraGroups = [ "video" ];
   };
 }

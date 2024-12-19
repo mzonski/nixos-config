@@ -22,6 +22,7 @@ in
         xdg-desktop-portal-hyprland
         xdg-desktop-portal-gtk
         xdg-desktop-portal-kde
+        xdg-desktop-portal-wlr
       ];
       config = {
         common = {
