@@ -21,20 +21,23 @@ in
     catppuccin = {
       enable = true;
       flavor = "mocha";
-      pointerCursor.enable = false;
-      pointerCursor.flavor = "mocha";
-    };
-    qt.style.catppuccin.enable = true;
-    qt.style.catppuccin.apply = true;
-    programs.zsh.syntaxHighlighting.catppuccin.enable = true;
-    programs.kitty.catppuccin.enable = true;
-    gtk.catppuccin = {
-      enable = false;
-      gnomeShellTheme = false;
+      cursors.enable = false;
+      cursors.flavor = "mocha";
 
-      icon.enable = false;
+      kvantum.enable = false;
+      kvantum.apply = false;
 
-      tweaks = [ "normal" ];
+      kitty.enable = true;
+      zsh-syntax-highlighting.enable = true;
+
+      gtk = {
+        enable = false;
+        gnomeShellTheme = false;
+
+        icon.enable = false;
+
+        tweaks = [ "normal" ];
+      };
     };
   };
 }
