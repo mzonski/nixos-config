@@ -41,11 +41,13 @@ in
 
     xdg.mimeApps = {
       associations.added = {
-        "x-scheme-handler/terminal" = "Kitty.desktop";
+        "x-scheme-handler/terminal" = "kitty.desktop";
       };
       defaultApplications = {
-        "x-scheme-handler/terminal" = "Kitty.desktop";
+        "x-scheme-handler/terminal" = "kitty.desktop";
       };
     };
+
+    # xdg.terminal-exec.default = [ "kitty.desktop" ];
   };
 }

@@ -17,7 +17,6 @@
     domain = "local.zonni.pl";
     hardware = {
       audio.enable = true;
-      audio.codecs = true;
       graphics.nvidia.enable = true;
     };
     locale.ponglish.enable = true;
