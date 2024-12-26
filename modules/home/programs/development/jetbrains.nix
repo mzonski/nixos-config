@@ -17,7 +17,7 @@ in
   };
 
   config = mkIf enabled {
-    home.packages = with pkgs.jbPkgs.jetbrains; [
+    home.packages = with pkgs.unstable.jetbrains; [
       webstorm
       pycharm-professional
       rust-rover

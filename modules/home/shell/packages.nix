@@ -15,7 +15,7 @@ in
   config = mkIf enabled {
     home.packages = with pkgs; [
       libnotify
-      hyprContrib.grimblast
+      unstable.grimblast
     ];
   };
 }

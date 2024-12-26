@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-jetbrains.url = "github:nixos/nixpkgs/1d0bae0d8d908c26c7c89025f694748e271fe58d";
+    nixpkgs-master.url = "github:nixos/nixpkgs/efd9668e9b64c716a793cac7785e369766b4d7c0";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
@@ -27,13 +27,6 @@
 
     nil-ls.url = "github:oxalica/nil";
     catppuccin.url = "github:catppuccin/nix";
-
-    hyprland-contrib = {
-      url = "github:hyprwm/contrib";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    hyprland.url = "github:hyprwm/Hyprland";
   };
 
   outputs =
@@ -41,7 +34,7 @@
       self,
       nixpkgs,
       nixpkgs-unstable,
-      nixpkgs-jetbrains,
+      nixpkgs-master,
       hyprland-contrib,
       hyprland,
       ...
@@ -64,11 +57,10 @@
           config.allowUnfree = true;
           overlays = overlays;
         };
-      pkgs = mkPkgs nixpkgs (lib.attrValues self.overlays);
+      #
+      pkgs = mkPkgs nixpkgs ((lib.attrValues self.overlays));
       pkgs' = mkPkgs nixpkgs-unstable [ ];
-      jbPkgs = mkPkgs nixpkgs-jetbrains [ ];
-      hyprContribPkgs = mkPkgs nixpkgs-jetbrains [ ];
-      hyprPkgs = mkPkgs nixpkgs-jetbrains [ ];
+      masterPkgs = mkPkgs inputs.nixpkgs-master [ ];
 
       lib = nixpkgs.lib;
       mylib = import ./lib { inherit pkgs inputs lib; };
@@ -77,9 +69,7 @@
         final: prev:
         {
           unstable = pkgs';
-          jbPkgs = jbPkgs;
-          hyprContrib = hyprContribPkgs;
-          hypr = hyprPkgs;
+          master = masterPkgs;
           my = self.packages."${system}";
         }
         // (import ./overlays) final prev;
