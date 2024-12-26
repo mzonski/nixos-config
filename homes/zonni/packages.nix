@@ -67,6 +67,8 @@
     bleachbit # Program to clean your computer
     buttermanager # manage btrfs
     qdirstat
+    caligula # disk imaging
+    qbittorrent-enhanced
   ];
   # ++ (with unstable; [ ]);
 }
