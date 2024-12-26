@@ -146,12 +146,5 @@ with mylib;
       ];
     };
 
-  mapHosts =
-    dir:
-    attrs@{
-      system,
-      stateVersion,
-      ...
-    }:
-    mapModules dir (hostPath: mkHost hostPath attrs);
+  mapHosts = dir: attrs: mapModules dir (hostPath: mkHost hostPath attrs);
 }
