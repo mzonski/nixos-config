@@ -4,7 +4,8 @@
     # GUI
     ## SYSTEM
     dconf-editor # gudconf gui config tool
-    gnome-logs # gui for system logs
+    gnome-logs # System logs
+    hardinfo2 # Hardware information
 
     # COMMUNICATION
     discord
@@ -14,6 +15,7 @@
     vlc
     streamlink
     tauon
+    qbittorrent-enhanced
 
     ## ENGINERING
     qcad
@@ -31,6 +33,7 @@
     fd # Better find
     jq # JSON pretty printer and manipulator
     nurl # Generate Nix fetcher calls from repository URLs
+    caligula # disk imaging
 
     tldr # quick man
 
@@ -66,9 +69,9 @@
     ## MAINTENANCE
     bleachbit # Program to clean your computer
     buttermanager # manage btrfs
-    qdirstat
-    caligula # disk imaging
-    qbittorrent-enhanced
+    qdirstat # Visualise used disk space
+
+    ## TEMP
   ];
   # ++ (with unstable; [ ]);
 }
