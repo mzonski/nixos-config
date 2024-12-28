@@ -16,8 +16,8 @@
     };
 
     peazip.enable = true;
-    feh.enable = true;
     kitty.enable = true;
+    ristretto.enable = true;
 
     obs-studio.enable = true;
     fastfetch.enable = true;
