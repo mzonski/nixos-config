@@ -15,7 +15,10 @@
     vlc
     streamlink
     tauon
+
+    ## PRODUCTIVITY
     qbittorrent-enhanced
+    xfce.xfburn # Image burner
 
     ## ENGINERING
     qcad
@@ -34,6 +37,7 @@
     jq # JSON pretty printer and manipulator
     nurl # Generate Nix fetcher calls from repository URLs
     caligula # disk imaging
+    powertop # check energy consumption per program
 
     tldr # quick man
 
