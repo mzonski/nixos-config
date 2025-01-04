@@ -23,7 +23,7 @@ in
     home.packages = (
       with pkgs;
       [
-        vscode
+        unstable.vscodium
 
         nil # Nix LSP
         nixfmt-rfc-style # Nix formatter
@@ -35,7 +35,7 @@ in
 
     programs.vscode = {
       enable = true;
-      package = pkgs.vscode;
+      package = pkgs.unstable.vscodium;
       extensions = with pkgs.vscode-extensions; [
         bbenoist.nix
         jnoortheen.nix-ide
