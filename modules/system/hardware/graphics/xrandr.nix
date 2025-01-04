@@ -25,7 +25,7 @@ in
       xrandrHeads = [
         {
           # LG 27UL850
-          output = "DP-3";
+          output = "DP-4";
           primary = true;
 
           monitorConfig = ''
@@ -36,7 +36,7 @@ in
         }
         {
           # LG DualUp
-          output = "HDMI-A-1";
+          output = "HDMI-A-4";
 
           monitorConfig = ''
             DisplaySize 470 520

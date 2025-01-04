@@ -17,7 +17,7 @@ in
     defaultLayout = mkStrOpt "dwindle";
     monitors = {
       primary = {
-        output = mkStrOpt "DP-3";
+        output = mkStrOpt "DP-4";
         workspaces = [
           1
           2
@@ -26,7 +26,7 @@ in
         ];
       };
       secondary = {
-        output = mkStrOpt "HDMI-A-1";
+        output = mkStrOpt "HDMI-A-4";
         workspaces = [
           5
           6

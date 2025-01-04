@@ -18,6 +18,10 @@ in
   };
 
   config = mkIf cfg.enable {
+    boot.blacklistedKernelModules = [
+      # "i915"
+      "amdgpu"
+    ];
     services.xserver.videoDrivers = [ "nvidia" ];
 
     hardware.graphics.enable = true;
@@ -44,7 +48,7 @@ in
     };
 
     hardware.nvidia-container-toolkit = {
-      enable = true;
+      enable = false;
     };
 
     virtualisation.docker = {
