@@ -84,7 +84,9 @@ let
       "float,gparted" # Make disk mounter float
       "float,title:^(qBittorrent)$" # Make torrent client float
     ];
-    v2 = [ ];
+    v2 = [
+      "noinitialfocus,class:^jetbrains-(?!toolbox),floating:1"
+    ];
   };
 
   # Picture-in-Picture configurations

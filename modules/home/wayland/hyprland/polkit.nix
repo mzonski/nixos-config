@@ -19,7 +19,7 @@ in
     xdg.portal = {
       enable = true;
       extraPortals = with pkgs; [
-        master.xdg-desktop-portal-hyprland
+        xdg-desktop-portal-hyprland
         xdg-desktop-portal-gtk
         xdg-desktop-portal-kde
         xdg-desktop-portal-wlr
@@ -35,30 +35,5 @@ in
         };
       };
     };
-
-    # xdg.portal = {
-    #   enable = true;
-    #   extraPortals = with pkgs; [
-    #     xdg-desktop-portal-gtk
-    #     xdg-desktop-portal-kde
-    #     xdg-desktop-portal-wlr
-    #   ];
-    #   config = {
-    #     common = {
-    #       default = [
-    #         "xdph"
-    #         "gtk"
-    #       ];
-    #       "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
-    #       "org.freedesktop.portal.FileChooser" = [ "xdg-desktop-portal-kde" ];
-    #     };
-    #     hyprland = {
-    #       default = [
-    #         "wlr"
-    #         "gtk"
-    #       ];
-    #     };
-    #   };
-    # };
   };
 }
