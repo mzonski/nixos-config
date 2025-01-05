@@ -34,13 +34,11 @@ in
           });
     in
     {
-      home.packages =
-        [
-          colloid-theme
-        ]
-        ++ (with pkgs; [
-          apple-cursor
-        ]);
+      home.packages = [
+        colloid-theme
+        pkgs.apple-cursor
+      ];
+
       gtk = {
         enable = true;
         iconTheme = {
