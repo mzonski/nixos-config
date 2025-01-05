@@ -31,6 +31,8 @@
     };
 
     shell.gnupg.enable = true;
+
+    gaming.enable = true;
   };
 
   hardware.bluetooth.enable = true;
