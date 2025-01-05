@@ -20,8 +20,12 @@ let
     };
 
     Fonts = {
-      fixed = "\"${fontProfiles.monospace.name},${toString fontProfiles.monospace.size},-1,5,50,0,0,0,0,0,Regular\"";
-      general = "\"${fontProfiles.regular.name},${toString fontProfiles.regular.size},-1,5,29,0,0,0,0,0,Regular\"";
+      fixed = "\"${fontProfiles.monospace.name},${
+        toString (fontProfiles.monospace.size - 2)
+      },-1,5,50,0,0,0,0,0,Regular\"";
+      general = "\"${fontProfiles.regular.name},${
+        toString (fontProfiles.regular.size - 4)
+      },-1,5,29,0,0,0,0,0,Regular\"";
     };
 
     Interface = {

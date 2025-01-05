@@ -257,16 +257,28 @@ window.#{$secondary-monitor} .modules-right label {
 
 #custom-separator {
 	background-color: $surface-wallpaper;
-	// border-left: 2px solid $catpuccin-crust;
-	// border-right: 2px solid $catpuccin-crust;
 	border-top: 2px solid $surface-wallpaper;
 	margin-left: 10px;
-	// margin: 0 4px;
 }
 
 #tray {
-	padding: 0 8px;
-	margin-left: 8px;
+	padding: 0 4px;
+	margin-right: 4px;
+
+	menu * {
+		color: $text-color;
+		font-size: 16px;
+		font-family: 'Fira Sans Book';
+
+		&:insensitive {
+			color: #585b70;
+		}
+	}
+}
+
+#privacy {
+	padding: 0 4px;
+	margin-right: 4px;
 }
 
 #custom-notification {

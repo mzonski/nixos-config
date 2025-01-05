@@ -51,12 +51,12 @@
         monospace = {
           name = "FiraCode Nerd Font Mono";
           package = pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; };
-          size = 10;
+          size = 12;
         };
         regular = {
           name = "Fira Sans Book";
           package = pkgs.fira;
-          size = 10;
+          size = 14;
         };
       };
       wallpaper = ./wallpaper.png;

@@ -207,24 +207,12 @@ let
 
     privacy = {
       icon-spacing = 4;
-      icon-size = 32;
+      icon-size = 26;
       transition-duration = 250;
       modules = [
-        {
-          type = "screenshare";
-          tooltip = true;
-          tooltip-icon-size = 42;
-        }
-        {
-          type = "audio-out";
-          tooltip = true;
-          tooltip-icon-size = 42;
-        }
-        {
-          type = "audio-in";
-          tooltip = true;
-          tooltip-icon-size = 42;
-        }
+        { type = "screenshare"; }
+        { type = "audio-out"; }
+        { type = "audio-in"; }
       ];
     };
 
@@ -263,12 +251,13 @@ in
           modules-center = [
             "idle_inhibitor"
             "clock"
-            "privacy"
+
           ];
           modules-right = [
             #"group/hardware"
             #"systemd-failed-units"
 
+            "privacy"
             "tray"
 
             "custom/toggle-secondary"
