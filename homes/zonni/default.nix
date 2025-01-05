@@ -18,6 +18,8 @@
   services.cliphist.enable = true;
   services.hypridle.enable = true;
 
+  qt.enable = true;
+
   hom = {
     development = {
 
@@ -47,13 +49,14 @@
       fontProfiles = {
         enable = true;
         monospace = {
-          name = "FiraCode Nerd Font";
+          name = "FiraCode Nerd Font Mono";
           package = pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; };
-          size = 12;
+          size = 10;
         };
         regular = {
-          name = "Fira Sans";
+          name = "Fira Sans Book";
           package = pkgs.fira;
+          size = 10;
         };
       };
       wallpaper = ./wallpaper.png;

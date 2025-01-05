@@ -10,7 +10,7 @@ with lib;
 with mylib;
 
 let
-  cfg = config.programs.kvantum;
+  enabled = config.qt.enable;
   variant = "mocha";
   accent = "mauve";
   kvantumThemePackage = pkgs.catppuccin-kvantum.override {
@@ -29,27 +29,12 @@ let
   ) (builtins.attrNames themeSettings);
 
   themeName = "Catppuccin${capitalize variant}${capitalize accent}Dark";
-
 in
 {
-  options.programs.kvantum = {
-    enable = mkBoolOpt' false "Enable Kvantum for Qt applications.";
-    theme = mkStrOpt' "KvAdapta" "The Kvantum theme name to use.";
-  };
-
-  config = mkIf cfg.enable {
-    home.packages =
-      [ kvantumThemePackage ]
-      ++ (with pkgs; [
-        kdePackages.breeze-icons
-        libsForQt5.qt5.qtbase
-        libsForQt5.qtstyleplugins
-        qt6.qtbase
-      ]);
+  config = mkIf enabled {
+    home.packages = [ kvantumThemePackage ];
 
     qt = {
-      enable = true;
-      platformTheme.name = "kvantum";
       style.name = "kvantum";
     };
 
@@ -59,7 +44,6 @@ in
         text = lib.generators.toINI { } {
           General = {
             theme = themeName;
-            icon_theme = "breeze-dark"; # i smell this don't have any effect :/
           };
         };
       };
