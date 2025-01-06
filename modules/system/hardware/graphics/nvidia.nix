@@ -24,8 +24,22 @@ in
     ];
     services.xserver.videoDrivers = [ "nvidia" ];
 
-    hardware.graphics.enable = true;
-    hardware.graphics.enable32Bit = true;
+    environment.systemPackages = with pkgs; [
+      libva-utils
+      vdpauinfo
+
+    ];
+
+    hardware.graphics = {
+      enable = true;
+      enable32Bit = true;
+      extraPackages = with pkgs; [
+        nvidia-vaapi-driver
+        vaapiVdpau
+        libvdpau-va-gl
+        libva1
+      ];
+    };
 
     hardware.nvidia = {
       modesetting.enable = true;
@@ -36,6 +50,7 @@ in
 
       forceFullCompositionPipeline = true;
       gsp.enable = true;
+      videoAcceleration = true;
 
       prime = {
         offload.enable = false;
