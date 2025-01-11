@@ -1,0 +1,1 @@
+nix run nixpkgs#eza -- --tree

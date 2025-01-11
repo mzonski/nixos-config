@@ -77,6 +77,6 @@
     qdirstat # Visualise used disk space
 
     ## TEMP
+    lxqt.pcmanfm-qt
   ];
-  # ++ (with unstable; [ ]);
 }
