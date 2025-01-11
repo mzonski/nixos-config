@@ -28,6 +28,7 @@
     gimp-with-plugins
 
     ## MISC
+    prismlauncher # minecraft
 
     # CONSOLE / TUI
     bc # Calculator
