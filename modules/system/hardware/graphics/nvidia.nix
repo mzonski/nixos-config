@@ -34,7 +34,7 @@ in
       enable = true;
       enable32Bit = true;
       extraPackages = with pkgs; [
-        nvidia-vaapi-driver
+        nvidia-vaapi-driver # remove 25.05?
         vaapiVdpau
         libvdpau-va-gl
         libva1
@@ -50,7 +50,7 @@ in
 
       forceFullCompositionPipeline = true;
       gsp.enable = true;
-      videoAcceleration = true;
+      #videoAcceleration = true; 25.05?
 
       prime = {
         offload.enable = false;
