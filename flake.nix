@@ -27,6 +27,12 @@
 
     nil-ls.url = "github:oxalica/nil";
     catppuccin.url = "github:catppuccin/nix";
+
+    hyprland.url = "github:hyprwm/Hyprland";
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
+    };
   };
 
   outputs =
@@ -55,6 +61,9 @@
         import pkgs {
           inherit system;
           config.allowUnfree = true;
+          config.permittedInsecurePackages = [
+            "archiver-3.5.1"
+          ];
           overlays = overlays;
         };
       #
