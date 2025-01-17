@@ -23,11 +23,5 @@ rec {
   # countAttrs :: (name -> value -> bool) attrs
   countAttrs = pred: attrs: count (attr: pred attr.name attr.value) (attrsToList attrs);
 
-  capitalize =
-    str:
-    let
-      head = substring 0 1 str;
-      tail = substring 1 (stringLength str) str;
-    in
-    (toUpper head) + tail;
+  unionAttrsList = set: foldl' mergeAttrs { } (attrValues set);
 }

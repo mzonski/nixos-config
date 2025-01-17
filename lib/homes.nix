@@ -20,6 +20,8 @@ with mylib;
       username = removeSuffix ".nix" (baseNameOf path);
       homeDirectory = "/home/${username}";
 
+      osConfig = import ../hosts/corn/default.nix;
+
       defaults =
         {
           config,
@@ -61,12 +63,5 @@ with mylib;
       };
     };
 
-  mapHomes =
-    dir:
-    attrs@{
-      system,
-      stateVersion,
-      ...
-    }:
-    mapModules dir (homePath: mkHome homePath attrs);
+  mapHomes = attrs: mapModules ../homes (homePath: mkHome homePath attrs);
 }

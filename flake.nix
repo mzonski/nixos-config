@@ -81,8 +81,8 @@
 
       nixosModules = mapModulesRec ./modules import;
 
-      nixosConfigurations = mapHosts ./hosts { inherit system stateVersion; };
+      nixosConfigurations = mapHosts { inherit system stateVersion; };
 
-      homeConfigurations = mapHomes ./homes { inherit system stateVersion; };
+      homeConfigurations = mapHomes { inherit system stateVersion; };
     };
 }

@@ -103,6 +103,7 @@ with mylib;
           age
         ];
 
+        home-manager.useUserPackages = mkDefault true;
         home-manager.useGlobalPkgs = mkDefault true;
         home-manager.extraSpecialArgs = {
           inherit mylib inputs;
@@ -146,5 +147,5 @@ with mylib;
       ];
     };
 
-  mapHosts = dir: attrs: mapModules dir (hostPath: mkHost hostPath attrs);
+  mapHosts = args: mapModules ../hosts (path: mkHost path args);
 }

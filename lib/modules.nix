@@ -15,22 +15,27 @@ let
     hasSuffix
     nameValuePair
     removeSuffix
+    foldl'
     ;
   inherit (self.attrs) mapFilterAttrs;
+
+  filterIgnored = name: type: type != null && !(hasPrefix "_" name);
+  filterIgnoredDirectories = name: type: type == "directory" && !(hasPrefix "_" name);
+  isNixDirModule = type: path: type == "directory" && pathExists "${path}/default.nix";
+  isRegularModule = type: name: type == "regular" && name != "default.nix" && hasSuffix ".nix" name;
 in
 rec {
-  asPath = str: ./. + str;
   mapModules =
     dir: fn:
-    mapFilterAttrs (n: v: v != null && !(hasPrefix "_" n)) (
-      n: v:
+    mapFilterAttrs filterIgnored (
+      name: type:
       let
-        path = "${toString dir}/${n}";
+        path = "${toString dir}/${name}";
       in
-      if v == "directory" && pathExists "${path}/default.nix" then
-        nameValuePair n (fn path)
-      else if v == "regular" && n != "default.nix" && hasSuffix ".nix" n then
-        nameValuePair (removeSuffix ".nix" n) (fn path)
+      if isNixDirModule type path then
+        nameValuePair name (fn path)
+      else if isRegularModule type name then
+        nameValuePair (removeSuffix ".nix" name) (fn path)
       else
         nameValuePair "" null
     ) (readDir dir);
@@ -39,15 +44,15 @@ rec {
 
   mapModulesRec =
     dir: fn:
-    mapFilterAttrs (n: v: v != null && !(hasPrefix "_" n)) (
-      n: v:
+    mapFilterAttrs filterIgnored (
+      name: type:
       let
-        path = "${toString dir}/${n}";
+        path = "${toString dir}/${name}";
       in
-      if v == "directory" then
-        nameValuePair n (mapModulesRec path fn)
-      else if v == "regular" && n != "default.nix" && hasSuffix ".nix" n then
-        nameValuePair (removeSuffix ".nix" n) (fn path)
+      if type == "directory" then
+        nameValuePair name (mapModulesRec path fn)
+      else if isRegularModule type name then
+        nameValuePair (removeSuffix ".nix" name) (fn path)
       else
         nameValuePair "" null
     ) (readDir dir);
@@ -55,11 +60,13 @@ rec {
   mapModulesRec' =
     dir: fn:
     let
-      dirs = mapAttrsToList (k: _: "${dir}/${k}") (
-        filterAttrs (n: v: v == "directory" && !(hasPrefix "_" n)) (readDir dir)
+      dirs = mapAttrsToList (key: _: "${dir}/${key}") (
+        filterAttrs filterIgnoredDirectories (readDir dir)
       );
       files = attrValues (mapModules dir id);
-      paths = files ++ concatLists (map (d: mapModulesRec' d id) dirs);
+      paths = files ++ concatLists (map (path: mapModulesRec' path id) dirs);
     in
     map fn paths;
+
+  mapModulesUnion = dir: fn: foldl' (acc: set: acc // set) { } (attrValues (self.mapModules dir fn));
 }
