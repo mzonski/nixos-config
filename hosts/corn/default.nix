@@ -8,8 +8,6 @@
 
     ./boot.nix
     ./file-system.nix
-
-    ./common/optional/hyprland.nix
   ];
 
   sys = {
@@ -33,6 +31,8 @@
   };
 
   boot.quietboot = false;
+  windows.variant = "hyprland";
+  windows.hyprland.source = "unstable";
 
   hardware.bluetooth.enable = true;
 
@@ -48,5 +48,7 @@
 
   services.autologin.enable = true;
   services.gvfs.enable = true; # virtual filesystem (ex. Trash)
+
+  programs.nix-ld.enable = true;
 
 }

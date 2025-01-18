@@ -1,4 +1,5 @@
 {
+  inputs,
   config,
   lib,
   pkgs,
@@ -19,7 +20,7 @@ in
     xdg.portal = {
       enable = true;
       extraPortals = with pkgs; [
-        xdg-desktop-portal-hyprland
+        pkgs.unstable.xdg-desktop-portal-hyprland
         xdg-desktop-portal-gtk
         xdg-desktop-portal-kde
         xdg-desktop-portal-wlr

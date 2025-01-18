@@ -1,4 +1,5 @@
 {
+  inputs,
   config,
   lib,
   pkgs,
@@ -42,7 +43,7 @@ in
           "systemctl --user start hyprland-session.target"
         ];
       };
-      package = pkgs.hyprland;
+      package = pkgs.unstable.hyprland;
 
       settings = {
         # autostart
