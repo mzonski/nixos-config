@@ -2,12 +2,12 @@
   config,
   lib,
   pkgs,
-  mylib,
+  lib',
   ...
 }:
 
 with lib;
-with mylib;
+with lib';
 let
   enabled = config.services.pipewire.enable;
   bluetoothEnabled = config.hardware.bluetooth.enable;

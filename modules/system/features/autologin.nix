@@ -1,7 +1,7 @@
 {
   config,
   lib,
-  mylib,
+  lib',
   ...
 }:
 
@@ -9,7 +9,7 @@ let
   enabled = config.features.autologin.enable;
   inherit (config.host) admin;
   inherit (lib) mkIf;
-  inherit (mylib) mkBoolOpt;
+  inherit (lib') mkBoolOpt;
 in
 {
   options.features.autologin = {

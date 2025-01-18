@@ -2,13 +2,13 @@
   config,
   lib,
   pkgs,
-  mylib,
+  lib',
   ...
 }:
 
 let
   enabled = config.features.quietboot.enable;
-  inherit (mylib) mkBoolOpt;
+  inherit (lib') mkBoolOpt;
   inherit (lib) mkIf;
 in
 {

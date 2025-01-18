@@ -1,12 +1,12 @@
 {
   config,
   lib,
-  mylib,
+  lib',
   ...
 }:
 
 with lib;
-with mylib;
+with lib';
 let
   enabled = config.programs.direnv.enable;
 in

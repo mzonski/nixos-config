@@ -1,13 +1,13 @@
 {
   inputs,
   lib,
-  mylib,
+  lib',
   pkgs,
   ...
 }:
 
 with lib;
-with mylib;
+with lib';
 {
   mkHost =
     path:
@@ -109,7 +109,7 @@ with mylib;
         home-manager.useUserPackages = mkDefault true;
         home-manager.useGlobalPkgs = mkDefault true;
         home-manager.extraSpecialArgs = {
-          inherit mylib inputs;
+          inherit lib' inputs;
         };
         home-manager.sharedModules = (mapModulesRec' (toString ../modules/home) import);
 
@@ -130,7 +130,7 @@ with mylib;
           lib
           inputs
           system
-          mylib
+          lib'
           ;
       };
       modules = [

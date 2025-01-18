@@ -1,12 +1,12 @@
 {
   pkgs,
   lib,
-  mylib,
+  lib',
   config,
   ...
 }:
 with lib;
-with mylib;
+with lib';
 let
   enabled = config.programs.ristretto.enable;
 in

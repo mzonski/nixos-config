@@ -38,12 +38,11 @@
   outputs =
     inputs@{ self, nixpkgs, ... }:
     let
-      inherit (mylib)
+      inherit (lib')
         mapModules
         mapModulesRec
         mapHosts
         mapHomes
-        mkPkgs
         ;
 
       system = "x86_64-linux";
@@ -51,15 +50,19 @@
 
       pkgs = mkPkgs nixpkgs ((lib.attrValues self.overlays));
 
+      mkPkgs =
+        pkgs: overlays:
+        import pkgs {
+          inherit system;
+          config.allowUnfree = true;
+          config.permittedInsecurePackages = [
+            "archiver-3.5.1"
+          ];
+          overlays = overlays;
+        };
+
       lib = nixpkgs.lib;
-      mylib = import ./lib {
-        inherit
-          pkgs
-          inputs
-          lib
-          system
-          ;
-      };
+      lib' = import ./lib { inherit pkgs inputs lib; };
 
       overlay =
         final: prev:
@@ -76,7 +79,7 @@
 
       packages."${system}" = mapModules ./packages (p: pkgs.callPackage p { inherit inputs; });
 
-      nixosModules = mapModulesRec ./modules/system import;
+      nixosModules = mapModulesRec ./modules import;
 
       nixosConfigurations = mapHosts { inherit system stateVersion; };
 

@@ -2,13 +2,13 @@
   config,
   options,
   lib,
-  mylib,
+  lib',
   pkgs,
   ...
 }:
 
 with lib;
-with mylib;
+with lib';
 {
   options.host = with types; {
     env = mkOption {

@@ -3,12 +3,12 @@
   config,
   lib,
   pkgs,
-  mylib,
+  lib',
   ...
 }:
 
 with lib;
-with mylib;
+with lib';
 let
   enabled = config.hom.wayland-wm.hyprland.enable;
   cfg = config.hom.wayland-wm.hyprland;

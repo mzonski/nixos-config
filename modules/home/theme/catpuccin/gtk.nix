@@ -2,12 +2,12 @@
   config,
   lib,
   pkgs,
-  mylib,
+  lib',
   ...
 }:
 
 with lib;
-with mylib;
+with lib';
 let
   inherit (config.hom.theme.catpuccin) enable;
 in

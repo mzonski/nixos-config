@@ -1,6 +1,6 @@
-{ mylib, config, ... }:
+{ lib', config, ... }:
 let
-  inherit (mylib) mkStrOpt';
+  inherit (lib') mkStrOpt';
 in
 {
   options.windows = {

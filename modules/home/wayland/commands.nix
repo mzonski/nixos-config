@@ -1,5 +1,5 @@
-{ mylib, ... }:
-with mylib;
+{ lib', ... }:
+with lib';
 {
   options.commands = {
     runTerminal = mkStrOpt "kitty";

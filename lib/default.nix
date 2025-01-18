@@ -1,5 +1,4 @@
 {
-  system,
   inputs,
   lib,
   pkgs,
@@ -18,7 +17,7 @@ let
     };
   };
 
-  mylib = makeExtensible (
+  lib' = makeExtensible (
     self:
     with self;
     mapModules ./. (
@@ -29,11 +28,10 @@ let
           lib
           pkgs
           inputs
-          system
           ;
-        mylib = self;
+        lib' = self;
       }
     )
   );
 in
-mylib.extend (self: super: foldr (a: b: a // b) { } (attrValues super))
+lib'.extend (self: super: foldr (a: b: a // b) { } (attrValues super))

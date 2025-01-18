@@ -1,11 +1,11 @@
 {
   config,
   lib,
-  mylib,
+  lib',
   ...
 }:
 with lib;
-with mylib;
+with lib';
 let
   enabled = config.hom.wayland-wm.hyprland.enable;
   cmds = config.commands;

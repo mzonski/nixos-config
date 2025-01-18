@@ -3,12 +3,12 @@
   options,
   lib,
   pkgs,
-  mylib,
+  lib',
   ...
 }:
 
 with lib;
-with mylib;
+with lib';
 let
   cfg = config.hom.theme.catpuccin;
 in

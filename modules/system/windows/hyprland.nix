@@ -2,13 +2,13 @@
   inputs,
   config,
   lib,
-  mylib,
+  lib',
   pkgs,
   ...
 }:
 let
   inherit (lib) mkIf;
-  inherit (mylib) mkEnumOpt;
+  inherit (lib') mkEnumOpt;
 
   enabled = config.windows.variant == "hyprland";
   hyprSource = config.windows.hyprland.source;

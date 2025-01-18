@@ -2,12 +2,12 @@
   config,
   lib,
   pkgs,
-  mylib,
+  lib',
   ...
 }:
 
 with lib;
-with mylib;
+with lib';
 let
   enabled = config.hom.development.jetbrains.toolbox;
 in

@@ -1,14 +1,14 @@
 {
   config,
   lib,
-  mylib,
+  lib',
   pkgs,
   ...
 }:
 
 let
   inherit (lib) mkIf;
-  inherit (mylib) mkBoolOpt;
+  inherit (lib') mkBoolOpt;
   enabled = config.features.gaming.enable;
 in
 {

@@ -2,12 +2,12 @@
   config,
   lib,
   pkgs,
-  mylib,
+  lib',
   ...
 }:
 
 with lib;
-with mylib;
+with lib';
 let
   enabled = config.programs.kitty.enable;
   zshEnabled = config.programs.zsh.enable;

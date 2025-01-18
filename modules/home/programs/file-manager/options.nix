@@ -1,12 +1,12 @@
 {
   config,
   lib,
-  mylib,
+  lib',
   ...
 }:
 
 with lib;
-with mylib;
+with lib';
 let
   cfg = config.programs.file-manager;
 in

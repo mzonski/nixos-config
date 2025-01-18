@@ -2,12 +2,12 @@
   config,
   lib,
   pkgs,
-  mylib,
+  lib',
   ...
 }:
 
 with lib;
-with mylib;
+with lib';
 let
   enabled = config.programs.chrome.enable;
   # Still no HW accel on wayland. X11 works like a charm. hopefully it will be fixed in 570

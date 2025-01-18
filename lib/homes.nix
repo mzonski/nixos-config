@@ -1,13 +1,13 @@
 {
   inputs,
   lib,
-  mylib,
+  lib',
   pkgs,
   ...
 }:
 
 with lib;
-with mylib;
+with lib';
 {
   mkHome =
     path:
@@ -19,8 +19,6 @@ with mylib;
     let
       username = removeSuffix ".nix" (baseNameOf path);
       homeDirectory = "/home/${username}";
-
-      osConfig = import ../hosts/corn/default.nix;
 
       defaults =
         {
@@ -58,7 +56,7 @@ with mylib;
           inputs
           system
           stateVersion
-          mylib
+          lib'
           ;
       };
     };

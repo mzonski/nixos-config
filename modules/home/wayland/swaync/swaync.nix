@@ -4,12 +4,12 @@
   options,
   lib,
   pkgs,
-  mylib,
+  lib',
   ...
 }:
 
 with lib;
-with mylib;
+with lib';
 let
   enabled = config.hom.wayland-wm.panel.waybar.enable;
 in

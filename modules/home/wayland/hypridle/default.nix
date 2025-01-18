@@ -1,11 +1,11 @@
 {
   pkgs,
   lib,
-  mylib,
+  lib',
   config,
   ...
 }:
-with mylib;
+with lib';
 with lib;
 let
   swaylock = "${config.programs.swaylock.package}/bin/swaylock";

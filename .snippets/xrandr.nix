@@ -2,12 +2,12 @@
   options,
   config,
   lib,
-  mylib,
+  lib',
   ...
 }:
 
 with lib;
-with mylib;
+with lib';
 let
   cfg = config.host.hardware.graphics.xrandr;
 in

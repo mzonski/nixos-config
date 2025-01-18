@@ -3,12 +3,12 @@
   options,
   lib,
   pkgs,
-  mylib,
+  lib',
   ...
 }:
 
 with lib;
-with mylib;
+with lib';
 {
   options.hom.theme.wallpaper = mkOption {
     type = types.nullOr types.path;

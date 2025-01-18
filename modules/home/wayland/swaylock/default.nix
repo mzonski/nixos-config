@@ -1,11 +1,11 @@
 {
   pkgs,
   lib,
-  mylib,
+  lib',
   config,
   ...
 }:
-with mylib;
+with lib';
 with lib;
 let
   enabled = config.hom.wayland-wm.hyprland.enable && config.hom.wayland-wm.idle.lockEnabled;

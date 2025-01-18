@@ -2,12 +2,12 @@
   config,
   options,
   lib,
-  mylib,
+  lib',
   ...
 }:
 
 with lib;
-with mylib;
+with lib';
 {
   options.host = with types; {
     admin = mkOption {
