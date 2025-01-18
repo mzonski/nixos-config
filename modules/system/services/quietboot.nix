@@ -7,18 +7,17 @@
   ...
 }:
 
-with lib;
-with mylib;
 let
-  cfg = config.sys.services.quietboot;
+  enabled = config.boot.quietboot;
+  inherit (mylib) mkBoolOpt;
+  inherit (lib) mkIf;
 in
 {
-  options.sys.services.quietboot = with types; {
-    enable = mkBoolOpt false;
+  options.boot = {
+    quietboot = mkBoolOpt false;
   };
 
-  config = mkIf cfg.enable {
-
+  config = mkIf enabled {
     console = {
       useXkbConfig = true;
       earlySetup = false;

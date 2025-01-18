@@ -1,24 +1,15 @@
 {
   config,
-  options,
   lib,
   pkgs,
-  mylib,
   ...
 }:
-
-with lib;
-with mylib;
 let
-  cfg = config.sys.services.virtual-filesystem;
+  enabled = config.services.gvfs.enable;
+  inherit (lib) mkIf;
 in
 {
-  options.sys.services.virtual-filesystem = with types; {
-    gvfs = mkBoolOpt false;
-  };
-
-  config = mkIf cfg.gvfs {
-    services.gvfs.enable = true;
+  config = mkIf enabled {
     services.gvfs.package = pkgs.gvfs;
   };
 }

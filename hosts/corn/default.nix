@@ -24,10 +24,7 @@
     apps.cli.zsh = true;
 
     services = {
-      autologin.enable = true;
-      quietboot.enable = false;
       virtualisation.enable = true;
-      virtual-filesystem.gvfs = true;
     };
 
     shell.gnupg.enable = true;
@@ -35,15 +32,21 @@
     gaming.enable = true;
   };
 
+  boot.quietboot = false;
+
   hardware.bluetooth.enable = true;
 
   networking.firewall.enable = false; # Disable firewall
 
-  programs.dconf.enable = true; # Enable DConf
+  programs.dconf.enable = true;
   services.tumbler.enable = true; # Enable thumbnail service
 
   services.libinput.enable = true;
   services.openssh.enable = true;
   services.printing.enable = true;
   services.pcscd.enable = true;
+
+  services.autologin.enable = true;
+  services.gvfs.enable = true; # virtual filesystem (ex. Trash)
+
 }

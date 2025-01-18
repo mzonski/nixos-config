@@ -10,11 +10,11 @@
 with lib;
 with mylib;
 let
-  cfg = config.sys.services.autologin;
+  cfg = config.services.autologin;
   inherit (config.sys) username;
 in
 {
-  options.sys.services.autologin = with types; {
+  options.services.autologin = with types; {
     enable = mkBoolOpt false;
   };
 
