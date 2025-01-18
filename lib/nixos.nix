@@ -60,6 +60,9 @@ with mylib;
         system.configurationRevision = with inputs; mkIf (self ? rev) self.rev;
         system.stateVersion = stateVersion;
 
+        boot.tmp.cleanOnBoot = true;
+        nixpkgs.hostPlatform = system;
+
         networking.useDHCP = mkDefault true;
         networking.networkmanager.enable = mkDefault false;
         hardware.enableRedistributableFirmware = mkDefault true;

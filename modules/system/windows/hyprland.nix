@@ -34,14 +34,13 @@ in
     hyprland.source = mkEnumOpt [ "stable" "unstable" "input" ] null;
   };
 
-  assertions = [
-    {
-      assertion = !enabled || config.windows.hyprland.source != null;
-      message = "windows.hyprland.source must be set when using Hyprland";
-    }
-  ];
-
   config = mkIf enabled {
+    assertions = [
+      {
+        assertion = hyprSource != null;
+        message = "windows.hyprland.source must be set when using Hyprland";
+      }
+    ];
     programs.hyprland = {
       inherit (hyprlandPackages.${hyprSource}) package portalPackage;
       enable = true;

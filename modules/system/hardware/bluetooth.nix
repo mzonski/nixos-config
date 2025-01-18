@@ -1,32 +1,18 @@
-{
-  options,
-  config,
-  lib,
-  pkgs,
-  mylib,
-  ...
-}:
+{ config, lib, ... }:
 
-with lib;
-with mylib;
 let
+  inherit (lib) mkIf;
   enabled = config.hardware.bluetooth.enable;
 
 in
 {
   config = mkIf enabled {
-
-    # environment.systemPackages = with pkgs; [
-    #   bluez
-    # ];
-
     hardware.bluetooth.powerOnBoot = true;
     services.blueman.enable = true;
 
     hardware.bluetooth.settings = {
       General = {
         Enable = "Source,Sink,Media,Socket";
-        # Experimental = true; show charge percent
       };
     };
   };
