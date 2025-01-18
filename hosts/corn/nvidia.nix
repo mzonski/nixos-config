@@ -61,5 +61,5 @@
     enableNvidia = true;
   };
 
-  sys.user.extraGroups = [ "video" ];
+  host.user.extraGroups = [ "video" ];
 }

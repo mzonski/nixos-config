@@ -1,6 +1,6 @@
 {
   # TODO: move to home configs
-  # sys.home.xdg.enable = true;
+  # host.home.xdg.enable = true;
 
   environment = {
     sessionVariables = {

@@ -1,33 +1,23 @@
 {
-  sys = {
-    adminUser = "zonni";
+  host = {
+    admin = "zonni";
     domain = "local.zonni.pl";
-    hardware = {
-      audio.enable = true;
-      graphics.nvidia.enable = true;
-    };
-    apps.cli.zsh = true;
-
-    services = {
-      virtualisation.enable = true;
-    };
-
-    shell.gnupg.enable = true;
-
-    gaming.enable = true;
   };
 
-  boot.quietboot = false;
+  features = {
+    quietboot.enable = false;
+    autologin.enable = true;
+    gaming.enable = true;
+    virtualisation.enable = true;
+  };
+
   boot.loader.systemd-boot.enable = true;
 
   windows.variant = "hyprland";
   windows.hyprland.source = "input";
 
-  hardware.bluetooth.enable = true;
-
   networking.firewall.enable = false; # Disable firewall
 
-  programs.dconf.enable = true;
   services.tumbler.enable = true; # Enable thumbnail service
 
   services.libinput.enable = true;
@@ -35,8 +25,13 @@
   services.printing.enable = true;
   services.pcscd.enable = true;
 
-  services.autologin.enable = true;
   services.gvfs.enable = true; # virtual filesystem (ex. Trash)
 
+  services.pipewire.enable = true;
+  hardware.bluetooth.enable = true;
+
   programs.nix-ld.enable = false;
+  programs.dconf.enable = true;
+  programs.zsh.enable = true;
+  programs.gnupg.agent.enable = true;
 }

@@ -1,5 +1,4 @@
 {
-  options,
   config,
   lib,
   pkgs,
@@ -10,16 +9,11 @@
 with lib;
 with mylib;
 let
-  cfg = config.sys.hardware.audio;
+  enabled = config.services.pipewire.enable;
   bluetoothEnabled = config.hardware.bluetooth.enable;
 in
 {
-  options.sys.hardware.audio = {
-    enable = mkBoolOpt false;
-  };
-
-  config = mkIf cfg.enable {
-
+  config = mkIf enabled {
     security.rtkit.enable = true;
     hardware.pulseaudio = {
       enable = false;
@@ -27,7 +21,6 @@ in
     };
 
     services.pipewire = {
-      enable = true;
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
@@ -56,6 +49,6 @@ in
       };
     };
 
-    sys.user.extraGroups = [ "audio" ];
+    host.user.extraGroups = [ "audio" ];
   };
 }

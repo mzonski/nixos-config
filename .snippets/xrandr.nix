@@ -9,10 +9,10 @@
 with lib;
 with mylib;
 let
-  cfg = config.sys.hardware.graphics.xrandr;
+  cfg = config.host.hardware.graphics.xrandr;
 in
 {
-  options.sys.hardware.graphics.xrandr = {
+  options.host.hardware.graphics.xrandr = {
     enable = mkBoolOpt false;
   };
 

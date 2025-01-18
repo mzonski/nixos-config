@@ -1,6 +1,5 @@
 {
   config,
-  options,
   lib,
   pkgs,
   mylib,
@@ -10,12 +9,12 @@
 with lib;
 with mylib;
 let
-  cfg = config.sys.services.virtualisation;
-  inherit (config.sys) username;
+  cfg = config.features.virtualisation;
+  inherit (config.host) admin;
   virtdGroupName = "libvirtd";
 in
 {
-  options.sys.services.virtualisation = with types; {
+  options.features.virtualisation = with types; {
     enable = mkBoolOpt false;
     macAddress = mkStrOpt "00:00:00:00:00:01";
     virtualBridgeNetwork = mkStrOpt "192.168.122.0/24";
@@ -26,7 +25,7 @@ in
 
   config = mkIf cfg.enable {
 
-    sys.user.extraGroups = [ virtdGroupName ];
+    host.user.extraGroups = [ virtdGroupName ];
 
     boot.kernelParams = [
       "intel_iommu=on"
@@ -53,7 +52,7 @@ in
           ovmf.enable = true;
           ovmf.packages = [ pkgs.OVMFFull.fd ];
           verbatimConfig = ''
-            user = "${username}"
+            user = "${admin}"
             group = "${virtdGroupName}"
             nvram = ["/run/libvirt/nix-ovmf/OVMF_CODE.fd:/run/libvirt/nix-ovmf/OVMF_VARS.fd"]
             gl = 1

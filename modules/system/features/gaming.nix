@@ -9,10 +9,10 @@
 let
   inherit (lib) mkIf;
   inherit (mylib) mkBoolOpt;
-  enabled = config.sys.gaming.enable;
+  enabled = config.features.gaming.enable;
 in
 {
-  options.sys.gaming = {
+  options.features.gaming = {
     enable = mkBoolOpt false;
     package = pkgs.steam.override {
       extraPkgs =

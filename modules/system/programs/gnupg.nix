@@ -1,24 +1,16 @@
 {
   config,
-  options,
   lib,
   pkgs,
-  mylib,
   ...
 }:
-
-with lib;
-with mylib;
 let
-  cfg = config.sys.shell.gnupg;
+  enabled = config.programs.gnupg.agent.enable;
+  inherit (lib) mkIf;
+
 in
 {
-  options.sys.shell.gnupg = with types; {
-    enable = mkBoolOpt false;
-    cacheTTL = mkOpt int 3600;
-  };
-
-  config = mkIf cfg.enable {
+  config = mkIf enabled {
     # environment.shellInit = ''
     #   export GPG_TTY="$(tty)"
     #   export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
@@ -28,15 +20,14 @@ in
     environment.systemPackages = with pkgs; [
       kleopatra
     ];
+
     programs.gnupg = {
       agent = {
-        enable = true;
         enableSSHSupport = true;
         enableBrowserSocket = true;
       };
 
       dirmngr.enable = true;
     };
-
   };
 }

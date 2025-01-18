@@ -3,15 +3,14 @@
   options,
   lib,
   mylib,
-  pkgs,
   ...
 }:
 
 with lib;
 with mylib;
 {
-  options.sys = with types; {
-    username = mkOption {
+  options.host = with types; {
+    admin = mkOption {
       type = types.str;
       description = "Main username";
       example = "zonni";
@@ -29,15 +28,15 @@ with mylib;
   config =
     let
       ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
-      inherit (config.sys) username domain;
+      inherit (config.host) admin domain;
     in
     {
-      sys.user = {
+      host.user = {
         createHome = true;
         isNormalUser = true;
         uid = 1000;
-        group = username;
-        home = "/home/${username}";
+        group = admin;
+        home = "/home/${admin}";
         extraGroups = ifTheyExist [
           "wheel"
           "deluge"
@@ -47,19 +46,20 @@ with mylib;
           "network"
           "plugdev"
           "wireshark"
+          "audio"
         ];
         initialPassword = "nixos";
       };
 
       users.mutableUsers = true;
-      users.users.${username} = mkAliasDefinitions options.sys.user;
-      users.groups.${username} = { };
+      users.users.${admin} = mkAliasDefinitions options.host.user;
+      users.groups.${admin} = { };
 
       networking.domain = domain;
 
       security.sudo.extraRules = [
         {
-          users = [ username ];
+          users = [ admin ];
           commands = [
             {
               command = "ALL";
@@ -73,7 +73,7 @@ with mylib;
         let
           users = [
             "root"
-            username
+            admin
           ];
         in
         {

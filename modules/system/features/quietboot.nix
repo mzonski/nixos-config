@@ -1,6 +1,5 @@
 {
   config,
-  options,
   lib,
   pkgs,
   mylib,
@@ -8,13 +7,13 @@
 }:
 
 let
-  enabled = config.boot.quietboot;
+  enabled = config.features.quietboot.enable;
   inherit (mylib) mkBoolOpt;
   inherit (lib) mkIf;
 in
 {
-  options.boot = {
-    quietboot = mkBoolOpt false;
+  options.features.quietboot = {
+    enable = mkBoolOpt false;
   };
 
   config = mkIf enabled {
@@ -43,6 +42,5 @@ in
       consoleLogLevel = 0;
       initrd.verbose = false;
     };
-
   };
 }

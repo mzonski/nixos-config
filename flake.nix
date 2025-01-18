@@ -36,50 +36,38 @@
   };
 
   outputs =
-    inputs@{
-      self,
-      nixpkgs,
-      nixpkgs-unstable,
-      nixpkgs-master,
-      hyprland-contrib,
-      hyprland,
-      ...
-    }:
+    inputs@{ self, nixpkgs, ... }:
     let
       inherit (mylib)
         mapModules
         mapModulesRec
         mapHosts
         mapHomes
+        mkPkgs
         ;
 
       system = "x86_64-linux";
       stateVersion = "24.11";
 
-      mkPkgs =
-        pkgs: overlays:
-        import pkgs {
-          inherit system;
-          config.allowUnfree = true;
-          config.permittedInsecurePackages = [
-            "archiver-3.5.1"
-          ];
-          overlays = overlays;
-        };
-      #
       pkgs = mkPkgs nixpkgs ((lib.attrValues self.overlays));
-      pkgs' = mkPkgs nixpkgs-unstable [ ];
-      masterPkgs = mkPkgs inputs.nixpkgs-master [ ];
 
       lib = nixpkgs.lib;
-      mylib = import ./lib { inherit pkgs inputs lib; };
+      mylib = import ./lib {
+        inherit
+          pkgs
+          inputs
+          lib
+          system
+          ;
+      };
 
       overlay =
         final: prev:
         {
-          unstable = pkgs';
-          master = masterPkgs;
-          my = self.packages."${system}";
+          unstable = mkPkgs inputs.nixpkgs-unstable [ ];
+          master = mkPkgs inputs.nixpkgs-master [ ];
+          hyprland = inputs.hyprland.packages."${system}";
+          local = self.packages."${system}";
         }
         // (import ./overlays) final prev;
     in
@@ -88,7 +76,7 @@
 
       packages."${system}" = mapModules ./packages (p: pkgs.callPackage p { inherit inputs; });
 
-      nixosModules = mapModulesRec ./modules import;
+      nixosModules = mapModulesRec ./modules/system import;
 
       nixosConfigurations = mapHosts { inherit system stateVersion; };
 
