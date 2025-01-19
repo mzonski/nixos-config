@@ -3,7 +3,7 @@
 let
   inherit (lib) mkOption types;
 in
-rec {
+{
   mkOpt = type: default: mkOption { inherit type default; };
 
   mkOpt' =

@@ -1,12 +1,20 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }:
 
-with lib;
 {
-  config = {
-    environment.systemPackages = with pkgs; [
-      bash
-      curl
-      gnumake
-    ];
-  };
+  environment.systemPackages = with pkgs; [
+    bash
+    curl
+    gnumake
+
+    nix
+    git
+    nano
+    wget
+    unzip
+    home-manager
+
+    openssl
+    sops
+    age
+  ];
 }

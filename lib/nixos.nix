@@ -11,7 +11,7 @@ with lib';
 {
   mkHost =
     path:
-    attrs@{
+    _@{
       system,
       stateVersion,
       ...
@@ -33,17 +33,11 @@ with lib';
             extraOptions = "experimental-features = nix-command flakes ca-derivations";
             nixPath = nixPathInputs ++ [
               "nixpkgs-overlays=${builtins.toString ../overlays}"
-              "dotfiles=${builtins.toString ../.}"
             ];
             registry = registryInputs // {
               dotfiles.flake = inputs.self;
             };
             settings = {
-              allowed-users = [ "@wheel" ];
-              trusted-users = [
-                "root"
-                "@wheel"
-              ];
               auto-optimise-store = true;
               warn-dirty = false;
               flake-registry = ""; # Disable global flake registry
@@ -55,13 +49,14 @@ with lib';
               dates = "weekly";
               options = "--delete-old";
             };
-
           };
+
         system.configurationRevision = with inputs; mkIf (self ? rev) self.rev;
         system.stateVersion = stateVersion;
-
         boot.tmp.cleanOnBoot = true;
         nixpkgs.hostPlatform = system;
+        nixpkgs.pkgs = pkgs;
+        networking.hostName = mkDefault (removeSuffix ".nix" (baseNameOf path));
 
         networking.useDHCP = mkDefault true;
         networking.networkmanager.enable = mkDefault false;
@@ -90,37 +85,12 @@ with lib';
           };
         };
 
-        environment.systemPackages = with pkgs; [
-          nix
-          git
-          nano
-          wget
-          gnumake
-          unzip
-          home-manager
-
-          openssl
-          sops
-          ssh-to-age
-          gnupg
-          age
-        ];
-
         home-manager.useUserPackages = mkDefault true;
         home-manager.useGlobalPkgs = mkDefault true;
         home-manager.extraSpecialArgs = {
           inherit lib' inputs;
         };
         home-manager.sharedModules = (mapModulesRec' (toString ../modules/home) import);
-
-        # Since I am decoupling nix from home manager I don't need it I suppose
-        # my.home =
-        #   { ... }:
-        #   {
-        #     nixpkgs.config = pkgs.config;
-        #     nixpkgs.overlays = pkgs.overlays;
-        #     my.nixGL.enable = false; # we are on NixOS and should not need nixGL
-        #   };
       };
     in
     nixosSystem {
@@ -134,17 +104,6 @@ with lib';
           ;
       };
       modules = [
-        {
-          nixpkgs.pkgs = pkgs;
-          networking.hostName = mkDefault (removeSuffix ".nix" (baseNameOf path));
-        }
-        (filterAttrs (
-          n: v:
-          !elem n [
-            "system"
-            "stateVersion"
-          ]
-        ) attrs)
         defaults
         (import path)
       ];

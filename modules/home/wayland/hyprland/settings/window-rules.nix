@@ -141,29 +141,25 @@ in
 {
   config = mkIf enabled {
     wayland.windowManager.hyprland.settings = {
-      config = mkIf enabled {
-        wayland.windowManager.hyprland.settings = {
-          windowrule = concatLists [
-            firefox.v1
-            mpv.v1
-            imv.v1
-            floating_kitty.v1
-            audio.v1
-            apps.v1
+      windowrule = concatLists [
+        firefox.v1
+        mpv.v1
+        imv.v1
+        floating_kitty.v1
+        audio.v1
+        apps.v1
 
-          ];
-          windowrulev2 = concatLists [
-            firefox.v2
-            mpv.v2
-            imv.v2
-            audio.v2
-            apps.v2
-            pip.v2
-            dialogs.v2
-            xwayland.v2
-          ];
-        };
-      };
+      ];
+      windowrulev2 = concatLists [
+        firefox.v2
+        mpv.v2
+        imv.v2
+        audio.v2
+        apps.v2
+        pip.v2
+        dialogs.v2
+        xwayland.v2
+      ];
     };
   };
 }

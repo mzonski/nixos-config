@@ -11,7 +11,7 @@ with lib';
 {
   mkHome =
     path:
-    attrs@{
+    _@{
       system,
       stateVersion,
       ...
@@ -20,35 +20,27 @@ with lib';
       username = removeSuffix ".nix" (baseNameOf path);
       homeDirectory = "/home/${username}";
 
-      defaults =
-        {
-          config,
-          pkgs,
-          lib,
-          ...
-        }:
-        {
-          systemd.user.startServices = "sd-switch";
-          news.display = "silent";
-          programs.home-manager.enable = true;
-          xdg.enable = true;
-          targets.genericLinux.enable = true;
-          home.stateVersion = stateVersion;
-          home.username = username;
-          home.homeDirectory = homeDirectory;
+      defaults = {
+        systemd.user.startServices = "sd-switch";
+        news.display = "silent";
+        programs.home-manager.enable = true;
+        xdg.enable = true;
+        targets.genericLinux.enable = true;
+        home.stateVersion = stateVersion;
+        home.username = username;
+        home.homeDirectory = homeDirectory;
+        nix.gc = {
+          automatic = true;
+          persistent = true;
+          frequency = "weekly";
+          options = "--delete-old";
         };
+      };
     in
     inputs.home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       modules = (mapModulesRec' (toString ../modules/home) import) ++ [
         defaults
-        (filterAttrs (
-          n: v:
-          !elem n [
-            "system"
-            "stateVersion"
-          ]
-        ) attrs)
         (import path)
       ];
       extraSpecialArgs = {

@@ -19,7 +19,6 @@ let
 
   lib' = makeExtensible (
     self:
-    with self;
     mapModules ./. (
       file:
       import file {
