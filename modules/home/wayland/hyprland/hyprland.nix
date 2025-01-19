@@ -51,7 +51,7 @@ in
       settings = {
         # autostart
         exec-once = [
-          #"${pkgs.lxqt.lxqt-policykit}/bin/lxqt-policykit-agent &"
+          "${pkgs.lxqt.lxqt-policykit}/bin/lxqt-policykit-agent &"
           "${pkgs.swaybg}/bin/swaybg -i ${wallpaper} --mode fill &"
           "hyprctl setcursor '${cursor.name}' ${toString cursor.size} &"
           "systemctl --user import-environment &"

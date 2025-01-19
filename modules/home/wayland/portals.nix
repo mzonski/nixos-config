@@ -12,7 +12,6 @@ let
 in
 {
   config = mkIf enabled {
-    # Polkit
     services.gnome-keyring.enable = true;
 
     xdg.portal = {
