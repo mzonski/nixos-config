@@ -69,7 +69,8 @@
         {
           unstable = mkPkgs inputs.nixpkgs-unstable [ ];
           master = mkPkgs inputs.nixpkgs-master [ ];
-          hyprland = inputs.hyprland.packages."${system}";
+          hyprland = inputs.hyprland.packages.${system};
+          hyprplugins = inputs.hyprland-plugins.packages.${system};
           local = self.packages."${system}";
         }
         // (import ./overlays) final prev;

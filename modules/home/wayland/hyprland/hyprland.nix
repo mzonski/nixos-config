@@ -36,34 +36,34 @@ in
       xwayland.enable = mkDefault true;
       systemd = {
         enable = true;
-        # Same as default, but stop graphical-session too
         extraCommands = lib.mkBefore [
           "systemctl --user stop graphical-session.target"
           "systemctl --user start hyprland-session.target"
         ];
       };
-      package = pkgs.unstable.hyprland;
+      package = pkgs.hyprland.hyprland;
+
+      plugins = [
+        # pkgs.hyprplugins.hyprbars # can't set hyprbar height wtf
+        # pkgs.hyprplugins.hyprexpo # hyprexpo is restarting hyprland atm
+        # pkgs.hyprplugins.xtra-dispatchers
+      ];
 
       settings = {
         # autostart
         exec-once = [
-          "${pkgs.lxqt.lxqt-policykit}/bin/lxqt-policykit-agent &"
+          #"${pkgs.lxqt.lxqt-policykit}/bin/lxqt-policykit-agent &"
           "${pkgs.swaybg}/bin/swaybg -i ${wallpaper} --mode fill &"
           "hyprctl setcursor '${cursor.name}' ${toString cursor.size} &"
           "systemctl --user import-environment &"
           "hash dbus-update-activation-environment 2>/dev/null &"
           "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP &"
-          #"nm-applet &"
-          #"swaybg -m fill -i $(find ~/Pictures/wallpapers/ -maxdepth 1 -type f) &"
-          #"poweralertd"
         ];
 
         general.layout = cfg.defaultLayout;
 
         monitor = [
-          # Primary monitor - will be used if it's the only one connected
           "${monitors.primary.output},3840x2160@60.0,0x450,1.6"
-          # Secondary monitor - using preferred to handle disconnection gracefully
           "${monitors.secondary.output},preferred,2400x0,1.6"
           # Catch-all rule for any other displays
           #",preferred,auto,1"
