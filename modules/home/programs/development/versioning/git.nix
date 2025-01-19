@@ -2,14 +2,12 @@
   config,
   lib,
   pkgs,
-  lib',
   ...
 }:
 
-with lib;
-with lib';
 let
   enabled = config.programs.git.enable;
+  inherit (lib) mkIf;
 in
 {
   config = mkIf enabled {

@@ -6,10 +6,11 @@
   ...
 }:
 
-with lib;
-with lib';
 let
   enabled = config.hom.wayland-wm.panel.waybar.enable;
+
+  inherit (lib') mkBoolOpt;
+  inherit (lib) mkIf;
 in
 {
   options.hom.wayland-wm.panel.swaync = {

@@ -2,13 +2,12 @@
   config,
   lib,
   pkgs,
-  lib',
   ...
 }:
 
-with lib;
-with lib';
 let
+  inherit (lib) mkIf mkDefault mkBefore;
+
   enabled = config.hom.wayland-wm.hyprland.enable;
   cfg = config.hom.wayland-wm.hyprland;
   wallpaper = config.hom.theme.wallpaper;
@@ -36,7 +35,7 @@ in
       xwayland.enable = mkDefault true;
       systemd = {
         enable = true;
-        extraCommands = lib.mkBefore [
+        extraCommands = mkBefore [
           "systemctl --user stop graphical-session.target"
           "systemctl --user start hyprland-session.target"
         ];

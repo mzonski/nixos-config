@@ -6,12 +6,13 @@
   ...
 }:
 
-with lib;
-with lib';
 let
   cfg = config.hom.development.vscode;
   hyprlandEnabled = config.hom.wayland-wm.hyprland.enable;
   fontProfiles = config.hom.theme.fontProfiles;
+
+  inherit (lib') mkBoolOpt;
+  inherit (lib) mkIf;
 in
 {
   options.hom.development.vscode = {

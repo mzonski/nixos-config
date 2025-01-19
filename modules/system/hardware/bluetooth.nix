@@ -3,7 +3,6 @@
 let
   inherit (lib) mkIf;
   enabled = config.hardware.bluetooth.enable;
-
 in
 {
   config = mkIf enabled {

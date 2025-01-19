@@ -1,14 +1,14 @@
 {
   pkgs,
   lib,
-  lib',
   config,
   ...
 }:
-with lib';
-with lib;
+
 let
   enabled = config.services.cliphist.enable;
+
+  inherit (lib) mkIf;
 in
 {
   config = mkIf enabled {

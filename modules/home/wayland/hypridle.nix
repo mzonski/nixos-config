@@ -1,13 +1,12 @@
 {
   pkgs,
   lib,
-  lib',
   config,
   ...
 }:
-with lib';
-with lib;
 let
+  inherit (lib) mkIf optionals;
+
   swaylock = "${config.programs.swaylock.package}/bin/swaylock";
   hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
 

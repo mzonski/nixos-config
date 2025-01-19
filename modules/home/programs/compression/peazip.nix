@@ -5,11 +5,10 @@
   lib',
   ...
 }:
-
-with lib;
-with lib';
 let
   enabled = config.programs.peazip.enable;
+  inherit (lib') mkBoolOpt;
+  inherit (lib) mkIf;
 in
 {
   options.programs.peazip = {

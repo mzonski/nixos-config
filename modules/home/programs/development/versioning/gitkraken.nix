@@ -6,10 +6,10 @@
   ...
 }:
 
-with lib;
-with lib';
 let
   cfg = config.programs.gitkraken;
+  inherit (lib') mkBoolOpt mkEnumOpt;
+  inherit (lib) mkIf;
 in
 {
   options.programs.gitkraken = {

@@ -6,10 +6,11 @@
   ...
 }:
 
-with lib;
-with lib';
 let
   cfg = config.hom.development;
+
+  inherit (lib') mkBoolOpt;
+  inherit (lib) mkIf;
 in
 {
   options.hom.development = {

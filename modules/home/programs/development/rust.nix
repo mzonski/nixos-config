@@ -6,9 +6,10 @@
   ...
 }:
 
-with lib;
-with lib';
 let
+  inherit (lib') mkBoolOpt;
+  inherit (lib) mkIf;
+
   cfg = config.hom.development;
 
   rustWithStd = pkgs.rust-bin.stable.latest.default.override {

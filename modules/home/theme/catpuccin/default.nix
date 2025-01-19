@@ -5,10 +5,11 @@
   ...
 }:
 
-with lib;
-with lib';
 let
   cfg = config.hom.theme.catpuccin;
+
+  inherit (lib') mkBoolOpt;
+  inherit (lib) mkIf;
 in
 {
   options.hom.theme.catpuccin = {
@@ -17,7 +18,7 @@ in
 
   config = mkIf cfg.enable {
     catppuccin = {
-      enable = true;
+      enable = false;
       flavor = "mocha";
       cursors.enable = false;
       cursors.flavor = "mocha";

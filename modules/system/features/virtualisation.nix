@@ -6,15 +6,16 @@
   ...
 }:
 
-with lib;
-with lib';
 let
   cfg = config.features.virtualisation;
   inherit (config.host) admin;
   virtdGroupName = "libvirtd";
+
+  inherit (lib') mkBoolOpt mkStrOpt;
+  inherit (lib) mkIf;
 in
 {
-  options.features.virtualisation = with types; {
+  options.features.virtualisation = {
     enable = mkBoolOpt false;
     macAddress = mkStrOpt "00:00:00:00:00:01";
     virtualBridgeNetwork = mkStrOpt "192.168.122.0/24";
@@ -78,8 +79,8 @@ in
       useDHCP = lib.mkDefault true;
 
       networkmanager.unmanaged = [
-        bridgeInterface
-        externalInterface
+        cfg.bridgeInterface
+        cfg.externalInterface
       ];
 
       useNetworkd = lib.mkDefault true;

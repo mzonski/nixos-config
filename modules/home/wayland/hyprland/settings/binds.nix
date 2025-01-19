@@ -1,12 +1,12 @@
 {
   config,
   lib,
-  lib',
   ...
 }:
-with lib;
-with lib';
+
 let
+  inherit (lib) mkIf concatLists;
+
   enabled = config.hom.wayland-wm.hyprland.enable;
   cmds = config.commands;
 

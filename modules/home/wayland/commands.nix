@@ -1,5 +1,7 @@
 { lib', ... }:
-with lib';
+let
+  inherit (lib') mkStrOpt;
+in
 {
   options.commands = {
     runTerminal = mkStrOpt "kitty";

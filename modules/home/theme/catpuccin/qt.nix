@@ -60,6 +60,8 @@ in
       kdePackages.breeze-icons
       libsForQt5.qt5.qtbase
       qt6.qtbase
+      qt6.qtwayland
+      qt5.qtwayland
     ];
 
     qt = {

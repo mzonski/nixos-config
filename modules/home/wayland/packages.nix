@@ -2,14 +2,13 @@
   config,
   pkgs,
   lib,
-  lib',
   ...
 }:
 
-with lib;
-with lib';
 let
   enabled = config.hom.wayland-wm.panel.waybar.enable;
+
+  inherit (lib) mkIf;
 in
 {
   config = mkIf enabled {

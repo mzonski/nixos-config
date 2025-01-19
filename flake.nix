@@ -71,6 +71,7 @@
           master = mkPkgs inputs.nixpkgs-master [ ];
           hyprland = inputs.hyprland.packages.${system};
           hyprplugins = inputs.hyprland-plugins.packages.${system};
+          firefoxAddons = inputs.firefox-addons.packages.${system};
           local = self.packages."${system}";
         }
         // (import ./overlays) final prev;
@@ -80,7 +81,7 @@
 
       packages."${system}" = mapModules ./packages (p: pkgs.callPackage p { inherit inputs; });
 
-      nixosModules = mapModulesRec ./modules import;
+      nixosModules = mapModulesRec ./modules/system import;
 
       nixosConfigurations = mapHosts { inherit system stateVersion; };
 

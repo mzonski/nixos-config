@@ -6,8 +6,18 @@
   ...
 }:
 
-with lib;
-with lib';
+let
+  inherit (lib') mapModulesRec' mapModules mkHost;
+  inherit (lib)
+    mkIf
+    filterAttrs
+    mapAttrsToList
+    mapAttrs
+    mkDefault
+    removeSuffix
+    nixosSystem
+    ;
+in
 {
   mkHost =
     path:

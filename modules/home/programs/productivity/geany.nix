@@ -6,10 +6,11 @@
   ...
 }:
 
-with lib;
-with lib';
 let
   cfg = config.programs.geany;
+
+  inherit (lib') mkBoolOpt mkEnumOpt;
+  inherit (lib) mkIf;
 in
 {
   options.programs.geany = {

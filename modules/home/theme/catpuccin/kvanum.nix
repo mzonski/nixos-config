@@ -6,10 +6,10 @@
   ...
 }:
 
-with lib;
-with lib';
-
 let
+  inherit (lib') capitalize;
+  inherit (lib) mkIf;
+
   enabled = config.qt.enable;
   variant = "mocha";
   accent = "mauve";

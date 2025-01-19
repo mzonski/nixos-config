@@ -1,12 +1,20 @@
 {
   config,
   lib,
-  lib',
   ...
 }:
 
-with lib;
-with lib';
+let
+  inherit (lib)
+    types
+    mkOption
+    concatStringsSep
+    concatMapStringsSep
+    mapAttrsToList
+    mapAttrs
+    isList
+    ;
+in
 {
   options.host = with types; {
     env = mkOption {

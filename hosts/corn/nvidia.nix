@@ -18,7 +18,6 @@
   environment.systemPackages = with pkgs; [
     libva-utils
     vdpauinfo
-
   ];
 
   hardware.graphics = {

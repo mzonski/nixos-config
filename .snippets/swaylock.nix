@@ -1,15 +1,14 @@
 {
   pkgs,
   lib,
-  lib',
   config,
   ...
 }:
-with lib';
-with lib;
 let
   enabled = config.hom.wayland-wm.hyprland.enable && config.hom.wayland-wm.idle.lockEnabled;
   fontProfile = config.hom.theme.fontProfiles.regular;
+
+  inherit (lib) mkIf;
 in
 {
   config = mkIf enabled {

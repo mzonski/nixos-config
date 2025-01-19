@@ -2,15 +2,14 @@
   config,
   lib,
   pkgs,
-  lib',
   ...
 }:
 
-with lib;
-with lib';
 let
   enabled = config.services.pipewire.enable;
   bluetoothEnabled = config.hardware.bluetooth.enable;
+
+  inherit (lib) mkIf;
 in
 {
   config = mkIf enabled {

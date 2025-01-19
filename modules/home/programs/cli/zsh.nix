@@ -2,14 +2,13 @@
   config,
   pkgs,
   lib,
-  lib',
   ...
 }:
-with lib;
-with lib';
+
 let
   enabled = config.programs.zsh.enable;
   inherit (pkgs) stdenv;
+  inherit (lib) mkIf mkDefault;
 in
 {
   config = mkIf enabled {

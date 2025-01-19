@@ -6,10 +6,11 @@
   ...
 }:
 
-with lib;
-with lib';
 let
   cfg = config.hom.wayland-wm.hyprland;
+
+  inherit (lib') mkBoolOpt mkStrOpt mkNumOpt;
+  inherit (lib) mkIf;
 in
 {
   options.hom.wayland-wm.hyprland = {
@@ -47,17 +48,9 @@ in
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       hyprpicker
-      grim
-      slurp
-
-      #wf-recorder
-
       brightnessctl # Control brightness of monitor
-
-      lxqt.lxqt-policykit # Polkit
-      # Fixes QT issues
-      qt6.qtwayland # For Qt6 applications
-      qt5.qtwayland # For Qt5 applications
+      #grim
+      #slurp
     ];
   };
 }

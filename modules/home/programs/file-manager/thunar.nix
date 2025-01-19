@@ -6,14 +6,14 @@
   ...
 }:
 
-with lib;
-with lib';
 let
   enabled = config.programs.file-manager.app == "thunar";
   thunarPlugins = with pkgs.xfce; [
     thunar-volman
     thunar-archive-plugin
   ];
+  inherit (lib') mkBoolOpt;
+  inherit (lib) mkIf;
 in
 {
   options.programs.file-manager = {

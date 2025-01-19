@@ -1,15 +1,15 @@
 {
-  options,
   config,
   lib,
   lib',
   ...
 }:
 
-with lib;
-with lib';
 let
   cfg = config.host.hardware.graphics.xrandr;
+
+  inherit (lib') mkBoolOpt;
+  inherit (lib) mkIf;
 in
 {
   options.host.hardware.graphics.xrandr = {

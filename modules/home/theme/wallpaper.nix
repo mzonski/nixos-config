@@ -1,11 +1,8 @@
-{
-  lib,
-  lib',
-  ...
-}:
+{ lib, ... }:
 
-with lib;
-with lib';
+let
+  inherit (lib) mkOption types;
+in
 {
   options.hom.theme.wallpaper = mkOption {
     type = types.nullOr types.path;

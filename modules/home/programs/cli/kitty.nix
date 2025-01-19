@@ -2,16 +2,15 @@
   config,
   lib,
   pkgs,
-  lib',
   ...
 }:
 
-with lib;
-with lib';
 let
   enabled = config.programs.kitty.enable;
   zshEnabled = config.programs.zsh.enable;
   fontProfile = config.hom.theme.fontProfiles.monospace;
+
+  inherit (lib) mkIf;
 in
 {
   config = mkIf enabled {

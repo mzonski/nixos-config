@@ -1,7 +1,18 @@
 { lib, ... }:
 
-with builtins;
-with lib;
+let
+  inherit (builtins) attrValues;
+  inherit (lib)
+    mapAttrsToList
+    filterAttrs
+    foldl'
+    mapAttrs'
+    listToAttrs
+    any
+    count
+    mergeAttrs
+    ;
+in
 rec {
   # attrsToList
   attrsToList = attrs: mapAttrsToList (name: value: { inherit name value; }) attrs;

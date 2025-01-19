@@ -2,14 +2,13 @@
   config,
   lib,
   pkgs,
-  lib',
   ...
 }:
 
-with lib;
-with lib';
 let
   enabled = config.hom.wayland-wm.hyprland.enable;
+
+  inherit (lib) mkIf;
 in
 {
   config = mkIf enabled {

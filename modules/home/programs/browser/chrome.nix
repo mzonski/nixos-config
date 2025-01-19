@@ -6,8 +6,6 @@
   ...
 }:
 
-with lib;
-with lib';
 let
   enabled = config.programs.chrome.enable;
   # Still no HW accel on wayland. X11 works like a charm. hopefully it will be fixed in 570
@@ -17,6 +15,9 @@ let
     "--ozone-platform-hint=auto"
     "--enable-features=MiddleClickAutoscroll,AcceleratedVideoDecodeLinuxZeroCopyGL,AcceleratedVideoDecodeLinuxGL,VaapiIgnoreDriverChecks,VaapiOnNvidiaGPUs"
   ];
+
+  inherit (lib') mkBoolOpt;
+  inherit (lib) mkIf;
 in
 {
   options.programs.chrome = {

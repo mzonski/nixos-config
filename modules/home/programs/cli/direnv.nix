@@ -1,14 +1,13 @@
 {
   config,
   lib,
-  lib',
   ...
 }:
 
-with lib;
-with lib';
 let
   enabled = config.programs.direnv.enable;
+
+  inherit (lib) mkIf;
 in
 {
   config = mkIf enabled {

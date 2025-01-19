@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   console.packages = [ pkgs.terminus_font ];
-  console.font = "${pkgs.terminus_font}/share/consolefonts/ter-u16b.psf.gz";
+  console.font = "${pkgs.terminus_font}/share/consolefonts/ter-u16b.psf.gz"; # TODO: HiDPI
   # Homebrew color scheme @ https://gogh-co.github.io/Gogh/
   console.colors = [
     "000000"

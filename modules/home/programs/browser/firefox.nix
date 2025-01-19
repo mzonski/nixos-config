@@ -1,5 +1,4 @@
 {
-  inputs,
   config,
   lib,
   pkgs,
@@ -7,11 +6,13 @@
   ...
 }:
 
-with lib;
-with lib';
 let
   cfg = config.programs.firefox;
   username = config.home.username;
+
+  inherit (builtins) toJSON;
+  inherit (lib') mkBoolOpt;
+  inherit (lib) mkIf mkDefault genAttrs;
 in
 {
   options.programs.firefox = {
@@ -36,7 +37,7 @@ in
           };
         };
         bookmarks = { };
-        extensions = with inputs.firefox-addons.packages."x86_64-linux"; [
+        extensions = with pkgs.firefoxAddons; [
           bitwarden
           ublock-origin
           sponsorblock
@@ -70,7 +71,7 @@ in
           "browser.newtabpage.activity-stream.feeds.topsites" = false;
           "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
           "browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts" = false;
-          "browser.newtabpage.blocked" = lib.genAttrs [
+          "browser.newtabpage.blocked" = genAttrs [
             # Youtube
             "26UbzFJ7qT9/4DhodHKA1Q=="
             # Facebook
@@ -120,7 +121,7 @@ in
           "privacy.trackingprotection.enabled" = true;
           "dom.security.https_only_mode" = true;
           # Layout
-          "browser.uiCustomization.state" = builtins.toJSON {
+          "browser.uiCustomization.state" = toJSON {
             currentVersion = 20;
             newElementCount = 5;
             dirtyAreaCache = [

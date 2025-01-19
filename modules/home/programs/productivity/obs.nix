@@ -2,14 +2,13 @@
   config,
   lib,
   pkgs,
-  lib',
   ...
 }:
 
-with lib;
-with lib';
 let
   enabled = config.programs.obs-studio.enable;
+
+  inherit (lib) mkIf;
 in
 {
   config = mkIf enabled {

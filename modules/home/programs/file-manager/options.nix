@@ -1,14 +1,13 @@
 {
   config,
-  lib,
   lib',
   ...
 }:
 
-with lib;
-with lib';
 let
   cfg = config.programs.file-manager;
+
+  inherit (lib') mkBoolOpt mkEnumOpt;
 in
 {
   options.programs.file-manager = {

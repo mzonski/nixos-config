@@ -6,10 +6,11 @@
   ...
 }:
 
-with lib;
-with lib';
 let
   enabled = config.hom.development.jetbrains.toolbox;
+
+  inherit (lib') mkBoolOpt;
+  inherit (lib) mkIf;
 in
 {
   options.hom.development.jetbrains = {

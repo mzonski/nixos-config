@@ -5,9 +5,10 @@
   pkgs,
   ...
 }:
-
-with lib;
-with lib';
+let
+  inherit (lib') mapModulesRec' mapModules mkHome;
+  inherit (lib) removeSuffix;
+in
 {
   mkHome =
     path:

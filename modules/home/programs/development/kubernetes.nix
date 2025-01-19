@@ -6,10 +6,11 @@
   ...
 }:
 
-with lib;
-with lib';
 let
   enabled = config.development.kubernetes.enable;
+
+  inherit (lib') mkBoolOpt;
+  inherit (lib) mkIf;
 in
 {
   options.development.kubernetes = {

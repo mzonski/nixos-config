@@ -2,13 +2,12 @@
   config,
   lib,
   pkgs,
-  lib',
   ...
 }:
 
-with lib;
-with lib';
 let
+  inherit (lib) mkIf;
+
   enabled = config.hom.wayland-wm.panel.waybar.enable;
 
   # Theme configuration

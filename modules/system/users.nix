@@ -5,9 +5,11 @@
   lib',
   ...
 }:
+let
+  inherit (lib) types mkOption mkAliasDefinitions;
+  inherit (lib') mkOpt;
+in
 
-with lib;
-with lib';
 {
   options.host = with types; {
     admin = mkOption {

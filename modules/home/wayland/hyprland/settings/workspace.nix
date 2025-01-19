@@ -1,13 +1,12 @@
 {
   config,
   lib,
-  lib',
   ...
 }:
 
-with lib;
-with lib';
 let
+  inherit (lib) mkIf;
+
   cfg = config.hom.wayland-wm.hyprland;
   enabled = cfg.enable;
   primaryOut = cfg.monitors.primary.output;

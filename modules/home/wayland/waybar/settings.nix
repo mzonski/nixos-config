@@ -1,13 +1,12 @@
 {
   config,
   lib,
-  lib',
   ...
 }:
 
-with lib;
-with lib';
 let
+  inherit (lib) mkIf;
+
   enabled = config.hom.wayland-wm.panel.waybar.enable;
 
   monitors = config.hom.wayland-wm.hyprland.monitors;

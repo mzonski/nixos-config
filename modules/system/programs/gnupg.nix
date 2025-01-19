@@ -7,7 +7,6 @@
 let
   enabled = config.programs.gnupg.agent.enable;
   inherit (lib) mkIf;
-
 in
 {
   config = mkIf enabled {

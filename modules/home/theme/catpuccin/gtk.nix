@@ -2,14 +2,16 @@
   config,
   lib,
   pkgs,
-  lib',
   ...
 }:
 
-with lib;
-with lib';
 let
   inherit (config.hom.theme.catpuccin) enable;
+
+  inherit (lib) mkIf;
+
+  themeName = "Colloid-Purple-Dark-Compact-Catppuccin";
+  iconThemeName = "Papirus-Dark";
 in
 {
   config = mkIf enable (
@@ -42,7 +44,7 @@ in
       gtk = {
         enable = true;
         iconTheme = {
-          name = "Papirus-Dark";
+          name = iconThemeName;
           package = pkgs.catppuccin-papirus-folders.override {
             flavor = "mocha";
             accent = "mauve";
@@ -55,7 +57,7 @@ in
           size = 24;
         };
         theme = {
-          name = "Colloid-Purple-Dark-Compact-Catppuccin";
+          name = themeName;
           package = colloid-theme;
         };
       };
@@ -71,8 +73,8 @@ in
       services.xsettingsd = {
         enable = false; # on wayland we don't need x11, think what if you need to use x11
         settings = {
-          "Net/ThemeName" = "${gtk.theme.name}";
-          "Net/IconThemeName" = "${gtk.iconTheme.name}";
+          "Net/ThemeName" = themeName;
+          "Net/IconThemeName" = iconThemeName;
         };
       };
 
