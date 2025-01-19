@@ -21,7 +21,6 @@ in
       extraPortals = with pkgs; [
         pkgs.hyprland.xdg-desktop-portal-hyprland
         xdg-desktop-portal-gtk
-        xdg-desktop-portal-kde
         xdg-desktop-portal-wlr
       ];
       config = {
@@ -31,7 +30,6 @@ in
             "gtk"
           ];
           "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
-          "org.freedesktop.impl.portal.FileChooser" = [ "kde" ];
         };
       };
     };
