@@ -41,6 +41,8 @@
   services.cliphist.enable = true;
   services.hypridle.enable = true;
 
+  programs.gpg.enable = true;
+
   qt.enable = true;
 
   development.kubernetes.enable = true;
@@ -59,8 +61,9 @@
   };
 
   hom = {
-    development = {
+    pgpKey = ./pgp.asc;
 
+    development = {
       jetbrains.toolbox = true;
       node = true;
       rust = false;
@@ -71,6 +74,7 @@
     wayland-wm = {
       hyprland = {
         enable = true;
+        source = "unstable";
       };
       panel.waybar.enable = true;
       panel.swaync.enable = true;

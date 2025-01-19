@@ -14,7 +14,7 @@
   boot.loader.systemd-boot.enable = true;
 
   windows.variant = "hyprland";
-  windows.hyprland.source = "input";
+  windows.hyprland.source = "unstable";
 
   networking.firewall.enable = false; # Disable firewall
 
@@ -33,7 +33,7 @@
   programs.nix-ld.enable = false;
   programs.dconf.enable = true;
   programs.zsh.enable = true;
-  programs.gnupg.agent.enable = true;
+  #programs.gnupg.agent.enable = true;
 
   security.polkit.enable = true;
 }

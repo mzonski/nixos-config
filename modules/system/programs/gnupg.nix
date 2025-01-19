@@ -10,11 +10,11 @@ let
 in
 {
   config = mkIf enabled {
-    # environment.shellInit = ''
-    #   export GPG_TTY="$(tty)"
-    #   export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-    #   gpgconf --launch gpg-agent
-    # '';
+    environment.shellInit = ''
+      export GPG_TTY="$(tty)"
+      export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+      gpgconf --launch gpg-agent
+    '';
 
     environment.systemPackages = with pkgs; [
       kleopatra

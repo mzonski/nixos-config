@@ -17,7 +17,6 @@ in
     xdg.portal = {
       enable = true;
       extraPortals = with pkgs; [
-        pkgs.hyprland.xdg-desktop-portal-hyprland
         xdg-desktop-portal-gtk
         xdg-desktop-portal-wlr
       ];

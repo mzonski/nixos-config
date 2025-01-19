@@ -1,0 +1,18 @@
+keys:
+  - &users:
+    - &zonni 1DE6074072F24AB36243CD7E3966358398A56CC1
+  - &hosts:
+    - &corn age1sthm3vzwh50zes4rjau2v9c0eeu529vtx20fuyh9d8kxyvdp6c2snkvfl2
+creation_rules:
+  - path_regex: shared-secrets.ya?ml$
+    key_groups:
+      - age:
+          - *corn
+        pgp:
+          - *zonni
+  - path_regex: hosts/corn/secrets.ya?ml$
+    key_groups:
+      - age:
+          - *corn
+      - pgp:
+          - *zonni

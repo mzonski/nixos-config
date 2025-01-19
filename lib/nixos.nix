@@ -30,6 +30,7 @@ in
       defaults = {
         imports = [
           inputs.home-manager.nixosModules.home-manager
+          inputs.sops-nix.nixosModules.sops
         ] ++ (mapModulesRec' (toString ../modules/system) import);
         environment.variables.NIXPKGS_ALLOW_UNFREE = "1";
         nix =
@@ -100,7 +101,9 @@ in
         home-manager.extraSpecialArgs = {
           inherit lib' inputs;
         };
-        home-manager.sharedModules = (mapModulesRec' (toString ../modules/home) import);
+        home-manager.sharedModules = (mapModulesRec' (toString ../modules/home) import) ++ [
+          inputs.sops-nix.homeManagerModules.sops
+        ];
       };
     in
     nixosSystem {

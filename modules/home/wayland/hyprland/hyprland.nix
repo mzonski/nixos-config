@@ -13,6 +13,23 @@ let
   wallpaper = config.hom.theme.wallpaper;
   cursor = config.gtk.cursorTheme;
   monitors = cfg.monitors;
+
+  hyprSource = config.windows.hyprland.source;
+
+  hyprlandPackages = {
+    stable = {
+      package = pkgs.hyprland;
+      portalPackage = pkgs.xdg-desktop-portal-hyprland;
+    };
+    unstable = {
+      package = pkgs.unstable.hyprland;
+      portalPackage = pkgs.unstable.xdg-desktop-portal-hyprland;
+    };
+    input = {
+      package = pkgs.hyprland.hyprland;
+      portalPackage = pkgs.hyprland.xdg-desktop-portal-hyprland;
+    };
+  };
 in
 {
   config = mkIf enabled {
@@ -31,8 +48,8 @@ in
     systemd.user.targets.hyprland-session.Unit.Wants = [ "xdg-desktop-autostart.target" ];
 
     wayland.windowManager.hyprland = {
-      enable = mkDefault true;
-      xwayland.enable = mkDefault true;
+      enable = true;
+      xwayland.enable = true;
       systemd = {
         enable = true;
         extraCommands = mkBefore [
@@ -40,7 +57,6 @@ in
           "systemctl --user start hyprland-session.target"
         ];
       };
-      package = pkgs.hyprland.hyprland;
 
       plugins = [
         # pkgs.hyprplugins.hyprbars # can't set hyprbar height wtf

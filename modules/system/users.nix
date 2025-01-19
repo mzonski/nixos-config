@@ -50,12 +50,18 @@ in
           "wireshark"
           "audio"
         ];
-        initialPassword = "nixos";
+        openssh.authorizedKeys.keys = lib.splitString "\n" (builtins.readFile ../../homes/${admin}/ssh.pub);
+        hashedPasswordFile = config.sops.secrets."${admin}-password".path;
       };
 
-      users.mutableUsers = true;
+      users.mutableUsers = false;
       users.users.${admin} = mkAliasDefinitions options.host.user;
       users.groups.${admin} = { };
+
+      sops.secrets."${admin}-password" = {
+        sopsFile = ../../shared-secrets.yaml;
+        neededForUsers = true;
+      };
 
       networking.domain = domain;
 

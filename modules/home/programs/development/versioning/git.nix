@@ -60,10 +60,10 @@ in
 
       lfs.enable = true;
 
-      # signing = {
-      #   key = "your-gpg-key-id";
-      #   signByDefault = true;
-      # };
+      signing = {
+        key = "1DE6074072F24AB36243CD7E3966358398A56CC1";
+        signByDefault = true;
+      };
     };
 
   };

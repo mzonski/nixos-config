@@ -43,6 +43,7 @@ in
       modules = (mapModulesRec' (toString ../modules/home) import) ++ [
         defaults
         (import path)
+        inputs.sops-nix.homeManagerModules.sops
       ];
       extraSpecialArgs = {
         inherit
