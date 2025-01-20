@@ -75,5 +75,10 @@
     bleachbit # Program to clean your computer
     buttermanager # manage btrfs
     qdirstat # Visualise used disk space
+
+    ## FONTS
+    vistafonts
+    textfonts
+    font-awesome
   ];
 }

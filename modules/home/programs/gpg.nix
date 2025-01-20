@@ -21,7 +21,7 @@ in
       enable = true;
       enableSshSupport = true;
       enableExtraSocket = true;
-      pinentryPackage = if config.gtk.enable then pkgs.pinentry-gnome3 else pkgs.pinentry-tty;
+      pinentryPackage = pkgs.wayprompt;
     };
 
     programs.gpg = {
