@@ -74,7 +74,7 @@
     wayland-wm = {
       hyprland = {
         enable = true;
-        source = "unstable";
+        source = "input";
       };
       panel.waybar.enable = true;
       panel.swaync.enable = true;

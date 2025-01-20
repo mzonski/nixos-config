@@ -14,7 +14,7 @@
   boot.loader.systemd-boot.enable = true;
 
   windows.variant = "hyprland";
-  windows.hyprland.source = "unstable";
+  windows.hyprland.source = "input";
 
   networking.firewall.enable = false; # Disable firewall
 
