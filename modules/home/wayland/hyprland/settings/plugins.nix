@@ -7,25 +7,26 @@ let
 in
 {
   config = mkIf enabled {
-    wayland.windowManager.hyprland.settings.plugins = {
+    wayland.windowManager.hyprland.settings.plugin = {
       hyprbars = {
-        #bar_color = "rgb(ff0000)";
-        bar_height = 48;
-        #col.text = "rgb(00ff00)";
-        # bar_text_size = 22;
-        #bar_title_enabled = true;
-        #bar_blur = false;
+        bar_color = "rgb(1E1E2E)";
+        col.text = "rgb(CDD6F4)";
         bar_text_font = regularFont.name;
-        #bar_text_align = "left";
-        #bar_part_of_window = true;
-        #bar_precedence_over_border = true;
-        #bar_buttons_alignment = "right";
-        #bar_padding = 4;
-        #bar_button_padding = 2;
+        bar_text_align = "left";
+        bar_buttons_alignment = "right";
+        bar_height = 32;
+        bar_text_size = 12;
+        bar_padding = 4;
+        bar_button_padding = 2;
+
+        bar_title_enabled = true;
+        bar_blur = false;
+        bar_part_of_window = true;
+        bar_precedence_over_border = false;
 
         hyprbars-button = [
-          "rgb(0000ff), 24,  󰖭  , hyprctl dispatch killactive"
-          "rgb(eeee11), 24,    , hyprctl dispatch fullscreen 1"
+          "rgb(000000), 24,  󰖭  , hyprctl dispatch killactive, rgb(f38ba8)"
+          "rgb(000000), 24,    , hyprctl dispatch fullscreen 1"
         ];
       };
 

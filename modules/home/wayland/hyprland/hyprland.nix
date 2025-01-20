@@ -59,7 +59,7 @@ in
       };
 
       plugins = [
-        # pkgs.hyprplugins.hyprbars # can't set hyprbar height wtf
+        pkgs.hyprplugins.hyprbars
         # pkgs.hyprplugins.hyprexpo # hyprexpo is restarting hyprland atm
         # pkgs.hyprplugins.xtra-dispatchers
       ];
