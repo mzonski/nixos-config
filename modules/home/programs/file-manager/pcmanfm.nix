@@ -18,7 +18,7 @@ in
 
   config = mkIf enabled {
     home.packages = with pkgs; [
-      pcmanfm
+      lxqt.pcmanfm-qt
       xarchiver
     ];
   };
