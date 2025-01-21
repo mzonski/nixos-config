@@ -27,6 +27,8 @@ in
         hyprbars-button = [
           "rgb(000000), 24,  󰖭  , hyprctl dispatch killactive, rgb(f38ba8)"
           "rgb(000000), 24,    , hyprctl dispatch fullscreen 1"
+          "rgb(000000), 24,  󰛺  , hyprctl dispatch pseudo"
+          "rgb(000000), 24,    , hyprctl dispatch togglefloating"
         ];
       };
 

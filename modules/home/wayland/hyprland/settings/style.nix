@@ -20,7 +20,6 @@ in
         "col.inactive_border" = "0x00000000";
         border_part_of_window = false;
         no_border_on_floating = false;
-        layout = "dwindle";
         resize_on_border = true;
       };
 

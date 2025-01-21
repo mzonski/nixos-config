@@ -8,6 +8,7 @@
 let
   inherit (lib') mapModulesRec' mapModules mkHome;
   inherit (lib) removeSuffix;
+  inherit (inputs.home-manager.lib) homeManagerConfiguration;
 in
 {
   mkHome =
@@ -38,7 +39,7 @@ in
         };
       };
     in
-    inputs.home-manager.lib.homeManagerConfiguration {
+    homeManagerConfiguration {
       inherit pkgs;
       modules = (mapModulesRec' (toString ../modules/home) import) ++ [
         defaults

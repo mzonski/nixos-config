@@ -17,6 +17,8 @@ let
     removeSuffix
     nixosSystem
     ;
+
+  homeManagerModules = (mapModulesRec' (toString ../modules/home) import);
 in
 {
   mkHost =
@@ -101,7 +103,7 @@ in
         home-manager.extraSpecialArgs = {
           inherit lib' inputs;
         };
-        home-manager.sharedModules = (mapModulesRec' (toString ../modules/home) import) ++ [
+        home-manager.sharedModules = homeManagerModules ++ [
           inputs.sops-nix.homeManagerModules.sops
         ];
       };

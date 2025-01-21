@@ -31,8 +31,8 @@ let
   ];
 
   mouseWorkspaceNavigation = [
-    "$mainMod, $mouseWheelUp, workspace, e+1" # Next workspace
-    "$mainMod, $mouseWheelDown, workspace, e-1" # Previous workspace
+    "$mainMod, $mouseForward, workspace, e+1" # Next workspace
+    "$mainMod, $mouseBack, workspace, e-1" # Previous workspace
 
     "$mainMod, $mouseMiddle, togglefloating" # Toggle window floating state
 

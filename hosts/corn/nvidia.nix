@@ -52,13 +52,9 @@
     package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
 
-  hardware.nvidia-container-toolkit = {
-    enable = false;
-  };
-
-  virtualisation.docker = {
-    enableNvidia = true;
-  };
+  #hardware.nvidia-container-toolkit = {
+  #  enable = false;
+  #};
 
   host.user.extraGroups = [ "video" ];
 }

@@ -75,7 +75,7 @@ in
           "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP &"
         ];
 
-        general.layout = cfg.defaultLayout;
+        # general.layout = cfg.defaultLayout;
 
         monitor = [
           "${monitors.primary.output},3840x2160@60.0,0x450,1.6"

@@ -28,9 +28,9 @@
     nil-ls.url = "github:oxalica/nil";
     catppuccin.url = "github:catppuccin/nix";
 
-    hyprland.url = "github:hyprwm/Hyprland";
+    hyprland.url = "github:hyprwm/Hyprland/8dd2cd41fb4c5a5eb6886cc190419b36084cabfa";
     hyprland-plugins = {
-      url = "github:hyprwm/hyprland-plugins";
+      url = "github:hyprwm/hyprland-plugins/d2dad5b434b338d18458bafa506f2993c13f24fc";
       inputs.hyprland.follows = "hyprland";
     };
   };

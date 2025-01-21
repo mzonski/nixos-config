@@ -16,6 +16,8 @@
   windows.variant = "hyprland";
   windows.hyprland.source = "input";
 
+  virtualisation.docker.enable = true;
+
   networking.firewall.enable = false; # Disable firewall
 
   services.tumbler.enable = true; # Enable thumbnail service
