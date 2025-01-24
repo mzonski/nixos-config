@@ -92,7 +92,8 @@ in
         ];
 
         boot = {
-          kernelPackages = mkDefault pkgs.linuxPackages_latest;
+          # kernelPackages = mkDefault pkgs.linuxPackages_latest;
+          kernelPackages = mkDefault pkgs.linuxPackages_6_12;
           loader = {
             efi.canTouchEfiVariables = mkDefault true;
           };
