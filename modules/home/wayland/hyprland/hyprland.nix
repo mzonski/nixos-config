@@ -36,10 +36,7 @@ in
     home.sessionVariables = {
       QT_QPA_PLATFORM = "wayland";
       #QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-      #QT_QPA_PLATFORMTHEME = "gtk2";
       GDK_BACKEND = "wayland";
-      # Additional useful variables for Wayland/Qt
-      #QT_QPA_PLATFORMTHEME = "qt5ct"; # For Qt theme configuration
       NIXOS_OZONE_WL = "1"; # For Electron apps to use Wayland
       HYPRCURSOR_THEME = cursor.name;
       HYPRCURSOR_SIZE = cursor.size;
@@ -65,7 +62,6 @@ in
       ];
 
       settings = {
-        # autostart
         exec-once = [
           "${pkgs.lxqt.lxqt-policykit}/bin/lxqt-policykit-agent &"
           "${pkgs.swaybg}/bin/swaybg -i ${wallpaper} --mode fill &"
@@ -75,13 +71,9 @@ in
           "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP &"
         ];
 
-        # general.layout = cfg.defaultLayout;
-
         monitor = [
           "${monitors.primary.output},3840x2160@60.0,0x450,1.6"
           "${monitors.secondary.output},preferred,2400x0,1.6"
-          # Catch-all rule for any other displays
-          #",preferred,auto,1"
         ];
 
         misc = {
@@ -97,10 +89,6 @@ in
         xwayland.force_zero_scaling = true;
         opengl.nvidia_anti_flicker = false;
       };
-    };
-
-    programs.direnv = {
-      enable = mkDefault true;
     };
   };
 }

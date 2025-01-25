@@ -159,21 +159,6 @@ let
 in
 {
   config = mkIf enabled {
-    wayland.windowManager.hyprland.settings.general = variables;
-    wayland.windowManager.hyprland.settings.bindm = mouseEventBinds;
-
-    wayland.windowManager.hyprland.settings.bind = concatLists [
-      mouseWorkspaceNavigation
-      workspaceNavigation
-      moveWindowFocus
-      terminalLauncher
-      appLaunchers
-      windowControl.layout
-      windowControl.move
-      windowControl.resize
-      mediaControl
-      system
-    ];
 
   };
 }
