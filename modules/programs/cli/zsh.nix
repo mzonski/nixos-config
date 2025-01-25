@@ -162,4 +162,12 @@ in
     };
 
   };
+
+  # nix
+  #   config = mkIf enabled {
+  #   users.defaultUserShell = pkgs.zsh;
+  #   host.user.shell = pkgs.zsh;
+
+  #   programs.zsh.enableCompletion = true;
+  # };
 }
