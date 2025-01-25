@@ -36,20 +36,25 @@
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
     };
+
+    denix = {
+      url = "github:yunfachi/denix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
   };
 
   outputs =
-    inputs@{ self, nixpkgs, ... }:
+    inputs@{
+      self,
+      denix,
+      nixpkgs,
+      ...
+    }:
     let
-      inherit (lib')
-        mapModules
-        mapModulesRec
-        mapHosts
-        mapHomes
-        ;
+      inherit (lib') mapModules;
 
       system = "x86_64-linux";
-      stateVersion = "24.11";
 
       pkgs = mkPkgs nixpkgs ((lib.attrValues self.overlays));
 
@@ -77,16 +82,37 @@
           local = self.packages."${system}";
         }
         // (import ./overlays) final prev;
+
+      mkConfigurations =
+        isHomeManager:
+        denix.lib.configurations rec {
+          homeManagerNixpkgs = nixpkgs;
+          homeManagerUser = "zonni";
+          inherit isHomeManager;
+
+          paths = [
+            ./hosts
+            ./modules
+            ./rices
+          ];
+
+          specialArgs = {
+            inherit
+              inputs
+              isHomeManager
+              homeManagerUser
+              pkgs
+              system
+              ;
+          };
+        };
     in
     {
       overlays.default = overlay;
 
       packages."${system}" = mapModules ./packages (p: pkgs.callPackage p { inherit inputs; });
 
-      nixosModules = mapModulesRec ./modules/system import;
-
-      nixosConfigurations = mapHosts { inherit system stateVersion; };
-
-      homeConfigurations = mapHomes { inherit system stateVersion; };
+      nixosConfigurations = mkConfigurations false;
+      homeConfigurations = mkConfigurations true;
     };
 }

@@ -53,6 +53,29 @@
         "type": "github"
       }
     },
+    "denix": {
+      "inputs": {
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1737478754,
+        "narHash": "sha256-Ts7HO379Gk8yYQ3fNgrjrQqSvF1NHb1P8kfllk0Op8Q=",
+        "owner": "yunfachi",
+        "repo": "denix",
+        "rev": "14e7c3cfbf0156119b35aed538d84e1b048278bf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "yunfachi",
+        "repo": "denix",
+        "type": "github"
+      }
+    },
     "firefox-addons": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -662,6 +685,7 @@
     "root": {
       "inputs": {
         "catppuccin": "catppuccin",
+        "denix": "denix",
         "firefox-addons": "firefox-addons",
         "home-manager": "home-manager",
         "hyprland": "hyprland",
