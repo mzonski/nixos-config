@@ -4,7 +4,6 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-master.url = "github:nixos/nixpkgs/efd9668e9b64c716a793cac7785e369766b4d7c0";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
@@ -72,7 +71,6 @@
         final: prev:
         {
           unstable = mkPkgs inputs.nixpkgs-unstable [ ];
-          master = mkPkgs inputs.nixpkgs-master [ ];
           hyprland = inputs.hyprland.packages.${system};
           hyprplugins = inputs.hyprland-plugins.packages.${system};
           firefoxAddons = inputs.firefox-addons.packages.${system};

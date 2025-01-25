@@ -38,4 +38,6 @@
   #programs.gnupg.agent.enable = true;
 
   security.polkit.enable = true;
+
+  hardware.block.defaultScheduler = "mq-deadline";
 }
