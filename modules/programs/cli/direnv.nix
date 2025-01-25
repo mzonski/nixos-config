@@ -1,19 +1,15 @@
-# {
-#   config,
-#   lib,
-#   ...
-# }:
+{ delib, ... }:
 
-# let
-#   enabled = config.programs.direnv.enable;
+let
+  inherit (delib) module singleEnableOption;
+in
+module {
+  name = "programs.cli.direnv";
 
-#   inherit (lib) mkIf;
-# in
-# {
-#   config = mkIf enabled {
-#     programs.direnv = {
-#       nix-direnv.enable = true;
-#     };
-#   };
-# }
-{ }
+  options = singleEnableOption true;
+
+  home.ifEnabled.programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
+}

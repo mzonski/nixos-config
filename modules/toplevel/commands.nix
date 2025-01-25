@@ -1,16 +1,17 @@
-# { lib', ... }:
-# let
-#   inherit (lib') mkStrOpt;
-# in
-# {
-#   options.commands = {
-#     runTerminal = mkStrOpt "kitty";
-#     runFileManager = mkStrOpt "thunar";
-#     runClipboardHistory = mkStrOpt "nwg-clipman";
-#     runColorPicker = mkStrOpt "hyprpicker -a";
-#     runDrun = mkStrOpt "rofi -show drun -show-icons";
-#     captureWholeScreen = mkStrOpt "grimblast --freeze --notify --cursor copysave screen";
-#     captureArea = mkStrOpt "grimblast --freeze --notify --cursor copysave area";
-#   };
-# }
-{ }
+{ delib, ... }:
+let
+  inherit (delib) module strOption;
+in
+module {
+  name = "commands";
+
+  options.commands = {
+    runTerminal = strOption "kitty";
+    runFileManager = strOption "thunar";
+    runClipboardHistory = strOption "nwg-clipman";
+    runColorPicker = strOption "hyprpicker -a";
+    runDrun = strOption "rofi -show drun -show-icons";
+    captureWholeScreen = strOption "grimblast --freeze --notify --cursor copysave screen";
+    captureArea = strOption "grimblast --freeze --notify --cursor copysave area";
+  };
+}

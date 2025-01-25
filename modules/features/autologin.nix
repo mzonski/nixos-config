@@ -1,38 +1,35 @@
-# {
-#   config,
-#   lib,
-#   lib',
-#   ...
-# }:
+{ delib, ... }:
 
-# let
-#   enabled = config.features.autologin.enable;
-#   inherit (config.host) admin;
-#   inherit (lib) mkIf;
-#   inherit (lib') mkBoolOpt;
-# in
-# {
-#   options.features.autologin = {
-#     enable = mkBoolOpt false;
-#   };
+let
+  inherit (delib) module singleEnableOption;
+in
+module {
+  name = "features.autologin";
 
-#   config = mkIf enabled {
-#     services.displayManager = {
-#       autoLogin.enable = true;
-#       autoLogin.user = admin;
+  options = singleEnableOption false;
 
-#       sddm.settings = {
-#         Autologin = {
-#           Relogin = false;
-#           Session = "hyprland";
-#           User = admin;
-#         };
-#       };
-#     };
+  nixos.ifEnabled =
+    { myconfig, ... }:
+    let
+      inherit (myconfig.admin) username;
+    in
+    {
+      services.displayManager = {
+        autoLogin.enable = true;
+        autoLogin.user = username;
 
-#     # GNOME Autologin Workaround
-#     systemd.services."getty@tty1".enable = false;
-#     systemd.services."autovt@tty1".enable = false;
-#   };
-# }
-{ }
+        sddm.settings = {
+          Autologin = {
+            Relogin = false;
+            Session = "hyprland"; # TODO: variable
+            User = username;
+          };
+        };
+      };
+
+      # TODO: condition
+      # GNOME Autologin Workaround
+      systemd.services."getty@tty1".enable = false;
+      systemd.services."autovt@tty1".enable = false;
+    };
+}

@@ -92,8 +92,8 @@
 
           paths = [
             ./hosts
-            ./modules
             ./rices
+            ./modules
           ];
 
           specialArgs = {
