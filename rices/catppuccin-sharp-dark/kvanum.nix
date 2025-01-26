@@ -5,8 +5,7 @@
   ...
 }:
 let
-  inherit (builtins) substring stringLength;
-  inherit (lib.strings) toUpper;
+  inherit (import ../../utils/strings.nix { inherit lib; }) capitalize;
 
   variant = "mocha";
   accent = "mauve";
@@ -26,15 +25,6 @@ let
   ) (builtins.attrNames themeSettings);
 
   themeName = "Catppuccin${capitalize variant}${capitalize accent}Dark";
-
-  capitalize =
-    str:
-    let
-      head = substring 0 1 str;
-      tail = substring 1 (stringLength str) str;
-    in
-    (toUpper head) + tail;
-
 in
 delib.rice {
   name = "catppuccin-sharp-dark";

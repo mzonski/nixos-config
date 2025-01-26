@@ -22,15 +22,13 @@ module {
         ];
       };
 
-      # nor me or this guy had it installed XDDDD this config was *just* copied XDDD
-      # friking linux copyboiiiis
-      # Media player (mpv) configurations
-      mpv = {
+      # Media player (vlc) configurations
+      vlc = {
         v1 = [
-          "float,mpv" # Make window floating
-          "center,mpv" # Center on screen
-          "size 1200 725,mpv" # Set specific window size
-          "idleinhibit focus,mpv" # Prevent screen timeout during playback
+          "float,vlc" # Make window floating
+          "center,vlc" # Center on screen
+          "size 1200 725, initialTitle:VLC media player"
+          "idleinhibit focus,vlc" # Prevent screen timeout during playback
         ];
         v2 = [
           # Prevent transparency for better viewing
@@ -140,7 +138,7 @@ module {
       wayland.windowManager.hyprland.settings = {
         windowrule = concatLists [
           firefox.v1
-          mpv.v1
+          vlc.v1
           imv.v1
           floating_kitty.v1
           audio.v1
@@ -149,7 +147,7 @@ module {
         ];
         windowrulev2 = concatLists [
           firefox.v2
-          mpv.v2
+          vlc.v2
           imv.v2
           audio.v2
           apps.v2

@@ -26,9 +26,9 @@ delib.module {
           ## SYSTEM
           gnome-logs # System logs
           hardinfo2 # Hardware information
+          qpwgraph # Pipewire manager
 
           # COMMUNICATION
-          discord
           thunderbird
 
           ## ENTERTAINMENT
@@ -81,7 +81,7 @@ delib.module {
 
           ## UTILS
           # holywood # i'm cool boi so i need to compile it xd
-          trekscii
+          local.trekscii
           timer
           qalculate-qt # kalkulator
 
@@ -100,6 +100,7 @@ delib.module {
           vistafonts
           textfonts
           font-awesome
+          local.apple-fonts
         ]
         ++ partitioning;
     };

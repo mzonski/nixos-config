@@ -40,7 +40,7 @@ module {
 
     home.packages = with pkgs; [
       wl-clipboard
-      nwg-clipman
+      local.nwg-clipman
     ];
   };
 }

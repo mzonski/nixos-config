@@ -38,7 +38,7 @@
     };
 
     denix = {
-      url = "github:yunfachi/denix";
+      url = "github:mzonski/denix/84b6310afdccbe8de6db03df77e248d958d4a54b";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
@@ -52,10 +52,10 @@
       ...
     }:
     let
-      inherit (lib') mapModules;
-
+      lib = nixpkgs.lib;
       system = "x86_64-linux";
 
+      mylib = import ./lib { inherit lib; };
       pkgs = mkPkgs nixpkgs ((lib.attrValues self.overlays));
 
       mkPkgs =
@@ -68,9 +68,6 @@
           ];
           overlays = overlays;
         };
-
-      lib = nixpkgs.lib;
-      lib' = import ./lib { inherit pkgs inputs lib; };
 
       overlay =
         final: prev:
@@ -103,6 +100,7 @@
               homeManagerUser
               pkgs
               system
+              mylib
               ;
           };
         };
@@ -110,7 +108,12 @@
     {
       overlays.default = overlay;
 
-      packages."${system}" = mapModules ./packages (p: pkgs.callPackage p { inherit inputs; });
+      packages."${system}" = builtins.listToAttrs (
+        map (path: {
+          name = baseNameOf (dirOf path);
+          value = pkgs.callPackage path { inherit inputs; };
+        }) (denix.lib.umport { path = ./packages; })
+      );
 
       nixosConfigurations = mkConfigurations false;
       homeConfigurations = mkConfigurations true;

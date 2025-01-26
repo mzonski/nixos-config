@@ -1,5 +1,4 @@
 { lib, ... }:
-
 let
   inherit (builtins) substring stringLength;
   inherit (lib.strings) toUpper;
