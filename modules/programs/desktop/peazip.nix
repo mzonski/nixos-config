@@ -25,7 +25,6 @@ module {
           _7zz = _7zz;
         }
       );
-
     in
     {
       home.packages = [

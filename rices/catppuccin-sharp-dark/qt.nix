@@ -21,7 +21,6 @@ delib.rice {
   home =
     { cfg, ... }:
     let
-
       qtConfig = {
         Appearance = {
           custom_palette = "false";

@@ -150,7 +150,6 @@ module {
           };
         };
       };
-      style = builtins.readFile ./style.css;
     };
   };
 }

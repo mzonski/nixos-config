@@ -234,7 +234,6 @@ module {
           tooltip = true;
         };
       };
-
     in
     {
       programs.waybar.settings = [

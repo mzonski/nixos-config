@@ -5,7 +5,7 @@
   ...
 }:
 delib.module {
-  name = "programs.desktop.defaults";
+  name = "programs.desktop.packages";
 
   options = delib.singleEnableOption host.isDesktop;
 

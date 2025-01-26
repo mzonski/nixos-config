@@ -1,5 +1,4 @@
 {
-  config,
   delib,
   lib,
   pkgs,
@@ -12,21 +11,6 @@ let
     enumOption
     module
     ;
-
-  hyprlandPkgVariant = {
-    stable = {
-      package = pkgs.hyprland;
-      portalPackage = pkgs.xdg-desktop-portal-hyprland;
-    };
-    unstable = {
-      package = pkgs.unstable.hyprland;
-      portalPackage = pkgs.unstable.xdg-desktop-portal-hyprland;
-    };
-    input = {
-      package = pkgs.hyprland.hyprland;
-      portalPackage = pkgs.hyprland.xdg-desktop-portal-hyprland;
-    };
-  };
 in
 module {
   name = "programs.wayland";
@@ -55,48 +39,39 @@ module {
     };
   };
 
-  nixos.ifEnabled =
-    { cfg, ... }:
-    let
-      inherit (cfg.hyprland) source;
-    in
-    {
-      programs.hyprland = {
-        inherit (hyprlandPkgVariant.${source}) package portalPackage;
+  nixos.ifEnabled = {
+    programs.hyprland = {
+      enable = true;
+      xwayland.enable = true;
+    };
+
+    environment.systemPackages = with pkgs; [
+      kitty # hyprland default terminal
+    ];
+
+    services = {
+      xserver.enable = true;
+      displayManager.sddm = {
         enable = true;
-        xwayland.enable = true;
-      };
-
-      environment.systemPackages = with pkgs; [
-        kitty # hyprland default terminal
-      ];
-
-      services = {
-        xserver.enable = true;
-        displayManager.sddm = {
-          enable = true;
-          wayland.enable = true;
-          autoNumlock = true;
-        };
-      };
-
-      # TODO: only if source is input
-      nix.settings = {
-        substituters = [ "https://hyprland.cachix.org" ];
-        trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+        wayland.enable = true;
+        autoNumlock = true;
       };
     };
+
+    # TODO: only if source is input
+    nix.settings = {
+      substituters = [ "https://hyprland.cachix.org" ];
+      trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+    };
+  };
 
   home.ifEnabled =
     { cfg, myconfig, ... }:
     let
       inherit (lib) mkBefore;
-      inherit (cfg.hyprland) source monitors;
+      inherit (cfg.hyprland) monitors;
       inherit (myconfig.rice) wallpaper cursor;
-
-      hyprPkgs = hyprlandPkgVariant.${source};
     in
-
     {
       home.sessionVariables = {
         QT_QPA_PLATFORM = "wayland";
@@ -109,10 +84,7 @@ module {
 
       systemd.user.targets.hyprland-session.Unit.Wants = [ "xdg-desktop-autostart.target" ];
 
-      xdg.portal.extraPortals = [ hyprPkgs.portalPackage ];
       wayland.windowManager.hyprland = {
-        inherit (hyprPkgs) package;
-
         enable = true;
         xwayland.enable = true;
         systemd = {

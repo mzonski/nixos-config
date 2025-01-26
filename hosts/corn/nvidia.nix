@@ -9,6 +9,8 @@
 delib.host {
   name = "corn";
 
+  myconfig.user.groups = [ "video" ];
+
   nixos = {
     imports = [
       inputs.nixos-hardware.nixosModules.common-gpu-nvidia
@@ -60,7 +62,5 @@ delib.host {
     #hardware.nvidia-container-toolkit = {
     #  enable = false;
     #};
-
-    # host.user.extraGroups = [ "video" ];
   };
 }

@@ -26,6 +26,7 @@ delib.host {
     features = {
       autologin.enable = true;
       gaming.enable = true;
+      general-development.enable = true;
       virt-manager.enable = true;
       docker.enable = true;
     };

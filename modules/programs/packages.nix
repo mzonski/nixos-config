@@ -1,6 +1,6 @@
 { delib, pkgs, ... }:
 delib.module {
-  name = "toplevel.packages";
+  name = "programs.packages";
   nixos.always = {
     environment.systemPackages = with pkgs; [
       bash

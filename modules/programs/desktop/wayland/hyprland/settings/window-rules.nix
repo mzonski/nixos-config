@@ -1,8 +1,4 @@
-{
-  delib,
-  lib,
-  ...
-}:
+{ delib, lib, ... }:
 let
   inherit (lib) concatLists;
   inherit (delib) module;
@@ -13,7 +9,6 @@ module {
   home.ifEnabled =
     { myconfig, ... }:
     let
-
       # Firefox-specific configurations
       firefox = {
         v1 = [
@@ -140,7 +135,6 @@ module {
           "noblur,class:^(xwaylandvideobridge)$" # Disables blur effect
         ];
       };
-
     in
     {
       wayland.windowManager.hyprland.settings = {
