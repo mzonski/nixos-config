@@ -51,7 +51,7 @@ delib.host {
       inputs.nixos-hardware.nixosModules.common-pc-ssd
     ];
 
-    boot.kernelPackages = pkgs.linuxPackages_6_12;
+    boot.kernelPackages = pkgs.linuxPackages_latest;
     networking.firewall.enable = false; # Disable firewall
 
     services.tumbler.enable = true; # Enable thumbnail service
