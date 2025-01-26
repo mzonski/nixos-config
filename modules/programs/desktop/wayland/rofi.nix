@@ -1,43 +1,45 @@
-# {
-#   pkgs,
-#   lib,
-#   config,
-#   ...
-# }:
+{
+  config,
+  delib,
+  pkgs,
+  ...
+}:
+let
+  inherit (delib) module;
+in
+module {
+  name = "programs.wayland.hyprland";
 
-# let
-#   enabled = config.hom.wayland-wm.hyprland.enable;
-#   fontProfile = config.hom.theme.fontProfiles.regular;
-#   commands = config.commands;
+  home.ifEnabled =
+    { myconfig, ... }:
+    let
+      cmds = myconfig.commands;
+      fontName = myconfig.rice.fonts.regular.name;
+    in
+    {
+      programs.rofi = {
+        enable = true;
+        package = pkgs.rofi-wayland;
+        plugins = with pkgs; [
+          rofi-calc
+          rofi-emoji
+          rofi-systemd
+        ];
+        font = fontName;
+        terminal = cmds.runTerminal;
+        cycle = false;
+        extraConfig = {
+          modi = "drun,window";
+          drun-show-actions = true;
 
-#   inherit (lib) mkIf;
-# in
-# {
-#   config = mkIf enabled {
-#     programs.rofi = {
-#       enable = true;
-#       package = pkgs.rofi-wayland;
-#       plugins = with pkgs; [
-#         rofi-calc
-#         rofi-emoji
-#         rofi-systemd
-#       ];
-#       font = fontProfile.name;
-#       terminal = commands.runTerminal;
-#       cycle = false;
-#       extraConfig = {
-#         modi = "drun,window";
-#         drun-show-actions = true;
+          click-to-exit = true;
+          global-kb = true;
 
-#         click-to-exit = true;
-#         global-kb = true;
-
-#         window-thumbnail = true;
-#         sidebar-mode = false;
-#         disable-history = false;
-#         icon-theme = config.gtk.iconTheme.name;
-#       };
-#     };
-#   };
-# }
-{ }
+          window-thumbnail = true;
+          sidebar-mode = false;
+          disable-history = false;
+          icon-theme = config.gtk.iconTheme.name;
+        };
+      };
+    };
+}

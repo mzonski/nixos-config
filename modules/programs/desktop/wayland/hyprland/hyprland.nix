@@ -91,8 +91,8 @@ module {
     { cfg, myconfig, ... }:
     let
       inherit (lib) mkBefore;
-      inherit (cfg.hyprland) source;
-      inherit (cfg.hyprland) monitors;
+      inherit (cfg.hyprland) source monitors;
+      hyprPkgs = hyprlandPkgVariant.${source};
 
     in
     # TODO: Enable wallpaper
@@ -110,7 +110,10 @@ module {
 
       systemd.user.targets.hyprland-session.Unit.Wants = [ "xdg-desktop-autostart.target" ];
 
+      xdg.portal.extraPortals = [ hyprPkgs.portalPackage ];
       wayland.windowManager.hyprland = {
+        inherit (hyprPkgs) package;
+
         enable = true;
         xwayland.enable = true;
         systemd = {
@@ -120,8 +123,6 @@ module {
             "systemctl --user start hyprland-session.target"
           ];
         };
-
-        inherit (hyprlandPkgVariant.${source}) package;
 
         # TODO: If input
         plugins = [

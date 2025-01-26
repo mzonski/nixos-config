@@ -1,6 +1,7 @@
 {
   delib,
   pkgs,
+  lib,
   ...
 }:
 let
@@ -20,9 +21,9 @@ delib.module {
   name = "nix";
 
   nixos.always = shared // {
-    nix.package = pkgs.nixVersions.stable;
+    nix.package = lib.mkForce pkgs.nixVersions.stable;
   };
   home.always = shared // {
-    nix.package = pkgs.nixVersions.stable;
+    nix.package = lib.mkDefault pkgs.nixVersions.stable;
   };
 }

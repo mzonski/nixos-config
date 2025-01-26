@@ -1,26 +1,17 @@
-# {
-#   config,
-#   lib,
-#   pkgs,
-#   lib',
-#   ...
-# }:
+{ delib, pkgs, ... }:
 
-# let
-#   enabled = config.programs.file-manager.app == "pcmanfm";
-#   inherit (lib') mkBoolOpt;
-#   inherit (lib) mkIf;
-# in
-# {
-#   options.programs.file-manager = {
-#     pcmanfm = mkBoolOpt false;
-#   };
+let
+  inherit (delib) module singleEnableOption;
+in
+module {
+  name = "programs.desktop.pcmanfm";
 
-#   config = mkIf enabled {
-#     home.packages = with pkgs; [
-#       lxqt.pcmanfm-qt
-#       xarchiver
-#     ];
-#   };
-# }
-{ }
+  options = singleEnableOption false;
+
+  home.ifEnabled = {
+    home.packages = with pkgs; [
+      lxqt.pcmanfm-qt
+      xarchiver
+    ];
+  };
+}

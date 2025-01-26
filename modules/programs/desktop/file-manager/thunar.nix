@@ -1,34 +1,33 @@
-# {
-#   config,
-#   lib,
-#   pkgs,
-#   lib',
-#   ...
-# }:
+{
+  delib,
+  pkgs,
+  host,
+  ...
+}:
 
-# let
-#   enabled = config.programs.file-manager.app == "thunar";
-#   thunarPlugins = with pkgs.xfce; [
-#     thunar-volman
-#     thunar-archive-plugin
-#   ];
-#   inherit (lib') mkBoolOpt;
-#   inherit (lib) mkIf;
-# in
-# {
-#   options.programs.file-manager = {
-#     thunar = mkBoolOpt false;
-#   };
+let
+  inherit (delib) module singleEnableOption;
+in
+module {
+  name = "programs.desktop.thunar";
 
-#   config = mkIf enabled {
-#     home.packages =
-#       with pkgs.xfce;
-#       [
-#         (thunar.override { inherit thunarPlugins; })
-#       ]
-#       ++ (with pkgs.mate; [
-#         engrampa
-#       ]);
-#   };
-# }
-{ }
+  options = singleEnableOption host.isDesktop;
+
+  home.ifEnabled =
+    let
+      thunarPlugins = with pkgs.xfce; [
+        thunar-volman
+        thunar-archive-plugin
+      ];
+    in
+    {
+      home.packages =
+        with pkgs.xfce;
+        [
+          (thunar.override { inherit thunarPlugins; })
+        ]
+        ++ (with pkgs.mate; [
+          engrampa
+        ]);
+    };
+}

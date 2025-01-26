@@ -1,21 +1,15 @@
-# {
-#   config,
-#   pkgs,
-#   lib,
-#   ...
-# }:
+{ delib, pkgs, ... }:
 
-# let
-#   enabled = config.hom.wayland-wm.panel.waybar.enable;
+let
+  inherit (delib) module;
+in
+module {
+  name = "programs.wayland";
 
-#   inherit (lib) mkIf;
-# in
-# {
-#   config = mkIf enabled {
-#     home.packages = with pkgs; [
-#       libnotify
-#       unstable.grimblast
-#     ];
-#   };
-# }
-{ }
+  home.ifEnabled = {
+    home.packages = with pkgs; [
+      libnotify
+      unstable.grimblast
+    ];
+  };
+}

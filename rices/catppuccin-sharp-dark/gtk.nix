@@ -1,85 +1,89 @@
-# {
-#   config,
-#   lib,
-#   pkgs,
-#   ...
-# }:
+{
+  pkgs,
+  delib,
+  ...
+}:
+let
+  themeName = "Colloid-Purple-Dark-Compact-Catppuccin";
+  iconThemeName = "Papirus-Dark";
+  iconPackage = pkgs.papirus-icon-theme;
 
-# let
-#   inherit (config.hom.theme.catpuccin) enable;
+  colloid-theme =
+    (pkgs.colloid-gtk-theme.override {
+      themeVariants = [ "purple" ];
+      colorVariants = [ "dark" ];
+      sizeVariants = [ "compact" ];
+      tweaks = [
+        "catppuccin"
+        "rimless"
+        "normal"
+        "black"
+      ];
+    }).overrideAttrs
+      (oldAttrs: {
+        preInstall = ''
+          ${oldAttrs.preInstall or ""}
+          cp -f ${./assets/_colloid-theme-variables.scss} src/sass/_variables.scss
+        '';
+      });
 
-#   inherit (lib) mkIf;
+  cursorTheme = {
+    package = pkgs.apple-cursor;
+    name = "macOS";
+    size = 24;
+  };
+in
+delib.rice {
+  name = "catppuccin-sharp-dark";
 
-#   themeName = "Colloid-Purple-Dark-Compact-Catppuccin";
-#   iconThemeName = "Papirus-Dark";
-# in
-# {
-#   config = mkIf enable (
-#     let
-#       colloid-theme =
-#         (pkgs.colloid-gtk-theme.override {
-#           themeVariants = [ "purple" ];
-#           colorVariants = [ "dark" ];
-#           sizeVariants = [ "compact" ];
-#           tweaks = [
-#             "catppuccin"
-#             "rimless"
-#             "normal"
-#             "black"
-#           ];
-#         }).overrideAttrs
-#           (oldAttrs: {
-#             preInstall = ''
-#               ${oldAttrs.preInstall or ""}
-#               cp -f ${./assets/_colloid-theme-variables.scss} src/sass/_variables.scss
-#             '';
-#           });
-#     in
-#     {
-#       home.packages = [
-#         colloid-theme
-#         pkgs.apple-cursor
-#       ];
+  cursor = cursorTheme;
+  gtkThemeName = themeName;
+  icons = {
+    name = iconThemeName;
+    package = iconPackage;
+  };
 
-#       gtk = {
-#         enable = true;
-#         iconTheme = {
-#           name = iconThemeName;
-#           package = pkgs.catppuccin-papirus-folders.override {
-#             flavor = "mocha";
-#             accent = "mauve";
-#             papirus-icon-theme = pkgs.papirus-icon-theme;
-#           };
-#         };
-#         cursorTheme = {
-#           package = pkgs.apple-cursor;
-#           name = "macOS";
-#           size = 24;
-#         };
-#         theme = {
-#           name = themeName;
-#           package = colloid-theme;
-#         };
-#       };
+  packages = [
+    colloid-theme
+    pkgs.apple-cursor
+  ];
 
-#       dconf.settings = {
-#         "org/gnome/desktop/interface" = {
-#           monospace-font-name = config.hom.theme.fontProfiles.monospace.name;
-#           font-name = config.hom.theme.fontProfiles.regular.name;
-#           color-scheme = "prefer-dark";
-#         };
-#       };
+  home =
+    { cfg, ... }:
+    {
+      gtk = {
+        enable = true;
+        inherit cursorTheme;
+        iconTheme = {
+          name = iconThemeName;
+          package = pkgs.catppuccin-papirus-folders.override {
+            flavor = "mocha";
+            accent = "mauve";
+            papirus-icon-theme = pkgs.papirus-icon-theme;
+          };
+        };
+        theme = {
+          name = themeName;
+          package = colloid-theme;
+        };
+      };
 
-#       services.xsettingsd = {
-#         enable = false; # on wayland we don't need x11, think what if you need to use x11
-#         settings = {
-#           "Net/ThemeName" = themeName;
-#           "Net/IconThemeName" = iconThemeName;
-#         };
-#       };
+      dconf.settings = {
+        "org/gnome/desktop/interface" = {
+          monospace-font-name = cfg.fonts.monospace.name;
+          font-name = cfg.fonts.regular.name;
+          color-scheme = "prefer-dark";
+        };
+      };
 
-#       xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-#     }
-#   );
-# }
-{ }
+      services.xsettingsd = {
+        enable = false; # on wayland we don't need x11, think what if you need to use x11
+        settings = {
+          "Net/ThemeName" = themeName;
+          "Net/IconThemeName" = iconThemeName;
+        };
+      };
+
+      xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    };
+}

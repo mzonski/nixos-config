@@ -1,35 +1,27 @@
-# {
-#   pkgs,
-#   lib,
-#   lib',
-#   config,
-#   ...
-# }:
+{
+  delib,
+  pkgs,
+  host,
+  ...
+}:
+let
+  inherit (delib) module singleEnableOption;
+in
+module {
+  name = "programs.desktop.ristretto";
 
-# let
-#   enabled = config.programs.ristretto.enable;
-#   inherit (lib') mkBoolOpt;
-#   inherit (lib) mkIf;
-# in
-# {
-#   options.programs.ristretto = {
-#     enable = mkBoolOpt false;
-#   };
+  options = singleEnableOption host.isDesktop;
 
-#   config = mkIf enabled {
-#     home.packages = with pkgs; [
-#       xfce.ristretto # Decent image viewer
-#     ];
+  home.ifEnabled = {
+    home.packages = with pkgs; [
+      xfce.ristretto # Decent image viewer
+    ];
 
-#     xdg.mimeApps = {
-#       defaultApplications = {
-#         "image/jpeg" = [ "org.xfce.ristretto.desktop" ];
-#         "image/png" = [ "org.xfce.ristretto.desktop" ];
-#         "image/gif" = [ "org.xfce.ristretto.desktop" ];
-#         "image/svg+xml" = [ "org.xfce.ristretto.desktop" ];
-#       };
-#     };
-#   };
-
-# }
-{ }
+    xdg.mimeApps.defaultApplications = {
+      "image/jpeg" = [ "org.xfce.ristretto.desktop" ];
+      "image/png" = [ "org.xfce.ristretto.desktop" ];
+      "image/gif" = [ "org.xfce.ristretto.desktop" ];
+      "image/svg+xml" = [ "org.xfce.ristretto.desktop" ];
+    };
+  };
+}
