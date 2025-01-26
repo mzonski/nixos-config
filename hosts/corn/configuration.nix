@@ -31,6 +31,7 @@ delib.host {
       docker.enable = true;
     };
 
+    programs.chrome.enable = true;
     programs.wayland = {
       hyprland.source = "input";
       idle = {
