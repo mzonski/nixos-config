@@ -31,8 +31,6 @@ delib.module {
           # COMMUNICATION
           thunderbird
 
-          ## ENTERTAINMENT
-          vlc
           streamlink
           tauon
 

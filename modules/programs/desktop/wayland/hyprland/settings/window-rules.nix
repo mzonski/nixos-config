@@ -26,27 +26,26 @@ module {
       vlc = {
         v1 = [
           "float,vlc" # Make window floating
-          "center,vlc" # Center on screen
           "size 1200 725, initialTitle:VLC media player"
           "idleinhibit focus,vlc" # Prevent screen timeout during playback
         ];
         v2 = [
           # Prevent transparency for better viewing
-          "opacity 1.0 override 1.0 override, title:^(.*mpv.*)$"
-          "idleinhibit focus, class:^(mpv)$"
+          "opacity 1.0 override 1.0 override, title:^(.*vlc.*)$"
+          "idleinhibit focus, class:^(vlc)$"
         ];
       };
 
       # Image viewer (imv) configurations
       imv = {
         v1 = [
-          "float,imv" # Make window floating
-          "center,imv" # Center on screen
-          "size 1200 725,imv" # Set specific window size
+          "float,ristretto" # Make window floating
+          "center,ristretto" # Center on screen
+          "size 1200 725,ristretto" # Set specific window size
         ];
         v2 = [
           # Prevent transparency for better viewing
-          "opacity 1.0 override 1.0 override, title:^(.*imv.*)$"
+          "opacity 1.0 override 1.0 override, title:^(.*ristretto.*)$"
         ];
       };
 
@@ -71,7 +70,7 @@ module {
           "move 40 55%,title:^(Volume Control)$" # Position on screen
         ];
         v2 = [
-          "float,class:^(pavucontrol)$" # Make PulseAudio control float
+          "float,class:^(org.pulseaudio.pavucontrol)$" # Make PulseAudio control float
           "float,class:^(SoundWireServer)$" # Make SoundWire float
         ];
       };
@@ -82,7 +81,7 @@ module {
           "float,title:^(qBittorrent)$" # Make torrent client float
         ];
         v2 = [
-          "noinitialfocus,class:^jetbrains-(?!toolbox),floating:1"
+          "noinitialfocus,class:^jetbrains-toolbox,floating:1"
         ];
       };
 
