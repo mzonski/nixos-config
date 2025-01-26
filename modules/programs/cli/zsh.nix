@@ -14,6 +14,12 @@ module {
 
   options = singleEnableOption true;
 
+  nixos.ifEnabled = {
+    users.defaultUserShell = pkgs.zsh;
+
+    programs.zsh.enableCompletion = true;
+  };
+
   home.ifEnabled =
     let
       inherit (pkgs) stdenv;

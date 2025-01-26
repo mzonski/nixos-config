@@ -13,11 +13,9 @@ module {
   name = "programs.wayland";
 
   home.ifEnabled =
-    { cfg, ... }:
+    { myconfig, cfg, ... }:
     let
-      # TODO: WALLPAPER
-      #wallpaper = config.hom.theme.wallpaper;
-      #   fontProfile = config.hom.theme.fontProfiles.regular;
+      inherit (myconfig.rice) wallpaper;
       lockEnabled = cfg.idle.lockEnabled;
       swaylock = "${homeconfig.programs.swaylock.package}/bin/swaylock";
       hyprctl = "${homeconfig.wayland.windowManager.hyprland.package}/bin/hyprctl";
@@ -28,7 +26,7 @@ module {
         package = pkgs.hypridle;
         settings = {
           general = {
-            #before_sleep_cmd = if lockEnabled then "${swaylock} -f -i ${wallpaper}" else "";
+            before_sleep_cmd = if lockEnabled then "${swaylock} -f -i ${wallpaper}" else "";
             after_sleep_cmd = "${hyprctl} dispatch dpms on";
             ignore_dbus_inhibit = false;
             ignore_systemd_inhibit = false;

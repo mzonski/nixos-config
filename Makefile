@@ -25,8 +25,13 @@ clean:
 
 home:
 	@echo "Switching home-manager configuration..."
-	home-manager build --flake $(FLAKE)#$(USERNAME)
-	home-manager switch --flake $(FLAKE)#$(USERNAME)
+	home-manager build --flake $(FLAKE)#$(USERNAME)@$(HOSTNAME)
+	home-manager switch --flake $(FLAKE)#$(USERNAME)@$(HOSTNAME)
+
+zhomes:
+	@echo "Switching cracked home-manager configuration..."
+	home-manager build --flake .#zonni@corn --extra-experimental-features nix-command --extra-experimental-features flakes
+	home-manager switch --flake .#zonni@corn --extra-experimental-features nix-command --extra-experimental-features flakes
 
 system:
 	@echo "Switching NixOS configuration..."

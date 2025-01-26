@@ -4,7 +4,7 @@ let
   inherit (delib) module singleEnableOption;
 in
 module {
-  name = "programs.docker";
+  name = "features.docker";
 
   options = singleEnableOption false;
 

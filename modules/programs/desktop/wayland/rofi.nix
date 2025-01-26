@@ -1,20 +1,16 @@
-{
-  config,
-  delib,
-  pkgs,
-  ...
-}:
+{ delib, pkgs, ... }:
 let
   inherit (delib) module;
 in
 module {
-  name = "programs.wayland.hyprland";
+  name = "programs.wayland";
 
   home.ifEnabled =
     { myconfig, ... }:
     let
       cmds = myconfig.commands;
       fontName = myconfig.rice.fonts.regular.name;
+      iconsName = myconfig.rice.icons.name;
     in
     {
       programs.rofi = {
@@ -38,7 +34,7 @@ module {
           window-thumbnail = true;
           sidebar-mode = false;
           disable-history = false;
-          icon-theme = config.gtk.iconTheme.name;
+          icon-theme = iconsName;
         };
       };
     };

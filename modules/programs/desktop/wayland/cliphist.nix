@@ -8,6 +8,7 @@ module {
 
   home.ifEnabled = {
     services.cliphist = {
+      enable = true;
       package = pkgs.cliphist;
       allowImages = true;
       # extraOptions = [

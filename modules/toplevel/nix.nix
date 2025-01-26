@@ -10,20 +10,21 @@ let
       experimental-features = [
         "nix-command"
         "flakes"
-        "ca-derivations"
       ];
       warn-dirty = false;
       flake-registry = ""; # Disable global flake registry
     };
   };
+  mkConfig = extras: lib.recursiveUpdate shared extras;
 in
 delib.module {
   name = "nix";
 
-  nixos.always = shared // {
+  nixos.always = mkConfig {
     nix.package = lib.mkForce pkgs.nixVersions.stable;
   };
-  home.always = shared // {
+
+  home.always = mkConfig {
     nix.package = lib.mkDefault pkgs.nixVersions.stable;
   };
 }

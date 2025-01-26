@@ -92,20 +92,19 @@ module {
     let
       inherit (lib) mkBefore;
       inherit (cfg.hyprland) source monitors;
-      hyprPkgs = hyprlandPkgVariant.${source};
+      inherit (myconfig.rice) wallpaper cursor;
 
+      hyprPkgs = hyprlandPkgVariant.${source};
     in
-    # TODO: Enable wallpaper
-    #wallpaper = config.hom.theme.wallpaper;
-    #cursor = config.gtk.cursorTheme;
+
     {
       home.sessionVariables = {
         QT_QPA_PLATFORM = "wayland";
         #QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
         GDK_BACKEND = "wayland";
         NIXOS_OZONE_WL = "1"; # For Electron apps to use Wayland
-        # HYPRCURSOR_THEME = cursor.name;
-        # HYPRCURSOR_SIZE = cursor.size;
+        HYPRCURSOR_THEME = cursor.name;
+        HYPRCURSOR_SIZE = cursor.size;
       };
 
       systemd.user.targets.hyprland-session.Unit.Wants = [ "xdg-desktop-autostart.target" ];
@@ -134,8 +133,8 @@ module {
         settings = {
           exec-once = [
             "${pkgs.lxqt.lxqt-policykit}/bin/lxqt-policykit-agent &"
-            #"${pkgs.swaybg}/bin/swaybg -i ${wallpaper} --mode fill &"
-            #"hyprctl setcursor '${cursor.name}' ${toString cursor.size} &"
+            "${pkgs.swaybg}/bin/swaybg -i ${wallpaper} --mode fill &"
+            "hyprctl setcursor '${cursor.name}' ${toString cursor.size} &"
             "systemctl --user import-environment &"
             "hash dbus-update-activation-environment 2>/dev/null &"
             "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP &"

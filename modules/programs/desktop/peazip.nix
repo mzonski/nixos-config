@@ -1,21 +1,18 @@
 {
-  config,
-  lib,
+  delib,
   pkgs,
-  lib',
+  host,
   ...
 }:
 let
-  enabled = config.programs.peazip.enable;
-  inherit (lib') mkBoolOpt;
-  inherit (lib) mkIf;
+  inherit (delib) module singleEnableOption;
 in
-{
-  options.programs.peazip = {
-    enable = mkBoolOpt false;
-  };
+module {
+  name = "programs.desktop.peazip";
 
-  config = mkIf enabled (
+  options = singleEnableOption host.isDesktop;
+
+  home.ifEnabled = (
     let
       _7zz = (
         pkgs._7zz.override {

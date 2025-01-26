@@ -1,22 +1,19 @@
 {
   config,
-  lib,
+  delib,
   pkgs,
-  lib',
   ...
 }:
 
 let
-  enabled = config.features.quietboot.enable;
-  inherit (lib') mkBoolOpt;
-  inherit (lib) mkIf;
+  inherit (delib) module singleEnableOption;
 in
-{
-  options.features.quietboot = {
-    enable = mkBoolOpt false;
-  };
+module {
+  name = "features.quietboot";
 
-  config = mkIf enabled {
+  options = singleEnableOption false;
+
+  nixos.ifEnabled = {
     console = {
       useXkbConfig = true;
       earlySetup = false;

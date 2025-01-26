@@ -27,11 +27,18 @@ delib.host {
       autologin.enable = true;
       gaming.enable = true;
       virt-manager.enable = true;
+      docker.enable = true;
     };
 
-    programs.wayland.enable = true;
-    programs.wayland.hyprland.source = "input";
-    programs.docker.enable = true;
+    programs.wayland = {
+      hyprland.source = "input";
+      idle = {
+        lockEnabled = false;
+        lockTimeout = 10 * 60; # 10 min
+        turnOffDisplayTimeout = 5 * 60; # 5 min
+        suspendTimeout = 30 * 60; # 30 min
+      };
+    };
   };
 
   nixos = {
@@ -43,18 +50,7 @@ delib.host {
       inputs.nixos-hardware.nixosModules.common-pc-ssd
     ];
 
-    # host = {
-    #   admin = "zonni";
-    #   domain = "local.zonni.pl";
-    # };
-
     boot.kernelPackages = pkgs.linuxPackages_6_12;
-
-    # windows.variant = "hyprland";
-    # windows.hyprland.source = "input";
-
-    # virtualisation.docker.enable = true;
-
     networking.firewall.enable = false; # Disable firewall
 
     services.tumbler.enable = true; # Enable thumbnail service
@@ -64,15 +60,22 @@ delib.host {
     services.printing.enable = true;
     services.pcscd.enable = true;
 
-    services.pipewire.enable = true;
-    hardware.bluetooth.enable = true;
-
     programs.nix-ld.enable = false;
     programs.dconf.enable = true;
     programs.zsh.enable = true;
-    #programs.gnupg.agent.enable = true;
 
     security.polkit.enable = true;
+  };
 
+  home = {
+    programs = {
+      bash.enable = true;
+      bat.enable = true;
+
+      git = {
+        userName = "Maciej Zonski";
+        userEmail = "me@zonni.pl";
+      };
+    };
   };
 }

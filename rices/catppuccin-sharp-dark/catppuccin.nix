@@ -8,7 +8,7 @@ delib.rice {
     ];
 
     catppuccin = {
-      enable = false;
+      enable = true;
       flavor = "mocha";
       cursors.enable = false;
       cursors.flavor = "mocha";

@@ -7,7 +7,7 @@ module {
   name = "programs.wayland";
 
   options.programs.wayland = {
-    enable = boolOption host.isDekstop;
+    enable = boolOption host.isDesktop;
     idle = {
       lockEnabled = boolOption false;
       lockTimeout = intOption 660;

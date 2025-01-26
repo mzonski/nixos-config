@@ -3,7 +3,7 @@ let
   inherit (delib) singleEnableOption module;
 in
 module {
-  name = "programs.browser.chrome";
+  name = "programs.chrome";
 
   options = singleEnableOption false;
 

@@ -3,7 +3,7 @@ let
   inherit (delib) module;
 in
 module {
-  name = "programs.wayland.hyprland";
+  name = "programs.wayland";
 
   home.ifEnabled = {
     wayland.windowManager.hyprland.settings = {

@@ -1,11 +1,16 @@
-{ delib, pkgs, ... }:
+{
+  delib,
+  pkgs,
+  host,
+  ...
+}:
 let
   inherit (delib) singleEnableOption module;
 in
 module {
   name = "programs.jetbrains";
 
-  options = singleEnableOption false;
+  options = singleEnableOption host.isDesktop;
 
   home.ifEnabled = {
     home.packages = with pkgs.unstable.jetbrains; [

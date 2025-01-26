@@ -11,9 +11,9 @@ let
 
 in
 module {
-  name = "programs.browser.firefox";
+  name = "programs.firefox";
 
-  options.programs.browser.firefox = {
+  options.programs.firefox = {
     enable = boolOption host.isDesktop;
     firefoxProfiles = boolOption false;
     rememberPasswords = boolOption true;
