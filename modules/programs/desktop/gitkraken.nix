@@ -14,6 +14,6 @@ module {
   options = singleEnableOption host.isDesktop;
 
   home.ifEnabled.home.packages = with pkgs; [
-    gitkraken
+    unstable.gitkraken
   ];
 }
