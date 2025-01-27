@@ -78,10 +78,12 @@ delib.module {
           yubico-piv-tool # Specific tool for PIV operations
 
           ## UTILS
-          # holywood # i'm cool boi so i need to compile it xd
-          local.trekscii
           timer
           qalculate-qt # kalkulator
+
+          ## Rice showcase
+          local.trekscii
+          cmatrix
 
           ## SYSTEM
           curl
