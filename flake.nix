@@ -55,8 +55,19 @@
       lib = nixpkgs.lib;
       system = "x86_64-linux";
 
-      mylib = import ./lib { inherit lib; };
       pkgs = mkPkgs nixpkgs ((lib.attrValues self.overlays));
+      unstable = mkPkgs inputs.nixpkgs-unstable [ ];
+
+      overlay =
+        final: prev:
+        {
+          inherit unstable;
+          hyprland = inputs.hyprland.packages.${system};
+          hyprplugins = inputs.hyprland-plugins.packages.${system};
+          firefoxAddons = inputs.firefox-addons.packages.${system};
+          local = self.packages."${system}";
+        }
+        // (import ./overlays) final prev;
 
       mkPkgs =
         pkgs: overlays:
@@ -68,17 +79,6 @@
           ];
           overlays = overlays;
         };
-
-      overlay =
-        final: prev:
-        {
-          unstable = mkPkgs inputs.nixpkgs-unstable [ ];
-          hyprland = inputs.hyprland.packages.${system};
-          hyprplugins = inputs.hyprland-plugins.packages.${system};
-          firefoxAddons = inputs.firefox-addons.packages.${system};
-          local = self.packages."${system}";
-        }
-        // (import ./overlays) final prev;
 
       mkConfigurations =
         isHomeManager:
@@ -100,7 +100,6 @@
               homeManagerUser
               pkgs
               system
-              mylib
               ;
           };
         };
