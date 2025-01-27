@@ -38,7 +38,7 @@
     };
 
     denix = {
-      url = "github:mzonski/denix/84b6310afdccbe8de6db03df77e248d958d4a54b";
+      url = "github:yunfachi/denix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
