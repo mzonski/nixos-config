@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
     owner = "peazip";
     repo = "PeaZip";
     rev = version;
-    hash = "sha256-mrSUkZlcmzVsyE6GnohaYuD9AzW/VOlA9FebpJKZlyQ=";
+    hash = "sha256-TyfLqT9VNSViJOWwM3KgL2tvCZE14bLlT/6DgF9IAOE=";
   };
   sourceRoot = "${src.name}/peazip-sources";
 
