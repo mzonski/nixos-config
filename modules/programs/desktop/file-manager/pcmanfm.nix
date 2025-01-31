@@ -1,4 +1,9 @@
-{ delib, pkgs, ... }:
+{
+  delib,
+  pkgs,
+  host,
+  ...
+}:
 
 let
   inherit (delib) module singleEnableOption;
@@ -6,7 +11,7 @@ in
 module {
   name = "programs.desktop.pcmanfm";
 
-  options = singleEnableOption false;
+  options = singleEnableOption host.isDesktop;
 
   home.ifEnabled = {
     home.packages = with pkgs; [
