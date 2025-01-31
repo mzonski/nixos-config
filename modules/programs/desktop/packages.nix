@@ -27,6 +27,7 @@ delib.module {
           gnome-logs # System logs
           hardinfo2 # Hardware information
           qpwgraph # Pipewire manager
+          gnome-font-viewer
 
           # COMMUNICATION
           thunderbird
