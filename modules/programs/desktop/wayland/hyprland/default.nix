@@ -89,6 +89,7 @@ module {
         xwayland.enable = true;
         systemd = {
           enable = true;
+          enableXdgAutostart = true;
           extraCommands = mkBefore [
             "systemctl --user stop graphical-session.target"
             "systemctl --user start hyprland-session.target"
