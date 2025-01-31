@@ -7,7 +7,6 @@ module {
 
   home.ifEnabled =
     { myconfig, ... }:
-
     let
       inherit (myconfig.programs.wayland.hyprland) monitors;
 
@@ -33,6 +32,8 @@ module {
           disable-scroll = true;
           format = "{icon}";
           on-click = "activate";
+          on-scroll-up = "hyprctl dispatch workspace m-1";
+          on-scroll-down = "hyprctl dispatch workspace m+1";
           format-icons = {
             "1" = "";
             "2" = "󰈹";
