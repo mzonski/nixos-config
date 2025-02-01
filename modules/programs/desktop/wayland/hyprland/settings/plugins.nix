@@ -35,11 +35,11 @@ module {
 
         hyprexpo = {
           # bind: "$mainMod, TAB, hyprexpo:expo, toggle"
-          columns = 3;
-          gap_size = 5;
+          columns = 2;
+          gap_size = 16;
           bg_col = "rgb(111111)";
 
-          workspace_method = "center current"; # [center/first] [workspace] e.g. first 1 or center m+1
+          workspace_method = "first 1"; # [center/first] [workspace] e.g. first 1 or center m+1
           enable_gesture = false; # laptop -> true
           gesture_fingers = 3;
           gesture_distance = 300;

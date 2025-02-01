@@ -99,7 +99,7 @@ module {
         # TODO: If input
         plugins = [
           pkgs.hyprplugins.hyprbars
-          # pkgs.hyprplugins.hyprexpo # hyprexpo is restarting hyprland atm
+          pkgs.hyprplugins.hyprexpo
           # pkgs.hyprplugins.xtra-dispatchers
         ];
 
