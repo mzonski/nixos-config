@@ -132,6 +132,13 @@ module {
           "noblur,class:^(xwaylandvideobridge)$" # Disables blur effect
         ];
       };
+
+      # XWayland bridge configurations
+      workspaces = {
+        v2 = [
+          "float, workspace:1"
+        ];
+      };
     in
     {
       wayland.windowManager.hyprland.settings = {
@@ -153,6 +160,7 @@ module {
           pip.v2
           dialogs.v2
           xwayland.v2
+          workspaces.v2
         ];
       };
     };
