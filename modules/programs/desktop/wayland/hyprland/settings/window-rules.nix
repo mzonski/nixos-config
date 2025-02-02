@@ -81,9 +81,20 @@ module {
           "float,title:^(qBittorrent)$" # Make torrent client float
         ];
         v2 = [
-          "noinitialfocus,class:jetbrains-toolbox,floating:1"
-          "noinitialfocus, class:jetbrains-webstorm, title:^$, initialTitle:^$"
           "pseudo,class:^(com.obsproject.Studio)$"
+        ];
+      };
+
+      jetbrains = {
+        v2 = [
+          "noinitialfocus,class:jetbrains-toolbox, floating:1"
+          # Find in files
+          "noinitialfocus, class:(jetbrains-)(.*), title:^$, initialTitle:^$, floating:1"
+          "center, class:(jetbrains-)(.*), title:^$, initialTitle:^$, floating:1"
+          "plugin:hyprbars:nobar, class:(jetbrains-)(.*), title:^$, initialTitle:^$, floating:1"
+          # Other dialogs
+          "plugin:hyprbars:nobar, class:(jetbrains-)(.*), initialTitle:(.+), floating:1"
+          "center, class:(jetbrains-)(.*), initialTitle:(.+), floating:1"
         ];
       };
 
@@ -163,6 +174,7 @@ module {
           dialogs.v2
           xwayland.v2
           workspaces.v2
+          jetbrains.v2
         ];
       };
     };
