@@ -52,6 +52,10 @@ delib.host {
       inputs.nixos-hardware.nixosModules.common-pc-ssd
     ];
 
+    # TODO: REVERT IT
+    boot.readOnlyNixStore = false;
+    # TODO: REVERT IT
+
     boot.kernelPackages = pkgs.linuxPackages_6_12;
     networking.firewall.enable = false; # Disable firewall
 
