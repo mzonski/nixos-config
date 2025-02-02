@@ -18,7 +18,7 @@ module {
           bar_height = 32;
           bar_text_size = 12;
           bar_padding = 4;
-          bar_button_padding = 2;
+          bar_button_padding = 6;
 
           bar_title_enabled = true;
           bar_blur = false;
@@ -26,11 +26,11 @@ module {
           bar_precedence_over_border = false;
 
           hyprbars-button = [
-            "rgb(000000), 24,  󰖭  , hyprctl dispatch killactive, rgb(f38ba8)"
-            "rgb(000000), 24,    , hyprctl dispatch fullscreen 1"
-            "rgb(000000), 24,  󰖰  , hyprctl dispatch movetoworkspacesilent special"
-            "rgb(000000), 24,  󰛺  , hyprctl dispatch pseudo"
-            "rgb(000000), 24,    , hyprctl dispatch togglefloating"
+            "rgb(f38ba8), 24,  󰖭  , hyprctl dispatch killactive"
+            "rgb(f9e2af), 24,    , hyprctl dispatch fullscreen 1"
+            "rgb(f2cdcd), 24,  󰖰  , hyprctl dispatch movetoworkspacesilent special"
+            "rgb(a6e3a1), 24,  󰛺  , hyprctl dispatch pseudo"
+            "rgb(74c7ec), 24,    , hyprctl dispatch togglefloating"
           ];
         };
 
