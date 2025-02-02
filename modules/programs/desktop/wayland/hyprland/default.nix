@@ -98,9 +98,9 @@ module {
 
         # TODO: If input
         plugins = [
-          pkgs.hyprplugins.hyprbars
-          pkgs.hyprplugins.hyprexpo
-          # pkgs.hyprplugins.xtra-dispatchers
+          pkgs.hyprPluginsFlake.hyprbars
+          pkgs.hyprPluginsFlake.hyprexpo
+          # pkgs.hyprPluginsFlake.xtra-dispatchers
         ];
 
         settings = {

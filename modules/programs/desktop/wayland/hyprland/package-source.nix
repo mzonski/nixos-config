@@ -14,8 +14,8 @@ let
       portalPackage = pkgs.unstable.xdg-desktop-portal-hyprland;
     };
     input = {
-      package = pkgs.hyprland.hyprland;
-      portalPackage = pkgs.hyprland.xdg-desktop-portal-hyprland;
+      package = pkgs.hyprFlake.hyprland;
+      portalPackage = pkgs.hyprFlake.xdg-desktop-portal-hyprland;
     };
   };
 in

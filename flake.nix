@@ -62,8 +62,8 @@
         final: prev:
         {
           inherit unstable;
-          hyprland = inputs.hyprland.packages.${system};
-          hyprplugins = inputs.hyprland-plugins.packages.${system};
+          hyprFlake = inputs.hyprland.packages.${system};
+          hyprPluginsFlake = inputs.hyprland-plugins.packages.${system};
           firefoxAddons = inputs.firefox-addons.packages.${system};
           local = self.packages."${system}";
         }
