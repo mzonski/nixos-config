@@ -83,6 +83,7 @@ module {
         v2 = [
           "noinitialfocus,class:jetbrains-toolbox,floating:1"
           "noinitialfocus, class:jetbrains-webstorm, title:^$, initialTitle:^$"
+          "pseudo,class:^(com.obsproject.Studio)$"
         ];
       };
 
