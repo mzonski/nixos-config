@@ -51,10 +51,10 @@ module {
 
       # Terminal (kitty) configurations
       floating_kitty = {
-        v1 = [
-          "float,title:^(float_kitty)$" # Make specific instance float
-          "center,title:^(float_kitty)$" # Center floating instance
-          "size 950 600,title:^(float_kitty)$" # Set specific size
+        v2 = [
+          "float, title:float_kitty"
+          "center, title:float_kitty"
+          "size 950 600, title:float_kitty"
         ];
       };
 
@@ -159,7 +159,6 @@ module {
           firefox.v1
           vlc.v1
           imv.v1
-          floating_kitty.v1
           audio.v1
           apps.v1
 
@@ -175,6 +174,7 @@ module {
           xwayland.v2
           workspaces.v2
           jetbrains.v2
+          floating_kitty.v2
         ];
       };
     };
