@@ -98,6 +98,14 @@ module {
         ];
       };
 
+      gitKraken = {
+        v2 = [
+          # Splash
+          "plugin:hyprbars:nobar, class:GitKraken, title:GitKraken, initialTitle:GitKraken, initialClass:GitKraken, floating:1"
+          "center, class:GitKraken, title:GitKraken, initialTitle:GitKraken, initialClass:GitKraken, floating:1"
+        ];
+      };
+
       # Picture-in-Picture configurations
       pip = {
         v2 = [
@@ -175,6 +183,7 @@ module {
           workspaces.v2
           jetbrains.v2
           floating_kitty.v2
+          gitKraken.v2
         ];
       };
     };
