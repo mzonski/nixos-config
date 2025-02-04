@@ -9,47 +9,39 @@ module {
   home.ifEnabled =
     { myconfig, ... }:
     let
-      # Firefox-specific configurations
       firefox = {
         v1 = [
-          # Sharing indicator positioning
-          "float,title:^(Firefox — Sharing Indicator)$" # Make sharing indicator float
-          "move 0 0,title:^(Firefox — Sharing Indicator)$" # Position at top-left corner
+          "float,title:^(Firefox — Sharing Indicator)$"
+          "move 0 0,title:^(Firefox — Sharing Indicator)$"
         ];
         v2 = [
-          # Prevent screen timeout during fullscreen videos
           "idleinhibit fullscreen, class:^(firefox)$"
         ];
       };
 
-      # Media player (vlc) configurations
       vlc = {
         v1 = [
-          "float,vlc" # Make window floating
+          "float,vlc"
           "size 1200 725, initialTitle:VLC media player"
-          "idleinhibit focus,vlc" # Prevent screen timeout during playback
+          "idleinhibit focus,vlc"
         ];
         v2 = [
-          # Prevent transparency for better viewing
           "opacity 1.0 override 1.0 override, title:^(.*vlc.*)$"
           "idleinhibit focus, class:^(vlc)$"
         ];
       };
 
-      # Image viewer (imv) configurations
-      imv = {
+      ristretto = {
         v1 = [
-          "float,ristretto" # Make window floating
-          "center,ristretto" # Center on screen
-          "size 1200 725,ristretto" # Set specific window size
+          "float,ristretto"
+          "center,ristretto"
+          "size 1200 725,ristretto"
         ];
         v2 = [
-          # Prevent transparency for better viewing
           "opacity 1.0 override 1.0 override, title:^(.*ristretto.*)$"
         ];
       };
 
-      # Terminal (kitty) configurations
       floating_kitty = {
         v2 = [
           "float, title:float_kitty"
@@ -58,27 +50,21 @@ module {
         ];
       };
 
-      # Audio applications configurations
       audio = {
         v1 = [
-          # Audacious music player
-          "float,audacious" # Make window floating
-          "workspace 8 silent, audacious" # Open in workspace 8
-          # Volume control
-          "float,title:^(Volume Control)$" # Make volume control float
-          "size 700 450,title:^(Volume Control)$" # Set specific size
-          "move 40 55%,title:^(Volume Control)$" # Position on screen
+          "float,title:^(Volume Control)$"
+          "size 700 450,title:^(Volume Control)$"
+          "move 40 55%,title:^(Volume Control)$"
         ];
         v2 = [
-          "float,class:^(org.pulseaudio.pavucontrol)$" # Make PulseAudio control float
-          "float,class:^(SoundWireServer)$" # Make SoundWire float
+          "float,class:^(SoundWireServer)$"
         ];
       };
 
       apps = {
         v1 = [
-          "float,gparted" # Make disk mounter float
-          "float,title:^(qBittorrent)$" # Make torrent client float
+          "float,gparted"
+          "float,title:^(qBittorrent)$"
         ];
         v2 = [
           "pseudo,class:^(com.obsproject.Studio)$"
@@ -106,7 +92,6 @@ module {
         ];
       };
 
-      # Picture-in-Picture configurations
       pip = {
         v2 = [
           "float, title:^(Picture-in-Picture)$"
@@ -115,7 +100,6 @@ module {
         ];
       };
 
-      # System dialogs and notifications
       dialogs = {
         v2 =
           let
@@ -142,19 +126,16 @@ module {
           ];
       };
 
-      # XWayland bridge configurations
       xwayland = {
         v2 = [
-          # Make screen sharing bridge invisible and non-interactive
-          "opacity 0.0 override,class:^(xwaylandvideobridge)$" # Makes bridge window invisible
-          "noanim,class:^(xwaylandvideobridge)$" # Disables animations
-          "noinitialfocus,class:^(xwaylandvideobridge)$" # Prevents focus on start
-          "maxsize 1 1,class:^(xwaylandvideobridge)$" # Makes window tiny
-          "noblur,class:^(xwaylandvideobridge)$" # Disables blur effect
+          "opacity 0.0 override,class:^(xwaylandvideobridge)$"
+          "noanim,class:^(xwaylandvideobridge)$"
+          "noinitialfocus,class:^(xwaylandvideobridge)$"
+          "maxsize 1 1,class:^(xwaylandvideobridge)$"
+          "noblur,class:^(xwaylandvideobridge)$"
         ];
       };
 
-      # XWayland bridge configurations
       workspaces = {
         v2 = [
           "float, workspace:1"
@@ -166,7 +147,7 @@ module {
         windowrule = concatLists [
           firefox.v1
           vlc.v1
-          imv.v1
+          ristretto.v1
           audio.v1
           apps.v1
 
@@ -174,7 +155,7 @@ module {
         windowrulev2 = concatLists [
           firefox.v2
           vlc.v2
-          imv.v2
+          ristretto.v2
           audio.v2
           apps.v2
           pip.v2
