@@ -48,6 +48,7 @@ delib.module {
 
           ## MISC
           prismlauncher # minecraft
+          mate.atril # Document viewer
 
           # CONSOLE / TUI
           bc # Calculator
