@@ -18,9 +18,6 @@ module {
         "3, monitor:${primaryOut}, name:terminal, persistent:true"
         "4, monitor:${primaryOut}, name:code, persistent:true"
         "5, monitor:${secondaryOut}, default:true, persistent:true"
-        "6, monitor:${secondaryOut}, persistent:true"
-        "7, monitor:${secondaryOut}, persistent:true"
-        "8, monitor:${secondaryOut}, persistent:true"
       ];
     };
 }
