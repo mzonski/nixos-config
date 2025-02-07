@@ -118,6 +118,10 @@ module {
             "${monitors.secondary.output},preferred,2400x0,1.6"
           ];
 
+          render = {
+            allow_early_buffer_release = false;
+          };
+
           misc = {
             disable_autoreload = false;
             disable_hyprland_logo = true;
