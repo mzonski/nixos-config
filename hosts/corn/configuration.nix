@@ -19,6 +19,7 @@ delib.host {
 
     hardware = {
       audio.enable = true;
+      audio.features = [ "noisy-no-alsa-suspension" ];
       bluetooth.enable = true;
       block.defaultScheduler = "mq-deadline";
     };

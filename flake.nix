@@ -38,7 +38,7 @@
     };
 
     denix = {
-      url = "github:yunfachi/denix";
+      url = "github:mzonski/denix/ifFeature-condition";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
