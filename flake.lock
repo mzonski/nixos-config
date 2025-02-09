@@ -40,11 +40,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1738834647,
-        "narHash": "sha256-NdetLk2Ie+syABcq/1MWSpqInhkODItR0xRkwDvWlpk=",
+        "lastModified": 1739094937,
+        "narHash": "sha256-LemSQ5AZHwl4ZVlirdpAytDWgS96OZsct7Akx/REdGA=",
         "owner": "catppuccin",
         "repo": "nix",
-        "rev": "7f2e0e709ad3e47a2ae0e735168438144c134947",
+        "rev": "aee0cec463e62702751adaeb9f4fc00f2f72879b",
         "type": "github"
       },
       "original": {
@@ -60,14 +60,15 @@
         ],
         "nixpkgs": [
           "nixpkgs"
-        ]
+        ],
+        "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1738330910,
-        "narHash": "sha256-v9iIPWEJtkOuqm9MjPkGIf2D6uGA/afsvMneqghS+tc=",
+        "lastModified": 1739034708,
+        "narHash": "sha256-0muFMcyLFdPqZ0hhtXGUky8xHsH+EGjzzmPLS9adia0=",
         "owner": "yunfachi",
         "repo": "denix",
-        "rev": "b42b30d2d8767d549dcabcde610518566e69c79b",
+        "rev": "ab2a1f7200f704ee10cb68cb22fa80b1f59d8c8f",
         "type": "github"
       },
       "original": {
@@ -85,11 +86,11 @@
       },
       "locked": {
         "dir": "pkgs/firefox-addons",
-        "lastModified": 1738901016,
-        "narHash": "sha256-951N/EZZnq4+TmTV7jWBEQyjAdZ7f+jmfTrF6OgNe9o=",
+        "lastModified": 1739073806,
+        "narHash": "sha256-uDyVctjdD5nLnpuWVPTD7kRbKT4mXScGqC2DYzSAtig=",
         "owner": "rycee",
         "repo": "nur-expressions",
-        "rev": "58bfa31fd4136a5b5fac268e93ff1789bd79d4a5",
+        "rev": "b82257270ffdf913c3a87058fdd86b997007fade",
         "type": "gitlab"
       },
       "original": {
@@ -100,6 +101,22 @@
       }
     },
     "flake-compat": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1696426674,
+        "narHash": "sha256-kvjfFW7WAETZlt09AgDn1MrtKzP7t90Vf7vypd3OL1U=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "0f9255e01c2351cc7d116c072cb317785dd33b33",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
+    "flake-compat_2": {
       "flake": false,
       "locked": {
         "lastModified": 1696426674,
@@ -164,6 +181,28 @@
       }
     },
     "gitignore": {
+      "inputs": {
+        "nixpkgs": [
+          "denix",
+          "pre-commit-hooks",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1709087332,
+        "narHash": "sha256-HG2cCnktfHsKV0s4XW83gU3F57gaTljL9KNSuG6bnQs=",
+        "owner": "hercules-ci",
+        "repo": "gitignore.nix",
+        "rev": "637db329424fd7e46cf4185293b9cc8c88c95394",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "gitignore.nix",
+        "type": "github"
+      }
+    },
+    "gitignore_2": {
       "inputs": {
         "nixpkgs": [
           "hyprland",
@@ -275,16 +314,16 @@
         "hyprutils": "hyprutils",
         "hyprwayland-scanner": "hyprwayland-scanner",
         "nixpkgs": "nixpkgs",
-        "pre-commit-hooks": "pre-commit-hooks",
+        "pre-commit-hooks": "pre-commit-hooks_2",
         "systems": "systems",
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1738863928,
-        "narHash": "sha256-sQAMrDOw8BmhELfKuL/rCtTdXHt95PlIqfhGbIunVqQ=",
+        "lastModified": 1739123889,
+        "narHash": "sha256-TinJJD88Y2EY0eoThanqN8Zr8I25JVhr1CeRS2LUeOc=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "54441e0c4e51dd182f78876c014446d5d0359ba8",
+        "rev": "f261fb6fe028a1427cfd672eee6e7d5705cd696f",
         "type": "github"
       },
       "original": {
@@ -310,11 +349,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1738612236,
-        "narHash": "sha256-IGp1AcZvYZ/R+AO0Znd+i+eQuEnQfkg/6AshoYPyUIg=",
+        "lastModified": 1738966025,
+        "narHash": "sha256-MzgrF0jKlTNnNS33D8PwI5z2MJ1Tzf5MQVf/oms2pdw=",
         "owner": "hyprwm",
         "repo": "hyprland-plugins",
-        "rev": "6d525bcfea005d399f4f603f6d9321f7281ddb6e",
+        "rev": "4f48dbe12f3cbbeb4d31c91c67b21edbc5b4b451",
         "type": "github"
       },
       "original": {
@@ -568,11 +607,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1738824222,
-        "narHash": "sha256-U3SNq+waitGIotmgg/Et3J7o4NvUtP2gb2VhME5QXiw=",
+        "lastModified": 1739020877,
+        "narHash": "sha256-mIvECo/NNdJJ/bXjNqIh8yeoSjVLAuDuTUzAo7dzs8Y=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "550e11f27ba790351d390d9eca3b80ad0f0254e7",
+        "rev": "a79cfe0ebd24952b580b1cf08cd906354996d547",
         "type": "github"
       },
       "original": {
@@ -633,6 +672,29 @@
       "inputs": {
         "flake-compat": "flake-compat",
         "gitignore": "gitignore",
+        "nixpkgs": [
+          "denix",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1737465171,
+        "narHash": "sha256-R10v2hoJRLq8jcL4syVFag7nIGE7m13qO48wRIukWNg=",
+        "owner": "cachix",
+        "repo": "git-hooks.nix",
+        "rev": "9364dc02281ce2d37a1f55b6e51f7c0f65a75f17",
+        "type": "github"
+      },
+      "original": {
+        "owner": "cachix",
+        "repo": "git-hooks.nix",
+        "type": "github"
+      }
+    },
+    "pre-commit-hooks_2": {
+      "inputs": {
+        "flake-compat": "flake-compat_2",
+        "gitignore": "gitignore_2",
         "nixpkgs": [
           "hyprland",
           "nixpkgs"
