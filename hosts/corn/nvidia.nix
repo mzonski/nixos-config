@@ -17,7 +17,7 @@ delib.host {
     ];
 
     boot.blacklistedKernelModules = [
-      # "i915"
+      "i915"
       "amdgpu"
     ];
     services.xserver.videoDrivers = [ "nvidia" ];
@@ -35,6 +35,7 @@ delib.host {
         vaapiVdpau
         libvdpau-va-gl
         libva1
+        libGL
       ];
     };
 
@@ -47,7 +48,7 @@ delib.host {
 
       forceFullCompositionPipeline = true;
       gsp.enable = true;
-      #videoAcceleration = true; 25.05?
+      # videoAcceleration = true; # 25.05?
 
       prime = {
         offload.enable = false;
