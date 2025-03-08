@@ -9,8 +9,16 @@ module {
   options = singleEnableOption false;
 
   nixos.ifEnabled = {
-    programs.steam.enable = true;
+    programs.steam = {
+      enable = true;
+      gamescopeSession.enable = true;
+    };
+
+    programs.gamescope.enable = true;
+    programs.gamescope.capSysNice = true;
     programs.gamemode.enable = true;
+
+    hardware.xone.enable = true;
 
     environment.sessionVariables = {
       STEAM_FORCE_DESKTOPUI_SCALING = "1.6";
@@ -19,7 +27,6 @@ module {
     environment.systemPackages = with pkgs; [
       # Steam
       mangohud
-      gamemode
       # WINE
       wine
       winetricks
