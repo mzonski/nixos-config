@@ -15,6 +15,13 @@ delib.module {
         ntfsprogs
         gparted
       ];
+      fonts = with pkgs; [
+        roboto
+        vistafonts
+        textfonts
+        font-awesome
+        local.apple-fonts
+      ];
     in
     {
       fonts.fontconfig.enable = true;
@@ -97,13 +104,8 @@ delib.module {
           bleachbit # Program to clean your computer
           buttermanager # manage btrfs
           qdirstat # Visualise used disk space
-
-          ## FONTS
-          vistafonts
-          textfonts
-          font-awesome
-          local.apple-fonts
         ]
-        ++ partitioning;
+        ++ partitioning
+        ++ fonts;
     };
 }
