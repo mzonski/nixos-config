@@ -10,7 +10,7 @@ module {
     programs.waybar = {
       enable = true;
       systemd.enable = true;
-      systemd.target = "graphical-session.target";
+      systemd.target = "hyprland-session.target";
       package = pkgs.unstable.waybar;
       # package = pkgs.waybar.overrideAttrs (oa: {
       #   mesonFlags = (oa.mesonFlags or [ ]) ++ [ "-Dexperimental=true" ];
