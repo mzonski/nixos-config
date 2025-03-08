@@ -12,7 +12,7 @@ module {
     let
       chromiumArgs = [
         "--ozone-platform-hint=auto"
-        "--enable-features=MiddleClickAutoscroll,AcceleratedVideoDecodeLinuxZeroCopyGL,AcceleratedVideoDecodeLinuxGL,VaapiIgnoreDriverChecks,VaapiOnNvidiaGPUs"
+        "--enable-features=MiddleClickAutoscroll,AcceleratedVideoDecodeLinuxGL,VaapiIgnoreDriverChecks,VaapiOnNvidiaGPUs"
       ];
     in
     {
