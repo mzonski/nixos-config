@@ -9,7 +9,7 @@ delib.rice {
       border_size = 2;
       "col.active_border" = "rgb(cba6f7) rgb(94e2d5) 45deg";
       "col.inactive_border" = "0x00000000";
-      border_part_of_window = false;
+      #border_part_of_window = false;
       no_border_on_floating = false;
       resize_on_border = true;
     };

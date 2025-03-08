@@ -58,7 +58,7 @@ module {
       ];
 
       workspaceNavigation = [
-        "$mainMod, TAB, hyprexpo:expo, toggle"
+        #"$mainMod, TAB, hyprexpo:expo, toggle"
 
         "$mainMod, 1, workspace, 1"
         "$mainMod, 2, workspace, 2"
