@@ -43,6 +43,8 @@ module {
       libxml2
       xml2
       SDL2
+      # GameBoy
+      mgba
     ];
   };
 }
