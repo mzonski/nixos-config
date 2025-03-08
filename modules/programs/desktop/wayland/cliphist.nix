@@ -20,9 +20,9 @@ module {
     systemd.user.services.cliphist-watch = {
       Unit = {
         Description = "Clipboard history watcher for cliphist";
-        PartOf = [ "graphical-session.target" ];
+        PartOf = [ "hyprland-session.target" ];
         After = [
-          "graphical-session.target"
+          "hyprland-session.target"
           "cliphist.service"
         ];
         Requires = [ "cliphist.service" ];
@@ -34,7 +34,7 @@ module {
       };
 
       Install = {
-        WantedBy = [ "graphical-session.target" ];
+        WantedBy = [ "hyprland-session.target" ];
       };
     };
 
