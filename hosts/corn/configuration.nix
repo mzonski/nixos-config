@@ -52,6 +52,11 @@ delib.host {
       inputs.nixos-hardware.nixosModules.common-pc-ssd
     ];
 
+    boot.kernelParams = [
+      ''acpi_os_name="Windows 2012"''
+      ''acpi_osi="Linux"''
+    ];
+
     # TODO: REVERT IT
     boot.readOnlyNixStore = false;
     # TODO: REVERT IT
