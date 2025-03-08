@@ -46,7 +46,7 @@ module {
     in
     {
       home.packages = with pkgs; [
-        nautilus
+        dconf-editor
         gnome-shell-extensions
         pop-shell-extension
         gnomeExtensions.appindicator
@@ -54,8 +54,9 @@ module {
         gnomeExtensions.color-picker
         gnomeExtensions.caffeine
         gnomeExtensions.emoji-copy
-        gnomeExtensions.desktop-icons-ng-ding
+        gnomeExtensions.gtk4-desktop-icons-ng-ding
         gnomeExtensions.dash-to-panel
+        gnomeExtensions.dual-monitor-toggle
       ];
 
       dconf = {
@@ -77,7 +78,8 @@ module {
               "color-picker@tuberry"
               "caffeine@patapon.info"
               "emoji-copy@felipeftn"
-              "ding@rastersoft.com"
+              "gtk4-ding@smedius.gitlab.com"
+              "dual-monitor-toggle@poka"
             ];
           };
           "org/gnome/gnome-session" = {
@@ -160,7 +162,7 @@ module {
             hint-color-rgba = "rgba(203, 166, 247, 1)";
           };
           "org/gnome/shell/extensions/user-theme" = {
-            name = "Colloid-Purple-Dark-Compact-Catppuccin";
+            name = gtkThemeName;
           };
 
           "org/gnome/nautilus/icon-view" = {
