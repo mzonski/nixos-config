@@ -29,6 +29,8 @@ delib.host {
       general-development.enable = true;
       virt-manager.enable = true;
       docker.enable = true;
+      windows-data-partition.enable = true;
+      windows-data-partition.diskUuid = "1E08506F08504843";
     };
 
     programs.chrome.enable = true;
