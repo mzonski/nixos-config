@@ -23,7 +23,10 @@ delib.module {
       isAdmin = homeManagerUser == username;
     in
     {
-      user.groups = mkIf isAdmin [ "wheel" ];
+      user.groups = mkIf isAdmin [
+        "wheel"
+        "adm"
+      ];
     };
 
   nixos.always =

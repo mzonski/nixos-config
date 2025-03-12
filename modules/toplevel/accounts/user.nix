@@ -43,6 +43,7 @@ delib.module {
   myconfig.always =
     { cfg, ... }:
     {
+      user.groups = [ "users" ];
       user.config = {
         name = homeManagerUser;
         createHome = true;
