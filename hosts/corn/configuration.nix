@@ -27,8 +27,8 @@ delib.host {
       autologin.enable = true;
       gaming.enable = true;
       general-development.enable = true;
-      virt-manager.enable = true;
-      docker.enable = true;
+      virt-manager.enable = false;
+      docker.enable = false;
       windows-data-partition.enable = true;
       windows-data-partition.diskUuid = "1E08506F08504843";
     };
@@ -54,10 +54,8 @@ delib.host {
       inputs.nixos-hardware.nixosModules.common-pc-ssd
     ];
 
-    boot.kernelParams = [
-      ''acpi_os_name="Windows 2012"''
-      ''acpi_osi="Linux"''
-    ];
+    # https://github.com/kachick/dotfiles/issues/959#issuecomment-2533264029
+    systemd.services.systemd-suspend.environment.SYSTEMD_SLEEP_FREEZE_USER_SESSIONS = "false";
 
     # TODO: REVERT IT
     boot.readOnlyNixStore = false;
