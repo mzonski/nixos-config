@@ -1,6 +1,7 @@
 { delib, pkgs, ... }:
 let
   inherit (delib) singleEnableOption module;
+  inherit (builtins) concatStringsSep;
 in
 module {
   name = "programs.chrome";
@@ -10,9 +11,23 @@ module {
   home.ifEnabled =
     { myconfig, ... }:
     let
+      commonFeatures = [
+        "MiddleClickAutoscroll"
+        "WaylandWindowDecorations"
+      ];
+      glesFeatures = [
+        "AcceleratedVideoDecodeLinuxGL"
+        "VaapiIgnoreDriverChecks"
+        "VaapiOnNvidiaGPUs"
+      ];
+      vulkanFeatures = [
+        "VulkanFromANGLE"
+        "UseVulkanForWebGL"
+      ];
+
       chromiumArgs = [
         "--ozone-platform-hint=auto"
-        "--enable-features=MiddleClickAutoscroll,AcceleratedVideoDecodeLinuxGL,VaapiIgnoreDriverChecks,VaapiOnNvidiaGPUs"
+        "--enable-features=${concatStringsSep "," (commonFeatures ++ vulkanFeatures)}"
       ];
     in
     {

@@ -129,8 +129,8 @@ module {
 
           cursor = {
             no_warps = true;
-            no_hardware_cursors = 1;
-            use_cpu_buffer = 1;
+            no_hardware_cursors = true;
+            #use_cpu_buffer = 1;
             default_monitor = monitors.primary.output;
             #no_break_fs_vrr = 1;
             #no_break_fs_vrr = true;
@@ -143,8 +143,6 @@ module {
 
           render = {
             #allow_early_buffer_release = false;
-            explicit_sync = 0;
-            explicit_sync_kms = 0;
           };
 
           misc = {

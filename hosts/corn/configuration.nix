@@ -35,7 +35,7 @@ delib.host {
 
     programs.chrome.enable = true;
     programs.wayland = {
-      hyprland.source = "stable";
+      hyprland.source = "unstable";
       idle = {
         lockEnabled = false;
         lockTimeout = 10 * 60; # 10 min

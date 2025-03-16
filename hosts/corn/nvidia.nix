@@ -3,6 +3,7 @@
   config,
   inputs,
   pkgs,
+  lib,
   ...
 }:
 
@@ -19,6 +20,7 @@ delib.host {
     boot.blacklistedKernelModules = [
       "i915"
       "amdgpu"
+      "nouveau"
     ];
     services.xserver.videoDrivers = [ "nvidia" ];
 
@@ -26,6 +28,17 @@ delib.host {
       libva-utils
       vdpauinfo
     ];
+
+    environment.variables = {
+      MESA_VK_DEVICE_SELECT_FORCE_DEFAULT_DEVICE = "1";
+      #MESA_LOADER_DRIVER_OVERRIDE = "nvidia";
+
+      LIBVA_DRIVER_NAME = "nvidia";
+      ELECTRON_OZONE_PLATFORM_HINT = "auto";
+      GBM_BACKEND = "nvidia-drm";
+      __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+      NVD_BACKEND = "direct";
+    };
 
     hardware.graphics = {
       enable = true;
@@ -46,7 +59,7 @@ delib.host {
 
       powerManagement.enable = true;
       powerManagement.finegrained = false;
-      open = false;
+      open = true;
 
       forceFullCompositionPipeline = true;
       gsp.enable = true;
@@ -55,7 +68,7 @@ delib.host {
       prime = {
         offload.enable = false;
         sync.enable = false;
-        reverseSync.enable = false;
+        reverseSync.enable = true;
         allowExternalGpu = false;
 
         intelBusId = "PCI:0:2:0";
