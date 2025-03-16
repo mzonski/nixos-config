@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DEFAULT_MONITOR="HDMI-A-1"
+DEFAULT_MONITOR="HDMI-A-4"
 DEFAULT_POSITION="2400x0"
 DEFAULT_SCALE="1.6"
 
@@ -17,8 +17,8 @@ print_usage() {
     echo "  -s, --scale    Scale factor (default: $DEFAULT_SCALE)"
     echo ""
     echo "Example:"
-    echo "  $0 toggle -m HDMI-A-1 -p 2400x0 -s 1.6"
-    echo "  $0 status --monitor HDMI-A-1"
+    echo "  $0 toggle -m HDMI-A-4 -p 2400x0 -s 1.6"
+    echo "  $0 status --monitor HDMI-A-4"
 }
 
 
