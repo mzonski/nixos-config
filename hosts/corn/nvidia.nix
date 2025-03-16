@@ -31,7 +31,7 @@ delib.host {
 
     environment.variables = {
       MESA_VK_DEVICE_SELECT_FORCE_DEFAULT_DEVICE = "1";
-      #MESA_LOADER_DRIVER_OVERRIDE = "nvidia";
+      MESA_LOADER_DRIVER_OVERRIDE = "nvidia";
 
       LIBVA_DRIVER_NAME = "nvidia";
       ELECTRON_OZONE_PLATFORM_HINT = "auto";
