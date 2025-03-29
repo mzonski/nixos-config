@@ -33,6 +33,11 @@ system:
 	@echo "Switching NixOS configuration..."
 	sudo nixos-rebuild switch --flake $(FLAKE)#$(HOSTNAME)
 
+sysboot:
+	@echo "Switching NixOS configuration..."
+	sudo nixos-rebuild boot --flake $(FLAKE)#$(HOSTNAME)
+
+
 help:
 	@echo "Available targets:"
 	@echo "  all     - Run both home and system targets (default)"
