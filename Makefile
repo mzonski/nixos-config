@@ -22,6 +22,7 @@ update:
 clean:
 	@echo "Cleaning old generations..."
 	nix-collect-garbage --delete-old
+	nix-store --gc --print-roots | egrep -v "^(/nix/var|/run/\w+-system|\{memory|/proc)"
 
 home:
 	@echo "Switching home-manager configuration..."
