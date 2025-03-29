@@ -1,11 +1,11 @@
 {
   delib,
+  lib,
   inputs,
   system,
   pkgs,
   ...
 }:
-
 delib.host {
   name = "corn";
   rice = "catppuccin-sharp-dark";
@@ -54,6 +54,9 @@ delib.host {
       inputs.nixos-hardware.nixosModules.common-cpu-intel-cpu-only
       inputs.nixos-hardware.nixosModules.common-pc-ssd
     ];
+
+    services.displayManager.sddm.enable = lib.mkForce false;
+    services.xserver.displayManager.gdm.enable = lib.mkForce true;
 
     systemd.package = pkgs.unstable.systemd;
 
