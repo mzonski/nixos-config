@@ -45,9 +45,10 @@ module {
           {
             matches = [ { "node.name" = "~alsa_*"; } ]; # TODO: test bluez_input.* / bluez_output.*
             actions.update-props = {
-              session.suspend-timeout-seconds = 0;
-              dither.method = "wannamaker3";
-              dither.noise = 2;
+              "session.suspend-timeout-seconds" = 0;
+              "clock.quantum-limit" = 8192;
+              #"dither.method" = "wannamaker3";
+              #"dither.noise" = 2;
             };
           }
         ];
