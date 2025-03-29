@@ -1,15 +1,18 @@
 { delib, ... }:
 
 let
-  inherit (delib) module singleEnableOption;
+  inherit (delib) module boolOption strOption;
 in
 module {
   name = "features.autologin";
 
-  options = singleEnableOption false;
+  options.features.autologin = {
+    enable = boolOption false;
+    session = strOption "hyprland";
+  };
 
   nixos.ifEnabled =
-    { myconfig, ... }:
+    { cfg, myconfig, ... }:
     let
       inherit (myconfig.admin) username;
     in
@@ -21,7 +24,7 @@ module {
         sddm.settings = {
           Autologin = {
             Relogin = false;
-            Session = "hyprland"; # TODO: variable
+            Session = cfg.session;
             User = username;
           };
         };
