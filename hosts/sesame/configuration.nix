@@ -31,7 +31,7 @@ delib.host {
     };
 
     features = {
-      autologin.enable = false;
+      autologin.enable = true;
       autologin.session = "hyprland";
       gaming.enable = false;
       general-development.enable = false;
