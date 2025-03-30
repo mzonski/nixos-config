@@ -9,10 +9,16 @@ delib.module {
         { config, ... }:
         {
           options = hostSubmoduleOptions // {
-            type = noDefault (enumOption [ "desktop" "server" ] null);
+            type = noDefault (enumOption [ "desktop" "server" "minimal" ] null);
 
             isDesktop = boolOption (config.type == "desktop");
             isServer = boolOption (config.type == "server");
+            isMinimal = boolOption (config.type == "minimal");
+            not = {
+              isDesktop = boolOption (config.type != "desktop");
+              isServer = boolOption (config.type != "server");
+              isMinimal = boolOption (config.type != "minimal");
+            };
           };
         };
     in

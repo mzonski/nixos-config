@@ -103,6 +103,28 @@
               ;
           };
         };
+
+      initConfiguration = denix.lib.configurations rec {
+        homeManagerNixpkgs = nixpkgs;
+        homeManagerUser = "nixos";
+        isHomeManager = false;
+
+        paths = [
+          ./special/initIso
+          ./rices
+          ./modules
+        ];
+
+        specialArgs = {
+          inherit
+            inputs
+            isHomeManager
+            homeManagerUser
+            pkgs
+            system
+            ;
+        };
+      };
     in
     {
       overlays.default = overlay;
@@ -114,7 +136,7 @@
         }) (denix.lib.umport { path = ./packages; })
       );
 
-      nixosConfigurations = mkConfigurations false;
+      nixosConfigurations = mkConfigurations false // initConfiguration;
       homeConfigurations = mkConfigurations true;
     };
 }
