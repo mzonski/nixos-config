@@ -18,11 +18,8 @@ delib.host {
     hardware = {
       audio.enable = false;
       bluetooth.enable = false;
-      block.scheduler = {
-        "mmcblk[0-9]*" = "bfq";
-        "sd[a-z]*" = "bfq";
-        "nvme[0-9]*" = "kyber";
-      };
+      block.defaultScheduler = "kyber";
+      block.defaultSchedulerRotational = "bfq";
       storage = {
         enable = true;
         layout = "desktop_btrfs_single_disk";
