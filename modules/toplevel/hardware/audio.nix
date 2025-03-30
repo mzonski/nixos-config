@@ -2,7 +2,6 @@
   delib,
   lib,
   pkgs,
-  host,
   ...
 }:
 
@@ -13,7 +12,7 @@ in
 module {
   name = "hardware.audio";
 
-  options = singleEnableOption host.isDesktop;
+  options = singleEnableOption false;
 
   myconfig.ifEnabled.user.groups = [ "audio" ];
 

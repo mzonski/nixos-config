@@ -3,6 +3,7 @@
   pkgs,
   delib,
   lib,
+  host,
   ...
 }:
 
@@ -12,12 +13,15 @@ in
 module {
   name = "programs.cli.zsh";
 
-  options = singleEnableOption true;
+  options = singleEnableOption host.not.isMinimal;
 
   nixos.ifEnabled = {
     users.defaultUserShell = pkgs.zsh;
 
-    programs.zsh.enableCompletion = true;
+    programs.zsh = {
+      enable = true;
+      enableCompletion = true;
+    };
   };
 
   home.ifEnabled =

@@ -1,5 +1,6 @@
 {
   delib,
+  lib,
   isHomeManager,
   homeManagerUser,
   config,
@@ -13,7 +14,7 @@ delib.module {
     if isHomeManager then config else config.home-manager.users.${homeManagerUser};
 
   nixos.always = {
-    environment.systemPackages = [ pkgs.home-manager ];
+    environment.systemPackages = lib.mkIf isHomeManager [ pkgs.home-manager ];
     home-manager = {
       backupFileExtension = "home_manager_backup";
       #useUserPackages = true;

@@ -4,6 +4,7 @@
   lib,
   pkgs,
   config,
+  host,
   ...
 }:
 delib.module {
@@ -83,6 +84,7 @@ delib.module {
       imports = [ inputs.sops-nix.nixosModules.sops ];
 
       sops = {
+        defaultSopsFile = ../../shared-secrets.yaml;
         age.sshKeyPaths = map getKeyPath keys;
       };
 
@@ -102,6 +104,14 @@ delib.module {
           AcceptEnv = "WAYLAND_DISPLAY";
           X11Forwarding = true;
         };
+
+        # knownHosts = lib.mapAttrs (hostname: pubkeyFile: {
+        #   publicKeyFile = pubkeyFile;
+        #   hostNames = [
+        #     hostname
+        #     "${hostname}.local.zonni.pl"
+        #   ] ++ (lib.optional (hostname == config.networking.hostName) "localhost");
+        # }) cfg.ssh;
 
         hostKeys = [
           {

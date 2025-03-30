@@ -1,8 +1,15 @@
-{ delib, lib, ... }:
+{
+  delib,
+  lib,
+  host,
+  ...
+}:
 delib.module {
   name = "boot";
 
-  nixos.always =
+  options = delib.singleEnableOption host.not.isMinimal;
+
+  nixos.ifEnabled =
     let
       inherit (lib) mkDefault;
     in

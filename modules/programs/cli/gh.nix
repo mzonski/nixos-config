@@ -1,4 +1,9 @@
-{ delib, pkgs, ... }:
+{
+  delib,
+  pkgs,
+  host,
+  ...
+}:
 
 let
   inherit (delib) module singleEnableOption;
@@ -6,7 +11,7 @@ in
 module {
   name = "programs.cli.gh";
 
-  options = singleEnableOption true;
+  options = singleEnableOption host.not.isMinimal;
 
   home.ifEnabled.programs.gh = {
     enable = true;

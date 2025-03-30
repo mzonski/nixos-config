@@ -54,7 +54,7 @@ module {
         enable = true;
         enableSshSupport = true;
         enableExtraSocket = true;
-        pinentryPackage = pkgs.wayprompt;
+        pinentryPackage = pkgs.pinentry-gnome3;
       };
 
       programs.gpg = {
