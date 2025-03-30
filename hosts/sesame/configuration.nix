@@ -16,8 +16,8 @@ delib.host {
     admin.username = "zonni";
 
     hardware = {
-      audio.enable = false;
-      bluetooth.enable = false;
+      audio.enable = true;
+      bluetooth.enable = true;
       block.defaultScheduler = "kyber";
       block.defaultSchedulerRotational = "bfq";
       storage = {
