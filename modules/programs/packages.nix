@@ -9,6 +9,7 @@ delib.module {
 
       nix
       git
+      gh
       nano
       wget
       unzip

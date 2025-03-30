@@ -1,6 +1,13 @@
-{ pkgs, delib, ... }:
+{
+  pkgs,
+  delib,
+  host,
+  lib,
+  ...
+}:
 
 let
+  inherit (lib) mkIf;
   inherit (delib) module singleEnableOption;
 in
 module {
@@ -59,7 +66,7 @@ module {
 
       lfs.enable = true;
 
-      signing = {
+      signing = mkIf host.isDesktop {
         key = "1DE6074072F24AB36243CD7E3966358398A56CC1";
         signByDefault = true;
       };
