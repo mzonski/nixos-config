@@ -50,7 +50,7 @@ module {
         gnome-shell-extensions
         pop-shell-extension
         gnomeExtensions.appindicator
-        gnomeExtensions.rounded-window-corners-reborn
+        #gnomeExtensions.rounded-window-corners-reborn
         gnomeExtensions.color-picker
         gnomeExtensions.caffeine
         gnomeExtensions.emoji-copy
@@ -74,12 +74,12 @@ module {
               "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
               "appindicatorsupport@rgcjonas.gmail.com"
               "pop-shell@system76.com"
-              "rounded-window-corners@fxgn"
+              #"rounded-window-corners@fxgn"
               "color-picker@tuberry"
               "caffeine@patapon.info"
-              "emoji-copy@felipeftn"
+              #"emoji-copy@felipeftn"
               "gtk4-ding@smedius.gitlab.com"
-              "dual-monitor-toggle@poka"
+              #"dual-monitor-toggle@poka"
             ];
           };
           "org/gnome/gnome-session" = {
