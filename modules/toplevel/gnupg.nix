@@ -62,7 +62,16 @@ module {
         settings = {
           trust-model = "tofu+pgp";
         };
-        inherit publicKeys;
+        publicKeys = [
+          {
+            source = ../../keys/users/zonni/pgp.asc;
+            trust = 5;
+          }
+        ];
+        scdaemonSettings = {
+          disable-ccid = true;
+        };
+        #inherit publicKeys;
       };
 
       systemd.user.services = {
