@@ -35,6 +35,7 @@ delib.module {
           hardinfo2 # Hardware information
           qpwgraph # Pipewire manager
           gnome-font-viewer
+          seahorse # manage GNOME Keyring
 
           # COMMUNICATION
           thunderbird
@@ -56,6 +57,7 @@ delib.module {
           ## MISC
           prismlauncher # minecraft
           mate.atril # Document viewer
+          unstable.furmark # GPU benchmark
 
           # CONSOLE / TUI
           bc # Calculator
