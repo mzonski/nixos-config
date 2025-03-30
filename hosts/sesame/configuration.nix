@@ -50,6 +50,7 @@ delib.host {
         suspendTimeout = 30 * 60; # 30 min
       };
     };
+    programs.gnome.enable = false;
   };
 
   nixos = {
