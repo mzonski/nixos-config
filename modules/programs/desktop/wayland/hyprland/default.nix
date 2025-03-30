@@ -19,7 +19,7 @@ module {
     source = noDefault (enumOption [ "stable" "unstable" "input" ] null);
     monitors = {
       primary = {
-        output = strOption "DP-4";
+        output = strOption "DP-2";
         workspaces = [
           1
           2
@@ -28,7 +28,7 @@ module {
         ];
       };
       secondary = {
-        output = strOption "HDMI-A-4";
+        output = strOption "eDP-1";
         workspaces = [
           5
           6
@@ -137,8 +137,11 @@ module {
           };
 
           monitor = [
-            "${monitors.primary.output},3840x2160@60.0,0x450,1.6"
-            "${monitors.secondary.output},preferred,2400x0,1.6"
+            #"${monitors.primary.output},3840x2160@60.0,0x450,1.6"
+            "eDP-1,1920x1080@60.0,0x450,1.5"
+            "DP-2,3840x2160@60.0,1280x0,1.6"
+
+            #"${monitors.secondary.output},preferred,2400x0,1.6"
           ];
 
           render = {

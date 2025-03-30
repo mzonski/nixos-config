@@ -16,13 +16,10 @@ delib.host {
     admin.username = "zonni";
 
     hardware = {
-      audio.enable = false;
-      bluetooth.enable = false;
-      block.scheduler = {
-        "mmcblk[0-9]*" = "bfq";
-        "sd[a-z]*" = "bfq";
-        "nvme[0-9]*" = "kyber";
-      };
+      audio.enable = true;
+      bluetooth.enable = true;
+      block.defaultScheduler = "kyber";
+      block.defaultSchedulerRotational = "bfq";
       storage = {
         enable = true;
         layout = "desktop_btrfs_single_disk";
@@ -34,7 +31,7 @@ delib.host {
     };
 
     features = {
-      autologin.enable = false;
+      autologin.enable = true;
       autologin.session = "hyprland";
       gaming.enable = false;
       general-development.enable = false;
@@ -53,6 +50,7 @@ delib.host {
         suspendTimeout = 30 * 60; # 30 min
       };
     };
+    programs.gnome.enable = false;
   };
 
   nixos = {
@@ -61,6 +59,7 @@ delib.host {
 
     imports = [
       inputs.nixos-hardware.nixosModules.common-cpu-intel
+      #inputs.nixos-hardware.nixosModules.asus-zenbook-ux371
       inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
     ];
 
@@ -75,6 +74,8 @@ delib.host {
     services.printing.enable = true;
     services.pcscd.enable = true;
     security.polkit.enable = true;
+
+    #services.fwupd.enable = true;
   };
 
   home = {

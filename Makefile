@@ -9,7 +9,7 @@
 
 FLAKE := .
 USERNAME := zonni
-HOSTNAME := corn
+HOSTNAME := sesame
 
 .PHONY: all home system update
 
