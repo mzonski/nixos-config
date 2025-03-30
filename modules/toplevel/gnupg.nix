@@ -36,6 +36,8 @@ module {
 
       dirmngr.enable = true;
     };
+
+    services.pcscd.enable = if host.isDesktop then true else false;
   };
 
   home.always =
@@ -63,6 +65,9 @@ module {
           trust-model = "tofu+pgp";
         };
         inherit publicKeys;
+        scdaemonSettings = {
+          disable-ccid = true;
+        };
       };
 
       systemd.user.services = {

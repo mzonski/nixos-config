@@ -70,7 +70,6 @@ delib.host {
     services.libinput.enable = true;
     services.openssh.enable = true;
     services.printing.enable = true;
-    services.pcscd.enable = true;
     security.polkit.enable = true;
   };
 
