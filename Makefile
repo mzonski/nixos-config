@@ -8,8 +8,8 @@
 ################################################
 
 FLAKE := .
-USERNAME := zonni
-HOSTNAME := sesame
+USERNAME := $(shell whoami)
+HOSTNAME := $(shell hostname)
 
 .PHONY: all home system update
 

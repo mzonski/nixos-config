@@ -36,6 +36,8 @@ module {
 
       dirmngr.enable = true;
     };
+
+    services.pcscd.enable = if host.isDesktop then true else false;
   };
 
   home.always =

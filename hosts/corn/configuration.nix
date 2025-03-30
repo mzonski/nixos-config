@@ -100,7 +100,6 @@ delib.host {
     services.libinput.enable = true;
     services.openssh.enable = true;
     services.printing.enable = true;
-    services.pcscd.enable = true;
 
     programs.nix-ld.enable = false;
     programs.dconf.enable = true;
