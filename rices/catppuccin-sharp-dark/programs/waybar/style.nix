@@ -50,5 +50,5 @@ in
 delib.rice {
   name = "catppuccin-sharp-dark";
 
-  home.programs.waybar.style = builtins.readFile waybarCss + "\n\n @import './custom.css';";
+  home.programs.waybar.style = builtins.readFile waybarCss; # + "\n\n @import './custom.css';"
 }
