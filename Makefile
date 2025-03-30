@@ -41,6 +41,10 @@ gen-init:
 	@echo "Generating Init ISO..."
 	nix build .#nixosConfigurations.init.config.system.build.isoImage
 
+deploy-sesame:
+	@echo "Deploying Sesame configuration..."
+    nix run github:numtide/nixos-anywhere -- --target-host nixos@sesame --flake .#sesame
+
 help:
 	@echo "Available targets:"
 	@echo "  all     - Run both home and system targets (default)"
