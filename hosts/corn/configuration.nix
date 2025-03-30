@@ -36,7 +36,7 @@ delib.host {
 
     programs.chrome.enable = true;
     programs.wayland = {
-      hyprland.source = "unstable";
+      hyprland.source = "stable";
       idle = {
         lockEnabled = false;
         lockTimeout = 10 * 60; # 10 min
@@ -92,7 +92,7 @@ delib.host {
     # TODO: REVERT IT
 
     #boot.kernelPackages = pkgs.linuxPackages_latest;
-    boot.kernelPackages = pkgs.linuxPackages_6_12;
+    #boot.kernelPackages = pkgs.linuxPackages_6_12;
     networking.firewall.enable = false; # Disable firewall
 
     services.tumbler.enable = true; # Enable thumbnail service
@@ -104,7 +104,6 @@ delib.host {
 
     programs.nix-ld.enable = false;
     programs.dconf.enable = true;
-    programs.zsh.enable = true;
 
     security.polkit.enable = true;
   };
