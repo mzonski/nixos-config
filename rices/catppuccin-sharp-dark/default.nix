@@ -1,6 +1,7 @@
 { pkgs, delib, ... }:
 delib.rice {
   name = "catppuccin-sharp-dark";
+  inherits = [ "homelab" ];
 
   wallpaper = ./assets/wallpaper.png;
 

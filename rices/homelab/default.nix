@@ -1,7 +1,8 @@
-{ delib, pkgs, ... }:
-delib.module {
-  name = "toplevel.console";
-  nixos.always = {
+{ pkgs, delib, ... }:
+delib.rice {
+  name = "homelab";
+
+  nixos = {
     console.packages = [ pkgs.terminus_font ];
     console.font = "${pkgs.terminus_font}/share/consolefonts/ter-u24b.psf.gz";
     # Homebrew color scheme @ https://gogh-co.github.io/Gogh/

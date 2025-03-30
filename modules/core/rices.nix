@@ -43,10 +43,6 @@ delib.module {
     { myconfig, ... }:
     {
       assertions = delib.riceNamesAssertions myconfig.rices;
-      home.packages = myconfig.rice.packages ++ [
-        myconfig.rice.fonts.monospace.package
-        myconfig.rice.fonts.regular.package
-        myconfig.rice.cursor.package
-      ];
+      home.packages = myconfig.rice.packages;
     };
 }
