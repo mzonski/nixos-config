@@ -9,7 +9,7 @@ let
   inherit (delib) module singleEnableOption;
 in
 module {
-  name = "programs.desktop.display-manager.gdm";
+  name = "programs.gdm";
 
   options = singleEnableOption false;
 
