@@ -4,7 +4,7 @@ let
   inherit (delib) module singleEnableOption;
 in
 module {
-  name = "programs.desktop.display-manager.sddm";
+  name = "programs.sddm";
 
   options = singleEnableOption false;
 

@@ -51,6 +51,7 @@ delib.host {
       };
     };
     programs.gnome.enable = false;
+    programs.sddm.enable = true;
   };
 
   nixos = {
