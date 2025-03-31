@@ -49,15 +49,6 @@ module {
       kitty # hyprland default terminal
     ];
 
-    services = {
-      xserver.enable = true;
-      displayManager.sddm = {
-        enable = true;
-        wayland.enable = true;
-        autoNumlock = true;
-      };
-    };
-
     # TODO: only if source is input
     nix.settings = {
       substituters = [ "https://hyprland.cachix.org" ];
