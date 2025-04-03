@@ -37,7 +37,7 @@ sysboot:
 	@echo "Switching NixOS configuration..."
 	sudo nixos-rebuild boot --flake $(FLAKE)#$(HOSTNAME)
 
-gen-init:
+init-iso:
 	@echo "Generating Init ISO..."
 	nix build .#nixosConfigurations.init.config.system.build.isoImage
 
