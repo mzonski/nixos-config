@@ -20,12 +20,12 @@ let
   };
 in
 delib.module {
-  name = "programs.wayland";
+  name = "programs.hyprland";
 
   nixos.ifEnabled =
     { cfg, ... }:
     let
-      inherit (cfg.hyprland) source;
+      inherit (cfg) source;
     in
     {
       programs.hyprland = {
@@ -36,7 +36,7 @@ delib.module {
   home.ifEnabled =
     { cfg, ... }:
     let
-      hyprPkgs = hyprlandPkgVariant.${cfg.hyprland.source};
+      hyprPkgs = hyprlandPkgVariant.${cfg.source};
     in
     {
       xdg.portal.extraPortals = [ hyprPkgs.portalPackage ];

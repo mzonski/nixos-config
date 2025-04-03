@@ -23,18 +23,27 @@ in
 module {
   name = "programs.gnome";
 
-  options = singleEnableOption host.isDesktop;
+  options = singleEnableOption false;
 
   # Put all displays in standby:
   # busctl --user set-property org.gnome.Mutter.DisplayConfig /org/gnome/Mutter/DisplayConfig org.gnome.Mutter.DisplayConfig PowerSaveMode i 1
   # Resume all displays:
   # busctl --user set-property org.gnome.Mutter.DisplayConfig /org/gnome/Mutter/DisplayConfig org.gnome.Mutter.DisplayConfig PowerSaveMode i 0
 
+  myconfig.ifEnabled = {
+    programs.gdm.enable = true;
+  };
+
   nixos.ifEnabled = {
-    services.xserver = {
-      enable = true;
-      #displayManager.gdm.enable = true;
-      desktopManager.gnome.enable = true;
+    services.xserver.enable = true;
+    services.xserver.desktopManager.gnome.enable = true;
+
+    services.gnome = {
+      core-os-services.enable = true;
+      core-shell.enable = true;
+      core-utilities.enable = true;
+      core-developer-tools.enable = true;
+      games.enable = true;
     };
   };
 

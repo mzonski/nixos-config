@@ -31,8 +31,8 @@ delib.host {
     };
 
     features = {
-      autologin.enable = true;
-      autologin.session = "hyprland";
+      autologin.enable = false;
+      autologin.session = "gnome";
       gaming.enable = false;
       general-development.enable = false;
       virt-manager.enable = false;
@@ -41,17 +41,7 @@ delib.host {
     };
 
     programs.chrome.enable = true;
-    programs.wayland = {
-      hyprland.source = "stable";
-      idle = {
-        lockEnabled = false;
-        lockTimeout = 10 * 60; # 10 min
-        turnOffDisplayTimeout = 5 * 60; # 5 min
-        suspendTimeout = 30 * 60; # 30 min
-      };
-    };
-    programs.gnome.enable = false;
-    programs.sddm.enable = true;
+    programs.gnome.enable = true;
   };
 
   nixos = {

@@ -3,7 +3,7 @@ let
   inherit (delib) module;
 in
 module {
-  name = "programs.wayland";
+  name = "programs.hyprland";
 
   home.ifEnabled =
     { cfg, ... }:

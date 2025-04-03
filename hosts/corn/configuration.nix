@@ -35,17 +35,7 @@ delib.host {
     };
 
     programs.chrome.enable = true;
-    programs.wayland = {
-      hyprland.source = "stable";
-      idle = {
-        lockEnabled = false;
-        lockTimeout = 10 * 60; # 10 min
-        turnOffDisplayTimeout = 5 * 60; # 5 min
-        suspendTimeout = 30 * 60; # 30 min
-      };
-    };
-
-    programs.gdm.enable = true;
+    programs.gnome.enable = true;
   };
 
   nixos = {
@@ -56,9 +46,6 @@ delib.host {
       inputs.nixos-hardware.nixosModules.common-cpu-intel-cpu-only
       inputs.nixos-hardware.nixosModules.common-pc-ssd
     ];
-
-    services.displayManager.sddm.enable = lib.mkForce false;
-    services.xserver.displayManager.gdm.enable = lib.mkForce true;
 
     systemd.package = pkgs.unstable.systemd;
 

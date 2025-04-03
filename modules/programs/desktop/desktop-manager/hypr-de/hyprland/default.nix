@@ -5,38 +5,13 @@
   ...
 }:
 let
-  inherit (delib)
-    noDefault
-    strOption
-    enumOption
-    module
-    ;
+  inherit (delib) module;
 in
 module {
-  name = "programs.wayland";
+  name = "programs.hyprland";
 
-  options.programs.wayland.hyprland = {
-    source = noDefault (enumOption [ "stable" "unstable" "input" ] null);
-    monitors = {
-      primary = {
-        output = strOption "DP-4";
-        workspaces = [
-          1
-          2
-          3
-          4
-        ];
-      };
-      secondary = {
-        output = strOption "HDMI-A-4";
-        workspaces = [
-          5
-          6
-          7
-          8
-        ];
-      };
-    };
+  options.programs.hyprland = {
+
   };
 
   nixos.ifEnabled = {
@@ -64,7 +39,7 @@ module {
     { cfg, myconfig, ... }:
     let
       inherit (lib) mkBefore;
-      inherit (cfg.hyprland) monitors;
+      inherit (cfg) monitors;
       inherit (myconfig.rice) wallpaper cursor;
     in
     {

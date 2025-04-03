@@ -10,7 +10,7 @@ let
   inherit (lib) optionals;
 in
 module {
-  name = "programs.wayland";
+  name = "programs.hyprland";
 
   home.ifEnabled =
     { myconfig, cfg, ... }:

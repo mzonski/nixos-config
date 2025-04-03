@@ -35,7 +35,7 @@ delib.module {
           hardinfo2 # Hardware information
           qpwgraph # Pipewire manager
           gnome-font-viewer
-          seahorse # manage GNOME Keyring
+          kdiskmark
 
           # COMMUNICATION
           thunderbird

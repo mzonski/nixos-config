@@ -8,7 +8,7 @@ let
   inherit (delib) module;
 in
 module {
-  name = "programs.wayland";
+  name = "programs.hyprland";
 
   home.ifEnabled = {
     services.swaync = {
@@ -85,28 +85,6 @@ module {
                 {
                   label = "󰩭  Window / Region";
                   command = "grimblast --notify --cursor --freeze copy area";
-                }
-              ];
-            };
-            "menu#record" = {
-              label = " 󰕧 ";
-              position = "left";
-              actions = [
-                {
-                  label = "  Record screen";
-                  command = "record screen & ; swaync-client -t";
-                }
-                {
-                  label = "  Record selection";
-                  command = "record area & ; swaync-client -t";
-                }
-                {
-                  label = "  Record GIF";
-                  command = "record gif & ; swaync-client -t";
-                }
-                {
-                  label = "󰻃  Stop";
-                  command = "record stop";
                 }
               ];
             };
