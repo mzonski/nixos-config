@@ -20,6 +20,8 @@ module {
       xwayland.enable = true;
     };
 
+    services.gpg-agent.pinentryPackage = pkgs.pinentry-gnome3;
+
     environment.systemPackages = with pkgs; [
       kitty # hyprland default terminal
     ];

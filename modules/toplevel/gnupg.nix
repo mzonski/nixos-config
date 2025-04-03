@@ -56,7 +56,6 @@ module {
         enable = true;
         enableSshSupport = true;
         enableExtraSocket = true;
-        pinentryPackage = pkgs.pinentry-gnome3;
       };
 
       programs.gpg = {
