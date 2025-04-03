@@ -44,6 +44,7 @@
     };
 
     disko.url = "github:nix-community/disko";
+    musnix.url = "github:musnix/musnix";
   };
 
   outputs =
