@@ -27,6 +27,20 @@ delib.host {
     boot.kernelModules = [ "kvm-intel" ];
     boot.extraModulePackages = [ ];
 
+    fileSystems."/mnt/steam_games" = {
+      device = "/dev/disk/by-uuid/ce40f70a-66d3-484b-bc51-d4964efb645e";
+      fsType = "ext4";
+      options = [
+        "rw"
+        "defaults"
+        "exec"
+        "nofail"
+        "noatime"
+        "discard"
+        "comment=x-gvfs-show"
+      ];
+    };
+
     fileSystems."/" = {
       device = "/dev/disk/by-uuid/fa4ed866-9bcd-48e5-a57d-c34e1af3f3b7";
       fsType = "btrfs";
