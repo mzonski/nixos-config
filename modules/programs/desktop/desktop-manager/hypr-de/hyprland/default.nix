@@ -20,8 +20,6 @@ module {
       xwayland.enable = true;
     };
 
-    services.gpg-agent.pinentryPackage = pkgs.pinentry-gnome3;
-
     environment.systemPackages = with pkgs; [
       kitty # hyprland default terminal
     ];
@@ -65,6 +63,8 @@ module {
       };
 
       systemd.user.targets.hyprland-session.Unit.Wants = [ "xdg-desktop-autostart.target" ];
+
+      services.gpg-agent.pinentryPackage = pkgs.pinentry-gnome3;
 
       wayland.windowManager.hyprland = {
         enable = true;
