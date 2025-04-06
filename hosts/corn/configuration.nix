@@ -30,7 +30,7 @@ delib.host {
       gaming.enable = true;
       general-development.enable = true;
       virt-manager.enable = false;
-      docker.enable = false;
+      docker.enable = true;
       windows-data-partition.enable = true;
       windows-data-partition.diskUuid = "1E08506F08504843";
     };

@@ -24,7 +24,7 @@ module {
         };
 
         daemon.settings = {
-          data-root = "/home/${username}/Docker/"; # TODO: persist
+          data-root = "/home/${username}/.docker/"; # TODO: persist
           userland-proxy = false;
           experimental = true;
           ipv6 = true;
