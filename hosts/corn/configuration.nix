@@ -81,7 +81,7 @@ delib.host {
     boot.readOnlyNixStore = false;
     # TODO: REVERT IT
 
-    #boot.kernelPackages = pkgs.linuxPackages_latest;
+    boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
     #boot.kernelPackages = pkgs.linuxPackages_6_12;
     networking.firewall.enable = false; # Disable firewall
 
