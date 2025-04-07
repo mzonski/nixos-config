@@ -6,12 +6,10 @@
   ...
 }:
 let
-  inherit (delib) module singleEnableOption;
+  inherit (delib) module;
 in
 module {
   name = "programs.gnome.noUserSessionFreeze";
-
-  options.programs.gnome.noUserSessionFreeze = singleEnableOption false;
 
   nixos.ifEnabled = {
 

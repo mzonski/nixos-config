@@ -37,7 +37,7 @@ delib.host {
 
     programs.chrome.enable = true;
     programs.gnome.enable = true;
-    programs.gnome.noUserSessionFreeze.enable = true;
+    programs.gnome.freezeOnNvidiaSuspend.enable = true;
   };
 
   nixos = {

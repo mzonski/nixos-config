@@ -6,7 +6,7 @@
   ...
 }:
 let
-  inherit (delib) module singleEnableOption;
+  inherit (delib) module boolOption;
   pop-shell-extension = pkgs.gnomeExtensions.pop-shell.overrideAttrs (oldAttrs: {
     postInstall = ''
       ${oldAttrs.postInstall or ""}
@@ -23,12 +23,11 @@ in
 module {
   name = "programs.gnome";
 
-  options = singleEnableOption false;
-
-  # Put all displays in standby:
-  # busctl --user set-property org.gnome.Mutter.DisplayConfig /org/gnome/Mutter/DisplayConfig org.gnome.Mutter.DisplayConfig PowerSaveMode i 1
-  # Resume all displays:
-  # busctl --user set-property org.gnome.Mutter.DisplayConfig /org/gnome/Mutter/DisplayConfig org.gnome.Mutter.DisplayConfig PowerSaveMode i 0
+  options.programs.gnome = {
+    enable = boolOption false;
+    noUserSessionFreeze.enable = boolOption false;
+    freezeOnNvidiaSuspend.enable = boolOption false;
+  };
 
   myconfig.ifEnabled = {
     programs.gdm.enable = true;
