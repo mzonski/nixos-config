@@ -114,6 +114,8 @@ module {
           kns = "kubens";
           tf = "terraform";
           tg = "terragrunt";
+          print_path = "echo $PATH | tr ':' '\n' | sort";
+          rm_docker = "docker rm -f $(docker ps -aq) && docker rmi -f $(docker images -q)";
         };
         initExtra = ''
           # Disable the underline for paths
