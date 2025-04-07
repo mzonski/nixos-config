@@ -232,7 +232,9 @@ module {
           };
           "org/gnome/settings-daemon/plugins/media-keys" = {
             custom-keybindings = [
-              "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+              "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/open_terminal/"
+              "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/resume_displays/"
+              "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/standby_displays/"
             ];
             screensaver = "@as ['<Super>Escape']";
             rotate-video-lock-static = [ ];
@@ -241,10 +243,20 @@ module {
             www = [ ];
             terminal = [ ];
           };
-          "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+          "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/open_terminal" = {
             binding = "<Super>z";
             command = "kitty"; # TODO: use configured "default"
             name = "Open Terminal";
+          };
+          "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/resume_displays" = {
+            command = "busctl --user set-property org.gnome.Mutter.DisplayConfig /org/gnome/Mutter/DisplayConfig org.gnome.Mutter.DisplayConfig PowerSaveMode i 0";
+            binding = "<Super>F1";
+            name = "Resume All Displays";
+          };
+          "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/standby_displays" = {
+            command = "busctl --user set-property org.gnome.Mutter.DisplayConfig /org/gnome/Mutter/DisplayConfig org.gnome.Mutter.DisplayConfig PowerSaveMode i 1";
+            binding = "<Super><Alt>F1";
+            name = "Put All Displays in Standby";
           };
         };
       };
