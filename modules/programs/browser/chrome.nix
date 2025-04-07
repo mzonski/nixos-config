@@ -27,7 +27,7 @@ module {
 
       chromiumArgs = [
         "--ozone-platform-hint=auto"
-        "--enable-features=${concatStringsSep "," (commonFeatures ++ vulkanFeatures)}"
+        "--enable-features=${concatStringsSep "," (commonFeatures ++ glesFeatures)}"
       ];
     in
     {
