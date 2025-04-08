@@ -3,7 +3,6 @@
   config,
   inputs,
   pkgs,
-  lib,
   ...
 }:
 
@@ -18,7 +17,7 @@ delib.host {
     ];
 
     boot.blacklistedKernelModules = [
-      #"i915"
+      "i915"
       "amdgpu"
       "nouveau"
     ];
