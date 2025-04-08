@@ -2,11 +2,11 @@
   delib,
   lib,
   pkgs,
-  host,
   ...
 }:
 let
   inherit (delib) module boolOption;
+  inherit (lib) mkIf;
   pop-shell-extension = pkgs.gnomeExtensions.pop-shell.overrideAttrs (oldAttrs: {
     postInstall = ''
       ${oldAttrs.postInstall or ""}
@@ -25,6 +25,7 @@ module {
 
   options.programs.gnome = {
     enable = boolOption false;
+    fullInstall = boolOption false;
     noUserSessionFreeze.enable = boolOption false;
     freezeOnNvidiaSuspend.enable = boolOption false;
   };
@@ -33,18 +34,20 @@ module {
     programs.gdm.enable = true;
   };
 
-  nixos.ifEnabled = {
-    services.xserver.enable = true;
-    services.xserver.desktopManager.gnome.enable = true;
+  nixos.ifEnabled =
+    { cfg, ... }:
+    {
+      services.xserver.enable = true;
+      services.xserver.desktopManager.gnome.enable = true;
 
-    services.gnome = {
-      core-os-services.enable = true;
-      core-shell.enable = true;
-      core-utilities.enable = true;
-      core-developer-tools.enable = true;
-      games.enable = true;
+      services.gnome = mkIf cfg.fullInstall {
+        core-os-services.enable = true;
+        core-shell.enable = true;
+        core-utilities.enable = true;
+        core-developer-tools.enable = true;
+        games.enable = false;
+      };
     };
-  };
 
   home.ifEnabled =
     { cfg, myconfig, ... }:
