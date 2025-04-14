@@ -69,6 +69,9 @@ delib.host {
     programs.dconf.enable = true;
 
     security.polkit.enable = true;
+
+    services.scx.enable = true;
+    services.scx.scheduler = "scx_rusty";
   };
 
   home = {
