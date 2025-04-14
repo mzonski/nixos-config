@@ -39,9 +39,19 @@ module {
         packages = pkgs.linuxPackages_rt;
       };
 
-      boot.kernelParams = [
-        "preempt=full"
-      ];
+      boot = {
+        kernel.sysctl = {
+          "vm.dirty_ratio" = 5;
+          "vm.dirty_background_ratio" = 5;
+          "vm.swappiness" = 10;
+          "vm.compaction_proactiveness" = 0;
+        };
+        kernelParams = [
+          "preempt=full"
+          #"nohz_full=all"
+        ];
+      };
+
       powerManagement.cpuFreqGovernor = "performance";
     };
 }
