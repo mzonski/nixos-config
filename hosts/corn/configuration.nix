@@ -33,6 +33,7 @@ delib.host {
       docker.enable = true;
       windows-data-partition.enable = true;
       windows-data-partition.diskUuid = "1E08506F08504843";
+      low-latency.enable = true;
     };
 
     programs.chrome.enable = true;
