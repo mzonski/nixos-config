@@ -9,7 +9,7 @@
 }:
 
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkDefault;
   inherit (delib) module boolOption strOption;
 in
 module {
@@ -43,7 +43,7 @@ module {
         kernel.sysctl = {
           "vm.dirty_ratio" = 5;
           "vm.dirty_background_ratio" = 5;
-          "vm.swappiness" = 10;
+          "vm.swappiness" = mkDefault 10;
           "vm.compaction_proactiveness" = 0;
         };
         kernelParams = [
