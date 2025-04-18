@@ -9,11 +9,16 @@ delib.module {
 
   options = delib.singleEnableOption host.isDesktop;
 
-  home.always =
+  home.ifEnabled =
     let
       partitioning = with pkgs; [
         ntfsprogs
         gparted
+        exfatprogs
+        f2fs-tools
+        xfsprogs
+        btrfs-progs
+
       ];
       fonts = with pkgs; [
         roboto
