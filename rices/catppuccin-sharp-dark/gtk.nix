@@ -73,6 +73,7 @@ delib.rice {
           monospace-font-name = cfg.fonts.monospace.name;
           font-name = cfg.fonts.regular.name;
           color-scheme = "prefer-dark";
+          accent-color = "purple";
         };
       };
 
