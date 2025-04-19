@@ -61,7 +61,7 @@ delib.host {
     };
 
     swapDevices = [
-      { device = "/dev/disk/by-uuid/d19a44bd-9e47-4957-83ac-b8e166da9184"; }
+      { device = "/dev/disk/by-uuid/a50f6c7b-74aa-457b-9987-7448c6ecae8f"; }
     ];
 
     # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
