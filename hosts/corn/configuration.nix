@@ -19,7 +19,7 @@ delib.host {
 
     hardware = {
       audio.enable = true;
-      bluetooth.enable = true;
+      bluetooth.enable = false;
       block.defaultScheduler = "kyber";
       block.defaultSchedulerRotational = "bfq";
     };
