@@ -46,6 +46,7 @@ module {
     {
       home.packages = with pkgs; [
         dconf-editor
+        pkgs.kdePackages.ocean-sound-theme
       ];
 
       dconf = {
@@ -64,6 +65,9 @@ module {
           };
           "org/gnome/desktop/sound" = {
             allow-volume-above-100-percent = true;
+            theme-name = "ocean";
+            event-sounds = true;
+            input-feedback-sounds = true;
           };
           "org/gnome/desktop/peripherals/mouse" = {
             middle-click-emulation = true;
