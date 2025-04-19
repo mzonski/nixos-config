@@ -150,9 +150,6 @@ module {
           ristretto.v1
           audio.v1
           apps.v1
-
-        ];
-        windowrulev2 = concatLists [
           firefox.v2
           vlc.v2
           ristretto.v2

@@ -8,7 +8,7 @@ module {
   home.ifEnabled =
     { myconfig, ... }:
     let
-      inherit (myconfig.programs.wayland.hyprland) monitors;
+      inherit (myconfig.programs.hyprland) monitors;
 
       commonSettings = {
         position = "top";

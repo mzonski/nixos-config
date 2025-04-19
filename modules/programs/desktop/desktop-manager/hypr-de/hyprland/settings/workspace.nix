@@ -8,8 +8,8 @@ module {
   home.ifEnabled =
     { cfg, ... }:
     let
-      primaryOut = cfg.hyprland.monitors.primary.output;
-      secondaryOut = cfg.hyprland.monitors.secondary.output;
+      primaryOut = cfg.monitors.primary.output;
+      secondaryOut = cfg.monitors.secondary.output;
     in
     {
       wayland.windowManager.hyprland.settings.workspace = [

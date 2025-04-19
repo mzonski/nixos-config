@@ -37,6 +37,9 @@ delib.host {
     };
 
     programs.chrome.enable = true;
+    programs.sddm.enable = lib.mkDefault false;
+    programs.hyprland.enable = false;
+    programs.hyprland.source = "input";
     programs.gnome.enable = true;
     programs.gnome.fullInstall = true;
     programs.gnome.freezeOnNvidiaSuspend.enable = true;
