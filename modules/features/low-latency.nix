@@ -31,8 +31,8 @@ module {
   nixos.ifEnabled =
     { cfg, ... }:
     {
-      musnix.enable = true;
-      musnix.soundcardPciId = mkIf (cfg.soundcardPciId != "") "01:00.1";
+      musnix.enable = false;
+      musnix.soundcardPciId = if cfg.soundcardPciId != "" then cfg.soundcardPciId else "01:00.1";
 
       musnix.kernel = mkIf (cfg.rtos.enable) {
         realtime = true;
