@@ -25,7 +25,7 @@ delib.host {
     };
 
     features = {
-      autologin.enable = true;
+      autologin.enable = false;
       autologin.session = "gnome";
       gaming.enable = true;
       general-development.enable = true;
