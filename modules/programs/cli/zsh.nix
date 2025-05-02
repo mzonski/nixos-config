@@ -9,6 +9,8 @@
 
 let
   inherit (delib) module singleEnableOption;
+  inherit (pkgs) writeScript;
+  inherit (lib) strings;
 in
 module {
   name = "programs.cli.zsh";
@@ -115,7 +117,7 @@ module {
           tf = "terraform";
           tg = "terragrunt";
           print_path = "echo $PATH | tr ':' '\n' | sort";
-          rm_docker = "docker rm -f $(docker ps -aq) && docker rmi -f $(docker images -q)";
+          docker_rm = "docker rm -f $(docker ps -aq) && docker rmi -f $(docker images -q)";
         };
         initExtra = ''
           # Disable the underline for paths

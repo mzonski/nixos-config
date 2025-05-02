@@ -21,6 +21,7 @@ update:
 
 clean:
 	@echo "Cleaning old generations..."
+	sudo ./utils/clear-nix-profiles.sh remove
 	nix-collect-garbage --delete-old
 	nix-store --gc --print-roots | egrep -v "^(/nix/var|/run/\w+-system|\{memory|/proc)"
 
