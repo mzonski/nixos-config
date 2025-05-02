@@ -33,9 +33,12 @@ module {
               scaling-factor = lib.gvariant.mkUint32 2;
               accent-color = "purple";
             };
+
+            "org/gnome/desktop/sound" = {
+              event-sounds = true;
+            };
           };
         }
-
       ];
     };
 }

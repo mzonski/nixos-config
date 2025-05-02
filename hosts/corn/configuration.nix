@@ -25,8 +25,8 @@ delib.host {
     };
 
     features = {
-      autologin.enable = false;
-      autologin.session = "gnome-wayland";
+      autologin.enable = true;
+      autologin.session = "gnome";
       gaming.enable = true;
       general-development.enable = true;
       virt-manager.enable = false;
