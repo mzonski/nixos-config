@@ -27,15 +27,25 @@ module {
       with pkgs;
       [
         gnome-shell-extensions
-        gnomeExtensions.appindicator
-        #gnomeExtensions.rounded-window-corners-reborn
-        gnomeExtensions.color-picker
-        gnomeExtensions.caffeine
-        gnomeExtensions.emoji-copy
-        gnomeExtensions.gtk4-desktop-icons-ng-ding
-        gnomeExtensions.dash-to-panel
-        gnomeExtensions.dual-monitor-toggle
+
       ]
+      ++ (with pkgs.gnomeExtensions; [
+        appindicator
+        color-picker
+        caffeine
+        dash-to-panel
+        emoji-copy
+        gtk4-desktop-icons-ng-ding
+        tophat
+        lilypad
+        cronomix
+        clipboard-history
+        #paperwm
+        #rounded-window-corners-reborn
+        #wintile-windows-10-window-tiling-for-gnome
+        #workspaces-indicator-by-open-apps
+
+      ])
       ++ [ pop-shell-extension ];
 
     dconf = {
@@ -44,21 +54,25 @@ module {
         "org/gnome/shell" = {
           disable-user-extensions = false;
           enabled-extensions = [
-            "apps-menu@gnome-shell-extensions.gcampax.github.com"
-            "user-theme@gnome-shell-extensions.gcampax.github.com"
-            "system-monitor@gnome-shell-extensions.gcampax.github.com"
-            "places-menu@gnome-shell-extensions.gcampax.github.com"
-            "drive-menu@gnome-shell-extensions.gcampax.github.com"
-            "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
-            "dash-to-panel@jderose9.github.com"
             "appindicatorsupport@rgcjonas.gmail.com"
-            "pop-shell@system76.com"
-            #"rounded-window-corners@fxgn"
-            "color-picker@tuberry"
+            "apps-menu@gnome-shell-extensions.gcampax.github.com"
             "caffeine@patapon.info"
-            #"emoji-copy@felipeftn"
+            "clipboard-history@alexsaveau.dev"
+            "color-picker@tuberry"
+            "cronomix@zagortenay333"
+            "dash-to-panel@jderose9.github.com"
+            "drive-menu@gnome-shell-extensions.gcampax.github.com"
             "gtk4-ding@smedius.gitlab.com"
+            "lilypad@shendrew.github.io"
+            "places-menu@gnome-shell-extensions.gcampax.github.com"
+            "pop-shell@system76.com"
+            "system-monitor@gnome-shell-extensions.gcampax.github.com"
+            "tophat@fflewddur.github.io"
+            "user-theme@gnome-shell-extensions.gcampax.github.com"
+            "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
             #"dual-monitor-toggle@poka"
+            #"emoji-copy@felipeftn"
+            #"rounded-window-corners@fxgn"
           ];
         };
         # Enable and configure pop-shell

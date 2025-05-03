@@ -41,7 +41,6 @@ module {
     { cfg, myconfig, ... }:
     let
       inherit (lib.gvariant) mkTuple;
-      inherit (myconfig.rice) wallpaper fonts gtkThemeName;
     in
     {
       home.packages = with pkgs; [
