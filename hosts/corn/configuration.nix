@@ -34,6 +34,7 @@ delib.host {
       windows-data-partition.enable = false;
       windows-data-partition.diskUuid = "1E08506F08504843";
       low-latency.enable = true;
+      home-nas.enable = true;
     };
 
     programs.chrome.enable = true;
