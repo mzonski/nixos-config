@@ -37,6 +37,10 @@ delib.host {
       GBM_BACKEND = "nvidia-drm";
       __GLX_VENDOR_LIBRARY_NAME = "nvidia";
       NVD_BACKEND = "direct";
+
+      __NV_PRIME_RENDER_OFFLOAD = 1;
+      _NV_PRIME_RENDER_OFFLOAD_PROVIDER = "NVIDIA-G0";
+      __VK_LAYER_NV_optimus = "NVIDIA_only";
     };
 
     hardware.graphics = {
@@ -88,5 +92,9 @@ delib.host {
     #hardware.nvidia-container-toolkit = {
     #  enable = false;
     #};
+  };
+
+  home = {
+    dconf.settings."org/gnome/mutter".experimental-features = [ "kms-modifiers" ];
   };
 }
