@@ -55,10 +55,10 @@
       ...
     }:
     let
-      lib = nixpkgs.lib;
+      inherit (nixpkgs) lib;
       system = "x86_64-linux";
 
-      pkgs = mkPkgs nixpkgs ((lib.attrValues self.overlays));
+      pkgs = mkPkgs nixpkgs (lib.attrValues self.overlays);
       unstable = mkPkgs inputs.nixpkgs-unstable [ ];
 
       overlay =
@@ -75,12 +75,11 @@
       mkPkgs =
         pkgs: overlays:
         import pkgs {
-          inherit system;
+          inherit system overlays;
           config.allowUnfree = true;
           config.permittedInsecurePackages = [
             "archiver-3.5.1"
           ];
-          overlays = overlays;
         };
 
       mkConfigurations =
