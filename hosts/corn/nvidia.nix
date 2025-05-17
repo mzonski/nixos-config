@@ -41,6 +41,11 @@ delib.host {
       __NV_PRIME_RENDER_OFFLOAD = 1;
       _NV_PRIME_RENDER_OFFLOAD_PROVIDER = "NVIDIA-G0";
       __VK_LAYER_NV_optimus = "NVIDIA_only";
+
+    };
+
+    environment.sessionVariables = {
+      VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
     };
 
     hardware.graphics = {
