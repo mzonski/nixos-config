@@ -48,6 +48,8 @@ module {
         pkgs.kdePackages.ocean-sound-theme
       ];
 
+      xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
+
       dconf = {
         enable = true;
         settings = {
