@@ -76,7 +76,6 @@ delib.host {
 
     services.scx.enable = true;
     services.scx.scheduler = "scx_rusty";
-    services.system76-scheduler.enable = true;
 
     hardware.logitech.wireless.enableGraphical = true;
     hardware.logitech.wireless.enable = true;
