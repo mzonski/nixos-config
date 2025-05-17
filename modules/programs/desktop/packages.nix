@@ -57,7 +57,7 @@ delib.module {
 
           ## IMAGE MANIPULATION
           inkscape-with-extensions
-          gimp-with-plugins
+          unstable.gimp3-with-plugins
 
           ## MISC
           prismlauncher # minecraft
