@@ -35,25 +35,26 @@ module {
 
     environment.systemPackages = with pkgs; [
       # Steam
-      mangohud
+      unstable.mangohud
       # WINE
-      wine
-      winetricks
-      protontricks
-      vulkan-tools
-      protonup-qt
+      unstable.wine
+      unstable.winetricks
+      unstable.protontricks
+      unstable.vulkan-tools
+      unstable.protonup-qt
       # Extra dependencies
       # https://github.com/lutris/docs/
-      gnutls
-      openldap
-      libgpg-error
-      freetype
-      sqlite
-      libxml2
-      xml2
-      SDL2
+      unstable.lutris
+      unstable.gnutls
+      unstable.openldap
+      unstable.libgpg-error
+      unstable.freetype
+      unstable.sqlite
+      unstable.libxml2
+      unstable.xml2
+      unstable.SDL2
       # GameBoy
-      mgba
+      unstable.mgba
     ];
 
     #system.activationScripts.steamCompatDataLink = ''ln -s ~/.steam/steam/steamapps/compatdata /mnt/data/Steam/steamapps/'';
