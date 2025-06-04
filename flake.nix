@@ -83,11 +83,11 @@
         };
 
       mkConfigurations =
-        isHomeManager:
+        moduleSystem:
         denix.lib.configurations rec {
           homeManagerNixpkgs = nixpkgs;
           homeManagerUser = "zonni";
-          inherit isHomeManager;
+          inherit moduleSystem;
 
           paths = [
             ./hosts
@@ -98,7 +98,7 @@
           specialArgs = {
             inherit
               inputs
-              isHomeManager
+              moduleSystem
               homeManagerUser
               pkgs
               system
@@ -109,7 +109,7 @@
       initConfiguration = denix.lib.configurations rec {
         homeManagerNixpkgs = nixpkgs;
         homeManagerUser = "nixos";
-        isHomeManager = false;
+        moduleSystem = "nixos";
 
         paths = [
           ./special/initIso
@@ -120,7 +120,7 @@
         specialArgs = {
           inherit
             inputs
-            isHomeManager
+            moduleSystem
             homeManagerUser
             pkgs
             system
@@ -138,7 +138,7 @@
         }) (denix.lib.umport { path = ./packages; })
       );
 
-      nixosConfigurations = mkConfigurations false // initConfiguration;
-      homeConfigurations = mkConfigurations true;
+      nixosConfigurations = mkConfigurations "nixos" // initConfiguration;
+      homeConfigurations = mkConfigurations "home";
     };
 }
