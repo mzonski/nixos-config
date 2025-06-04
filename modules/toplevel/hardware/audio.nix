@@ -23,7 +23,7 @@ module {
     in
     {
       security.rtkit.enable = true;
-      hardware.pulseaudio = {
+      services.pulseaudio = {
         enable = false;
         package = pkgs.pulseaudioFull;
       };

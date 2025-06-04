@@ -2,11 +2,11 @@
   description = "My Home NixOS configuration flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -27,7 +27,7 @@
     nil-ls.url = "github:oxalica/nil";
 
     catppuccin = {
-      url = "github:catppuccin/nix/62424ccd65e280f3739754e0f30b85c901f6bcd9";
+      url = "github:catppuccin/nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -55,31 +55,17 @@
       ...
     }:
     let
-      inherit (nixpkgs) lib;
       system = "x86_64-linux";
 
-      pkgs = mkPkgs nixpkgs (lib.attrValues self.overlays);
-      unstable = mkPkgs inputs.nixpkgs-unstable [ ];
-
-      overlay =
-        final: prev:
+      mkSpecialArgs =
+        { moduleSystem, homeManagerUser }:
         {
-          inherit unstable;
-          hyprFlake = inputs.hyprland.packages.${system};
-          hyprPluginsFlake = inputs.hyprland-plugins.packages.${system};
-          firefoxAddons = inputs.firefox-addons.packages.${system};
-          local = self.packages."${system}";
-        }
-        // (import ./overlays) final prev;
-
-      mkPkgs =
-        pkgs: overlays:
-        import pkgs {
-          inherit system overlays;
-          config.allowUnfree = true;
-          config.permittedInsecurePackages = [
-            "archiver-3.5.1"
-          ];
+          inherit
+            inputs
+            moduleSystem
+            homeManagerUser
+            system
+            ;
         };
 
       mkConfigurations =
@@ -95,15 +81,7 @@
             ./modules
           ];
 
-          specialArgs = {
-            inherit
-              inputs
-              moduleSystem
-              homeManagerUser
-              pkgs
-              system
-              ;
-          };
+          specialArgs = mkSpecialArgs { inherit moduleSystem homeManagerUser; };
         };
 
       initConfiguration = denix.lib.configurations rec {
@@ -117,27 +95,10 @@
           ./modules
         ];
 
-        specialArgs = {
-          inherit
-            inputs
-            moduleSystem
-            homeManagerUser
-            pkgs
-            system
-            ;
-        };
+        specialArgs = mkSpecialArgs { inherit moduleSystem homeManagerUser; };
       };
     in
     {
-      overlays.default = overlay;
-
-      packages."${system}" = builtins.listToAttrs (
-        map (path: {
-          name = baseNameOf (dirOf path);
-          value = pkgs.callPackage path { inherit inputs; };
-        }) (denix.lib.umport { path = ./packages; })
-      );
-
       nixosConfigurations = mkConfigurations "nixos" // initConfiguration;
       homeConfigurations = mkConfigurations "home";
     };

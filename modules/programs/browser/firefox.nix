@@ -32,18 +32,18 @@ module {
         profiles.${homeManagerUser} = {
           search = {
             force = true;
-            default = "Google";
-            privateDefault = "DuckDuckGo";
+            default = "google";
+            privateDefault = "ddg";
             order = [
-              "DuckDuckGo"
-              "Google"
+              "ddg"
+              "google"
             ];
             engines = {
-              "Bing".metaData.hidden = true;
+              "bing".metaData.hidden = true;
             };
           };
           bookmarks = { };
-          extensions = with pkgs.firefoxAddons; [
+          extensions.packages = with pkgs.firefoxAddons; [
             bitwarden
             ublock-origin
             sponsorblock

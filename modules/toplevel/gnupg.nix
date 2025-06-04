@@ -23,7 +23,7 @@ module {
     environment.systemPackages = mkIf host.isDesktop (
       with pkgs;
       [
-        kleopatra
+        kdePackages.kleopatra
       ]
     );
 
@@ -87,7 +87,7 @@ module {
       home.packages = mkIf host.isDesktop (
         with pkgs;
         [
-          kleopatra
+          kdePackages.kleopatra
         ]
       );
     };

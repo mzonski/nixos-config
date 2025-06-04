@@ -8,7 +8,7 @@ delib.rice {
   fonts = {
     monospace = {
       name = "FiraCode Nerd Font Mono";
-      package = pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; };
+      package = pkgs.nerd-fonts.fira-code;
       size = 12;
     };
     regular = {

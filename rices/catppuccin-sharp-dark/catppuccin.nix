@@ -4,7 +4,7 @@ delib.rice {
 
   home = {
     imports = [
-      inputs.catppuccin.homeManagerModules.catppuccin
+      inputs.catppuccin.homeModules.catppuccin
     ];
 
     catppuccin = {

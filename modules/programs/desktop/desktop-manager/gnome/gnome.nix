@@ -31,7 +31,7 @@ module {
       services.gnome = mkIf cfg.fullInstall {
         core-os-services.enable = true;
         core-shell.enable = true;
-        core-utilities.enable = true;
+        core-apps.enable = true;
         core-developer-tools.enable = true;
         games.enable = false;
       };

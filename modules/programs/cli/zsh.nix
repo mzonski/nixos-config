@@ -119,7 +119,7 @@ module {
           print_path = "echo $PATH | tr ':' '\n' | sort";
           docker_rm = "docker rm -f $(docker ps -aq) && docker rmi -f $(docker images -q)";
         };
-        initExtra = ''
+        initContent = ''
           # Disable the underline for paths
           typeset -A ZSH_HIGHLIGHT_STYLES
           ZSH_HIGHLIGHT_STYLES[path]='none'
