@@ -57,49 +57,31 @@
     let
       system = "x86_64-linux";
 
-      mkSpecialArgs =
-        { moduleSystem, homeManagerUser }:
-        {
-          inherit
-            inputs
-            moduleSystem
-            homeManagerUser
-            system
-            ;
-        };
-
       mkConfigurations =
-        moduleSystem:
+        moduleSystem: homeManagerUser: path:
         denix.lib.configurations rec {
           homeManagerNixpkgs = nixpkgs;
-          homeManagerUser = "zonni";
-          inherit moduleSystem;
+          inherit homeManagerUser moduleSystem;
 
           paths = [
-            ./hosts
+            path
             ./rices
             ./modules
           ];
 
-          specialArgs = mkSpecialArgs { inherit moduleSystem homeManagerUser; };
+          specialArgs = {
+            inherit
+              inputs
+              moduleSystem
+              homeManagerUser
+              system
+              ;
+          };
         };
-
-      initConfiguration = denix.lib.configurations rec {
-        homeManagerNixpkgs = nixpkgs;
-        homeManagerUser = "nixos";
-        moduleSystem = "nixos";
-
-        paths = [
-          ./special/initIso
-          ./rices
-          ./modules
-        ];
-
-        specialArgs = mkSpecialArgs { inherit moduleSystem homeManagerUser; };
-      };
     in
     {
-      nixosConfigurations = mkConfigurations "nixos" // initConfiguration;
-      homeConfigurations = mkConfigurations "home";
+      nixosConfigurations =
+        (mkConfigurations "nixos" "zonni" ./hosts) // (mkConfigurations "nixos" "nixos" ./special/initIso);
+      homeConfigurations = mkConfigurations "home" "zonni" ./hosts;
     };
 }
