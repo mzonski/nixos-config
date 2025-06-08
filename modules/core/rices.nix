@@ -1,9 +1,4 @@
-{
-  pkgs,
-  delib,
-  lib,
-  ...
-}:
+{ delib, ... }:
 delib.module {
   name = "rices";
 
@@ -25,7 +20,8 @@ delib.module {
           packages = listOfOption package [ ];
           fonts = {
             monospace = themeSizeOption;
-            regular = themeSizeOption;
+            sans = themeSizeOption;
+            emoji = themeSizeOption;
           };
           cursor = themeSizeOption;
           icons = themeOption;

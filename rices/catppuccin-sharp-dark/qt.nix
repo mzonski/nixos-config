@@ -33,8 +33,8 @@ delib.rice {
           fixed = "\"${cfg.fonts.monospace.name},${
             toString (cfg.fonts.monospace.size - 2)
           },-1,5,50,0,0,0,0,0,Regular\"";
-          general = "\"${cfg.fonts.regular.name},${
-            toString (cfg.fonts.regular.size - 4)
+          general = "\"${cfg.fonts.sans.name},${
+            toString (cfg.fonts.sans.size - 4)
           },-1,5,29,0,0,0,0,0,Regular\"";
         };
 

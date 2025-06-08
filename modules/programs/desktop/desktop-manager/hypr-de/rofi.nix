@@ -9,7 +9,7 @@ module {
     { myconfig, ... }:
     let
       cmds = myconfig.commands;
-      fontName = myconfig.rice.fonts.regular.name;
+      fontName = myconfig.rice.fonts.sans.name;
       iconsName = myconfig.rice.icons.name;
     in
     {

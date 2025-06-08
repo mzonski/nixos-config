@@ -71,7 +71,7 @@ delib.rice {
       dconf.settings = {
         "org/gnome/desktop/interface" = {
           monospace-font-name = cfg.fonts.monospace.name;
-          font-name = cfg.fonts.regular.name;
+          font-name = cfg.fonts.sans.name;
           color-scheme = "prefer-dark";
           accent-color = "purple";
         };

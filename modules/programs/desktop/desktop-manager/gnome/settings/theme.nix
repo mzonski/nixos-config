@@ -19,7 +19,7 @@ module {
         settings = {
           "org/gnome/desktop/interface" = {
             monospace-font-name = fonts.monospace.name;
-            font-name = fonts.regular.name;
+            font-name = fonts.sans.name;
             color-scheme = "prefer-dark";
             scaling-factor = lib.gvariant.mkUint32 2;
           };

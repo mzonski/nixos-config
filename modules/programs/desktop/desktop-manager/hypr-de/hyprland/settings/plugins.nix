@@ -12,7 +12,7 @@ module {
         hyprbars = {
           bar_color = "rgb(1E1E2E)";
           col.text = "rgb(CDD6F4)";
-          bar_text_font = myconfig.rice.fonts.regular.name;
+          bar_text_font = myconfig.rice.fonts.sans.name;
           bar_text_align = "left";
           bar_buttons_alignment = "right";
           bar_height = 32;

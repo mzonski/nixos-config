@@ -11,9 +11,14 @@ delib.rice {
       package = pkgs.nerd-fonts.fira-code;
       size = 12;
     };
-    regular = {
+    sans = {
       name = "Fira Sans Book";
       package = pkgs.fira;
+      size = 14;
+    };
+    emoji = {
+      name = "Noto Color Emoji";
+      package = pkgs.noto-fonts-color-emoji;
       size = 14;
     };
   };
