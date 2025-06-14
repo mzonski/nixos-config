@@ -24,7 +24,7 @@ module {
         {
           type = "datetime";
           key = "Timestamp";
-          format = "{1}-{3}-{11} {14}:{17}:{20}";
+          format = "{year}-{month-pretty}-{day-pretty} {hour-pretty}:{minute-pretty}:{second-pretty}";
         }
         "Uptime"
         "separator"
