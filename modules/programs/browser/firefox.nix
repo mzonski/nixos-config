@@ -54,6 +54,7 @@ module {
           settings = {
             "general.autoScroll" = true;
             "browser.startup.homepage" = "about:home";
+            "extensions.autoDisableScopes" = 0;
 
             # Disable irritating first-run stuff
             "browser.disableResetPrompt" = true;
