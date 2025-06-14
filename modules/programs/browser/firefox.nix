@@ -55,6 +55,7 @@ module {
             "general.autoScroll" = true;
             "browser.startup.homepage" = "about:home";
             "extensions.autoDisableScopes" = 0;
+            "widget.use-xdg-desktop-portal.file-picker" = 1;
 
             # Disable irritating first-run stuff
             "browser.disableResetPrompt" = true;
