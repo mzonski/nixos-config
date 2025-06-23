@@ -10,7 +10,7 @@ delib.host {
   type = "desktop";
 
   homeManagerSystem = system;
-  home.home.stateVersion = "24.11";
+  home.home.stateVersion = "25.05";
 
   myconfig = {
     admin.username = "zonni";
@@ -46,7 +46,7 @@ delib.host {
 
   nixos = {
     nixpkgs.hostPlatform = system;
-    system.stateVersion = "24.11";
+    system.stateVersion = "25.05";
 
     imports = [
       inputs.nixos-hardware.nixosModules.common-cpu-intel

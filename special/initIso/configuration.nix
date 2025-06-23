@@ -11,7 +11,7 @@ delib.host {
   type = "minimal";
 
   homeManagerSystem = system;
-  home.home.stateVersion = "24.11";
+  home.home.stateVersion = "25.05";
 
   myconfig = {
     admin.username = "nixos";
@@ -24,7 +24,7 @@ delib.host {
 
   nixos = {
     nixpkgs.hostPlatform = system;
-    system.stateVersion = "24.11";
+    system.stateVersion = "25.05";
 
     imports = [
       (modulesPath + "/installer/cd-dvd/installation-cd-minimal.nix")
