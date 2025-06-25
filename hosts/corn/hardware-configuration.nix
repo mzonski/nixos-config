@@ -16,43 +16,37 @@ delib.host {
       (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-    boot.initrd.availableKernelModules = [
-      "xhci_pci"
-      "ahci"
-      "nvme"
-      "usbhid"
-      "sd_mod"
-    ];
+    boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "ahci" "usbhid" "usb_storage" "sd_mod" ];
     boot.initrd.kernelModules = [ ];
-    boot.kernelModules = [ "kvm-intel" ];
+    boot.kernelModules = [ "kvm-amd" ];
     boot.extraModulePackages = [ ];
 
     fileSystems."/" = {
-      device = "/dev/disk/by-uuid/fa4ed866-9bcd-48e5-a57d-c34e1af3f3b7";
+      device = "/dev/disk/by-label/NIX_ROOT";
       fsType = "btrfs";
       options = [ "subvol=@" ];
     };
 
     fileSystems."/home" = {
-      device = "/dev/disk/by-uuid/fa4ed866-9bcd-48e5-a57d-c34e1af3f3b7";
+      device = "/dev/disk/by-label/NIX_ROOT";
       fsType = "btrfs";
       options = [ "subvol=@home" ];
     };
 
     fileSystems."/persist" = {
-      device = "/dev/disk/by-uuid/fa4ed866-9bcd-48e5-a57d-c34e1af3f3b7";
+      device = "/dev/disk/by-label/NIX_ROOT";
       fsType = "btrfs";
       options = [ "subvol=@persist" ];
     };
 
     fileSystems."/nix" = {
-      device = "/dev/disk/by-uuid/fa4ed866-9bcd-48e5-a57d-c34e1af3f3b7";
+      device = "/dev/disk/by-label/NIX_ROOT";
       fsType = "btrfs";
       options = [ "subvol=@nix" ];
     };
 
     fileSystems."/boot" = {
-      device = "/dev/disk/by-uuid/E449-D70F";
+      device = "/dev/disk/by-label/NIX_BOOT";
       fsType = "vfat";
       options = [
         "fmask=0022"
@@ -61,7 +55,7 @@ delib.host {
     };
 
     swapDevices = [
-      { device = "/dev/disk/by-uuid/a50f6c7b-74aa-457b-9987-7448c6ecae8f"; }
+      { device = "/dev/disk/by-label/NIX_SWAP"; }
     ];
 
     # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
@@ -74,6 +68,6 @@ delib.host {
     # networking.interfaces.wlp4s0.useDHCP = lib.mkDefault true;
 
     nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-    hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   };
 }

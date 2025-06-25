@@ -51,7 +51,7 @@ delib.host {
     system.stateVersion = "25.05";
 
     imports = [
-      inputs.nixos-hardware.nixosModules.common-cpu-intel-cpu-only
+      #inputs.nixos-hardware.nixosModules.common-cpu-intel-cpu-only
       inputs.nixos-hardware.nixosModules.common-pc-ssd
     ];
 
