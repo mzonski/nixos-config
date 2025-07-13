@@ -16,12 +16,7 @@ delib.host {
       inputs.nixos-hardware.nixosModules.common-gpu-nvidia
     ];
 
-    boot.blacklistedKernelModules = [
-      "i915"
-      "amdgpu"
-      "nouveau"
-    ];
-    services.xserver.videoDrivers = [ "nvidia" ];
+    boot.blacklistedKernelModules = [ "nouveau" ];
 
     environment.systemPackages = with pkgs; [
       libva-utils
@@ -29,24 +24,22 @@ delib.host {
     ];
 
     environment.variables = {
-      MESA_VK_DEVICE_SELECT_FORCE_DEFAULT_DEVICE = "1";
-      MESA_LOADER_DRIVER_OVERRIDE = "nvidia";
+      #MESA_VK_DEVICE_SELECT_FORCE_DEFAULT_DEVICE = "1";
+      #MESA_LOADER_DRIVER_OVERRIDE = "nvidia";
 
-      LIBVA_DRIVER_NAME = "nvidia";
-      ELECTRON_OZONE_PLATFORM_HINT = "auto";
-      GBM_BACKEND = "nvidia-drm";
-      __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-      NVD_BACKEND = "direct";
+      #LIBVA_DRIVER_NAME = "nvidia";
+      #GBM_BACKEND = "nvidia-drm";
+      #__GLX_VENDOR_LIBRARY_NAME = "nvidia";
+      #NVD_BACKEND = "direct";
 
-      __NV_PRIME_RENDER_OFFLOAD = 1;
-      _NV_PRIME_RENDER_OFFLOAD_PROVIDER = "NVIDIA-G0";
-      __VK_LAYER_NV_optimus = "NVIDIA_only";
-
+      #__NV_PRIME_RENDER_OFFLOAD = 1;
+      #_NV_PRIME_RENDER_OFFLOAD_PROVIDER = "NVIDIA-G0";
+      #__VK_LAYER_NV_optimus = "NVIDIA_only";
     };
 
-    environment.sessionVariables = {
-      VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
-    };
+    #environment.sessionVariables = {
+    #  VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
+    #};
 
     hardware.graphics = {
       enable = true;
@@ -66,17 +59,17 @@ delib.host {
       modesetting.enable = true;
 
       powerManagement.enable = true;
-      powerManagement.finegrained = false;
+      powerManagement.finegrained = true;
       open = true;
 
-      forceFullCompositionPipeline = true;
+      forceFullCompositionPipeline = false;
       gsp.enable = true;
       # videoAcceleration = true; # 25.05?
 
       prime = {
-        offload.enable = false;
+        offload.enable = true;
         sync.enable = false;
-        reverseSync.enable = true;
+        reverseSync.enable = false;
         allowExternalGpu = false;
 
         amdgpuBusId = "PCI:71:0:0";

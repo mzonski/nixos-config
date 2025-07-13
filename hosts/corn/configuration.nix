@@ -27,7 +27,7 @@ delib.host {
 
     features = {
       autologin.enable = false;
-      autologin.session = "gnome";
+      autologin.session = "Hyprland";
       gaming.enable = true;
       general-development.enable = true;
       virt-manager.enable = false;
@@ -41,15 +41,16 @@ delib.host {
     programs.chrome.enable = true;
     programs.sddm.enable = lib.mkDefault false;
     programs.hyprland.enable = false;
-    programs.hyprland.source = "input";
+    programs.hyprland.source = "stable";
     programs.gnome.enable = true;
     programs.gnome.fullInstall = true;
-    programs.gnome.freezeOnNvidiaSuspend.enable = true;
+    programs.gnome.freezeOnNvidiaSuspend.enable = false;
   };
 
   nixos = {
     nixpkgs.hostPlatform = system;
     system.stateVersion = "25.05";
+    hardware.enableRedistributableFirmware = true;
 
     imports = [
       #inputs.nixos-hardware.nixosModules.common-cpu-intel-cpu-only
@@ -77,6 +78,15 @@ delib.host {
 
     services.scx.enable = true;
     services.scx.scheduler = "scx_rusty";
+
+    services.hardware.openrgb.enable = true;
+    hardware.i2c.enable = true;
+    programs.coolercontrol.enable = true;
+    programs.coolercontrol.nvidiaSupport = true;
+
+    # boot.kernelParams = [
+    # "acpi_enforce_resources=lax"
+    # ];
   };
 
   home = {
