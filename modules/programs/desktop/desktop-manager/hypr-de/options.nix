@@ -24,7 +24,7 @@ module {
     source = noDefault (enumOption [ "stable" "unstable" "input" ] null);
     monitors = {
       primary = {
-        output = strOption "DP-3";
+        output = strOption "HDMI-A-1";
         workspaces = [
           1
           2

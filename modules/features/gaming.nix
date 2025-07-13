@@ -30,7 +30,7 @@ module {
     hardware.xone.enable = true;
 
     environment.sessionVariables = {
-      STEAM_FORCE_DESKTOPUI_SCALING = "1.6";
+      # STEAM_FORCE_DESKTOPUI_SCALING = "1.6";
     };
 
     environment.systemPackages = with pkgs; [

@@ -51,20 +51,11 @@ module {
         NIXOS_OZONE_WL = "1"; # For Electron apps to use Wayland
         HYPRCURSOR_THEME = cursor.name;
         HYPRCURSOR_SIZE = cursor.size;
-
-        #LIBVA_DRIVER_NAME = "nvidia";
-        #ELECTRON_OZONE_PLATFORM_HINT = "auto";
-        #GBM_BACKEND = "nvidia-drm";
-        #__GLX_VENDOR_LIBRARY_NAME = "nvidia";
-        #NVD_BACKEND = "direct";
-
-        #__GL_VRR_ALLOWED = "1";
-        #__GL_GSYNC_ALLOWED = "1";
       };
 
       systemd.user.targets.hyprland-session.Unit.Wants = [ "xdg-desktop-autostart.target" ];
 
-      services.gpg-agent.pinentryPackage = pkgs.pinentry-gnome3;
+      services.gpg-agent.pinentry.package = pkgs.pinentry-gnome3;
 
       wayland.windowManager.hyprland = {
         enable = true;
@@ -106,7 +97,7 @@ module {
 
           monitor = [
             "${monitors.primary.output},3840x2160@60.0,0x450,1.6"
-            "${monitors.secondary.output},preferred,2400x0,1.6"
+            #"${monitors.secondary.output},preferred,2400x0,1.6"
           ];
 
           render = {
@@ -126,7 +117,7 @@ module {
           };
 
           xwayland.force_zero_scaling = true;
-          opengl.nvidia_anti_flicker = true;
+          #opengl.nvidia_anti_flicker = true;
         };
       };
     };

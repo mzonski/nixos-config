@@ -15,38 +15,38 @@ module {
           "move 0 0,title:^(Firefox — Sharing Indicator)$"
         ];
         v2 = [
-          "idleinhibit fullscreen, class:^(firefox)$"
+          "idleinhibit fullscreen,class:^(firefox)$"
         ];
       };
 
       vlc = {
         v1 = [
-          "float,vlc"
-          "size 1200 725, initialTitle:VLC media player"
-          "idleinhibit focus,vlc"
+          "float,class:^(vlc)$"
+          "size 1200 725,initialTitle:^(VLC media player)$"
+          "idleinhibit focus,class:^(vlc)$"
         ];
         v2 = [
-          "opacity 1.0 override 1.0 override, title:^(.*vlc.*)$"
-          "idleinhibit focus, class:^(vlc)$"
+          "opacity 1.0 override 1.0 override,title:^(.*vlc.*)$"
+          "idleinhibit focus,class:^(vlc)$"
         ];
       };
 
       ristretto = {
         v1 = [
-          "float,ristretto"
-          "center,ristretto"
-          "size 1200 725,ristretto"
+          "float,class:^(ristretto)$"
+          "center,class:^(ristretto)$"
+          "size 1200 725,class:^(ristretto)$"
         ];
         v2 = [
-          "opacity 1.0 override 1.0 override, title:^(.*ristretto.*)$"
+          "opacity 1.0 override 1.0 override,title:^(.*ristretto.*)$"
         ];
       };
 
       floating_kitty = {
         v2 = [
-          "float, title:float_kitty"
-          "center, title:float_kitty"
-          "size 950 600, title:float_kitty"
+          "float,title:^(float_kitty)$"
+          "center,title:^(float_kitty)$"
+          "size 950 600,title:^(float_kitty)$"
         ];
       };
 
@@ -63,7 +63,7 @@ module {
 
       apps = {
         v1 = [
-          "float,gparted"
+          "float,class:^(gparted)$"
           "float,title:^(qBittorrent)$"
         ];
         v2 = [
@@ -73,30 +73,30 @@ module {
 
       jetbrains = {
         v2 = [
-          "noinitialfocus,class:jetbrains-toolbox, floating:1"
+          "noinitialfocus,class:^(jetbrains-toolbox)$,floating:1"
           # Find in files
-          "noinitialfocus, class:(jetbrains-)(.*), title:^$, initialTitle:^$, floating:1"
-          "center, class:(jetbrains-)(.*), title:^$, initialTitle:^$, floating:1"
-          "plugin:hyprbars:nobar, class:(jetbrains-)(.*), title:^$, initialTitle:^$, floating:1"
+          "noinitialfocus,class:^(jetbrains-)(.*),title:^$,initialTitle:^$,floating:1"
+          "center,class:^(jetbrains-)(.*),title:^$,initialTitle:^$,floating:1"
+          "plugin:hyprbars:nobar,class:^(jetbrains-)(.*),title:^$,initialTitle:^$,floating:1"
           # Other dialogs
-          "plugin:hyprbars:nobar, class:(jetbrains-)(.*), initialTitle:(.+), floating:1"
-          "center, class:(jetbrains-)(.*), initialTitle:(.+), floating:1"
+          "plugin:hyprbars:nobar,class:^(jetbrains-)(.*),initialTitle:^(.+)$,floating:1"
+          "center,class:^(jetbrains-)(.*),initialTitle:^(.+)$,floating:1"
         ];
       };
 
       gitKraken = {
         v2 = [
           # Splash
-          "plugin:hyprbars:nobar, class:GitKraken, title:GitKraken, initialTitle:GitKraken, initialClass:GitKraken, floating:1"
-          "center, class:GitKraken, title:GitKraken, initialTitle:GitKraken, initialClass:GitKraken, floating:1"
+          "plugin:hyprbars:nobar,class:^(GitKraken)$,title:^(GitKraken)$,initialTitle:^(GitKraken)$,initialClass:^(GitKraken)$,floating:1"
+          "center,class:^(GitKraken)$,title:^(GitKraken)$,initialTitle:^(GitKraken)$,initialClass:^(GitKraken)$,floating:1"
         ];
       };
 
       pip = {
         v2 = [
-          "float, title:^(Picture-in-Picture)$"
-          "opacity 1.0 override 1.0 override, title:^(Picture-in-Picture)$"
-          "pin, title:^(Picture-in-Picture)$"
+          "float,title:^(Picture-in-Picture)$"
+          "opacity 1.0 override 1.0 override,title:^(Picture-in-Picture)$"
+          "pin,title:^(Picture-in-Picture)$"
         ];
       };
 
@@ -138,7 +138,7 @@ module {
 
       workspaces = {
         v2 = [
-          "float, workspace:1"
+          "float,workspace:1"
         ];
       };
     in
