@@ -36,10 +36,10 @@ module {
         dash-to-panel
         emoji-copy
         gtk4-desktop-icons-ng-ding
-        tophat
         lilypad
         cronomix
         clipboard-history
+        #tophat
         #paperwm
         #rounded-window-corners-reborn
         #wintile-windows-10-window-tiling-for-gnome
@@ -67,9 +67,9 @@ module {
             "places-menu@gnome-shell-extensions.gcampax.github.com"
             "pop-shell@system76.com"
             "system-monitor@gnome-shell-extensions.gcampax.github.com"
-            "tophat@fflewddur.github.io"
             "user-theme@gnome-shell-extensions.gcampax.github.com"
             "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
+            #"tophat@fflewddur.github.io"
             #"dual-monitor-toggle@poka"
             #"emoji-copy@felipeftn"
             #"rounded-window-corners@fxgn"
