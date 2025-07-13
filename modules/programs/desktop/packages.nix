@@ -67,6 +67,7 @@ delib.module {
           # CONSOLE / TUI
           bc # Calculator
           bottom # System viewer (btm)
+          btop # Better top
           ncdu # Calculates space usage of files
           fd # Better find
           jq # JSON pretty printer and manipulator
@@ -84,6 +85,10 @@ delib.module {
           glxinfo
           vulkan-tools
           lshw
+
+          edid-decode
+          lm_sensors # fancontrol isadump isaset pwmconfig sensors sensors-conf-convert sensors-detect
+          usbutils # lsusb usb-devices usbhid-dump usbreset
 
           ## ENCRYPTION/SIGNING
           opensc # Smart card utilities and libraries
