@@ -22,6 +22,7 @@ delib.host {
       bluetooth.enable = false;
       block.defaultScheduler = "kyber";
       block.defaultSchedulerRotational = "bfq";
+      logitech.enable = true;
     };
 
     features = {
@@ -76,9 +77,6 @@ delib.host {
 
     services.scx.enable = true;
     services.scx.scheduler = "scx_rusty";
-
-    hardware.logitech.wireless.enableGraphical = true;
-    hardware.logitech.wireless.enable = true;
   };
 
   home = {
