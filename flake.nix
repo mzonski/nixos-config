@@ -67,6 +67,7 @@
             path
             ./rices
             ./modules
+            ./overlays
           ];
 
           specialArgs = {
