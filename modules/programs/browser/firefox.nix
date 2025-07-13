@@ -29,7 +29,7 @@ module {
       programs.firefox = {
         enable = true;
         package = pkgs.firefox;
-        profiles.${homeManagerUser} = {
+        profiles.default = {
           search = {
             force = true;
             default = "google";
@@ -43,6 +43,8 @@ module {
             };
           };
           bookmarks = { };
+
+          extensions.force = true;
           extensions.packages = with pkgs.firefoxAddons; [
             bitwarden
             ublock-origin
