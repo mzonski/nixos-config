@@ -12,17 +12,17 @@ delib.host {
 
   nixos = {
     imports = [
-      inputs.nixos-hardware.nixosModules.common-gpu-amd
       inputs.nixos-hardware.nixosModules.common-cpu-amd
-    ];
-
-    environment.systemPackages = with pkgs; [
-      amdvlk
+      inputs.nixos-hardware.nixosModules.common-cpu-amd-raphael-igpu
     ];
 
     hardware.graphics = {
       enable = true;
       enable32Bit = true;
+
+      extraPackages = [
+        pkgs.amdvlk
+      ];
 
       extraPackages32 = [
         pkgs.driversi686Linux.amdvlk
