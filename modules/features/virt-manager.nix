@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   delib,
@@ -10,9 +11,11 @@ let
   inherit (delib)
     module
     strOption
+    intOption
     boolOption
     ;
-  virtdGroupName = "libvirtd";
+  qemuGroupName = "qemu-libvirtd";
+  kvmfrDevice = "/dev/kvmfr0";
 in
 module {
   name = "features.virt-manager";
@@ -24,9 +27,13 @@ module {
     virtualBridgeInterface = strOption "virbr0";
     bridgeInterface = strOption "br0";
     externalInterface = strOption "enp3s0";
+    sharedMemorySize = intOption 256; # 4k hdr
+    vfioPciIds = strOption "10de:2488,10de:228b,144d:a810";
   };
 
-  myconfig.ifEnabled.user.groups = [ virtdGroupName ];
+  myconfig.ifEnabled.user.groups = [
+    qemuGroupName
+  ];
 
   nixos.ifEnabled =
     { cfg, myconfig, ... }:
@@ -35,9 +42,32 @@ module {
     in
     {
       boot.kernelParams = [
-        "intel_iommu=on"
+        "amd_iommu=on"
         "iommu=pt"
       ];
+
+      boot.blacklistedKernelModules = [
+        #"nvidia"
+        "nouveau"
+      ];
+      boot.kernelModules = [
+        "vfio_pci"
+        "vfio_iommu_type1"
+        "vfio"
+
+        "kvmfr"
+      ];
+      boot.extraModprobeConfig = ''
+        options vfio-pci ids=${toString cfg.vfioPciIds}
+
+        options kvmfr static_size_mb=${toString cfg.sharedMemorySize}
+      '';
+
+      services.udev.extraRules = ''
+        SUBSYSTEM=="kvmfr", OWNER="${username}", GROUP="${qemuGroupName}", MODE="0660"
+      '';
+
+      boot.extraModulePackages = [ config.boot.kernelPackages.kvmfr ];
 
       environment.systemPackages = with pkgs; [
         virt-manager
@@ -47,6 +77,8 @@ module {
         spice-protocol
         win-virtio
         win-spice
+
+        looking-glass-client
       ];
 
       virtualisation = {
@@ -54,18 +86,30 @@ module {
           enable = true;
           qemu = {
             package = pkgs.qemu_kvm;
-            runAsRoot = true;
+            runAsRoot = false;
             swtpm.enable = true;
             ovmf.enable = true;
             ovmf.packages = [ pkgs.OVMFFull.fd ];
             verbatimConfig = ''
               user = "${username}"
-              group = "${virtdGroupName}"
-              nvram = ["/run/libvirt/nix-ovmf/OVMF_CODE.fd:/run/libvirt/nix-ovmf/OVMF_VARS.fd"]
+              group = "${qemuGroupName}"
               gl = 1
               egl_headless = 1
               spice_gl = 1
               display_gl = 1
+              nvram = ["/run/libvirt/nix-ovmf/OVMF_CODE.fd:/run/libvirt/nix-ovmf/OVMF_VARS.fd"]
+              cgroup_device_acl = [
+                "/dev/null",
+                "/dev/full",
+                "/dev/zero",
+                "/dev/random",
+                "/dev/urandom",
+                "/dev/ptmx",
+                "/dev/kvm",
+                "/dev/rtc",
+                "/dev/hpet",
+                "${kvmfrDevice}",
+              ]
             '';
           };
         };

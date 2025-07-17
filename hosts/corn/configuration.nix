@@ -30,7 +30,8 @@ delib.host {
       autologin.session = "Hyprland";
       gaming.enable = true;
       general-development.enable = true;
-      virt-manager.enable = false;
+      virt-manager.enable = true;
+      virt-manager.externalInterface = "enp113s0";
       docker.enable = true;
       windows-data-partition.enable = false;
       windows-data-partition.diskUuid = "1E08506F08504843";
