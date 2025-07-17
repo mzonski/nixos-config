@@ -16,6 +16,9 @@ delib.module {
 
       openssl
       age
+
+      lsof
+      psmisc
     ];
   };
 }

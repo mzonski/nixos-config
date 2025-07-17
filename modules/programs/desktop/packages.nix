@@ -89,6 +89,9 @@ delib.module {
           edid-decode
           lm_sensors # fancontrol isadump isaset pwmconfig sensors sensors-conf-convert sensors-detect
           usbutils # lsusb usb-devices usbhid-dump usbreset
+          gptfdisk # partitioning tools: cgdisk fixparts gdisk sgdisk
+          ddrescue # data recovery tool
+          efibootmgr
 
           ## ENCRYPTION/SIGNING
           opensc # Smart card utilities and libraries
@@ -101,6 +104,7 @@ delib.module {
           ## UTILS
           timer
           qalculate-qt # kalkulator
+          furmark # gpu benchmark
 
           ## Rice showcase
           local.trekscii
