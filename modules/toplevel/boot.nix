@@ -2,6 +2,7 @@
   delib,
   lib,
   host,
+  pkgs,
   ...
 }:
 delib.module {
@@ -16,8 +17,15 @@ delib.module {
     {
       boot.loader = {
         efi.canTouchEfiVariables = mkDefault true;
-        systemd-boot.enable = true;
         timeout = 3;
+
+        systemd-boot = {
+          enable = true;
+          extraInstallCommands = ''
+            ${pkgs.coreutils}/bin/rm -f /boot/EFI/BOOT/BOOTX64.EFI
+            ${pkgs.coreutils}/bin/rmdir /boot/EFI/BOOT
+          '';
+        };
       };
     };
 }
