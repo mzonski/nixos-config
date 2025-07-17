@@ -38,6 +38,10 @@ sysboot:
 	@echo "Switching NixOS configuration..."
 	sudo nixos-rebuild boot --flake $(FLAKE)#$(HOSTNAME)
 
+bootloader:
+	@echo "Switching NixOS configuration..."
+	sudo nixos-rebuild boot --install-bootloader --flake $(FLAKE)#$(HOSTNAME)
+
 init-iso:
 	@echo "Generating Init ISO..."
 	nix build .#nixosConfigurations.init.config.system.build.isoImage
