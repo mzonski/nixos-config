@@ -2,6 +2,7 @@
   delib,
   inputs,
   system,
+  lib,
   ...
 }:
 delib.host {
@@ -63,6 +64,7 @@ delib.host {
     services.openssh.enable = true;
     services.printing.enable = true;
     security.polkit.enable = true;
+    networkmanager.enable = lib.mkDefault true;
   };
 
   home = {
