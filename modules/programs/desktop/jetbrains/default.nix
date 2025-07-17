@@ -13,7 +13,7 @@ module {
   options = singleEnableOption host.isDesktop;
 
   home.ifEnabled = {
-    home.packages = with pkgs.unstable.jetbrains; [
+    home.packages = with pkgs.jetbrains; [
       webstorm
       pycharm-professional
       rust-rover
