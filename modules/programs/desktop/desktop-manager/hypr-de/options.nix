@@ -33,7 +33,7 @@ module {
         ];
       };
       secondary = {
-        output = strOption "HDMI-A-4";
+        output = strOption "DP-2";
         workspaces = [
           5
           6

@@ -10,11 +10,12 @@ delib.module (
       final: prev:
       let
         inherit (final) config;
-      in
-      {
         unstable = import inputs.nixpkgs-unstable {
           inherit system config;
         };
+      in
+      {
+        inherit unstable;
       }
     );
   in

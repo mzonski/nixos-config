@@ -30,9 +30,9 @@ module {
       trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
     };
 
-    # environment.variables = {
-    #   AQ_DRM_DEVICES = "/dev/dri/card2";
-    # };
+    environment.variables = {
+      AQ_DRM_DEVICES = "/dev/dri/card1";
+    };
   };
 
   home.ifEnabled =
