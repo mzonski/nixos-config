@@ -104,7 +104,6 @@ delib.module {
           ## UTILS
           timer
           qalculate-qt # kalkulator
-          furmark # gpu benchmark
 
           ## Rice showcase
           local.trekscii
