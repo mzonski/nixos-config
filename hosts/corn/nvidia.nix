@@ -21,6 +21,8 @@ delib.host {
     environment.systemPackages = with pkgs; [
       libva-utils
       vdpauinfo
+
+      nvtopPackages.nvidia
     ];
 
     environment.variables = {

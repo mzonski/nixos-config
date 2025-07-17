@@ -16,17 +16,19 @@ delib.host {
       inputs.nixos-hardware.nixosModules.common-cpu-amd-raphael-igpu
     ];
 
+    environment.systemPackages = with pkgs; [
+      amdgpu_top
+    ];
+
     hardware.graphics = {
       enable = true;
       enable32Bit = true;
+    };
 
-      extraPackages = [
-        pkgs.amdvlk
-      ];
-
-      extraPackages32 = [
-        pkgs.driversi686Linux.amdvlk
-      ];
+    hardware.amdgpu = {
+      amdvlk.enable = true;
+      amdvlk.support32Bit.enable = true;
+      initrd.enable = true;
     };
   };
 }

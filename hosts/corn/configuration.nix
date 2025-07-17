@@ -39,7 +39,8 @@ delib.host {
     };
 
     programs.chrome.enable = true;
-    programs.sddm.enable = lib.mkDefault false;
+    programs.gdm.enable = lib.mkForce true;
+    programs.sddm.enable = lib.mkForce false;
     programs.hyprland.enable = false;
     programs.hyprland.source = "stable";
     programs.gnome.enable = true;
@@ -53,11 +54,10 @@ delib.host {
     hardware.enableRedistributableFirmware = true;
 
     imports = [
-      #inputs.nixos-hardware.nixosModules.common-cpu-intel-cpu-only
       inputs.nixos-hardware.nixosModules.common-pc-ssd
     ];
 
-    # TODO: REVERT IT
+    # CHANGE TO boot.nixStoreMountOpts
     boot.readOnlyNixStore = false;
     # TODO: REVERT IT
 
