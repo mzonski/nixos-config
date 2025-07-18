@@ -6,6 +6,7 @@ delib.module {
       bash
       curl
       gnumake
+      screen
 
       nix
       git
