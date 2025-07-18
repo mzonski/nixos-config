@@ -23,7 +23,7 @@ delib.module {
           enable = true;
           extraInstallCommands = ''
             ${pkgs.coreutils}/bin/rm -f /boot/EFI/BOOT/BOOTX64.EFI
-            ${pkgs.coreutils}/bin/rmdir /boot/EFI/BOOT
+            [ -d /boot/EFI/BOOT ] && ${pkgs.coreutils}/bin/rmdir /boot/EFI/BOOT || true
           '';
         };
       };
