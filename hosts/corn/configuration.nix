@@ -68,7 +68,6 @@ delib.host {
 
     services.tumbler.enable = true; # Enable thumbnail service
 
-    services.libinput.enable = true;
     services.openssh.enable = true;
     services.printing.enable = true;
 

@@ -24,6 +24,8 @@ module {
       kitty # hyprland default terminal
     ];
 
+    services.libinput.enable = true;
+
     # TODO: only if source is input
     nix.settings = {
       substituters = [ "https://hyprland.cachix.org" ];
