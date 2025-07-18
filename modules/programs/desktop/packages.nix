@@ -117,7 +117,6 @@ delib.module {
 
           ## MAINTENANCE
           bleachbit # Program to clean your computer
-          buttermanager # manage btrfs
           qdirstat # Visualise used disk space
         ]
         ++ partitioning

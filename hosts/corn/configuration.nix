@@ -64,7 +64,6 @@ delib.host {
     # TODO: REVERT IT
 
     boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
-    #boot.kernelPackages = pkgs.linuxPackages_6_12;
     networking.firewall.enable = false; # Disable firewall
 
     services.tumbler.enable = true; # Enable thumbnail service
@@ -85,10 +84,6 @@ delib.host {
     hardware.i2c.enable = true;
     programs.coolercontrol.enable = true;
     programs.coolercontrol.nvidiaSupport = true;
-
-    # boot.kernelParams = [
-    # "acpi_enforce_resources=lax"
-    # ];
   };
 
   home = {

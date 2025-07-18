@@ -35,6 +35,22 @@ module {
         core-developer-tools.enable = true;
         games.enable = false;
       };
+
+      environment.gnome.excludePackages = with pkgs; [
+        gnome-music
+        gnome-maps
+        gnome-contacts
+        gnome-clocks
+        gnome-calculator
+        epiphany
+        gnome-disk-utility
+        geary
+        simple-scan
+        totem
+        yelp
+        gnome-tour
+        devhelp
+      ];
     };
 
   home.ifEnabled =
@@ -47,8 +63,6 @@ module {
         dconf-editor
         pkgs.kdePackages.ocean-sound-theme
       ];
-
-      xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
 
       dconf = {
         enable = true;
