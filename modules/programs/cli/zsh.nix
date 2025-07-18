@@ -125,21 +125,17 @@ module {
           bindkey '^E' end-of-line
 
           setopt PROMPT_SP
-
-          # Make sure krew works
-          export PATH="$PATH:$HOME/.krew/bin"
           export EDITOR="nano"
 
-          # Powerlevel10k instant prompt
           if [[ -r "${homeconfig.xdg.cacheHome}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
             source "${homeconfig.xdg.cacheHome}/p10k-instant-prompt-''${(%):-%n}.zsh"
           fi
 
-          # Powerlevel10k configuration
-          [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-          # Custom aliases
-          alias edit='nano'
+          if [[ -o interactive ]] && [[ -n "$DISPLAY" || -n "$WAYLAND_DISPLAY" ]]; then
+            [[ ! -f ~/.p10k-desktop.zsh ]] || source ~/.p10k-desktop.zsh
+          else
+            [[ ! -f ~/.p10k-tty.zsh ]] || source ~/.p10k-tty.zsh
+          fi
         '';
       }; # TODO: FIX EDITOR
 
