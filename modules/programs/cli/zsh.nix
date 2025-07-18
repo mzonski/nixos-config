@@ -9,8 +9,6 @@
 
 let
   inherit (delib) module singleEnableOption;
-  inherit (pkgs) writeScript;
-  inherit (lib) strings;
 in
 module {
   name = "programs.cli.zsh";
@@ -108,14 +106,9 @@ module {
         };
         shellAliases = {
           ls = if stdenv.isLinux then "ls --color" else "ls -G";
-          cdgit = "cd ~/Git";
+          cdgit = "cd ~/git";
           watch = "watch ";
           gpgbye = "gpg-connect-agent updatestartuptty /bye";
-          tmux = "tmux -u";
-          kctx = "kubectx"; # TODO: move where relevant
-          kns = "kubens";
-          tf = "terraform";
-          tg = "terragrunt";
           print_path = "echo $PATH | tr ':' '\n' | sort";
           docker_rm = "docker rm -f $(docker ps -aq) && docker rmi -f $(docker images -q)";
           reboot2win = "sudo systemctl reboot --boot-loader-entry=auto-windows";
