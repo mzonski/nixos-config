@@ -10,12 +10,13 @@ let
   inherit (lib) mkDefault;
   inherit (delib)
     module
+    packageOption
+    noDefault
     strOption
     intOption
     boolOption
     ;
   qemuGroupName = "qemu-libvirtd";
-  kvmfrDevice = "/dev/kvmfr0";
 in
 module {
   name = "features.virt-manager";
@@ -27,8 +28,22 @@ module {
     virtualBridgeInterface = strOption "virbr0";
     bridgeInterface = strOption "br0";
     externalInterface = strOption "enp3s0";
-    sharedMemorySize = intOption 256; # 4k hdr
-    vfioPciIds = strOption "10de:2488,10de:228b,144d:a810";
+
+    vfio-passtrough = {
+      enable = boolOption false;
+      sharedMemorySize = intOption 256;
+
+      devices = {
+        dgpu-video = strOption "10de:2488";
+        dgpu-audio = strOption "10de:228b";
+        igd-video = strOption "1002:13c0";
+      };
+      scripts = {
+        gpu-status = noDefault (packageOption null);
+        gpu-to-nvidia = noDefault (packageOption null);
+        gpu-to-vfio = noDefault (packageOption null);
+      };
+    };
   };
 
   myconfig.ifEnabled.user.groups = [
@@ -46,29 +61,6 @@ module {
         "iommu=pt"
       ];
 
-      boot.blacklistedKernelModules = [
-        #"nvidia"
-        "nouveau"
-      ];
-      boot.kernelModules = [
-        "vfio_pci"
-        "vfio_iommu_type1"
-        "vfio"
-
-        "kvmfr"
-      ];
-      boot.extraModprobeConfig = ''
-        options vfio-pci ids=${toString cfg.vfioPciIds}
-
-        options kvmfr static_size_mb=${toString cfg.sharedMemorySize}
-      '';
-
-      services.udev.extraRules = ''
-        SUBSYSTEM=="kvmfr", OWNER="${username}", GROUP="${qemuGroupName}", MODE="0660"
-      '';
-
-      boot.extraModulePackages = [ config.boot.kernelPackages.kvmfr ];
-
       environment.systemPackages = with pkgs; [
         virt-manager
         virt-viewer
@@ -77,8 +69,6 @@ module {
         spice-protocol
         win-virtio
         win-spice
-
-        looking-glass-client
       ];
 
       virtualisation = {
@@ -86,7 +76,7 @@ module {
           enable = true;
           qemu = {
             package = pkgs.qemu_kvm;
-            runAsRoot = false;
+            runAsRoot = true;
             swtpm.enable = true;
             ovmf.enable = true;
             ovmf.packages = [ pkgs.OVMFFull.fd ];
@@ -98,18 +88,6 @@ module {
               spice_gl = 1
               display_gl = 1
               nvram = ["/run/libvirt/nix-ovmf/OVMF_CODE.fd:/run/libvirt/nix-ovmf/OVMF_VARS.fd"]
-              cgroup_device_acl = [
-                "/dev/null",
-                "/dev/full",
-                "/dev/zero",
-                "/dev/random",
-                "/dev/urandom",
-                "/dev/ptmx",
-                "/dev/kvm",
-                "/dev/rtc",
-                "/dev/hpet",
-                "${kvmfrDevice}",
-              ]
             '';
           };
         };

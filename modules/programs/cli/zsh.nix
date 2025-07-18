@@ -119,21 +119,6 @@ module {
           print_path = "echo $PATH | tr ':' '\n' | sort";
           docker_rm = "docker rm -f $(docker ps -aq) && docker rmi -f $(docker images -q)";
           reboot2win = "sudo systemctl reboot --boot-loader-entry=auto-windows";
-          check-gpu = ''
-            echo "DGPU NVIDIA" | grep "NVIDIA" && lspci -nnk | grep "NVIDIA Corporation GA104" -A 2 | grep "Kernel driver in use" &&
-            echo "IGD AMD" | grep "AMD" && lspci -nnk | grep "\[Radeon Graphics\]" -A 3 | grep "Kernel driver in use" '';
-          nvidia-enable = ''
-            sudo virsh nodedev-reattach pci_0000_01_00_0 && 
-            echo "GPU reattached" && 
-            sudo rmmod vfio_pci vfio_pci_core vfio_iommu_type1 vfio && echo "VFIO drivers removed" && 
-            sudo modprobe -i nvidia_drm nvidia_modeset nvidia_uvm nvidia && echo "NVIDIA drivers added"
-          '';
-          nvidia-disable = ''
-            sudo rmmod nvidia_uvm nvidia_drm nvidia_modeset nvidia && echo "NVIDIA drivers removed" && 
-            sudo modprobe -i vfio_pci vfio_pci_core vfio_iommu_type1 vfio && echo "VFIO drivers added" && 
-            sudo virsh nodedev-detach pci_0000_01_00_0 && echo "GPU detached"
-          '';
-          gpu-processes = "lsof /dev/dri/card* | awk 'NR==1 || !seen[$1,$NF]++ {print}'";
         };
         initContent = ''
           # Disable the underline for paths
