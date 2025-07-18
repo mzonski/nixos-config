@@ -8,7 +8,6 @@
 
 let
   inherit (delib) module;
-  inherit (lib) concatStringsSep;
   qemuGroupName = "qemu-libvirtd";
   kvmfrDevice = "/dev/kvmfr0";
 in
