@@ -4,7 +4,7 @@
   lib,
   pkgs,
   config,
-  host,
+  homeManagerUser,
   ...
 }:
 delib.module {
@@ -121,21 +121,59 @@ delib.module {
         ];
       };
 
-      programs.ssh = {
-        knownHosts = lib.genAttrs hostnames (hostname: {
-          publicKeyFile = cfg.ssh.${hostname};
-          extraHostNames =
-            [ "${hostname}.local.zonni.pl" ]
-            ++
-            # Alias for localhost if it's the same host
-            (lib.optional (hostname == config.networking.hostName) "localhost");
-        });
-      };
+      programs.ssh =
+        let
+          extraHostConfig = builtins.toFile "home_host_entries" (
+            lib.concatStringsSep "\n" (
+              map (
+                hostname:
+                lib.optionalString (hostname != config.networking.hostName) ''
+                  Host ${hostname}
+                    HostName ${hostname}
+                    User root
+                    IdentityFile /etc/ssh/ssh_host_ed25519_key
+                ''
+              ) hostnames
+            )
+          );
+        in
+        {
+          knownHosts = lib.genAttrs hostnames (hostname: {
+            publicKeyFile = cfg.ssh.${hostname};
+            extraHostNames =
+              [ "${hostname}.local.zonni.pl" ]
+              ++
+              # Alias for localhost if it's the same host
+              (lib.optional (hostname == config.networking.hostName) "localhost");
+
+          });
+
+          extraConfig = ''
+            Include ${extraHostConfig}
+          '';
+        };
 
       # Passwordless sudo when SSH'ing with keys
       security.pam.sshAgentAuth = {
         enable = true;
         authorizedKeysFiles = [ "/etc/ssh/authorized_keys.d/%u" ];
+      };
+    };
+
+  home.always =
+    { myconfig, ... }:
+    let
+      hostnames = builtins.attrNames myconfig.hosts;
+    in
+    {
+      programs.ssh = {
+        enable = true;
+
+        matchBlocks = lib.genAttrs hostnames (hostname: {
+          inherit hostname;
+          user = homeManagerUser;
+          identityFile = "~/.ssh/id_ed25519";
+        });
       };
     };
 
