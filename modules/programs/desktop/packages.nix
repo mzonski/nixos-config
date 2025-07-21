@@ -51,6 +51,7 @@ delib.module {
           ## PRODUCTIVITY
           qbittorrent-enhanced
           xfce.xfburn # Image burner
+          code-cursor-fhs
 
           ## ENGINERING
           qcad

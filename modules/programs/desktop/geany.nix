@@ -11,7 +11,7 @@ in
 module {
   name = "programs.desktop.geany";
 
-  options = singleEnableOption host.isDesktop;
+  options = singleEnableOption false;
 
   home.ifEnabled.home.packages = with pkgs; [
     geany # text editor

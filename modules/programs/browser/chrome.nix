@@ -35,8 +35,11 @@ module {
         (google-chrome.override {
           commandLineArgs = chromiumArgs;
         })
-        (chromium.override {
-          enableWideVine = true;
+        # (chromium.override {
+        #   enableWideVine = true;
+        #   commandLineArgs = chromiumArgs;
+        # })
+        (brave.override {
           commandLineArgs = chromiumArgs;
         })
       ];

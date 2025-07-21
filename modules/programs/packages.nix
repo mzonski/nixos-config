@@ -7,6 +7,9 @@ delib.module {
       curl
       gnumake
       screen
+      unstable.msedit
+
+      coreutils-full
 
       nix
       git
