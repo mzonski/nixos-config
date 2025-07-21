@@ -1,4 +1,5 @@
 {
+  config,
   delib,
   lib,
   inputs,

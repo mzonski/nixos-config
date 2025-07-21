@@ -23,6 +23,7 @@ let
       ];
     in
     pkgs.writeShellScriptBin "gpu-to-nvidia" ''
+      [[ $EUID -ne 0 ]] && echo "Error: Root is required" && exit 1
       echo "=== Switching GPU to NVIDIA ==="
       VIRSH_BIN=${pkgs.libvirt}/bin/virsh
       RMMOD_BIN=${pkgs.kmod}/bin/rmmod

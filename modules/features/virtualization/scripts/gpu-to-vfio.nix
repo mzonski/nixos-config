@@ -23,6 +23,7 @@ let
       ];
     in
     pkgs.writeShellScriptBin "gpu-to-vfio" ''
+      [[ $EUID -ne 0 ]] && echo "Error: Root is required" && exit 1
       echo "=== Switching GPU to VFIO ==="
 
       VIRSH_BIN=${pkgs.libvirt}/bin/virsh
