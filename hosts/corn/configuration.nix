@@ -70,6 +70,8 @@ delib.host {
     # TODO: REVERT IT
 
     boot.kernelPackages = pkgs.unstable.linuxPackages_latest;
+    boot.loader.systemd-boot.windows."11".efiDeviceHandle = "HD1b";
+
     networking.firewall.enable = false; # Disable firewall
 
     services.tumbler.enable = true; # Enable thumbnail service
