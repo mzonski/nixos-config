@@ -7,6 +7,9 @@
   homeManagerUser,
   ...
 }:
+let
+  machineKeyFile = "/etc/ssh/ssh_host_ed25519_key";
+in
 delib.module {
   name = "keys";
 
@@ -15,107 +18,65 @@ delib.module {
     gpg = attrsOfOption path { };
   };
 
-  myconfig.always =
-    { cfg, myconfig, ... }:
-    let
-      inherit (builtins)
-        attrNames
-        readDir
-        filter
-        listToAttrs
-        pathExists
-        ;
-      hostnames = attrNames myconfig.hosts;
-
-      makeKeyPaths =
-        {
-          basePath,
-          names,
-          suffix,
-        }:
-        listToAttrs (
-          map (name: {
-            inherit name;
-            value = "${basePath}/${name}/${suffix}";
-          }) (filter (name: pathExists "${basePath}/${name}/${suffix}") names)
-        );
-
-      userDirs =
-        let
-          dirs = readDir ../../keys/users;
-          dirPaths = lib.mapAttrsToList (name: type: {
-            inherit name type;
-            path = ../../keys/users + "/${name}";
-          }) dirs;
-        in
-        filter (x: x.type == "directory") dirPaths;
-
-      userNames = map (dir: dir.name) userDirs;
-    in
-    {
-      keys.ssh =
-        (makeKeyPaths {
-          basePath = ../../keys/hosts;
-          names = hostnames;
-          suffix = "ssh.pub";
-        })
-        // (makeKeyPaths {
-          basePath = ../../keys/users;
-          names = userNames;
-          suffix = "ssh.pub";
-        });
-
-      keys.gpg = makeKeyPaths {
-        basePath = ../../keys/users;
-        names = userNames;
-        suffix = "pgp.asc";
-      };
-    };
-
   nixos.always =
     { cfg, myconfig, ... }:
     let
       isEd25519 = k: k.type == "ed25519";
-      getKeyPath = k: k.path;
-      keys = builtins.filter isEd25519 config.services.openssh.hostKeys;
+      hostKeys = builtins.filter isEd25519 config.services.openssh.hostKeys;
       hostnames = builtins.attrNames myconfig.hosts;
+      otherMachineHostNames = lib.filter (hostname: hostname != config.networking.hostName) hostnames;
     in
     {
       imports = [ inputs.sops-nix.nixosModules.sops ];
 
       sops = {
         defaultSopsFile = ../../shared-secrets.yaml;
-        age.sshKeyPaths = map getKeyPath keys;
+        age.sshKeyPaths = map (key: key.path) hostKeys;
+
+        secrets =
+          {
+            "ssh_private_zonni" = {
+              path = "/home/zonni/.ssh/id_ed25519";
+              mode = "0600";
+              owner = homeManagerUser;
+              group = homeManagerUser;
+            };
+            "ssh_public_zonni" = {
+              path = "/etc/ssh/authorized_keys.d/${homeManagerUser}";
+              mode = "0640";
+              owner = homeManagerUser;
+              group = homeManagerUser;
+            };
+          }
+          // lib.listToAttrs (
+            map (hostname: {
+              name = "ssh_public_${hostname}";
+              value = {
+                path = "/etc/ssh/authorized_keys.d/${hostname}";
+                mode = "0640";
+                owner = "root";
+                group = "root";
+              };
+            }) otherMachineHostNames
+          );
       };
 
       environment.systemPackages = [ pkgs.sops ];
 
       services.openssh = {
         settings = {
-          # Harden
           PasswordAuthentication = false;
-          PermitRootLogin = "no";
+          PermitRootLogin = "yes";
 
-          # Automatically remove stale sockets
           StreamLocalBindUnlink = "yes";
-          # Allow forwarding ports to everywhere
           GatewayPorts = "clientspecified";
-          # Let WAYLAND_DISPLAY be forwarded
           AcceptEnv = "WAYLAND_DISPLAY";
           X11Forwarding = true;
         };
 
-        # knownHosts = lib.mapAttrs (hostname: pubkeyFile: {
-        #   publicKeyFile = pubkeyFile;
-        #   hostNames = [
-        #     hostname
-        #     "${hostname}.local.zonni.pl"
-        #   ] ++ (lib.optional (hostname == config.networking.hostName) "localhost");
-        # }) cfg.ssh;
-
         hostKeys = [
           {
-            path = "/etc/ssh/ssh_host_ed25519_key";
+            path = machineKeyFile;
             type = "ed25519";
           }
         ];
@@ -123,34 +84,32 @@ delib.module {
 
       programs.ssh =
         let
-          extraHostConfig = builtins.toFile "home_host_entries" (
-            lib.concatStringsSep "\n" (
-              map (
-                hostname:
-                lib.optionalString (hostname != config.networking.hostName) ''
-                  Host ${hostname}
-                    HostName ${hostname}
-                    User root
-                    IdentityFile /etc/ssh/ssh_host_ed25519_key
-                ''
-              ) hostnames
-            )
+          extraHostConfig = lib.concatStringsSep "\n" (
+            (map (hostname: ''
+              Host ${hostname}
+                HostName ${hostname}
+                User root
+                IdentityFile ${machineKeyFile}
+            '') otherMachineHostNames)
+            ++ [
+              ''
+                Host seed
+                  HostName seed
+                  User root
+                  IdentityFile ${machineKeyFile}
+              ''
+            ]
           );
         in
         {
-          knownHosts = lib.genAttrs hostnames (hostname: {
-            publicKeyFile = cfg.ssh.${hostname};
-            extraHostNames =
-              [ "${hostname}.local.zonni.pl" ]
-              ++
-              # Alias for localhost if it's the same host
-              (lib.optional (hostname == config.networking.hostName) "localhost");
-
-          });
-
-          extraConfig = ''
-            Include ${extraHostConfig}
-          '';
+          extraConfig =
+            extraHostConfig
+            + ''
+              Host seed
+                HostName seed
+                User nixos
+                IdentityFile ~/.ssh/id_ed25519
+            '';
         };
 
       # Passwordless sudo when SSH'ing with keys
@@ -169,11 +128,20 @@ delib.module {
       programs.ssh = {
         enable = true;
 
-        matchBlocks = lib.genAttrs hostnames (hostname: {
-          inherit hostname;
-          user = homeManagerUser;
-          identityFile = "~/.ssh/id_ed25519";
-        });
+        matchBlocks =
+          lib.genAttrs hostnames (hostname: {
+            inherit hostname;
+            user = homeManagerUser;
+            identityFile = "~/.ssh/id_ed25519";
+          })
+          // {
+            "seed" = {
+              hostname = "seed";
+              user = "nixos";
+              identityFile = "~/.ssh/id_ed25519";
+            };
+          };
+
       };
     };
 

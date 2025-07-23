@@ -20,6 +20,7 @@ delib.module {
 
       openssl
       age
+      ssh-to-age
 
       lsof
       psmisc
