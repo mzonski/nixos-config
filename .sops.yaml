@@ -4,12 +4,14 @@ keys:
   - &hosts:
     - &corn age1sthm3vzwh50zes4rjau2v9c0eeu529vtx20fuyh9d8kxyvdp6c2snkvfl2
     - &sesame age103yq9vu40m5y5rupr4ygn29k3snl76mrxnhzy3pw0yecpssvks6scwgp7q
+    - &seed age1kjq6lwe5gjsz4zfqvlgw4wyznpj53zdrdtplrn07rhdnc6mv03qq9panna
 creation_rules:
   - path_regex: shared-secrets.ya?ml$
     key_groups:
       - age:
           - *corn
           - *sesame
+          - *seed
         pgp:
           - *zonni
   - path_regex: hosts/corn/secrets.ya?ml$

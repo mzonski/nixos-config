@@ -87,7 +87,7 @@
     in
     {
       nixosConfigurations =
-        (mkConfigurations "nixos" "zonni" ./hosts) // (mkConfigurations "nixos" "nixos" ./special/initIso);
+        (mkConfigurations "nixos" "zonni" ./hosts) // (mkConfigurations "nixos" "nixos" ./special/seed);
       homeConfigurations = mkConfigurations "home" "zonni" ./hosts;
     };
 }
