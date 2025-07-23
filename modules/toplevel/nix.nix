@@ -1,4 +1,5 @@
 {
+  inputs,
   delib,
   pkgs,
   lib,
@@ -12,7 +13,6 @@ let
         "flakes"
       ];
       warn-dirty = false;
-      flake-registry = ""; # Disable global flake registry
     };
   };
   mkConfig = extras: lib.recursiveUpdate shared extras;
@@ -20,9 +20,13 @@ in
 delib.module {
   name = "nix";
 
-  nixos.always = mkConfig {
-    nix.package = lib.mkForce pkgs.nixVersions.stable;
-  };
+  nixos.always =
+    {
+      imports = [ inputs.flake-programs-sqlite.nixosModules.programs-sqlite ];
+    }
+    // mkConfig {
+      nix.package = lib.mkForce pkgs.nixVersions.stable;
+    };
 
   home.always = mkConfig {
     nix.package = lib.mkDefault pkgs.nixVersions.stable;

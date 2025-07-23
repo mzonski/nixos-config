@@ -43,6 +43,11 @@
       inputs.home-manager.follows = "home-manager";
     };
 
+    flake-programs-sqlite = {
+      url = "github:wamserma/flake-programs-sqlite";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     disko.url = "github:nix-community/disko";
     musnix.url = "github:musnix/musnix";
   };
