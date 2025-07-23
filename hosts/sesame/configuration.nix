@@ -43,6 +43,7 @@ delib.host {
 
     programs.chrome.enable = true;
     programs.gnome.enable = true;
+    programs.jetbrains.enable = false;
   };
 
   nixos = {
@@ -64,7 +65,8 @@ delib.host {
     services.openssh.enable = true;
     services.printing.enable = true;
     security.polkit.enable = true;
-    networkmanager.enable = lib.mkDefault true;
+    networking.networkmanager.enable = lib.mkForce true;
+    networking.useDHCP = lib.mkForce false;
   };
 
   home = {
