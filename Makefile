@@ -70,9 +70,13 @@ seed-debug:
  	export SSH_PUBLIC_HOST=$$(sops -d --extract '["ssh_public_seed"]' ./shared-secrets.yaml) && \
 	nix build --impure .#nixosConfigurations.seed.config.system.build.toplevel
 
-deploy-sesame:
-	@echo "Deploying Sesame configuration..."
-    nix run github:numtide/nixos-anywhere -- --target-host nixos@sesame --flake .#sesame
+deploy-%:
+	@echo "Deploying new configuration..."
+	./utils/deploy-host.sh $* $(USERNAME)
+
+edit-shared-secrets-host:
+	export SOPS_AGE_KEY=$(sudo ssh-to-age -private-key -i /etc/ssh/ssh_host_ed25519_key) && \
+	sops shared-secrets.yaml
 
 help:
 	@echo "Available targets:"
