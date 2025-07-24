@@ -50,7 +50,8 @@ seed-iso:
 
 burn-iso:
 	@echo "Burning Seed ISO..."
-	caligula burn result/iso/seed.iso -z none -s skip -f --root always
+	$(eval OUTPUT_DEVICE := $(shell udevadm info --name=/dev/sda | grep -q "ID_VENDOR=SanDisk" && udevadm info --name=/dev/sda | grep -q "ID_MODEL=Ultra" && echo "/dev/sda" || echo ""))
+	caligula burn result/iso/seed.iso -z none -s skip -f --root always $(if $(OUTPUT_DEVICE),-o $(OUTPUT_DEVICE))
 
 test-iso:
 	@echo "Starting virtual machine"
