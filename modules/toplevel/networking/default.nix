@@ -26,5 +26,6 @@ delib.module {
 
         inherit (cfg) nameservers;
       };
+
     };
 }
