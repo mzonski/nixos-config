@@ -37,26 +37,17 @@ delib.host {
       (modulesPath + "/profiles/qemu-guest.nix")
     ];
 
-    environment.etc = {
-      "ssh/ssh_host_ed25519_key" = {
-        # need to add next line, if not added ssh dont initialize on boot
-        text = ''
-          ${requireEnvVar "SSH_PRIVATE_HOST"}
-            
-        '';
-        mode = "0600";
-      };
-      "ssh/ssh_host_ed25519_key.pub" = {
-        text = ''
-          ${requireEnvVar "SSH_PUBLIC_HOST"}
-            
-        '';
-        mode = "0640";
-      };
-    };
+    boot.initrd.postMountCommands = ''
+      mkdir -p /mnt-root/etc/ssh
+      echo "${(requireEnvVar "SSH_PRIVATE_HOST" + "\n")}" > /mnt-root/etc/ssh/ssh_host_ed25519_key
+      echo "${(requireEnvVar "SSH_PUBLIC_HOST" + "\n")}" > /mnt-root/etc/ssh/ssh_host_ed25519_key.pub
+      chmod 600 /mnt-root/etc/ssh/ssh_host_ed25519_key
+      chmod 644 /mnt-root/etc/ssh/ssh_host_ed25519_key.pub
+    '';
 
     services.openssh = {
       settings.PermitRootLogin = lib.mkForce "yes";
+      settings.PasswordAuthentication = lib.mkForce false;
       enable = true;
     };
     services.spice-vdagentd.enable = true;
@@ -67,6 +58,7 @@ delib.host {
       firewall.enable = false;
     };
     networking.useDHCP = lib.mkForce false;
+
     systemd.network = {
       enable = true;
       networks."10-home" = {
@@ -82,10 +74,14 @@ delib.host {
       };
     };
 
+    sops.secrets.user_zonni_password.neededForUsers = true;
+
+    users.mutableUsers = lib.mkForce false;
     users.users.nixos = {
+      hashedPasswordFile = config.sops.secrets.user_zonni_password.path;
+      hashedPassword = lib.mkForce null;
       initialHashedPassword = lib.mkForce null;
-      hashedPasswordFile = lib.mkForce null;
-      initialPassword = lib.mkForce "nixos";
+      initialPassword = lib.mkForce null;
     };
 
     isoImage.squashfsCompression = "gzip";
@@ -98,6 +94,8 @@ delib.host {
         group = "root";
       };
     };
+
+    networking.wireless.enable = true;
 
     services.openssh = {
       authorizedKeysFiles = ([

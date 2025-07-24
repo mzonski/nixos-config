@@ -24,8 +24,9 @@ delib.module {
     in
     {
       user.groups = mkIf isAdmin [
-        "wheel"
+        "wheel" # root
         "adm"
+        "keys" # secrets
       ];
     };
 

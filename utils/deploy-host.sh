@@ -59,4 +59,4 @@ sudo nix run github:numtide/nixos-anywhere -- \
     --extra-files "$TEMP_DIR" \
     --build-on local
 
-retry_with_backoff ssh "${USERNAME}@${HOSTNAME}" "sudo chown ${USERNAME}:${USERNAME} /home/${USERNAME}/.ssh && home-manager switch --flake 'github:mzonski/nixos-config#${USERNAME}@${HOSTNAME}'"
+retry_with_backoff ssh "${USERNAME}@${HOSTNAME}" "sudo systemctl stop display-manager.service && sudo chown ${USERNAME}:${USERNAME} /home/${USERNAME}/.ssh && home-manager switch --flake 'github:mzonski/nixos-config#${USERNAME}@${HOSTNAME}' && sudo reboot"
