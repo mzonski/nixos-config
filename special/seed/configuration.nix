@@ -84,6 +84,7 @@ delib.host {
 
     users.users.nixos = {
       initialHashedPassword = lib.mkForce null;
+      hashedPasswordFile = lib.mkForce null;
       initialPassword = lib.mkForce "nixos";
     };
 

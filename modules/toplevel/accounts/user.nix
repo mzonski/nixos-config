@@ -2,6 +2,7 @@
   delib,
   lib,
   homeManagerUser,
+  config,
   ...
 }:
 let
@@ -52,7 +53,6 @@ delib.module {
         group = homeManagerUser;
         home = "/home/${homeManagerUser}";
         extraGroups = cfg.groups;
-        initialPassword = homeManagerUser;
       };
 
       # must already begin with pre-existing PATH. Also, can't use binDir here,
@@ -66,12 +66,16 @@ delib.module {
   nixos.always =
     { cfg, ... }:
     let
-      inherit (cfg) config env;
+      inherit (cfg) env;
     in
     {
       users.mutableUsers = true;
-      users.users.${config.name} = config;
-      users.groups.${config.name} = { };
+      users.users.${cfg.config.name} = cfg.config // {
+        hashedPasswordFile = config.sops.secrets.user_zonni_password.path;
+      };
+      users.groups.${cfg.config.name} = { };
+
+      sops.secrets.user_zonni_password.neededForUsers = true;
 
       environment.extraInit = concatStringsSep "\n" (mapAttrsToList (n: v: "export ${n}=\"${v}\"") env);
     };
