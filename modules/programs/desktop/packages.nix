@@ -64,6 +64,7 @@ delib.module {
           prismlauncher # minecraft
           mate.atril # Document viewer
           unstable.furmark # GPU benchmark
+          unstable.mission-center
 
           # CONSOLE / TUI
           bc # Calculator
