@@ -49,6 +49,11 @@ delib.host {
     programs.gnome.enable = true;
     programs.gnome.fullInstall = true;
     programs.gnome.freezeOnNvidiaSuspend.enable = false;
+
+    services.systemd.restart-network-after-suspend = {
+      enable = true;
+      networkInterface = "enp113s0";
+    };
   };
 
   nixos = {
