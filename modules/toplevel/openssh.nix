@@ -36,7 +36,7 @@ delib.module {
         secrets =
           {
             "ssh_private_zonni" = {
-              path = "/home/zonni/.ssh/id_ed25519";
+              path = "/home/${homeManagerUser}/.ssh/id_ed25519";
               mode = "0600";
               owner = homeManagerUser;
               group = homeManagerUser;
