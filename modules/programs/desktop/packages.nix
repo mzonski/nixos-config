@@ -13,7 +13,6 @@ delib.module {
     let
       partitioning = with pkgs; [
         ntfsprogs
-        gparted
         exfatprogs
         f2fs-tools
         xfsprogs
