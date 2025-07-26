@@ -32,7 +32,8 @@ delib.host {
       gaming.enable = true;
       general-development.enable = true;
       virt-manager.enable = true;
-      virt-manager.externalInterface = "enp113s0";
+      virt-manager.bridge.enable = true;
+      virt-manager.bridge.externalInterface = "enp113s0";
       virt-manager.vfio-passtrough.enable = true;
       docker.enable = true;
       windows-data-partition.enable = false;
