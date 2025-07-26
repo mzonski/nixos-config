@@ -13,7 +13,7 @@ in
 module {
   name = "programs.cli.zsh";
 
-  options = singleEnableOption host.not.isMinimal;
+  options = singleEnableOption (!host.isMinimal);
 
   nixos.ifEnabled = {
     users.defaultUserShell = pkgs.zsh;

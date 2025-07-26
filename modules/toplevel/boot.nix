@@ -8,7 +8,7 @@
 delib.module {
   name = "boot";
 
-  options = delib.singleEnableOption host.not.isMinimal;
+  options = delib.singleEnableOption (!host.isMinimal);
 
   nixos.ifEnabled =
     let

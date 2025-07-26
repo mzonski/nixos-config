@@ -75,6 +75,25 @@
             ./overlays
           ];
 
+          extensions = (with denix.lib.extensions; [ args ]) ++ ([
+            (
+              (denix.lib.mergeExtensions "denix_extensions" [
+                (denix.lib.callExtension ./extensions/base/default.nix)
+                (denix.lib.callExtension ./extensions/base/hosts.nix)
+                (denix.lib.callExtension ./extensions/base/rices.nix)
+              ]).withConfig
+              {
+                args.enable = true;
+
+                hosts.type.types = [
+                  "desktop"
+                  "server"
+                  "minimal"
+                ];
+              }
+            )
+          ]);
+
           specialArgs = {
             inherit
               inputs
