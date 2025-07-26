@@ -4,9 +4,10 @@
   system,
   ...
 }:
-delib.module (
-  let
-    overlay = (
+delib.overlayModule {
+  name = "overlays.unstable";
+  overlays = [
+    (
       final: prev:
       let
         inherit (final) config;
@@ -17,17 +18,6 @@ delib.module (
       {
         inherit unstable;
       }
-    );
-  in
-  {
-    name = "overlays.unstable";
-
-    nixos.always.nixpkgs.overlays = [
-      overlay
-    ];
-
-    home.always.nixpkgs.overlays = [
-      overlay
-    ];
-  }
-)
+    )
+  ];
+}

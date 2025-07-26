@@ -1,21 +1,9 @@
 { delib, ... }:
-delib.module (
-  let
-    overlay = (
-      final: prev: {
-        fsnotifier = prev.callPackage ../packages/fsnotifier { };
-      }
-    );
-  in
-  {
-    name = "overlays.jetbrains";
-
-    nixos.always.nixpkgs.overlays = [
-      overlay
-    ];
-
-    home.always.nixpkgs.overlays = [
-      overlay
-    ];
-  }
-)
+delib.overlayModule {
+  name = "overlays.jetbrains";
+  overlays = [
+    (final: prev: {
+      fsnotifier = prev.callPackage ../packages/fsnotifier { };
+    })
+  ];
+}
