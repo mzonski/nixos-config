@@ -81,9 +81,15 @@
                 (denix.lib.callExtension ./extensions/base/default.nix)
                 (denix.lib.callExtension ./extensions/base/hosts.nix)
                 (denix.lib.callExtension ./extensions/base/rices.nix)
+                (denix.lib.callExtension ./extensions/overlay-module.nix)
               ]).withConfig
               {
                 args.enable = true;
+
+                defaultOverlayTargets = [
+                  "nixos"
+                  "home"
+                ];
 
                 hosts.type.types = [
                   "desktop"
