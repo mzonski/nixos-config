@@ -36,17 +36,17 @@ in
 delib.rice {
   name = "catppuccin-sharp-dark";
 
-  cursor = cursorTheme;
-  gtkThemeName = themeName;
-  icons = {
-    name = iconThemeName;
-    package = iconPackage;
-  };
+  # cursor = cursorTheme;
+  # gtkThemeName = themeName;
+  # icons = {
+  #   name = iconThemeName;
+  #   package = iconPackage;
+  # };
 
-  packages = [
-    colloid-theme
-    pkgs.apple-cursor
-  ];
+  # packages = [
+  #   colloid-theme
+  #   pkgs.apple-cursor
+  # ];
 
   home =
     { cfg, ... }:
@@ -70,8 +70,8 @@ delib.rice {
 
       dconf.settings = {
         "org/gnome/desktop/interface" = {
-          monospace-font-name = cfg.fonts.monospace.name;
-          font-name = cfg.fonts.sans.name;
+          #monospace-font-name = cfg.fonts.monospace.name;
+          #font-name = cfg.fonts.sans.name;
           color-scheme = "prefer-dark";
           accent-color = "purple";
         };

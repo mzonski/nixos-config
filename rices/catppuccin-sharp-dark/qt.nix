@@ -10,13 +10,13 @@ in
 delib.rice {
   name = "catppuccin-sharp-dark";
 
-  packages = with pkgs; [
-    kdePackages.breeze-icons
-    libsForQt5.qt5.qtbase
-    qt6.qtbase
-    qt6.qtwayland
-    qt5.qtwayland
-  ];
+  # packages = with pkgs; [
+  #   kdePackages.breeze-icons
+  #   libsForQt5.qt5.qtbase
+  #   qt6.qtbase
+  #   qt6.qtwayland
+  #   qt5.qtwayland
+  # ];
 
   home =
     { cfg, ... }:
@@ -24,18 +24,18 @@ delib.rice {
       qtConfig = {
         Appearance = {
           custom_palette = "false";
-          icon_theme = cfg.icons.name;
+          #icon_theme = cfg.icons.name;
           standard_dialogs = "xdgdesktopportal";
           style = "kvantum-dark";
         };
 
         Fonts = {
-          fixed = "\"${cfg.fonts.monospace.name},${
-            toString (cfg.fonts.monospace.size - 2)
-          },-1,5,50,0,0,0,0,0,Regular\"";
-          general = "\"${cfg.fonts.sans.name},${
-            toString (cfg.fonts.sans.size - 4)
-          },-1,5,29,0,0,0,0,0,Regular\"";
+          # fixed = "\"${cfg.fonts.monospace.name},${
+          #   toString (cfg.fonts.monospace.size - 2)
+          # },-1,5,50,0,0,0,0,0,Regular\"";
+          # general = "\"${cfg.fonts.sans.name},${
+          #   toString (cfg.fonts.sans.size - 4)
+          # },-1,5,29,0,0,0,0,0,Regular\"";
         };
 
         Interface = {

@@ -22,9 +22,9 @@ module {
         enable = true;
         package = pkgs.kitty;
         shellIntegration.enableZshIntegration = myconfig.programs.cli.zsh.enable;
-        font = {
-          inherit (myconfig.rice.fonts.monospace) name size;
-        };
+        # font = {
+        #   inherit (myconfig.rice.fonts.monospace) name size;
+        # };
       };
 
       # xdg.desktopEntries = {

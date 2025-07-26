@@ -9,8 +9,8 @@ module {
     { myconfig, ... }:
     let
       cmds = myconfig.commands;
-      fontName = myconfig.rice.fonts.sans.name;
-      iconsName = myconfig.rice.icons.name;
+      # fontName = myconfig.rice.fonts.sans.name;
+      # iconsName = myconfig.rice.icons.name;
     in
     {
       programs.rofi = {
@@ -21,7 +21,7 @@ module {
           rofi-emoji
           rofi-systemd
         ];
-        font = fontName;
+        #font = fontName;
         terminal = cmds.runTerminal;
         cycle = false;
         extraConfig = {
@@ -34,7 +34,7 @@ module {
           window-thumbnail = true;
           sidebar-mode = false;
           disable-history = false;
-          icon-theme = iconsName;
+          #icon-theme = iconsName;
         };
       };
     };

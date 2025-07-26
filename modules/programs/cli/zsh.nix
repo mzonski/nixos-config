@@ -13,7 +13,8 @@ in
 module {
   name = "programs.cli.zsh";
 
-  options = singleEnableOption host.not.isMinimal;
+  # TODO: HOST IS NOT MINIMAL
+  options = singleEnableOption host.isDesktop;
 
   nixos.ifEnabled = {
     users.defaultUserShell = pkgs.zsh;

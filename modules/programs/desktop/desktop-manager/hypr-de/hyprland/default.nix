@@ -42,7 +42,7 @@ module {
     let
       inherit (lib) mkBefore;
       inherit (cfg) monitors;
-      inherit (myconfig.rice) wallpaper cursor;
+      #inherit (myconfig.rice) wallpaper cursor;
     in
     {
       home.sessionVariables = {
@@ -51,8 +51,8 @@ module {
         GDK_BACKEND = "wayland";
 
         NIXOS_OZONE_WL = "1"; # For Electron apps to use Wayland
-        HYPRCURSOR_THEME = cursor.name;
-        HYPRCURSOR_SIZE = cursor.size;
+        # HYPRCURSOR_THEME = cursor.name;
+        # HYPRCURSOR_SIZE = cursor.size;
       };
 
       systemd.user.targets.hyprland-session.Unit.Wants = [ "xdg-desktop-autostart.target" ];
@@ -81,8 +81,8 @@ module {
         settings = {
           exec-once = [
             "${pkgs.lxqt.lxqt-policykit}/bin/lxqt-policykit-agent &"
-            "${pkgs.swaybg}/bin/swaybg -i ${wallpaper} --mode fill &"
-            "hyprctl setcursor '${cursor.name}' ${toString cursor.size} &"
+            # "${pkgs.swaybg}/bin/swaybg -i ${wallpaper} --mode fill &"
+            # "hyprctl setcursor '${cursor.name}' ${toString cursor.size} &"
             "systemctl --user import-environment &"
             "hash dbus-update-activation-environment 2>/dev/null &"
             "dbus-update-activation-environment --systemd --all &"
