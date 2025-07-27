@@ -9,8 +9,8 @@ let
     ;
 in
 extension {
-  name = "overlay-module";
-  description = "Provides overlay management for modules with configurable targets";
+  name = "add-overlay-module";
+  description = "Provides overlay module with configurable targets";
 
   config = final: prev: {
     defaultOverlayTargets = [
@@ -19,7 +19,7 @@ extension {
     ];
   };
 
-  libExtension = config: final: prev: {
+  libExtension = config: final: _: {
     overlayModule =
       {
         name ? "overlay",
@@ -33,8 +33,8 @@ extension {
         finalTargets = if restricted == [ ] then targets else (intersectLists targets restricted);
 
         applyToNixOS = elem "nixos" finalTargets;
-        applyToHome = elem "home" finalTargets;
-        applyToDarwin = elem "darwin" finalTargets;
+        applyToHomeManager = elem "home" finalTargets;
+        applyToMacOS = elem "darwin" finalTargets;
       in
       final.module {
         inherit name;
@@ -43,11 +43,11 @@ extension {
           nixpkgs.overlays = finalOverlays;
         };
 
-        home.always = mkIf applyToHome {
+        home.always = mkIf applyToHomeManager {
           nixpkgs.overlays = finalOverlays;
         };
 
-        darwin.always = mkIf applyToDarwin {
+        darwin.always = mkIf applyToMacOS {
           nixpkgs.overlays = finalOverlays;
         };
       };
