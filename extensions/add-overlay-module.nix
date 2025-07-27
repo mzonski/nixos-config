@@ -1,5 +1,6 @@
 { lib, delib, ... }:
 let
+  inherit (builtins) concatStringsSep;
   inherit (delib) extension;
   inherit (lib)
     elem
@@ -7,6 +8,7 @@ let
     intersectLists
     optional
     ;
+  namePrefix = "overlay";
 in
 extension {
   name = "add-overlay-module";
@@ -22,7 +24,7 @@ extension {
   libExtension = config: final: _: {
     overlayModule =
       {
-        name ? "overlay",
+        name ? namePrefix,
         overlay ? null,
         overlays ? [ ],
         targets ? config.defaultOverlayTargets,
@@ -37,7 +39,10 @@ extension {
         applyToMacOS = elem "darwin" finalTargets;
       in
       final.module {
-        inherit name;
+        name = concatStringsSep "." [
+          namePrefix
+          name
+        ];
 
         nixos.always = mkIf applyToNixOS {
           nixpkgs.overlays = finalOverlays;

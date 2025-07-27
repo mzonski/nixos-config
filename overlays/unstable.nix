@@ -5,7 +5,7 @@
   ...
 }:
 delib.overlayModule {
-  name = "overlays.unstable";
+  name = "unstable";
   overlay =
     final: prev:
     let

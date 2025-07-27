@@ -5,7 +5,7 @@
   ...
 }:
 delib.overlayModule {
-  name = "overlay.firefox-addons";
+  name = "firefox-addons";
   overlay = final: prev: {
     firefoxAddons = inputs.firefox-addons.packages.${system};
   };
