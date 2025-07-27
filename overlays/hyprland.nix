@@ -5,9 +5,9 @@
   ...
 }:
 delib.overlayModule {
-  name = "overlays.hyprland";
-  overlays = [
-    (delib.inputOverlay inputs system "hyprland" "hyprFlake")
-    (delib.inputOverlay inputs system "hyprland-plugins" "hyprPluginsFlake")
-  ];
+  name = "overlay.hyprland";
+  overlay = final: prev: {
+    hyprFlake = inputs.hyprland.packages.${system};
+    hyprPluginsFlake = inputs.hyprland-plugins.packages.${system};
+  };
 }

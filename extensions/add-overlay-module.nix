@@ -1,8 +1,14 @@
 { lib, delib, ... }:
 let
-  overlayNamePrefix = "overlay";
+  inherit (delib) extension;
+  inherit (lib)
+    elem
+    mkIf
+    intersectLists
+    optional
+    ;
 in
-delib.extension {
+extension {
   name = "overlay-module";
   description = "Provides overlay management for modules with configurable targets";
 
@@ -16,31 +22,33 @@ delib.extension {
   libExtension = config: final: prev: {
     overlayModule =
       {
-        name ? overlayNamePrefix,
+        name ? "overlay",
+        overlay ? null,
         overlays ? [ ],
         targets ? config.defaultOverlayTargets,
         restricted ? [ ],
       }:
       let
-        finalTargets = if restricted == [ ] then targets else lib.intersectLists targets restricted;
+        finalOverlays = overlays ++ (optional (overlay != null) overlay);
+        finalTargets = if restricted == [ ] then targets else (intersectLists targets restricted);
 
-        applyToNixOS = lib.elem "nixos" finalTargets;
-        applyToHome = lib.elem "home" finalTargets;
-        applyToDarwin = lib.elem "darwin" finalTargets;
+        applyToNixOS = elem "nixos" finalTargets;
+        applyToHome = elem "home" finalTargets;
+        applyToDarwin = elem "darwin" finalTargets;
       in
       final.module {
         inherit name;
 
-        nixos.always = lib.mkIf applyToNixOS {
-          nixpkgs.overlays = overlays;
+        nixos.always = mkIf applyToNixOS {
+          nixpkgs.overlays = finalOverlays;
         };
 
-        home.always = lib.mkIf applyToHome {
-          nixpkgs.overlays = overlays;
+        home.always = mkIf applyToHome {
+          nixpkgs.overlays = finalOverlays;
         };
 
-        darwin.always = lib.mkIf applyToDarwin {
-          nixpkgs.overlays = overlays;
+        darwin.always = mkIf applyToDarwin {
+          nixpkgs.overlays = finalOverlays;
         };
       };
   };
