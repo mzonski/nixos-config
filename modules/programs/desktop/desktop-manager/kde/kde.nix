@@ -1,10 +1,4 @@
-{
-  delib,
-  lib,
-  pkgs,
-  host,
-  ...
-}:
+{ delib, ... }:
 let
   inherit (delib) module singleEnableOption;
 in
@@ -18,7 +12,6 @@ module {
   };
 
   nixos.ifEnabled = {
-    #services.xserver.enable = true;
     services.desktopManager.plasma6.enable = true;
     services.desktopManager.plasma6.enableQt5Integration = true;
   };

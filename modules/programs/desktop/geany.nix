@@ -1,9 +1,4 @@
-{
-  pkgs,
-  delib,
-  host,
-  ...
-}:
+{ pkgs, delib, ... }:
 
 let
   inherit (delib) module singleEnableOption;

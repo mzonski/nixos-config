@@ -88,10 +88,6 @@ delib.host {
       #   persistencedSha256 = "sha256-G1V7JtHQbfnSRfVjz/LE2fYTlh9okpCbE4dfX9oYSg8=";
       # };
     };
-
-    #hardware.nvidia-container-toolkit = {
-    #  enable = false;
-    #};
   };
 
   home = {

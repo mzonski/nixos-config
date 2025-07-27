@@ -5,7 +5,6 @@
   lib,
   ...
 }:
-
 let
   inherit (delib) module singleEnableOption;
 in

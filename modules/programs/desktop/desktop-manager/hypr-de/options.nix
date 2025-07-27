@@ -1,4 +1,4 @@
-{ delib, host, ... }:
+{ delib, ... }:
 
 let
   inherit (delib)

@@ -6,7 +6,7 @@
   ...
 }:
 
-stdenv.mkDerivation rec {
+stdenv.mkDerivation {
   name = "asus-ec-sensors";
   version = "0.1.0-custom";
 

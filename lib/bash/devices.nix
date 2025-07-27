@@ -54,4 +54,3 @@ rec {
       }
     '';
 }
-#           driver_info=$(${getDriverInfo} && get_driver_info "${deviceIds}")

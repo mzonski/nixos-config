@@ -4,7 +4,6 @@
   config,
   ...
 }:
-
 let
   inherit (delib) module;
   inherit (lib) mkDefault;
