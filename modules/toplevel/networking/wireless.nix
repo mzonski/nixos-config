@@ -1,13 +1,20 @@
 {
+  host,
   delib,
   config,
   lib,
   ...
 }:
-delib.module {
+let
+
+  inherit (delib) module singleEnableOption;
+in
+module {
   name = "networking.wireless";
 
-  nixos.always =
+  options = singleEnableOption host.isDesktop;
+
+  nixos.ifEnabled =
     { cfg, ... }:
     {
       sops.secrets = {
