@@ -69,7 +69,7 @@ delib.module {
       inherit (cfg) env;
     in
     {
-      users.mutableUsers = true;
+      users.mutableUsers = false;
       users.users.${cfg.config.name} = cfg.config // {
         hashedPasswordFile = config.sops.secrets.user_zonni_password.path;
       };
