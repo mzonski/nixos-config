@@ -1,10 +1,9 @@
-# extensions/overlays.nix
 { lib, delib, ... }:
 let
   overlayNamePrefix = "overlay";
 in
 delib.extension {
-  name = "addOverlayModule";
+  name = "overlay-module";
   description = "Provides overlay management for modules with configurable targets";
 
   config = final: prev: {
@@ -44,9 +43,5 @@ delib.extension {
           nixpkgs.overlays = overlays;
         };
       };
-
-    inputOverlay = inputs: system: inputName: packageName: final: prev: {
-      ${packageName} = inputs.${inputName}.packages.${system};
-    };
   };
 }

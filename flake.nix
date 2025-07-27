@@ -78,9 +78,7 @@
           extensions = (with denix.lib.extensions; [ args ]) ++ ([
             (
               (denix.lib.mergeExtensions "denix_extensions" [
-                (denix.lib.callExtension ./extensions/base/default.nix)
-                (denix.lib.callExtension ./extensions/base/hosts.nix)
-                (denix.lib.callExtension ./extensions/base/rices.nix)
+                denix.lib.extensions.base
                 (denix.lib.callExtension ./extensions/add-overlay-module.nix)
               ]).withConfig
               {
