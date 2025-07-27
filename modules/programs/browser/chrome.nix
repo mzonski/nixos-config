@@ -1,15 +1,23 @@
-{ delib, pkgs, ... }:
+{
+  host,
+  delib,
+  pkgs,
+  ...
+}:
 let
-  inherit (delib) singleEnableOption module;
+  inherit (delib) module boolOption;
   inherit (builtins) concatStringsSep;
 in
 module {
   name = "programs.chrome";
 
-  options = singleEnableOption false;
+  options.programs.chrome = {
+    enable = boolOption host.isDesktop;
+    useVulkan = boolOption false;
+  };
 
   home.ifEnabled =
-    { myconfig, ... }:
+    { cfg, myconfig, ... }:
     let
       commonFeatures = [
         "MiddleClickAutoscroll"
@@ -25,10 +33,13 @@ module {
         "UseVulkanForWebGL"
       ];
 
+      selectedFeatures = if cfg.useVulkan then vulkanFeatures else glesFeatures;
+
       chromiumArgs = [
         "--ozone-platform-hint=auto"
-        "--enable-features=${concatStringsSep "," (commonFeatures ++ glesFeatures)}"
+        "--enable-features=${concatStringsSep "," (commonFeatures ++ selectedFeatures)}"
       ];
+
     in
     {
       home.packages = with pkgs; [
