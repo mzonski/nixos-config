@@ -3,7 +3,6 @@
   pkgs,
   delib,
   lib,
-  host,
   ...
 }:
 
@@ -13,7 +12,7 @@ in
 module {
   name = "programs.cli.zsh";
 
-  options = singleEnableOption (!host.isMinimal);
+  options = singleEnableOption true;
 
   nixos.ifEnabled = {
     users.defaultUserShell = pkgs.zsh;
@@ -34,6 +33,9 @@ module {
         enable = true;
         enableZshIntegration = true;
       };
+
+      home.file.".p10k-desktop.zsh".source = ./p10k/.p10k-desktop.zsh;
+      home.file.".p10k-tty.zsh".source = ./p10k/.p10k-tty.zsh;
 
       programs.zsh = {
         enable = true;
