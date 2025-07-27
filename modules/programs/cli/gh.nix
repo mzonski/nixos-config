@@ -11,7 +11,7 @@ in
 module {
   name = "programs.cli.gh";
 
-  options = singleEnableOption (!host.isMinimal);
+  options = singleEnableOption host.isDesktop;
 
   home.ifEnabled.programs.gh = {
     enable = true;

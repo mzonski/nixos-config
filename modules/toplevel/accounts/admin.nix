@@ -1,4 +1,5 @@
 {
+  host,
   lib,
   delib,
   homeManagerUser,
@@ -13,7 +14,7 @@ delib.module {
 
   options.admin = {
     username = strOption "zonni";
-    disableSudoPasswordRequirement = boolOption true;
+    disableSudoPasswordRequirement = boolOption host.isDesktop;
   };
 
   myconfig.always =
