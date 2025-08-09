@@ -6,33 +6,40 @@
 }:
 
 let
-  inherit (lib.strings) concatMapStrings;
   inherit (delib) module;
 
   inherit (import ../../../../lib/bash/devices.nix { inherit pkgs lib; })
-    getPciIdFromDeviceId
     checkGpuDriver
+    removeKernelModules
+    loadKernelModules
+    reattachDevices
+    ;
+  inherit (import ../../../../lib/bash/utils.nix { inherit lib; })
+    extendPath
+    requireRoot
     ;
 
   displaySessionManipulation = pkgs.writeShellScript "display_session_manipulation" ''
-    SYSTEMCTL_BIN=${pkgs.systemd}/bin/systemctl
-    TEE_BIN=${pkgs.coreutils}/bin/tee
+    ${extendPath [
+      pkgs.systemd
+      pkgs.coreutils
+    ]}
 
     kill_display_session() {
-      "$SYSTEMCTL_BIN" stop display-manager.service
+      systemctl stop display-manager.service
       sleep 1
 
-      echo 0 | "$TEE_BIN" /sys/class/vtconsole/vtcon0/bind > /dev/null
-      echo 0 | "$TEE_BIN" /sys/class/vtconsole/vtcon1/bind > /dev/null
+      echo 0 | tee /sys/class/vtconsole/vtcon0/bind > /dev/null
+      echo 0 | tee /sys/class/vtconsole/vtcon1/bind > /dev/null
       sleep 1
     }
 
     restore_display_session() {
-      echo 1 | "$TEE_BIN" /sys/class/vtconsole/vtcon0/bind > /dev/null
-      echo 1 | "$TEE_BIN" /sys/class/vtconsole/vtcon1/bind > /dev/null
+      echo 1 | tee /sys/class/vtconsole/vtcon0/bind > /dev/null
+      echo 1 | tee /sys/class/vtconsole/vtcon1/bind > /dev/null
       sleep 1
 
-      "$SYSTEMCTL_BIN" start display-manager.service
+      systemctl start display-manager.service
       sleep 1
     }
   '';
@@ -46,35 +53,43 @@ let
       ];
     in
     pkgs.writeShellScriptBin "gpu-to-vfio" ''
-      [[ $EUID -ne 0 ]] && echo "Error: Root is required" && exit 1
-      echo "=== Switching GPU to VFIO ==="
+      ${requireRoot}
 
-      VIRSH_BIN=${pkgs.libvirt}/bin/virsh
-      RMMOD_BIN=${pkgs.kmod}/bin/rmmod
-      MODPROBE_BIN=${pkgs.kmod}/bin/modprobe
+      ${extendPath ([
+        pkgs.libvirt
+        pkgs.kmod
+      ])}
 
       source ${displaySessionManipulation}
-      source ${getPciIdFromDeviceId}
       source ${checkGpuDriver dgpuDevices}
+
+      echo "=== Switching GPU to VFIO ==="
 
       check_gpu_driver "vfio-pci"
       kill_display_session
 
-      "$RMMOD_BIN" nvidia_uvm nvidia_drm nvidia_modeset nvidia
+      ${removeKernelModules [
+        "nvidia_uvm"
+        "nvidia_drm"
+        "nvidia_modeset"
+        "nvidia"
+      ]}
       echo "NVIDIA drivers removed"
 
-      "$MODPROBE_BIN" -i vfio_pci
-      "$MODPROBE_BIN" -i vfio_pci_core
-      "$MODPROBE_BIN" -i vfio_iommu_type1
-      "$MODPROBE_BIN" -i vfio
+      ${loadKernelModules [
+        "vfio_pci"
+        "vfio_pci_core"
+        "vfio_iommu_type1"
+        "vfio"
+      ]}
       echo "VFIO drivers loaded"
 
-      ${concatMapStrings (deviceId: ''
-        "$VIRSH_BIN" nodedev-reattach $(get_pci_id_from_device_id "${deviceId}")
-        echo "Device ${deviceId} detached for VFIO"
-      '') dgpuDevices}
+      ${reattachDevices dgpuDevices}
 
       restore_display_session
+
+      echo "VFIO drivers removed"
+      sleep 1
     '';
 
 in

@@ -9,6 +9,7 @@ let
 
   bashColorsScript = import ../../../../lib/bash/colors.nix { inherit pkgs; };
   inherit (import ../../../../lib/bash/devices.nix { inherit pkgs lib; }) getDriverInfo;
+  inherit (import ../../../../lib/bash/utils.nix { inherit lib; }) extendPath;
 
   getDriverColor = pkgs.writeShellScript "get_driver_color" ''
     get_driver_color() {
@@ -36,7 +37,9 @@ let
   makeScript =
     devices:
     pkgs.writeShellScriptBin "gpu-status" ''
-      LSPCI_PATH="${pkgs.pciutils}/bin/lspci"
+      ${extendPath ([
+        pkgs.pciutils
+      ])}
 
       source ${bashColorsScript}
       source ${getDriverInfo}
@@ -60,7 +63,7 @@ let
           device_id="''${DEVICES[$device_type]}"
           device_name="''${DEVICE_NAMES[$device_type]}"
           
-          if "$LSPCI_PATH" -n -d "$device_id" | grep -q "$device_id"; then
+          if lspci -n -d "$device_id" | grep -q "$device_id"; then
               driver=$(get_driver_color "$(get_driver_info "$device_id")")
               echo -e "$device_name ($device_id): $driver"
           fi
