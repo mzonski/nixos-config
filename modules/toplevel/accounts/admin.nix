@@ -15,6 +15,7 @@ delib.module {
   options.admin = {
     username = strOption "zonni";
     disableSudoPasswordRequirement = boolOption host.isDesktop;
+    enablePasswordlessDesktop = boolOption host.isDesktop;
   };
 
   myconfig.always =
@@ -63,6 +64,17 @@ delib.module {
           trusted-users = users;
           allowed-users = users;
         };
+
+      security.polkit = mkIf cfg.enablePasswordlessDesktop {
+        enable = true;
+        extraConfig = ''
+          polkit.addRule(function(action, subject) {
+              if (subject.isInGroup("wheel")) {
+                  return polkit.Result.YES;
+              }
+          });
+        '';
+      };
 
       # Increase open file limit for sudoers
       security.pam.loginLimits = [
