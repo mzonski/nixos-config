@@ -41,8 +41,12 @@ let
 
       "$RMMOD_BIN" vfio_pci vfio_pci_core vfio_iommu_type1 vfio 
       echo "VFIO drivers removed"
+      sleep 1
 
-      "$MODPROBE_BIN" -i nvidia nvidia_modeset nvidia_uvm nvidia_drm 
+      "$MODPROBE_BIN" -i nvidia
+      "$MODPROBE_BIN" -i nvidia_modeset
+      "$MODPROBE_BIN" -i nvidia_uvm
+      "$MODPROBE_BIN" -i nvidia_drm
       echo "NVIDIA drivers loaded"
     '';
 

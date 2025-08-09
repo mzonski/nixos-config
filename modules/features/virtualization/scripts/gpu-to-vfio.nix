@@ -14,6 +14,29 @@ let
     checkGpuDriver
     ;
 
+  displaySessionManipulation = pkgs.writeShellScript "display_session_manipulation" ''
+    SYSTEMCTL_BIN=${pkgs.systemd}/bin/systemctl
+    TEE_BIN=${pkgs.coreutils}/bin/tee
+
+    kill_display_session() {
+      "$SYSTEMCTL_BIN" stop display-manager.service
+      sleep 1
+
+      echo 0 | "$TEE_BIN" /sys/class/vtconsole/vtcon0/bind > /dev/null
+      echo 0 | "$TEE_BIN" /sys/class/vtconsole/vtcon1/bind > /dev/null
+      sleep 1
+    }
+
+    restore_display_session() {
+      echo 1 | "$TEE_BIN" /sys/class/vtconsole/vtcon0/bind > /dev/null
+      echo 1 | "$TEE_BIN" /sys/class/vtconsole/vtcon1/bind > /dev/null
+      sleep 1
+
+      "$SYSTEMCTL_BIN" start display-manager.service
+      sleep 1
+    }
+  '';
+
   makeScript =
     devices:
     let
@@ -29,37 +52,29 @@ let
       VIRSH_BIN=${pkgs.libvirt}/bin/virsh
       RMMOD_BIN=${pkgs.kmod}/bin/rmmod
       MODPROBE_BIN=${pkgs.kmod}/bin/modprobe
-      SYSTEMCTL_BIN=${pkgs.systemd}/bin/systemctl
-      TEE_BIN=${pkgs.coreutils}/bin/tee
 
+      source ${displaySessionManipulation}
       source ${getPciIdFromDeviceId}
       source ${checkGpuDriver dgpuDevices}
 
       check_gpu_driver "vfio-pci"
-
-      "$SYSTEMCTL_BIN" stop display-manager.service
-
-      echo 0 | "$TEE_BIN" /sys/class/vtconsole/vtcon0/bind > /dev/null
-      echo 0 | "$TEE_BIN" /sys/class/vtconsole/vtcon1/bind > /dev/null
-      sleep 1
+      kill_display_session
 
       "$RMMOD_BIN" nvidia_uvm nvidia_drm nvidia_modeset nvidia
       echo "NVIDIA drivers removed"
 
-      "$MODPROBE_BIN" -i vfio_pci vfio_pci_core vfio_iommu_type1 vfio
+      "$MODPROBE_BIN" -i vfio_pci
+      "$MODPROBE_BIN" -i vfio_pci_core
+      "$MODPROBE_BIN" -i vfio_iommu_type1
+      "$MODPROBE_BIN" -i vfio
       echo "VFIO drivers loaded"
 
       ${concatMapStrings (deviceId: ''
         "$VIRSH_BIN" nodedev-reattach $(get_pci_id_from_device_id "${deviceId}")
         echo "Device ${deviceId} detached for VFIO"
       '') dgpuDevices}
-      sleep 1
 
-      echo 1 | "$TEE_BIN" /sys/class/vtconsole/vtcon0/bind > /dev/null
-      echo 1 | "$TEE_BIN" /sys/class/vtconsole/vtcon1/bind > /dev/null
-      sleep 1
-
-      "$SYSTEMCTL_BIN" start display-manager.service
+      restore_display_session
     '';
 
 in
