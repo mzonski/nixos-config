@@ -32,12 +32,15 @@ module {
             Options = concatStringsSep "," [
               "soft"
               "bg"
-              "timeo=3000"
+              "intr"
+              "timeo=150"
               "nconnect=8"
               "vers=4"
               "_netdev"
               "comment=x-gvfs-show"
             ];
+            TimeoutSec = "15s";
+            TimeoutStopSec = "10s";
           };
           what = cfg.resource;
           where = cfg.target;
@@ -49,7 +52,7 @@ module {
           wantedBy = [ "multi-user.target" ];
           automountConfig = {
             TimeoutIdleSec = "15min";
-            DeviceTimeoutSec = "30";
+            DeviceTimeoutSec = "15s";
           };
           where = cfg.target;
         }
