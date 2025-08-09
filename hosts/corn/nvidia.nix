@@ -78,7 +78,7 @@ delib.host {
         nvidiaBusId = "PCI:1:0:0";
       };
 
-      package = config.boot.kernelPackages.nvidiaPackages.latest;
+      package = config.boot.kernelPackages.nvidiaPackages.beta;
       # package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
       #   version = "570.133.07";
       #   sha256_64bit = "sha256-LUPmTFgb5e9VTemIixqpADfvbUX1QoTT2dztwI3E3CY=";
