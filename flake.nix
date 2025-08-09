@@ -27,7 +27,7 @@
     nil-ls.url = "github:oxalica/nil";
 
     catppuccin = {
-      url = "github:catppuccin/nix";
+      url = "github:catppuccin/nix/bc6d2b7b57dd29389538f8c4465e408c07187404";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
