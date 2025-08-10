@@ -1,4 +1,9 @@
-{ inputs, delib, ... }:
+{
+  inputs,
+  delib,
+  system,
+  ...
+}:
 delib.overlayModule {
   name = "local-packages";
   overlay = final: prev: {
@@ -10,5 +15,7 @@ delib.overlayModule {
         };
       }) (inputs.denix.lib.umport { path = ../packages; })
     );
+
+    systemdrebootmenuext = inputs.systemdrebootmenuext.packages.${system}.default;
   };
 }

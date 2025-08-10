@@ -1,6 +1,5 @@
 {
   delib,
-  lib,
   pkgs,
   ...
 }:
@@ -18,35 +17,35 @@ let
       ${pkgs.gnused}/bin/sed -i 's/#9B8E8A/#181825/g' "$out/share/gnome-shell/extensions/pop-shell@system76.com/stack.js"
     '';
   });
+
+  gnomeExtensions =
+    with pkgs;
+    [
+      systemdrebootmenuext
+    ]
+    ++ (with pkgs.gnomeExtensions; [
+      appindicator
+      color-picker
+      caffeine
+      dash-to-panel
+      emoji-copy
+      gtk4-desktop-icons-ng-ding
+      lilypad
+      cronomix
+      clipboard-history
+      #tophat
+      #paperwm
+      #rounded-window-corners-reborn
+      #wintile-windows-10-window-tiling-for-gnome
+      #workspaces-indicator-by-open-apps
+    ])
+    ++ [ pop-shell-extension ];
 in
 module {
   name = "programs.gnome";
 
   home.ifEnabled = {
-    home.packages =
-      with pkgs;
-      [
-        gnome-shell-extensions
-
-      ]
-      ++ (with pkgs.gnomeExtensions; [
-        appindicator
-        color-picker
-        caffeine
-        dash-to-panel
-        emoji-copy
-        gtk4-desktop-icons-ng-ding
-        lilypad
-        cronomix
-        clipboard-history
-        #tophat
-        #paperwm
-        #rounded-window-corners-reborn
-        #wintile-windows-10-window-tiling-for-gnome
-        #workspaces-indicator-by-open-apps
-
-      ])
-      ++ [ pop-shell-extension ];
+    home.packages = gnomeExtensions ++ (with pkgs; [ gnome-shell-extensions ]);
 
     dconf = {
       enable = true;
@@ -54,26 +53,14 @@ module {
         "org/gnome/shell" = {
           disable-user-extensions = false;
           enabled-extensions = [
-            "appindicatorsupport@rgcjonas.gmail.com"
             "apps-menu@gnome-shell-extensions.gcampax.github.com"
-            "caffeine@patapon.info"
-            "clipboard-history@alexsaveau.dev"
-            "color-picker@tuberry"
-            "cronomix@zagortenay333"
-            "dash-to-panel@jderose9.github.com"
             "drive-menu@gnome-shell-extensions.gcampax.github.com"
-            "gtk4-ding@smedius.gitlab.com"
-            "lilypad@shendrew.github.io"
             "places-menu@gnome-shell-extensions.gcampax.github.com"
-            "pop-shell@system76.com"
+            "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
             "system-monitor@gnome-shell-extensions.gcampax.github.com"
             "user-theme@gnome-shell-extensions.gcampax.github.com"
-            "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
-            #"tophat@fflewddur.github.io"
-            #"dual-monitor-toggle@poka"
-            #"emoji-copy@felipeftn"
-            #"rounded-window-corners@fxgn"
-          ];
+          ]
+          ++ (map (ext: ext.extensionUuid) gnomeExtensions);
         };
         # Enable and configure pop-shell
         # (see https://github.com/pop-os/shell/blob/master_jammy/scripts/configure.sh)

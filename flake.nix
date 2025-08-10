@@ -50,6 +50,11 @@
 
     disko.url = "github:nix-community/disko";
     musnix.url = "github:musnix/musnix";
+
+    systemdrebootmenuext = {
+      url = "github:mzonski/gnome-systemd-reboot-menu-ext";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
