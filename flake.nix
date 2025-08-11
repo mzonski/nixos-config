@@ -55,6 +55,11 @@
       url = "github:mzonski/gnome-systemd-reboot-menu-ext";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    piavpn = {
+      url = "github:mzonski/piavpn-nixos";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

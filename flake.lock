@@ -851,6 +851,26 @@
         "type": "github"
       }
     },
+    "piavpn": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1754938575,
+        "narHash": "sha256-JnYqwa13OMPATmZ+j0JMA/zyG1alPEbxgvceL7EzqHs=",
+        "owner": "mzonski",
+        "repo": "piavpn-nixos",
+        "rev": "6738903d24ddaa6f8676d5ecfe15c32daeb9f94b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mzonski",
+        "repo": "piavpn-nixos",
+        "type": "github"
+      }
+    },
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -956,6 +976,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_7",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "piavpn": "piavpn",
         "sops-nix": "sops-nix",
         "systemdrebootmenuext": "systemdrebootmenuext",
         "systems": "systems_3"
