@@ -39,6 +39,7 @@ delib.host {
       virt-manager.enable = false;
       docker.enable = false;
       windows-data-partition.enable = false;
+      vpnclient.enable = true;
     };
 
     programs.chrome.enable = true;
@@ -65,8 +66,6 @@ delib.host {
     services.openssh.enable = true;
     services.printing.enable = true;
     security.polkit.enable = true;
-    networking.networkmanager.enable = lib.mkForce true;
-    networking.useDHCP = lib.mkForce false;
   };
 
   home = {
