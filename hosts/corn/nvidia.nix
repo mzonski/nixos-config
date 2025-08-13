@@ -16,6 +16,11 @@ delib.host {
       inputs.nixos-hardware.nixosModules.common-gpu-nvidia
     ];
 
+    boot.kernelParams = [
+      "video=HDMI-A-2:d"
+      "video=HDMI-A-3:d"
+    ];
+
     boot.blacklistedKernelModules = [ "nouveau" ];
 
     environment.systemPackages = with pkgs; [
