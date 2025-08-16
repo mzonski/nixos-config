@@ -50,7 +50,7 @@ delib.host {
     programs.hyprland.source = "stable";
     programs.gnome.enable = true;
     programs.gnome.fullInstall = true;
-    programs.gnome.freezeOnNvidiaSuspend.enable = false;
+    programs.gnome.freezeOnNvidiaSuspend.enable = true;
 
     services.systemd.restart-network-after-suspend = {
       enable = true;

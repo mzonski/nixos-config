@@ -61,7 +61,6 @@ let
 
       echo "NVIDIA drivers loaded"
     '';
-
 in
 module {
   name = "features.virt-manager.vfio-passtrough";
