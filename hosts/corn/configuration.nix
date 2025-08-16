@@ -31,16 +31,16 @@ delib.host {
       autologin.session = "Hyprland";
       gaming.enable = true;
       general-development.enable = true;
-      virt-manager.enable = false;
-      virt-manager.bridge.enable = false;
-      virt-manager.vfio-passtrough.enable = false;
+      virt-manager.enable = true;
+      virt-manager.bridge.enable = true;
+      virt-manager.vfio-passtrough.enable = true;
       virt-manager.bridge.externalInterface = "enp113s0";
       docker.enable = true;
       windows-data-partition.enable = false;
       windows-data-partition.diskUuid = "1E08506F08504843";
       low-latency.enable = true;
       home-nas.enable = true;
-      vpnclient.enable = true;
+      vpnclient.enable = false;
     };
 
     programs.chrome.enable = true;
