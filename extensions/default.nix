@@ -10,8 +10,8 @@
     ];
   })
   (delib.callExtension ./extend-rice-options.nix)
-  ((delib.callExtension ./add-overlay-module.nix).withConfig {
-    defaultOverlayTargets = [
+  (overlays.withConfig {
+    defaultTargets = [
       "nixos"
       "home"
     ];
