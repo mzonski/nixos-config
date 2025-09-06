@@ -6,6 +6,7 @@
   config,
   lib,
   modulesPath,
+  pkgs,
   ...
 }:
 delib.host {
@@ -32,6 +33,19 @@ delib.host {
       "asus-ec-sensors"
     ];
     boot.extraModulePackages = [ ];
+
+    # boot.kernelParams = [
+    #   # try to fix samsung nvme failure after waking up from suspend
+    #   "nvme_core.default_ps_max_latency_us=0"
+    # ];
+
+    services.udev.packages = [
+      # https://support.system76.com/articles/kernelstub/
+      (pkgs.writeTextDir "etc/udev/rules.d/99-nvme-tolerance.rules" ''
+        ACTION=="add", SUBSYSTEM=="nvme", KERNEL=="nvme0", ATTR{power/pm_qos_latency_tolerance_us}="13500"
+        ACTION=="add", SUBSYSTEM=="nvme", KERNEL=="nvme1", ATTR{power/pm_qos_latency_tolerance_us}="11000"
+      '')
+    ];
 
     fileSystems."/" = {
       device = "/dev/disk/by-label/NIX_ROOT";
