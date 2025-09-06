@@ -99,7 +99,7 @@ module {
           };
           "org/gnome/mutter" = {
             edge-tiling = true;
-            workspaces-only-on-primary = false;
+            workspaces-only-on-primary = true;
             dynamic-workspaces = false;
             experimental-features = [ "scale-monitor-framebuffer" ];
           };
