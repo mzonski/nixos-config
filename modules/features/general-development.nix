@@ -23,7 +23,8 @@ module {
 
       node22 = [
         pkgs.yarn
-        pkgs.nodejs_24
+        pkgs.pnpm
+        pkgs.nodejs_22
         pkgs.node-gyp
         pkgs.node-glob
       ];
