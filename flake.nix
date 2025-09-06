@@ -60,6 +60,11 @@
       url = "github:mzonski/piavpn-nixos";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    deepcool-digital-linux = {
+      url = "github:mzonski/deepcool-digital-linux";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

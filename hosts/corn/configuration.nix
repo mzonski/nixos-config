@@ -56,6 +56,7 @@ delib.host {
       enable = true;
       networkInterface = "enp113s0";
     };
+    services.deepcool-digital-linux.enable = true;
   };
 
   nixos = {
