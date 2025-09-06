@@ -11,11 +11,12 @@ stdenv.mkDerivation {
   version = "0.1.0-custom";
 
   src = fetchFromGitHub {
-    owner = "mzonski";
+    owner = "zeule";
     repo = "asus-ec-sensors";
-    rev = "bcb116aca51f20c95fb0841bc07834e93117396f";
-    sha256 = "sha256-jYtC/853X+eSo1es1miwaz+luUKOMF1EJ5LDVBpOyyQ=";
+    rev = "de633c4061f38baffa0c706e9d034ead5c8c20d8";
+    sha256 = "sha256-Fwn4DIrOPBjGthehyeDeAAfXcf6GMxxNM+2Hchabirw=";
   };
+
   hardeningDisable = [ "pic" ];
 
   nativeBuildInputs = kernel.moduleBuildDependencies;
