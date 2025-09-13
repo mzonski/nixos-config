@@ -51,6 +51,7 @@ delib.module {
           qbittorrent-enhanced
           xfce.xfburn # Image burner
           code-cursor-fhs
+          libreoffice-fresh
 
           ## ENGINERING
           qcad
