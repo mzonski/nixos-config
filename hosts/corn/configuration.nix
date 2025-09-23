@@ -68,12 +68,6 @@ delib.host {
       inputs.nixos-hardware.nixosModules.common-pc-ssd
     ];
 
-    boot.extraModulePackages = [
-      (pkgs.callPackage ../../kernel-packages/asus-ec-sensors {
-        kernel = config.boot.kernelPackages.kernel;
-      })
-    ];
-
     # CHANGE TO boot.nixStoreMountOpts
     boot.readOnlyNixStore = false;
     # TODO: REVERT IT

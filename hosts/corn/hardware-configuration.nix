@@ -17,22 +17,35 @@ delib.host {
       (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-    boot.initrd.availableKernelModules = [
-      "xhci_pci"
-      "thunderbolt"
-      "nvme"
-      "ahci"
-      "usbhid"
-      "usb_storage"
-      "sd_mod"
-    ];
-    boot.initrd.kernelModules = [ ];
-    boot.kernelModules = [
-      "kvm-amd"
-      "nct6775"
-      "asus-ec-sensors"
-    ];
-    boot.extraModulePackages = [ ];
+    boot = {
+      initrd.availableKernelModules = [
+        "xhci_pci"
+        "thunderbolt"
+        "nvme"
+        "ahci"
+        "usbhid"
+        "usb_storage"
+        "sd_mod"
+      ];
+      initrd.kernelModules = [ ];
+
+      blacklistedKernelModules = [ ];
+      kernelModules = [
+        "kvm-amd"
+        "nct6775"
+        "asus-ec-sensors"
+        "asus_rog_ryujin"
+      ];
+
+      extraModulePackages = [
+        (pkgs.callPackage ../../kernel-packages/asus-ec-sensors {
+          kernel = config.boot.kernelPackages.kernel;
+        })
+        (pkgs.callPackage ../../kernel-packages/asus_rog_ryujin {
+          kernel = config.boot.kernelPackages.kernel;
+        })
+      ];
+    };
 
     # boot.kernelParams = [
     #   # try to fix samsung nvme failure after waking up from suspend
