@@ -92,8 +92,6 @@ delib.host {
 
     services.hardware.openrgb.enable = true;
     hardware.i2c.enable = true;
-    programs.coolercontrol.enable = true;
-    programs.coolercontrol.nvidiaSupport = true;
   };
 
   home = {
