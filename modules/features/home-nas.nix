@@ -33,17 +33,20 @@ module {
               "soft"
               "bg"
               "intr"
-              "timeo=150"
+              "timeo=5"
               "nconnect=8"
               "vers=4"
               "_netdev"
               "comment=x-gvfs-show"
+              "noauto"
             ];
             TimeoutSec = "15s";
             TimeoutStopSec = "10s";
           };
           what = cfg.resource;
           where = cfg.target;
+          after = [ "network-online.target" ];
+          wants = [ "network-online.target" ];
         }
       ];
 
@@ -57,5 +60,20 @@ module {
           where = cfg.target;
         }
       ];
+
+      systemd.services.restart-nfs-after-suspend = {
+        description = "Restart NFS mounts after suspend";
+        #wantedBy = [ "suspend.target" ];
+        after = [
+          "suspend.target"
+          "restart-network-after-suspend.service"
+        ];
+        wants = [ "restart-network-after-suspend.service" ];
+        script = ''
+          sleep 3
+          ${pkgs.systemd}/bin/systemctl restart mnt-nas.automount
+        '';
+        serviceConfig.Type = "oneshot";
+      };
     };
 }
