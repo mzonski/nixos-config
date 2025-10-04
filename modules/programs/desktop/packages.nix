@@ -106,6 +106,7 @@ delib.module {
           ## UTILS
           timer
           qalculate-qt # kalkulator
+          wireshark
 
           ## Rice showcase
           local.trekscii
