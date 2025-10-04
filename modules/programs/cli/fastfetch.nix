@@ -32,12 +32,12 @@ module {
         "OS"
         {
           type = "command";
-          key = "NixOS Gen";
-          text = "nix-env --list-generations | tail -n1 | awk '{print $1}'";
+          key = "NixOS Generation";
+          text = "readlink /nix/var/nix/profiles/system | cut -d- -f2";
         }
         {
           type = "command";
-          key = "Home Gen";
+          key = "Home Generation";
           text = "home-manager generations | head -n1 | awk '{print $5}'";
         }
         "Break"
