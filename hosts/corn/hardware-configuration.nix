@@ -29,7 +29,7 @@ delib.host {
       ];
       initrd.kernelModules = [ ];
 
-      blacklistedKernelModules = [ "k10temp" ];
+      blacklistedKernelModules = [ ];
       kernelModules = [
         "kvm-amd"
         "nct6775"
