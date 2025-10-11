@@ -46,7 +46,11 @@ let
   '';
 
   makeScript =
-    devices:
+    {
+      devices,
+      preScript,
+      postScript,
+    }:
     let
       dgpuDevices = [
         devices.dgpu-video
@@ -66,7 +70,7 @@ let
       source ${assertGpuDriver dgpuDevices}
 
       echo "=== Switching GPU to VFIO ==="
-      ${beforeScript}
+      ${preScript}
 
       assert_gpu_driver "vfio-pci"
       kill_display_session
@@ -86,14 +90,13 @@ let
         "vfio_iommu_type1"
         "vfio"
       ]}
-      sleep 1
 
       ${reattachDevices dgpuDevices}
-      sleep 1
-
       ${rebindDevice "snd_hda_intel" "vfio-pci" devices.dgpu-audio}
 
       restore_display_session
+
+      ${postScript}
 
       echo "=== VFIO drivers loaded ==="
     '';
@@ -102,8 +105,12 @@ in
 module {
   name = "features.virt-manager.vfio-passtrough";
   myconfig.ifEnabled =
-    { cfg, ... }:
+    { cfg, myconfig, ... }:
     {
-      features.virt-manager.vfio-passtrough.scripts.gpu-to-vfio = makeScript cfg.devices;
+      features.virt-manager.vfio-passtrough.scripts.gpu-to-vfio = makeScript ({
+        devices = cfg.devices;
+        preScript = cfg.scripts.hooks.preGpuToVfio or "";
+        postScript = cfg.scripts.hooks.postGpuToVfio or "";
+      });
     };
 }

@@ -3,6 +3,8 @@ let
   inherit (delib)
     module
     packageOption
+    noNullDefault
+    allowNull
     noDefault
     strOption
     intOption
@@ -39,6 +41,12 @@ module {
         gpu-status = noDefault (packageOption null);
         gpu-to-nvidia = noDefault (packageOption null);
         gpu-to-vfio = noDefault (packageOption null);
+        hooks = {
+          preGpuToNvidia = allowNull (packageOption null);
+          postGpuToNvidia = allowNull (packageOption null);
+          preGpuToVfio = allowNull (packageOption null);
+          postGpuToVfio = allowNull (packageOption null);
+        };
       };
     };
   };

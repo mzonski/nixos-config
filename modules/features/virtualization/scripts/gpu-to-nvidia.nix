@@ -6,6 +6,7 @@
 }:
 let
   inherit (delib) module;
+  inherit (lib) optional;
 
   inherit (import ../../../../lib/bash/devices.nix { inherit pkgs lib; })
     assertGpuDriver
@@ -21,7 +22,11 @@ let
     ;
 
   makeScript =
-    devices:
+    {
+      devices,
+      preScript,
+      postScript,
+    }:
     let
       dgpuDevices = [
         devices.dgpu-video
@@ -41,6 +46,8 @@ let
       source ${assertGpuDriver dgpuDevices}
 
       assert_gpu_driver "nvidia"
+
+      ${preScript}
 
       ${reattachDevices dgpuDevices}
 
@@ -62,14 +69,22 @@ let
 
       ${rebindDevice "vfio-pci" "snd_hda_intel" devices.dgpu-audio}
 
+      ${postScript}
+
       echo "=== NVIDIA drivers loaded ==="
     '';
 in
 module {
   name = "features.virt-manager.vfio-passtrough";
   myconfig.ifEnabled =
-    { cfg, ... }:
+    { cfg, myconfig, ... }:
     {
-      features.virt-manager.vfio-passtrough.scripts.gpu-to-nvidia = makeScript cfg.devices;
+      features.virt-manager.vfio-passtrough.scripts.gpu-to-nvidia = makeScript ({
+        devices = cfg.devices;
+        preScript =
+          if cfg.scripts.hooks.preGpuToNvidia != null then cfg.scripts.hooks.preGpuToNvidia else "";
+        postScript =
+          if cfg.scripts.hooks.postGpuToNvidia != null then cfg.scripts.hooks.postGpuToNvidia else "";
+      });
     };
 }
