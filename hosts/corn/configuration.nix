@@ -67,9 +67,7 @@ delib.host {
       inputs.nixos-hardware.nixosModules.common-pc-ssd
     ];
 
-    # CHANGE TO boot.nixStoreMountOpts
-    boot.readOnlyNixStore = false;
-    # TODO: REVERT IT
+    #boot.readOnlyNixStore = false;
 
     boot.kernelPackages = pkgs.linuxPackages_latest;
     boot.loader.systemd-boot.windows."11".efiDeviceHandle = "HD1b";
