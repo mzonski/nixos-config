@@ -14,49 +14,63 @@ delib.host {
   homeManagerSystem = system;
   home.home.stateVersion = "25.05";
 
-  myconfig = {
-    admin.username = "zonni";
+  myconfig =
+    { myconfig, ... }:
+    {
+      admin.username = "zonni";
 
-    hardware = {
-      audio.enable = true;
-      bluetooth.enable = false;
-      block.defaultScheduler = "kyber";
-      block.defaultSchedulerRotational = "bfq";
-      logitech.enable = true;
+      hardware = {
+        audio.enable = true;
+        bluetooth.enable = false;
+        block.defaultScheduler = "kyber";
+        block.defaultSchedulerRotational = "bfq";
+        logitech.enable = true;
+      };
+
+      features = {
+        autologin.enable = false;
+        autologin.session = "Hyprland";
+        gaming.enable = true;
+        general-development.enable = true;
+        docker.enable = true;
+        windows-data-partition.enable = false;
+        windows-data-partition.diskUuid = "1E08506F08504843";
+        low-latency.enable = true;
+        home-nas.enable = true;
+        vpnclient.enable = false;
+        virt-manager = {
+          enable = true;
+          bridge.enable = true;
+          vfio-passtrough.enable = true;
+          bridge.externalInterface = "enp113s0";
+          vfio-passtrough.scripts.hooks = {
+            postGpuToNvidia = myconfig.services.coolercontrol.scripts.restartAndSetModeGpu;
+            preGpuToVfio = myconfig.services.coolercontrol.scripts.stop;
+            postGpuToVfio = myconfig.services.coolercontrol.scripts.restartAndSetModeCpu;
+          };
+        };
+      };
+
+      services.coolercontrol.enable = true;
+      services.coolercontrol.setModeOnTerminate.targetModeId = "e7de53fd-c644-4959-b299-8ad13a92be23";
+      services.coolercontrol.scripts.setModeCpu.targetModeId = "e7de53fd-c644-4959-b299-8ad13a92be23";
+      services.coolercontrol.scripts.setModeGpu.targetModeId = "5ff2d15b-420f-43c8-8e55-46ca66145d48";
+
+      programs.chrome.enable = true;
+      programs.gdm.enable = lib.mkForce true;
+      programs.sddm.enable = lib.mkForce false;
+      programs.hyprland.enable = false;
+      programs.hyprland.source = "stable";
+      programs.gnome.enable = true;
+      programs.gnome.fullInstall = true;
+      programs.gnome.freezeOnNvidiaSuspend.enable = true;
+
+      services.systemd.restart-network-after-suspend = {
+        enable = true;
+        networkInterface = "enp113s0";
+      };
+      services.deepcool-digital-linux.enable = false;
     };
-
-    features = {
-      autologin.enable = false;
-      autologin.session = "Hyprland";
-      gaming.enable = true;
-      general-development.enable = true;
-      virt-manager.enable = true;
-      virt-manager.bridge.enable = true;
-      virt-manager.vfio-passtrough.enable = true;
-      virt-manager.bridge.externalInterface = "enp113s0";
-      docker.enable = true;
-      windows-data-partition.enable = false;
-      windows-data-partition.diskUuid = "1E08506F08504843";
-      low-latency.enable = true;
-      home-nas.enable = true;
-      vpnclient.enable = false;
-    };
-
-    programs.chrome.enable = true;
-    programs.gdm.enable = lib.mkForce true;
-    programs.sddm.enable = lib.mkForce false;
-    programs.hyprland.enable = false;
-    programs.hyprland.source = "stable";
-    programs.gnome.enable = true;
-    programs.gnome.fullInstall = true;
-    programs.gnome.freezeOnNvidiaSuspend.enable = true;
-
-    services.systemd.restart-network-after-suspend = {
-      enable = true;
-      networkInterface = "enp113s0";
-    };
-    services.deepcool-digital-linux.enable = true;
-  };
 
   nixos = {
     nixpkgs.hostPlatform = system;
@@ -88,6 +102,16 @@ delib.host {
     services.scx.scheduler = "scx_rusty";
 
     hardware.i2c.enable = true;
+
+    services.udev.packages = [
+      (pkgs.writeTextDir "etc/udev/rules.d/45-asus-peripherals.rules" (''
+        # ASUS AURA LED Controller
+        SUBSYSTEM=="usb", ATTR{idVendor}=="0b05", ATTR{idProduct}=="19af", MODE="0666", OWNER="zonni"
+
+        # ASUS ROG RYUJIN III EXTREME
+        SUBSYSTEM=="hidraw", ATTRS{idVendor}=="0b05", ATTRS{idProduct}=="1bcb", MODE="0666", OWNER="zonni"
+      ''))
+    ];
   };
 
   home = {
