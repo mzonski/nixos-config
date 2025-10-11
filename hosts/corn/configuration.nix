@@ -1,5 +1,4 @@
 {
-  config,
   delib,
   lib,
   inputs,
@@ -90,7 +89,6 @@ delib.host {
     services.scx.enable = true;
     services.scx.scheduler = "scx_rusty";
 
-    services.hardware.openrgb.enable = true;
     hardware.i2c.enable = true;
   };
 
