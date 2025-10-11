@@ -7,7 +7,6 @@
 }:
 let
   inherit (delib) boolOption module;
-
 in
 module {
   name = "programs.firefox";
@@ -171,13 +170,6 @@ module {
             };
           };
         };
-      };
-
-      xdg.mimeApps.defaultApplications = {
-        "text/html" = [ "firefox.desktop" ];
-        "text/xml" = [ "firefox.desktop" ];
-        "x-scheme-handler/http" = [ "firefox.desktop" ];
-        "x-scheme-handler/https" = [ "firefox.desktop" ];
       };
     };
 }
