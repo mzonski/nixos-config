@@ -37,7 +37,18 @@ rec {
     }
   '';
 
-  checkGpuDriver =
+  getPciAddressFromDeviceId = pkgs.writeShellScript "get_pci_address_from_device_id" ''
+    ${extendPath ([
+      pkgs.pciutils
+      pkgs.gawk
+    ])}
+
+    get_pci_address_from_device_id() {
+      local device_id="$1"
+      echo $(lspci -D -mmn -d "$device_id" | awk '{print $1}')
+    }
+  '';
+
   assertGpuDriver =
     deviceIds:
     pkgs.writeShellScript "assert_gpu_driver" ''
@@ -95,4 +106,15 @@ rec {
       echo "Device ${deviceId} reattached to host"
     '') deviceIds;
 
+  rebindDevice = driverFrom: driverTo: deviceId: ''
+    source ${getPciAddressFromDeviceId}
+
+    rebind_device_pci_id=$(get_pci_address_from_device_id "${deviceId}")
+    if ! [ -e "/sys/bus/pci/drivers/${driverTo}/$rebind_device_pci_id" ]; then
+      echo "$rebind_device_pci_id" | tee /sys/bus/pci/drivers/${driverFrom}/unbind
+      echo "$rebind_device_pci_id" | tee /sys/bus/pci/drivers/${driverTo}/bind
+    fi
+
+    echo "Device $rebind_device_pci_id attached to ${driverTo}"
+  '';
 }

@@ -13,6 +13,7 @@ let
     removeKernelModules
     loadKernelModules
     reattachDevices
+    rebindDevice
     ;
   inherit (import ../../../../lib/bash/utils.nix { inherit lib; })
     extendPath
@@ -65,9 +66,11 @@ let
       source ${assertGpuDriver dgpuDevices}
 
       echo "=== Switching GPU to VFIO ==="
+      ${beforeScript}
 
       assert_gpu_driver "vfio-pci"
       kill_display_session
+      sleep 1
 
       ${removeKernelModules [
         "nvidia_uvm"
@@ -86,6 +89,9 @@ let
       sleep 1
 
       ${reattachDevices dgpuDevices}
+      sleep 1
+
+      ${rebindDevice "snd_hda_intel" "vfio-pci" devices.dgpu-audio}
 
       restore_display_session
 

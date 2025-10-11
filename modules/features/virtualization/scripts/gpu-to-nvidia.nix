@@ -12,6 +12,7 @@ let
     removeKernelModules
     loadKernelModules
     reattachDevices
+    rebindDevice
     ;
 
   inherit (import ../../../../lib/bash/utils.nix { inherit lib; })
@@ -58,6 +59,8 @@ let
         "nvidia_uvm"
         "nvidia_drm"
       ]}
+
+      ${rebindDevice "vfio-pci" "snd_hda_intel" devices.dgpu-audio}
 
       echo "=== NVIDIA drivers loaded ==="
     '';
