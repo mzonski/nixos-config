@@ -9,7 +9,7 @@ let
   inherit (delib) module;
 
   inherit (import ../../../../lib/bash/devices.nix { inherit pkgs lib; })
-    checkGpuDriver
+    assertGpuDriver
     removeKernelModules
     loadKernelModules
     reattachDevices
@@ -58,14 +58,15 @@ let
       ${extendPath ([
         pkgs.libvirt
         pkgs.kmod
+        pkgs.coreutils
       ])}
 
       source ${displaySessionManipulation}
-      source ${checkGpuDriver dgpuDevices}
+      source ${assertGpuDriver dgpuDevices}
 
       echo "=== Switching GPU to VFIO ==="
 
-      check_gpu_driver "vfio-pci"
+      assert_gpu_driver "vfio-pci"
       kill_display_session
 
       ${removeKernelModules [
@@ -82,14 +83,13 @@ let
         "vfio_iommu_type1"
         "vfio"
       ]}
-      echo "VFIO drivers loaded"
+      sleep 1
 
       ${reattachDevices dgpuDevices}
 
       restore_display_session
 
-      echo "VFIO drivers removed"
-      sleep 1
+      echo "=== VFIO drivers loaded ==="
     '';
 
 in

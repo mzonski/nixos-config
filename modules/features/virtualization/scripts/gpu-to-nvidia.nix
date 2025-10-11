@@ -4,12 +4,11 @@
   delib,
   ...
 }:
-
 let
   inherit (delib) module;
 
   inherit (import ../../../../lib/bash/devices.nix { inherit pkgs lib; })
-    checkGpuDriver
+    assertGpuDriver
     removeKernelModules
     loadKernelModules
     reattachDevices
@@ -34,12 +33,13 @@ let
       ${extendPath ([
         pkgs.libvirt
         pkgs.kmod
+        pkgs.coreutils
       ])}
 
       echo "=== Switching GPU to NVIDIA ==="
-      source ${checkGpuDriver dgpuDevices}
+      source ${assertGpuDriver dgpuDevices}
 
-      check_gpu_driver "nvidia"
+      assert_gpu_driver "nvidia"
 
       ${reattachDevices dgpuDevices}
 
@@ -59,7 +59,7 @@ let
         "nvidia_drm"
       ]}
 
-      echo "NVIDIA drivers loaded"
+      echo "=== NVIDIA drivers loaded ==="
     '';
 in
 module {

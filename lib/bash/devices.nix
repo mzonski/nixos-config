@@ -38,11 +38,12 @@ rec {
   '';
 
   checkGpuDriver =
+  assertGpuDriver =
     deviceIds:
-    pkgs.writeShellScript "check_gpu_devices" ''
+    pkgs.writeShellScript "assert_gpu_driver" ''
       source ${getDriverInfo}
 
-      check_gpu_driver() {
+      assert_gpu_driver() {
         local expected_driver="$1"
         local driver_loaded=false
         
