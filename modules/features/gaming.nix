@@ -57,7 +57,7 @@ module {
       unstable.xml2
       unstable.SDL2
       # GameBoy
-      unstable.mgba
+      mgba
     ];
 
     #system.activationScripts.steamCompatDataLink = ''ln -s ~/.steam/steam/steamapps/compatdata /mnt/data/Steam/steamapps/'';
