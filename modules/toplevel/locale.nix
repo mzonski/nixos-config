@@ -29,7 +29,8 @@ delib.module {
 
     location.provider = "geoclue2";
     time.timeZone = "Europe/Warsaw";
-    time.hardwareClockInLocalTime = true;
+    time.hardwareClockInLocalTime = false;
+    services.timesyncd.enable = true;
 
     console.keyMap = "pl";
 
