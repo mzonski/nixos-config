@@ -4,6 +4,7 @@
   pkgs,
   homeManagerUser,
   lib,
+  config,
   ...
 }:
 let
@@ -93,21 +94,34 @@ module {
     { cfg, ... }:
     {
       programs.coolercontrol.enable = true;
-      programs.coolercontrol.nvidiaSupport = true;
+      programs.coolercontrol.nvidiaSupport = false;
 
-      systemd.services.coolercontrold = {
-        serviceConfig = {
-          ExecStart = [
-            ""
-            "${pkgs.coolercontrol.coolercontrold}/bin/coolercontrold --nvidia-cli"
+      systemd.services.coolercontrold =
+        let
+          nvidiaPkg = config.hardware.nvidia.package;
+        in
+        {
+          path = [
+            nvidiaPkg.bin
+            nvidiaPkg.settings
           ];
-          ExecStop = mkIf cfg.setModeOnTerminate.enable [
-            (pkgs.writeShellScript "coolercontrol-shutdown" ''
-              ${cfg.scripts.setModeCpu.script}
-              ${pkgs.systemd}/bin/systemctl kill --signal=TERM coolercontrold.service
-            '')
-          ];
+
+          environment = {
+            LD_LIBRARY_PATH = "${nvidiaPkg}/lib";
+          };
+
+          serviceConfig = {
+            # ExecStart = [
+            #   ""
+            #   "${pkgs.coolercontrol.coolercontrold}/bin/coolercontrold --debug"
+            # ];
+            ExecStop = mkIf cfg.setModeOnTerminate.enable [
+              (pkgs.writeShellScript "coolercontrol-shutdown" ''
+                ${cfg.scripts.setModeCpu.script}
+                ${pkgs.systemd}/bin/systemctl kill --signal=TERM coolercontrold.service
+              '')
+            ];
+          };
         };
-      };
     };
 }
