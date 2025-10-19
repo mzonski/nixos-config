@@ -67,7 +67,7 @@ delib.host {
 
       powerManagement.enable = true;
       powerManagement.finegrained = true;
-      open = false;
+      open = true;
 
       forceFullCompositionPipeline = false;
       gsp.enable = true;
