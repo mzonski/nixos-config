@@ -41,13 +41,21 @@ delib.host {
         virt-manager = {
           enable = true;
           bridge.enable = true;
-          vfio-passtrough.enable = true;
           bridge.externalInterface = "enp113s0";
-          vfio-passtrough.scripts.hooks = {
-            postGpuToNvidia = myconfig.services.coolercontrol.scripts.restartAndSetModeGpu;
-            preGpuToVfio = myconfig.services.coolercontrol.scripts.stop;
-            postGpuToVfio = myconfig.services.coolercontrol.scripts.restartAndSetModeCpu;
+          vfio-passtrough = {
+            enable = true;
+            devices = {
+              dgpu-video = "10de:2b85";
+              dgpu-audio = "10de:22e8";
+              igd-video = "1002:13c0";
+            };
+            scripts.hooks = {
+              postGpuToNvidia = myconfig.services.coolercontrol.scripts.restartAndSetModeGpu;
+              preGpuToVfio = myconfig.services.coolercontrol.scripts.stop;
+              postGpuToVfio = myconfig.services.coolercontrol.scripts.restartAndSetModeCpu;
+            };
           };
+
         };
       };
 
