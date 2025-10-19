@@ -121,6 +121,7 @@ module {
                 ${pkgs.systemd}/bin/systemctl kill --signal=TERM coolercontrold.service
               '')
             ];
+            BindReadOnlyPaths = [ "${pkgs.hwdata}/share/hwdata:/usr/share/hwdata" ];
           };
         };
     };
