@@ -5,6 +5,8 @@
   coolercontrol,
   runtimeShell,
   addDriverRunpath,
+  python3Packages,
+  liquidctl,
   ...
 }:
 
@@ -13,7 +15,6 @@
   src,
   meta,
 }:
-
 rustPlatform.buildRustPackage {
   pname = "coolercontrold";
   inherit version src;
@@ -21,8 +22,18 @@ rustPlatform.buildRustPackage {
 
   cargoHash = "sha256-4aSEEBtxwTyAx5CPa2fDBhx5U+Ql2X/tKPQHLIsm3I0=";
 
-  buildInputs = [ libdrm ];
-  nativeBuildInputs = [ addDriverRunpath ];
+  buildInputs = [
+    libdrm
+  ];
+
+  nativeBuildInputs = [
+    addDriverRunpath
+    python3Packages.wrapPython
+  ];
+
+  pythonPath = [
+    liquidctl
+  ];
 
   postPatch = ''
     # copy the frontend static resources to a directory for embedding
@@ -41,7 +52,12 @@ rustPlatform.buildRustPackage {
   '';
 
   postFixup = ''
-    addDriverRunpath "$out/bin/$pname"
+    addDriverRunpath "$out/bin/coolercontrold"
+
+    buildPythonPath "$pythonPath"
+    wrapProgram "$out/bin/coolercontrold" \
+      --prefix PATH : $program_PATH \
+      --prefix PYTHONPATH : $program_PYTHONPATH
   '';
 
   passthru.tests.version = testers.testVersion {
