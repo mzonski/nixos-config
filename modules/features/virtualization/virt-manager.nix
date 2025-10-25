@@ -92,12 +92,10 @@ module {
               egl_headless = 1
               spice_gl = 1
               display_gl = 1
-              nvram = ["/run/libvirt/nix-ovmf/OVMF_CODE.fd:/run/libvirt/nix-ovmf/OVMF_VARS.fd"]
             '';
           };
         };
         spiceUSBRedirection.enable = true;
       };
-      services.spice-vdagentd.enable = true;
     };
 }
