@@ -4,7 +4,6 @@
   pkgs,
   homeManagerUser,
   lib,
-  config,
   ...
 }:
 let
@@ -93,22 +92,20 @@ module {
   nixos.ifEnabled =
     { cfg, ... }:
     {
-      programs.coolercontrol.enable = true;
+      programs.coolercontrol.enable = false;
       programs.coolercontrol.nvidiaSupport = false;
 
-      systemd.services.coolercontrold =
-        let
-          nvidiaPkg = config.hardware.nvidia.package;
-        in
-        {
-          path = [
-            nvidiaPkg.bin
-            nvidiaPkg.settings
-          ];
+      environment.systemPackages = with pkgs.coolercontrol; [
+        coolercontrol-gui
+      ];
 
-          environment = {
-            LD_LIBRARY_PATH = "${nvidiaPkg}/lib";
-          };
+      systemd = {
+        packages = with pkgs.coolercontrol; [
+          coolercontrold
+        ];
+
+        services.coolercontrold = {
+          wantedBy = [ "multi-user.target" ];
 
           serviceConfig = {
             # ExecStart = [
@@ -124,5 +121,6 @@ module {
             BindReadOnlyPaths = [ "${pkgs.hwdata}/share/hwdata:/usr/share/hwdata" ];
           };
         };
+      };
     };
 }
