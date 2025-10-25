@@ -78,6 +78,7 @@ delib.host {
         networkInterface = "enp113s0";
       };
       services.deepcool-digital-linux.enable = false;
+      services.my-pc-rgb.enable = true;
     };
 
   nixos = {
@@ -113,9 +114,6 @@ delib.host {
 
     services.udev.packages = [
       (pkgs.writeTextDir "etc/udev/rules.d/45-asus-peripherals.rules" (''
-        # ASUS AURA LED Controller
-        SUBSYSTEM=="usb", ATTR{idVendor}=="0b05", ATTR{idProduct}=="19af", MODE="0666", OWNER="zonni"
-
         # ASUS ROG RYUJIN III EXTREME
         SUBSYSTEM=="hidraw", ATTRS{idVendor}=="0b05", ATTRS{idProduct}=="1bcb", MODE="0666", OWNER="zonni"
       ''))

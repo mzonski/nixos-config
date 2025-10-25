@@ -65,6 +65,10 @@
       url = "github:mzonski/deepcool-digital-linux";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    my-pc-rgb = {
+      url = "github:mzonski/my-pc-rgb";
+    };
   };
 
   outputs =
