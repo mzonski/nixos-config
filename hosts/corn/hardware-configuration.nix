@@ -58,6 +58,9 @@ delib.host {
         ACTION=="add", SUBSYSTEM=="nvme", KERNEL=="nvme0", ATTR{power/pm_qos_latency_tolerance_us}="13500"
         ACTION=="add", SUBSYSTEM=="nvme", KERNEL=="nvme1", ATTR{power/pm_qos_latency_tolerance_us}="11000"
       '')
+      (pkgs.writeTextDir "etc/udev/rules.d/99-ram-stick-detection.rules" ''
+        ACTION=="add", SUBSYSTEM=="i2c", ATTR{name}=="SMBus PIIX4 adapter port 0 at 0b00", RUN+="${pkgs.bash}/bin/sh -c 'echo spd5118 0x53 > /sys/bus/i2c/devices/i2c-6/new_device'"
+      '')
     ];
 
     fileSystems."/" = {
