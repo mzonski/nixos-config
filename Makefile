@@ -79,6 +79,14 @@ edit-shared-secrets-host:
 	export SOPS_AGE_KEY=$(sudo ssh-to-age -private-key -i /etc/ssh/ssh_host_ed25519_key) && \
 	sops shared-secrets.yaml
 
+wipe-journal:
+	@echo "Wiping journal files..."
+	sudo systemctl stop systemd-journald.socket systemd-journald-dev-log.socket systemd-journald-audit.socket
+	sudo systemctl stop systemd-journald
+	sudo rm -rf /var/log/journal/*
+	sudo systemctl start systemd-journald
+
+
 help:
 	@echo "Available targets:"
 	@echo "  all     - Run both home and system targets (default)"
