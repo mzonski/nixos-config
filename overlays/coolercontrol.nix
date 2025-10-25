@@ -1,6 +1,6 @@
 { delib, ... }:
 delib.overlayModule {
-  enabled = false;
+  enabled = true;
   name = "coolercontrol";
   overlay = final: prev: {
     coolercontrol = prev.callPackage ../packages/coolercontrol { };
