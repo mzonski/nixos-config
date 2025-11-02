@@ -22,6 +22,7 @@ module {
         dgpu-video
         dgpu-audio
       ];
+      inherit (cfg) autoBindDevices;
     in
     {
       boot.kernelModules = [
@@ -33,7 +34,8 @@ module {
       ];
 
       boot.extraModprobeConfig = ''
-        options vfio-pci ids=${lib.concatStringsSep "," dgpuDevices}
+        ${lib.optionalString autoBindDevices "options vfio-pci ids=${lib.concatStringsSep "," dgpuDevices}"}
+
         options kvmfr static_size_mb=${toString cfg.sharedMemorySize}
       '';
 

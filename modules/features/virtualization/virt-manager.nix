@@ -31,6 +31,7 @@ module {
     vfio-passtrough = {
       enable = boolOption false;
       sharedMemorySize = intOption 256;
+      autoBindDevices = boolOption false;
 
       devices = {
         dgpu-video = strOption "10de:2488";
