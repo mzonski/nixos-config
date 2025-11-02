@@ -17,7 +17,7 @@ delib.module {
     {
       boot.loader = {
         efi.canTouchEfiVariables = mkDefault true;
-        timeout = 2;
+        timeout = 5;
 
         systemd-boot = {
           enable = true;
