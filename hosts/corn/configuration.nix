@@ -93,7 +93,7 @@ delib.host {
     #boot.readOnlyNixStore = false;
 
     boot.kernelPackages = pkgs.linuxPackages_latest;
-    boot.loader.systemd-boot.windows."11".efiDeviceHandle = "HD1b";
+    boot.loader.systemd-boot.windows."11".efiDeviceHandle = "HD1e";
 
     networking.firewall.enable = false; # Disable firewall
 
