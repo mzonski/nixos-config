@@ -10,10 +10,6 @@ in
 module {
   name = "programs.hyprland";
 
-  options.programs.hyprland = {
-
-  };
-
   nixos.ifEnabled = {
     programs.hyprland = {
       enable = true;
