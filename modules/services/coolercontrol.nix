@@ -114,7 +114,7 @@ module {
             # ];
             ExecStop = mkIf cfg.setModeOnTerminate.enable [
               (pkgs.writeShellScript "coolercontrol-shutdown" ''
-                ${cfg.scripts.setModeCpu.script}
+                ${cfg.scripts.setModeGpu.script}
                 ${pkgs.systemd}/bin/systemctl kill --signal=TERM coolercontrold.service
               '')
             ];

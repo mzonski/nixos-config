@@ -62,8 +62,6 @@ rustPlatform.buildRustPackage {
 
   passthru.tests.version = testers.testVersion {
     package = coolercontrol.coolercontrold;
-    # coolercontrold prints its version with "v" prefix
-    version = "v${version}";
   };
 
   meta = meta // {
