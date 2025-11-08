@@ -13,7 +13,6 @@
   (overlays.withConfig {
     defaultTargets = [
       "nixos"
-      "home"
     ];
   })
 ])

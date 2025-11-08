@@ -62,4 +62,4 @@ sudo nix run github:numtide/nixos-anywhere -- \
 
 sudo ssh root@seed 'bootctl --path=/mnt/boot install && reboot'
 
-retry_with_backoff ssh "${USERNAME}@${HOSTNAME}" "(sudo systemctl stop display-manager.service || true) && sudo chown ${USERNAME}:${USERNAME} /home/${USERNAME}/.ssh && home-manager switch --flake 'github:mzonski/nixos-config#${USERNAME}@${HOSTNAME}' && sudo reboot"
+retry_with_backoff ssh "${USERNAME}@${HOSTNAME}" "(sudo systemctl stop display-manager.service || true) && sudo chown ${USERNAME}:${USERNAME} /home/${USERNAME}/.ssh && sudo reboot"

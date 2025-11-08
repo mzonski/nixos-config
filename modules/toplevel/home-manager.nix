@@ -16,8 +16,8 @@ delib.module {
     environment.systemPackages = [ pkgs.home-manager ];
     home-manager = {
       backupFileExtension = "home_manager_backup";
-      #useUserPackages = true;
-      #useGlobalPkgs = true;
+      useUserPackages = true;
+      useGlobalPkgs = true;
     };
   };
 

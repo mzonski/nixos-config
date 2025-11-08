@@ -5,13 +5,6 @@
   ...
 }:
 let
-  shared.nixpkgs.config = {
-    allowUnfree = true;
-    permittedInsecurePackages = [
-      "archiver-3.5.1"
-    ];
-  };
-
   # TODO: /root/.config/nixpkgs/config.nix
   files."nixpkgs/config.nix".text = ''
     {
@@ -20,16 +13,20 @@ let
   '';
   variables."NIXPKGS_ALLOW_UNFREE" = 1;
 
-  mkConfig = extras: lib.recursiveUpdate shared extras;
-
 in
 delib.module {
   name = "nixpkgs";
 
-  nixos.always = mkConfig {
+  nixos.always = {
     environment.variables = variables;
+    nixpkgs.config = {
+      allowUnfree = true;
+      permittedInsecurePackages = [
+        "archiver-3.5.1"
+      ];
+    };
   };
-  home.always = mkConfig {
+  home.always = {
     xdg.configFile = files;
     home.sessionVariables = variables;
   };
