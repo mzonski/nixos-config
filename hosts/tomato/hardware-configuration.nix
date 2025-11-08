@@ -33,6 +33,7 @@ delib.host {
       kernelModules = [
         "kvm-intel"
         "coretemp"
+        "drivetemp"
         "it87"
       ];
       extraModprobeConfig = ''
