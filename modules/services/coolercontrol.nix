@@ -27,10 +27,11 @@ module {
     cookiesFile = strOption "/home/${homeManagerUser}/.local/share/org.coolercontrol.CoolerControl/cookies.txt";
     apiUrl = strOption "http://localhost:11987";
     setModeOnTerminate = {
-      enable = boolOption true;
+      enable = boolOption host.isDesktop;
       targetModeId = strOption "e7de53fd-c644-4959-b299-8ad13a92be23";
     };
     scripts = {
+      enable = boolOption host.isDesktop;
       setModeCpu = {
         targetModeId = strOption "e7de53fd-c644-4959-b299-8ad13a92be23";
         script = noDefault (packageOption null);
@@ -73,7 +74,7 @@ module {
           fi
         '';
     in
-    {
+    mkIf cfg.scripts.enable {
       services.coolercontrol.scripts.setModeCpu.script = mkSetMode cfg.scripts.setModeCpu.targetModeId;
       services.coolercontrol.scripts.setModeGpu.script = mkSetMode cfg.scripts.setModeGpu.targetModeId;
       services.coolercontrol.scripts.restartAndSetModeCpu = mkRestartAndSetMode cfg.scripts.setModeCpu;
