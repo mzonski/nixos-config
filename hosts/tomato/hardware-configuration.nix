@@ -42,6 +42,10 @@ delib.host {
           kernel = config.boot.kernelPackages.kernel;
         })
       ];
+      supportedFilesystems = {
+        vfat = true;
+        xfs = true;
+      };
     };
 
     # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
