@@ -20,5 +20,11 @@ creation_rules:
     key_groups:
       - age:
           - *corn
-      - pgp:
+        pgp:
+          - *zonni
+  - path_regex: hosts/tomato/secrets.ya?ml$
+    key_groups:
+      - age:
+          - *tomato
+        pgp:
           - *zonni
