@@ -78,6 +78,7 @@ deploy-%:
 edit-shared-secrets-host:
 	export SOPS_AGE_KEY=$(sudo ssh-to-age -private-key -i /etc/ssh/ssh_host_ed25519_key) && \
 	sops shared-secrets.yaml
+	sops updatekeys shared-secrets.yaml
 
 wipe-journal:
 	@echo "Wiping journal files..."

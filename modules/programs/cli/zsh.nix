@@ -3,6 +3,7 @@
   pkgs,
   delib,
   lib,
+  host,
   ...
 }:
 let
@@ -11,7 +12,7 @@ in
 module {
   name = "programs.cli.zsh";
 
-  options = singleEnableOption true;
+  options = singleEnableOption (!host.isMinimal);
 
   nixos.ifEnabled = {
     users.defaultUserShell = pkgs.zsh;

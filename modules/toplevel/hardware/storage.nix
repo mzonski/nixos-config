@@ -116,19 +116,43 @@ module {
                       };
                       "/swap" = {
                         mountpoint = "/.swapvol";
-                        swap.swapfile.size = "20M";
+                        swap.swapfile.size = cfg.swapSize;
                       };
                     };
                   };
                 };
-                # swap = {
-                #   size = "100%";
-                #   content = {
-                #     type = "swap";
-                #     discardPolicy = "both";
-                #     resumeDevice = true;
-                #   };
-                # };
+              };
+            };
+          };
+        })
+        (mkIf (cfg.layout == "server_single_xfs") {
+          disk.main = {
+            device = head cfg.devices;
+            type = "disk";
+            content = {
+              type = "gpt";
+              partitions = {
+                inherit ESP;
+                root = {
+                  end = "-" + cfg.swapSize;
+                  content = {
+                    type = "filesystem";
+                    format = "xfs";
+                    mountpoint = "/";
+                    mountOptions = [
+                      "noatime"
+                      "discard"
+                    ];
+                  };
+                };
+                swap = {
+                  size = cfg.swapSize;
+                  content = {
+                    type = "swap";
+                    discardPolicy = "both";
+                    resumeDevice = false;
+                  };
+                };
               };
             };
           };

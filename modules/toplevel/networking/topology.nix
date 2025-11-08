@@ -14,12 +14,14 @@ delib.module {
         secrets = {
           ip_corn = { };
           ip_sesame = { };
+          ip_tomato = { };
           ip_seed = { };
         };
         templates.hosts-home = {
           content = ''
             ${config.sops.placeholder.ip_corn} corn
             ${config.sops.placeholder.ip_sesame} sesame
+            ${config.sops.placeholder.ip_tomato} tomato
             ${config.sops.placeholder.ip_seed} seed
           '';
           path = "/etc/hosts.home";

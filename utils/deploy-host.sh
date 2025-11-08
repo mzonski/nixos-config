@@ -12,7 +12,7 @@ USERNAME="$2"
 TEMP_DIR=$(mktemp -d)
 
 retry_with_backoff() {
-    local intervals=(10 20 30 60 120)
+    local intervals=(15 20 30 60 120)
     local attempt=0
     local max_attempts=${#intervals[@]}
     
@@ -52,11 +52,14 @@ sudo chmod 600 "$TEMP_DIR/etc/ssh/ssh_host_ed25519_key"
 sudo chmod 640 "$TEMP_DIR/etc/ssh/ssh_host_ed25519_key.pub"
 sudo chmod 755 "$TEMP_DIR/etc/ssh"
 
-export SSH_PRIVATE_KEY=$(sops -d --extract "[\"ssh_private_${HOSTNAME}\"]" ./shared-secrets.yaml) &&
+SSH_PRIVATE_KEY=$(sops -d --extract "[\"ssh_private_${HOSTNAME}\"]" ./shared-secrets.yaml) && \
 sudo nix run github:numtide/nixos-anywhere -- \
     --target-host "root@seed" \
     --flake ".#${HOSTNAME}" \
     --extra-files "$TEMP_DIR" \
-    --build-on local
+    --build-on local \
+    --phases kexec,disko,install
 
-retry_with_backoff ssh "${USERNAME}@${HOSTNAME}" "sudo systemctl stop display-manager.service && sudo chown ${USERNAME}:${USERNAME} /home/${USERNAME}/.ssh && home-manager switch --flake 'github:mzonski/nixos-config#${USERNAME}@${HOSTNAME}' && sudo reboot"
+sudo ssh root@seed 'bootctl --path=/mnt/boot install && reboot'
+
+retry_with_backoff ssh "${USERNAME}@${HOSTNAME}" "(sudo systemctl stop display-manager.service || true) && sudo chown ${USERNAME}:${USERNAME} /home/${USERNAME}/.ssh && home-manager switch --flake 'github:mzonski/nixos-config#${USERNAME}@${HOSTNAME}' && sudo reboot"
