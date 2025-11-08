@@ -34,6 +34,22 @@ delib.host {
     features = {
       virt-manager.enable = false;
       docker.enable = true;
+      zfs = {
+        enable = true;
+        hostId = "d79af5c1";
+        pools = [ "HOME" ];
+        arc = {
+          min = 4;
+          max = 12;
+        };
+        encryptedDatasets = [
+          {
+            dataset = "HOME/Personal";
+            passwordSopsKey = "personal_dataset_password";
+            sopsFile = ./secrets.yaml;
+          }
+        ];
+      };
     };
 
     services.coolercontrol.enable = true;
