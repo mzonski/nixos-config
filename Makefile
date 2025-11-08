@@ -75,6 +75,10 @@ deploy-%:
 	@echo "Deploying new configuration..."
 	./utils/deploy-host.sh $* $(USERNAME)
 
+update-%:
+	@echo "Updating remote machine..."
+	./utils/update-host.sh $* $(USERNAME)
+
 edit-shared-secrets-host:
 	export SOPS_AGE_KEY=$(sudo ssh-to-age -private-key -i /etc/ssh/ssh_host_ed25519_key) && \
 	sops shared-secrets.yaml
