@@ -71,6 +71,17 @@ seed-debug:
  	export SSH_PUBLIC_HOST=$$(sops -d --extract '["ssh_public_seed"]' ./shared-secrets.yaml) && \
 	nix build --impure .#nixosConfigurations.seed.config.system.build.toplevel
 
+
+edit-secrets:
+	export SOPS_AGE_KEY=$(sudo ssh-to-age -private-key -i /etc/ssh/ssh_host_ed25519_key) && \
+	sops shared-secrets.yaml
+	sops updatekeys shared-secrets.yaml
+
+edit-secrets-%:
+	sops hosts/$*/secrets.yaml
+	sops updatekeys hosts/$*/secrets.yaml
+
+
 deploy-%:
 	@echo "Deploying new configuration..."
 	./utils/deploy-host.sh $* $(USERNAME)
@@ -78,11 +89,6 @@ deploy-%:
 update-%:
 	@echo "Updating remote machine..."
 	./utils/update-host.sh $* $(USERNAME)
-
-edit-shared-secrets-host:
-	export SOPS_AGE_KEY=$(sudo ssh-to-age -private-key -i /etc/ssh/ssh_host_ed25519_key) && \
-	sops shared-secrets.yaml
-	sops updatekeys shared-secrets.yaml
 
 wipe-journal:
 	@echo "Wiping journal files..."
