@@ -90,6 +90,10 @@ update-%:
 	@echo "Updating remote machine..."
 	./utils/update-host.sh $* $(USERNAME)
 
+reboot-%:
+	@echo "Rebooting remote machine..."
+	ssh $(USERNAME)@$* "sudo reboot"
+
 wipe-journal:
 	@echo "Wiping journal files..."
 	sudo systemctl stop systemd-journald.socket systemd-journald-dev-log.socket systemd-journald-audit.socket
