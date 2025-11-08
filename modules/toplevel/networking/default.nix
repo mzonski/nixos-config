@@ -20,7 +20,7 @@ delib.module {
       networking = {
         hostName = host.name;
 
-        firewall.enable = false;
+        firewall.enable = true;
         networkmanager.enable = false;
         useDHCP = true;
 

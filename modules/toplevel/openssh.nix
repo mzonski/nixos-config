@@ -52,6 +52,8 @@ delib.module {
       );
 
       services.openssh = {
+        enable = true;
+
         settings = {
           PasswordAuthentication = false;
           PermitRootLogin = "yes";
@@ -69,6 +71,8 @@ delib.module {
           }
         ];
       };
+
+      networking.firewall.allowedTCPPorts = [ 22 ];
 
       programs.ssh =
         let

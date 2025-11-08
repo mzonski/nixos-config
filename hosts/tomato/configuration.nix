@@ -64,9 +64,7 @@ delib.host {
       inputs.nixos-hardware.nixosModules.common-pc-ssd
     ];
 
-    networking.firewall.enable = false;
-
-    services.openssh.enable = true;
+    networking.firewall.enable = true;
   };
 
   home = {

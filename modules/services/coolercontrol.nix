@@ -100,6 +100,8 @@ module {
         coolercontrol-gui
       ];
 
+      networking.firewall.allowedTCPPorts = [ 11987 ];
+
       systemd = {
         packages = with pkgs.coolercontrol; [
           coolercontrold
