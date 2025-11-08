@@ -35,6 +35,8 @@ delib.host {
       virt-manager.enable = false;
       docker.enable = true;
     };
+
+    services.coolercontrol.enable = true;
   };
 
   nixos = {

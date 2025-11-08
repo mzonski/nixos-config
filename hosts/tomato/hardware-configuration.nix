@@ -7,6 +7,7 @@
   config,
   lib,
   modulesPath,
+  pkgs,
   ...
 }:
 delib.host {
@@ -17,17 +18,32 @@ delib.host {
       (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-    boot.initrd.availableKernelModules = [
-      "xhci_pci"
-      "ahci"
-      "nvme"
-      "usbhid"
-      "usb_storage"
-      "sd_mod"
-    ];
-    boot.initrd.kernelModules = [ "dm-snapshot" ];
-    boot.kernelModules = [ "kvm-intel" ];
-    boot.extraModulePackages = [ ];
+    boot = {
+      kernelPackages = pkgs.linuxPackages_latest;
+
+      initrd.availableKernelModules = [
+        "xhci_pci"
+        "ahci"
+        "nvme"
+        "usbhid"
+        "usb_storage"
+        "sd_mod"
+      ];
+      initrd.kernelModules = [ "dm-snapshot" ];
+      kernelModules = [
+        "kvm-intel"
+        "coretemp"
+        "it87"
+      ];
+      extraModprobeConfig = ''
+        options it87 force_id=0x8613
+      '';
+      extraModulePackages = [
+        (pkgs.callPackage ../../kernel-packages/it87 {
+          kernel = config.boot.kernelPackages.kernel;
+        })
+      ];
+    };
 
     # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
     # (the default) this is the recommended approach. When using systemd-networkd it's
