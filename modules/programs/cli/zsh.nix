@@ -115,6 +115,7 @@ module {
           docker_rm = "docker rm -f $(docker ps -aq) && docker rmi -f $(docker images -q)";
           reboot2win = "sudo systemctl reboot --boot-loader-entry=windows_11";
           reboot2bios = "sudo systemctl reboot --boot-loader-entry=auto-reboot-to-firmware-setup";
+          wipe-journal = "sudo systemctl stop systemd-journald.socket systemd-journald-dev-log.socket systemd-journald-audit.socket && sudo systemctl stop systemd-journald && sudo rm -rf /var/log/journal/* && sudo systemctl start systemd-journald";
         };
         initContent = ''
           # Disable the underline for paths

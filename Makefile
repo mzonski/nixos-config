@@ -94,14 +94,6 @@ reboot-%:
 	@echo "Rebooting remote machine..."
 	ssh $(USERNAME)@$* "sudo reboot"
 
-wipe-journal:
-	@echo "Wiping journal files..."
-	sudo systemctl stop systemd-journald.socket systemd-journald-dev-log.socket systemd-journald-audit.socket
-	sudo systemctl stop systemd-journald
-	sudo rm -rf /var/log/journal/*
-	sudo systemctl start systemd-journald
-
-
 help:
 	@echo "Available targets:"
 	@echo "  all     - Run both home and system targets (default)"
