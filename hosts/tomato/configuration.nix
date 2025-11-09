@@ -51,6 +51,18 @@ delib.host {
           }
         ];
       };
+      vnets = {
+        enable = true;
+        interface.name = "enp3s0";
+        vlans = [
+          "home"
+          "vpn"
+        ];
+        defaultVlan = "home";
+        overrides = {
+          home.macAddress = "00:00:00:00:01:01";
+        };
+      };
     };
 
     services.coolercontrol.enable = true;
@@ -111,6 +123,8 @@ delib.host {
         nas-torrents.gid = 2002;
       };
     };
+
+    services.qbittorrent.enable = true;
   };
 
   nixos = {
