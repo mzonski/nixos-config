@@ -58,11 +58,12 @@ delib.host {
 
         };
       };
-
-      services.coolercontrol.enable = true;
-      services.coolercontrol.setModeOnTerminate.targetModeId = "e7de53fd-c644-4959-b299-8ad13a92be23";
-      services.coolercontrol.scripts.setModeCpu.targetModeId = "e7de53fd-c644-4959-b299-8ad13a92be23";
-      services.coolercontrol.scripts.setModeGpu.targetModeId = "5ff2d15b-420f-43c8-8e55-46ca66145d48";
+      services.coolercontrol = {
+        enable = true;
+        setModeOnTerminate.targetModeId = "e7de53fd-c644-4959-b299-8ad13a92be23";
+        scripts.setModeCpu.targetModeId = "e7de53fd-c644-4959-b299-8ad13a92be23";
+        scripts.setModeGpu.targetModeId = "5ff2d15b-420f-43c8-8e55-46ca66145d48";
+      };
 
       programs.chrome.enable = true;
       programs.gdm.enable = lib.mkForce true;
