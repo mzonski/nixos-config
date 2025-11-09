@@ -21,11 +21,8 @@ delib.module {
         hostName = host.name;
 
         firewall.enable = true;
-        networkmanager.enable = false;
-        useDHCP = true;
 
         inherit (cfg) nameservers;
       };
-
     };
 }
