@@ -8,6 +8,7 @@ delib.host {
   name = "tomato";
   rice = "homelab";
   type = "server";
+  secretsFile = ./secrets.yaml;
 
   homeManagerSystem = system;
   home.home.stateVersion = "25.05";

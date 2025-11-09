@@ -10,6 +10,7 @@ delib.host {
   name = "corn";
   rice = "catppuccin-sharp-dark";
   type = "desktop";
+  secretsFile = ./secrets.yaml;
 
   homeManagerSystem = system;
   home.home.stateVersion = "25.05";
