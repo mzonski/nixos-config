@@ -96,8 +96,8 @@ module {
       programs.coolercontrol.enable = false;
       programs.coolercontrol.nvidiaSupport = false;
 
-      environment.systemPackages = with pkgs.coolercontrol; [
-        coolercontrol-gui
+      environment.systemPackages = mkIf host.isDesktop [
+        pkgs.coolercontrol.coolercontrol-gui
       ];
 
       networking.firewall.allowedTCPPorts = [ 11987 ];
