@@ -110,7 +110,7 @@ module {
 
       systemd.services = lib.mkMerge (
         lib.forEach cfg.encryptedDatasets (
-          { dataset, passwordSopsKey }:
+          { dataset, passwordSopsKey, ... }:
           let
             serviceName = "zfs-load-key-${lib.toLower (lib.replaceStrings [ "/" ] [ "-" ] dataset)}";
             sopsKeyPath = config.sops.secrets.${passwordSopsKey}.path;
