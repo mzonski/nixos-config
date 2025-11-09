@@ -54,7 +54,63 @@ delib.host {
     };
 
     services.coolercontrol.enable = true;
-    services.samba.enable = true;
+
+    services.network-share-server = {
+      enable = true;
+      enableSamba = true;
+      enableNfs = true;
+
+      workgroup = "HOMELAB";
+      serverString = "Homelab NAS";
+
+      nfsAllowedNetworks = [
+        "corn"
+      ];
+
+      shares = {
+        media = {
+          path = "/nas/media";
+          type = "public";
+          writeList = [
+            "@nas-files"
+            "@nas-torrents"
+            "zonni"
+          ];
+          nfsExtraConfig = [ "async" ];
+        };
+
+        files = {
+          path = "/nas/files";
+          type = "protected";
+          validUsers = [ "zonni" ];
+        };
+
+        personal = {
+          path = "/nas/personal";
+          type = "private";
+          validUsers = [ "zonni" ];
+          enableNfs = false;
+        };
+
+        # backups = {
+        #   path = "/nas/backups";
+        #   type = "private";
+        #   validUsers = [
+        #     "zonni"
+        #     "backup-user"
+        #   ];
+        #   sambaExtraConfig = {
+        #     "vfs objects" = "recycle";
+        #     "recycle:repository" = ".recycle";
+        #   };
+        # };
+      };
+
+      nasGroups = {
+        nas-files.gid = 2001;
+        nas-torrents.gid = 2002;
+      };
+    };
   };
 
   nixos = {
