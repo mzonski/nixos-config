@@ -110,8 +110,6 @@ delib.host {
     boot.kernelPackages = pkgs.linuxPackages_latest;
     boot.loader.systemd-boot.windows."11".efiDeviceHandle = "HD1e";
 
-    networking.firewall.enable = false; # Disable firewall
-
     services.tumbler.enable = true; # Enable thumbnail service
 
     services.openssh.enable = true;
