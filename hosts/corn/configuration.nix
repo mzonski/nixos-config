@@ -37,7 +37,6 @@ delib.host {
         windows-data-partition.enable = false;
         windows-data-partition.diskUuid = "1E08506F08504843";
         low-latency.enable = true;
-        home-nas.enable = true;
         vpnclient.enable = false;
         virt-manager = {
           enable = true;
@@ -80,6 +79,20 @@ delib.host {
       };
       services.deepcool-digital-linux.enable = false;
       services.my-pc-rgb.enable = true;
+
+      services.network-share-client = {
+        enable = true;
+        mounts = [
+          {
+            resource = "tomato:/nas/media";
+            target = "/mnt/nas/media";
+          }
+          {
+            resource = "tomato:/nas/files";
+            target = "/mnt/nas/files";
+          }
+        ];
+      };
     };
 
   nixos = {
