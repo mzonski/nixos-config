@@ -38,9 +38,18 @@ delib.host {
         windows-data-partition.diskUuid = "1E08506F08504843";
         low-latency.enable = true;
         vpnclient.enable = false;
+        vnets = {
+          enable = true;
+          interface.name = "enp113s0";
+          vlans = [
+            "home"
+            "vpn"
+          ];
+          defaultVlan = "vpn";
+        };
         virt-manager = {
           enable = true;
-          bridge.enable = true;
+          bridge.enable = false;
           bridge.externalInterface = "enp113s0";
           vfio-passtrough = {
             enable = true;
