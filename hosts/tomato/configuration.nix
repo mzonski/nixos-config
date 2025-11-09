@@ -54,6 +54,7 @@ delib.host {
     };
 
     services.coolercontrol.enable = true;
+    services.samba.enable = true;
   };
 
   nixos = {
