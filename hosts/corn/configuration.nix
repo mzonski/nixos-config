@@ -40,7 +40,7 @@ delib.host {
         vpnclient.enable = false;
         virt-manager = {
           enable = true;
-          bridge.enable = true;
+          bridge.enable = false;
           bridge.externalInterface = "enp113s0";
           vfio-passtrough = {
             enable = true;
@@ -55,9 +55,20 @@ delib.host {
               postGpuToVfio = myconfig.services.coolercontrol.scripts.restartAndSetModeCpu;
             };
           };
-
+        };
+        vnets = {
+          enable = true;
+          interface = "enp113s0";
+          defaultVlan = "home";
+          defaultOctet = 50;
+          vlans = {
+            lan.macAddress = "00:00:00:00:00:FF";
+            home.macAddress = "00:00:00:00:00:01";
+            vpn.macAddress = "00:00:00:00:00:02";
+          };
         };
       };
+
       services.coolercontrol = {
         enable = true;
         setModeOnTerminate.targetModeId = "e7de53fd-c644-4959-b299-8ad13a92be23";
