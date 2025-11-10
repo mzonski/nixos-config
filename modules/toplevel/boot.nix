@@ -23,7 +23,6 @@ delib.module {
           enable = true;
 
           edk2-uefi-shell.enable = false;
-          configurationLimit = 10;
 
           # extraInstallCommands = ''
           #   ${pkgs.coreutils}/bin/rm -f /boot/EFI/BOOT/BOOTX64.EFI
