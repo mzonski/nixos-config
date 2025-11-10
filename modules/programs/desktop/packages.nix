@@ -67,17 +67,8 @@ delib.module {
           unstable.mission-center
 
           # CONSOLE / TUI
-          bc # Calculator
-          bottom # System viewer (btm)
-          btop # Better top
-          ncdu # Calculates space usage of files
-          fd # Better find
-          jq # JSON pretty printer and manipulator
           nurl # Generate Nix fetcher calls from repository URLs
           caligula # disk imaging
-          powertop # check energy consumption per program
-
-          tldr # quick man
 
           ## HARDWARE INFO
           fwupd
