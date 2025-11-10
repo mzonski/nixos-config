@@ -53,14 +53,12 @@ delib.host {
       };
       vnets = {
         enable = true;
-        interface.name = "enp3s0";
-        vlans = [
-          "home"
-          "vpn"
-        ];
+        interface = "enp3s0";
         defaultVlan = "home";
-        overrides = {
+        defaultOctet = 3;
+        vlans = {
           home.macAddress = "00:00:00:00:01:01";
+          vpn.macAddress = "00:00:00:00:01:02";
         };
       };
     };
@@ -124,7 +122,7 @@ delib.host {
       };
     };
 
-    services.qbittorrent.enable = true;
+    # services.qbittorrent.enable = true;
   };
 
   nixos = {
