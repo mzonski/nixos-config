@@ -122,7 +122,7 @@ delib.host {
       };
     };
 
-    # services.qbittorrent.enable = true;
+    services.qbittorrent.enable = true;
   };
 
   nixos = {
