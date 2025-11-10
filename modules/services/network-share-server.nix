@@ -52,7 +52,14 @@ module {
     }) { };
   };
 
-  myconfig.ifEnabled.user.groups = [ "nogroup" ];
+  myconfig.ifEnabled =
+    { cfg, ... }:
+    {
+      user.groups = [
+        "nogroup"
+      ]
+      ++ builtins.attrNames cfg.nasGroups;
+    };
 
   nixos.ifEnabled =
     { cfg, ... }:
@@ -195,26 +202,13 @@ module {
             mkNfsExport =
               name: shareCfg:
               let
-                baseOptions =
-                  if shareCfg.type == "public" then
-                    [
-                      "all_squash"
-                      "anonuid=65534"
-                      "anongid=65534"
-                    ]
-                  else
-                    [
-                      "no_root_squash"
-                    ];
-
-                allOptions =
-                  baseOptions
-                  ++ [
-                    "rw"
-                    "sync"
-                    "subtree_check"
-                  ]
-                  ++ shareCfg.nfsExtraConfig;
+                allOptions = [
+                  "rw"
+                  "sync"
+                  "subtree_check"
+                  "no_root_squash"
+                ]
+                ++ shareCfg.nfsExtraConfig;
                 optionsStr = lib.concatStringsSep "," allOptions;
 
                 mkNetworkExport = network: "${shareCfg.path} ${network}(${optionsStr})";
