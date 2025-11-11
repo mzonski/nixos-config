@@ -105,6 +105,8 @@ delib.host {
           }
         ];
       };
+
+      services.nginx.enable = true;
     };
 
   nixos = {
