@@ -62,67 +62,67 @@ delib.host {
         };
       };
     };
+    services = {
+      network-share-server = {
+        enable = true;
+        enableSamba = true;
+        enableNfs = true;
 
-    services.coolercontrol.enable = true;
+        workgroup = "HOMELAB";
+        serverString = "Homelab NAS";
 
-    services.network-share-server = {
-      enable = true;
-      enableSamba = true;
-      enableNfs = true;
+        nfsAllowedNetworks = [
+          "corn"
+        ];
 
-      workgroup = "HOMELAB";
-      serverString = "Homelab NAS";
+        shares = {
+          media = {
+            path = "/nas/media";
+            type = "public";
+            writeList = [
+              "@nas-files"
+              "@nas-torrents"
+              "zonni"
+            ];
+            nfsExtraConfig = [ "async" ];
+          };
 
-      nfsAllowedNetworks = [
-        "corn"
-      ];
+          files = {
+            path = "/nas/files";
+            type = "protected";
+            validUsers = [ "zonni" ];
+          };
 
-      shares = {
-        media = {
-          path = "/nas/media";
-          type = "public";
-          writeList = [
-            "@nas-files"
-            "@nas-torrents"
-            "zonni"
-          ];
-          nfsExtraConfig = [ "async" ];
+          personal = {
+            path = "/nas/personal";
+            type = "private";
+            validUsers = [ "zonni" ];
+            enableNfs = false;
+          };
+
+          # backups = {
+          #   path = "/nas/backups";
+          #   type = "private";
+          #   validUsers = [
+          #     "zonni"
+          #     "backup-user"
+          #   ];
+          #   sambaExtraConfig = {
+          #     "vfs objects" = "recycle";
+          #     "recycle:repository" = ".recycle";
+          #   };
+          # };
         };
 
-        files = {
-          path = "/nas/files";
-          type = "protected";
-          validUsers = [ "zonni" ];
+        nasGroups = {
+          nas-files.gid = 2001;
+          nas-torrents.gid = 2002;
         };
-
-        personal = {
-          path = "/nas/personal";
-          type = "private";
-          validUsers = [ "zonni" ];
-          enableNfs = false;
-        };
-
-        # backups = {
-        #   path = "/nas/backups";
-        #   type = "private";
-        #   validUsers = [
-        #     "zonni"
-        #     "backup-user"
-        #   ];
-        #   sambaExtraConfig = {
-        #     "vfs objects" = "recycle";
-        #     "recycle:repository" = ".recycle";
-        #   };
-        # };
       };
 
-      nasGroups = {
-        nas-files.gid = 2001;
-        nas-torrents.gid = 2002;
-      };
+      coolercontrol.enable = true;
+      qbittorrent.enable = true;
     };
-
-    services.qbittorrent.enable = true;
   };
 
   nixos = {
