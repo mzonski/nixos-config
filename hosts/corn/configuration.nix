@@ -62,7 +62,6 @@ delib.host {
           defaultVlan = "home";
           defaultOctet = 50;
           vlans = {
-            lan.macAddress = "00:00:00:00:00:FF";
             home.macAddress = "00:00:00:00:00:01";
             vpn.macAddress = "00:00:00:00:00:02";
           };
