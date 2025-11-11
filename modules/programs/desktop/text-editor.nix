@@ -13,6 +13,8 @@ module {
     in
     {
       "text/plain" = [ launcher ];
+      "text/markdown" = [ launcher ];
+      "text/x-python" = [ launcher ];
       "text/json" = [ launcher ];
       "application/octet-stream" = [ launcher ];
       "application/x-desktop" = [ launcher ];
