@@ -7,13 +7,14 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkMerge;
   inherit (delib)
     module
     moduleOptions
     packageOption
     noDefault
     strOption
+    intOption
     boolOption
     ;
 in
@@ -25,7 +26,8 @@ module {
     adminUser = strOption "CCAdmin";
     adminPassword = strOption "coolAdmin";
     cookiesFile = strOption "/home/${homeManagerUser}/.local/share/org.coolercontrol.CoolerControl/cookies.txt";
-    apiUrl = strOption "http://localhost:11987";
+    host = strOption "127.0.0.1";
+    port = intOption 11987;
     setModeOnTerminate = {
       enable = boolOption host.isDesktop;
       targetModeId = strOption "e7de53fd-c644-4959-b299-8ad13a92be23";
@@ -50,11 +52,12 @@ module {
     { cfg, ... }:
     let
       curlBin = "${pkgs.curl}/bin/curl";
+      apiUrl = "http://${cfg.host}:${builtins.toString cfg.port}";
       mkSetMode =
         targetModeId:
         pkgs.writeShellScript "set-cooler-control-mode-${targetModeId}" ''
-          ${curlBin} -sS -X POST "${cfg.apiUrl}/login" -u "${cfg.adminUser}:${cfg.adminPassword}" -c ${cfg.cookiesFile}
-          ${curlBin} -sS -X POST "${cfg.apiUrl}/modes-active/${targetModeId}" -b ${cfg.cookiesFile}
+          ${curlBin} -sS -X POST "${apiUrl}/login" -u "${cfg.adminUser}:${cfg.adminPassword}" -c ${cfg.cookiesFile}
+          ${curlBin} -sS -X POST "${apiUrl}/modes-active/${targetModeId}" -b ${cfg.cookiesFile}
         '';
       mkRestartAndSetMode =
         script:
@@ -65,7 +68,7 @@ module {
             ${pkgs.systemd}/bin/systemctl start coolercontrold.service
           fi
 
-          if timeout 30 ${pkgs.bash}/bin/bash -c 'until ${curlBin} -f -s ${cfg.apiUrl} >/dev/null 2>&1; do sleep 1; done'; then
+          if timeout 30 ${pkgs.bash}/bin/bash -c 'until ${curlBin} -f -s ${apiUrl} >/dev/null 2>&1; do sleep 1; done'; then
             echo "coolercontrold.service restarted, setting ${script.targetModeId} profile"
             ${script.script}
           else
@@ -74,21 +77,26 @@ module {
           fi
         '';
     in
-    mkIf cfg.scripts.enable {
-      services.coolercontrol.scripts.setModeCpu.script = mkSetMode cfg.scripts.setModeCpu.targetModeId;
-      services.coolercontrol.scripts.setModeGpu.script = mkSetMode cfg.scripts.setModeGpu.targetModeId;
-      services.coolercontrol.scripts.restartAndSetModeCpu = mkRestartAndSetMode cfg.scripts.setModeCpu;
-      services.coolercontrol.scripts.restartAndSetModeGpu = mkRestartAndSetMode cfg.scripts.setModeGpu;
-      services.coolercontrol.scripts.stop = pkgs.writeShellScript "stop-coolercontrold" ''
-        ${pkgs.systemd}/bin/systemctl stop coolercontrold.service
-        if timeout 30 ${pkgs.bash}/bin/bash -c 'until ! ${pkgs.systemd}/bin/systemctl is-active --quiet coolercontrold.service; do sleep 1; done'; then
-          echo "coolercontrold.service stopped successfully"
-        else
-          echo "Warning: service did not stop within 30 seconds"
-          exit 1
-        fi
-      '';
-    };
+    mkMerge [
+      {
+        homelab.reverse-proxy.coolercontrol.port = cfg.port;
+      }
+      (mkIf cfg.scripts.enable {
+        services.coolercontrol.scripts.setModeCpu.script = mkSetMode cfg.scripts.setModeCpu.targetModeId;
+        services.coolercontrol.scripts.setModeGpu.script = mkSetMode cfg.scripts.setModeGpu.targetModeId;
+        services.coolercontrol.scripts.restartAndSetModeCpu = mkRestartAndSetMode cfg.scripts.setModeCpu;
+        services.coolercontrol.scripts.restartAndSetModeGpu = mkRestartAndSetMode cfg.scripts.setModeGpu;
+        services.coolercontrol.scripts.stop = pkgs.writeShellScript "stop-coolercontrold" ''
+          ${pkgs.systemd}/bin/systemctl stop coolercontrold.service
+          if timeout 30 ${pkgs.bash}/bin/bash -c 'until ! ${pkgs.systemd}/bin/systemctl is-active --quiet coolercontrold.service; do sleep 1; done'; then
+            echo "coolercontrold.service stopped successfully"
+          else
+            echo "Warning: service did not stop within 30 seconds"
+            exit 1
+          fi
+        '';
+      })
+    ];
 
   nixos.ifEnabled =
     { cfg, ... }:
@@ -100,7 +108,7 @@ module {
         pkgs.coolercontrol.coolercontrol-gui
       ];
 
-      networking.firewall.allowedTCPPorts = [ 11987 ];
+      networking.firewall.allowedTCPPorts = [ cfg.port ];
 
       systemd = {
         packages = with pkgs.coolercontrol; [
