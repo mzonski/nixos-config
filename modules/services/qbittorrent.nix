@@ -9,6 +9,7 @@ let
     module
     boolOption
     moduleOptions
+    intOption
     ;
 in
 module {
@@ -16,7 +17,17 @@ module {
 
   options = moduleOptions {
     enable = boolOption false;
+    port = intOption 6881;
   };
+
+  myconfig.ifEnabled =
+    { cfg, ... }:
+    {
+      homelab.reverse-proxy.qbittorrent = {
+        inherit (cfg) port;
+        subdomain = "torrent";
+      };
+    };
 
   nixos.ifEnabled =
     { cfg, ... }:
@@ -32,7 +43,7 @@ module {
         package = pkgs.qbittorrent-nox;
 
         openFirewall = true;
-        torrentingPort = 6881;
+        torrentingPort = cfg.port;
         webuiPort = 8081;
 
         user = "qbittorrent";
@@ -63,7 +74,7 @@ module {
               Interface = "br102";
               InterfaceAddress = "10.0.2.3";
               InterfaceName = "br102";
-              Port = 6881;
+              Port = cfg.port;
               QueueingSystemEnabled = true;
               SSL.Port = 42719;
               ShareLimitAction = "Stop";
