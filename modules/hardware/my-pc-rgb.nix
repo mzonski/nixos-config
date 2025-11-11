@@ -9,7 +9,7 @@ let
   inherit (delib) module singleEnableOption;
 in
 module {
-  name = "services.my-pc-rgb";
+  name = "hardware.my-pc-rgb";
 
   options = singleEnableOption false;
 

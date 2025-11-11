@@ -4,9 +4,9 @@ let
   inherit (delib) module boolOption strOption;
 in
 module {
-  name = "services.systemd.restart-network-after-suspend";
+  name = "hardware.network.restart-after-suspend";
 
-  options.services.systemd.restart-network-after-suspend = {
+  options.hardware.network.restart-after-suspend = {
     enable = boolOption false;
     networkInterface = strOption "enp113s0";
   };

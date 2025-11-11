@@ -85,12 +85,12 @@ delib.host {
       programs.gnome.fullInstall = true;
       programs.gnome.freezeOnNvidiaSuspend.enable = true;
 
-      services.systemd.restart-network-after-suspend = {
+      hardware.network.restart-after-suspend = {
         enable = true;
         networkInterface = "enp113s0";
       };
-      services.deepcool-digital-linux.enable = false;
-      services.my-pc-rgb.enable = true;
+      hardware.deepcool-digital-linux.enable = false;
+      hardware.my-pc-rgb.enable = true;
 
       services.network-share-client = {
         enable = true;

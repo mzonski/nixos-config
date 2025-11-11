@@ -8,7 +8,7 @@ let
   inherit (delib) module singleEnableOption;
 in
 module {
-  name = "services.deepcool-digital-linux";
+  name = "hardware.deepcool-digital-linux";
 
   options = singleEnableOption false;
 
