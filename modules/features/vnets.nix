@@ -170,6 +170,7 @@ module {
                 address = [
                   (getCidrIp vlanName (if vlanCfg.lastOctet != null then vlanCfg.lastOctet else cfg.defaultOctet))
                 ];
+                dns = [ Gateway ];
                 routes = [
                   {
                     inherit Gateway;

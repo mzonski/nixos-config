@@ -7,10 +7,6 @@ delib.module {
   name = "networking";
 
   options.networking = with delib; {
-    nameservers = listOfOption str [
-      "10.0.5.10"
-      "1.1.1.1"
-    ];
     hosts = attrsOfOption (listOf str) { };
   };
 
@@ -21,8 +17,6 @@ delib.module {
         hostName = host.name;
 
         firewall.enable = true;
-
-        inherit (cfg) nameservers;
       };
     };
 }
