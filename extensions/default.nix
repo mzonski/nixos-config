@@ -11,6 +11,7 @@
   })
   (delib.callExtension ./extend-rice-options.nix)
   (delib.callExtension ./extend-host-options.nix)
+  (delib.callExtension ./custom-functions.nix)
   (overlays.withConfig {
     defaultTargets = [
       "nixos"
