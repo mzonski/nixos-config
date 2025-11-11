@@ -1,6 +1,9 @@
 {
   delib,
   pkgs,
+  homeManagerUser,
+  config,
+  host,
   ...
 }:
 
@@ -10,6 +13,7 @@ let
     boolOption
     moduleOptions
     intOption
+    strOption
     ;
 in
 module {
@@ -18,23 +22,51 @@ module {
   options = moduleOptions {
     enable = boolOption false;
     port = intOption 6881;
+    uiPort = intOption 8081;
+    profileDir = strOption "/var/lib/qBittorrent";
+    downloadsDir = strOption "/nas/media/Torrents";
   };
 
   myconfig.ifEnabled =
     { cfg, ... }:
     {
       homelab.reverse-proxy.qbittorrent = {
-        inherit (cfg) port;
+        port = cfg.uiPort;
         subdomain = "torrent";
       };
     };
 
   nixos.ifEnabled =
     { cfg, ... }:
+    let
+      configLocation = "${cfg.profileDir}/qBittorrent/config/qBittorrent.conf";
+    in
     {
+      sops = {
+        secrets.qbittorrent_password = {
+          sopsFile = host.secretsFile;
+        };
+        templates.qbittorrent-password-config = {
+          content = ''
+            [Preferences]
+            WebUI\Password_PBKDF2="${config.sops.placeholder.qbittorrent_password}"
+          '';
+          owner = "qbittorrent";
+          group = "nas-torrents";
+        };
+      };
+
       systemd.services.qbittorrent = {
         serviceConfig = {
           UMask = "0002";
+          ExecStartPre = pkgs.writeShellScript "insert-qbittorrent-password" ''
+            ${pkgs.gnused}/bin/sed -i '/# BEGIN PASSWORD INSERT/,/# END PASSWORD INSERT/d' ${configLocation}
+            ${pkgs.gnused}/bin/sed -i '/^WebUI\\Password_PBKDF2=/d' ${configLocation}
+
+            echo "# BEGIN PASSWORD INSERT" >> ${configLocation}
+            cat ${config.sops.templates.qbittorrent-password-config.path} >> ${configLocation}
+            echo "# END PASSWORD INSERT" >> ${configLocation}
+          '';
         };
       };
 
@@ -45,6 +77,7 @@ module {
         openFirewall = true;
         torrentingPort = cfg.port;
         webuiPort = 8081;
+        profileDir = cfg.profileDir + "/";
 
         user = "qbittorrent";
         group = "nas-torrents";
@@ -60,7 +93,7 @@ module {
               DeleteOld = true;
               Enabled = true;
               MaxSizeBytes = 66560;
-              Path = "/var/lib/qBittorrent/qBittorrent/data/logs";
+              Path = "${cfg.profileDir}/qBittorrent/data/logs";
             };
           };
 
@@ -68,7 +101,7 @@ module {
             Session = {
               AddExtensionToIncompleteFiles = true;
               AddTorrentStopped = false;
-              DefaultSavePath = "/nas/media/Torrents";
+              DefaultSavePath = cfg.downloadsDir;
               ExcludedFileNames = "";
               GlobalMaxRatio = 0;
               Interface = "br102";
@@ -78,7 +111,7 @@ module {
               QueueingSystemEnabled = true;
               SSL.Port = 42719;
               ShareLimitAction = "Stop";
-              TempPath = "/nas/media/Torrents/_temp";
+              TempPath = "${cfg.downloadsDir}/_temp";
               TempPathEnabled = true;
             };
           };
@@ -106,16 +139,20 @@ module {
             General.Locale = "en";
             MailNotification.req_auth = true;
             WebUI = {
-              Address = "10.0.1.3";
+              Address = "127.0.0.1";
               AuthSubnetWhitelist = "10.0.1.50/32";
-              AuthSubnetWhitelistEnabled = true;
-              Port = 8081;
-              Username = "zonni";
+              AuthSubnetWhitelistEnabled = false;
+              Port = cfg.uiPort;
+              Username = homeManagerUser;
+              CSRFProtection = false;
+              HostHeaderValidation = false;
+              LocalHostAuth = true;
+              ReverseProxySupportEnabled = true;
+              TrustedReverseProxiesList = "0.0.0.0/24";
+              SecureCookie = false;
             };
           };
         };
-        profileDir = "/var/lib/qBittorrent/";
-
       };
     };
 }
