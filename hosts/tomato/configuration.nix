@@ -122,6 +122,7 @@ delib.host {
 
       coolercontrol.enable = true;
       qbittorrent.enable = true;
+      nginx.enable = true;
     };
   };
 
