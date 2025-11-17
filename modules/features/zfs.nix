@@ -27,7 +27,7 @@ module {
     enable = boolOption false;
     ssd = boolOption false;
     snapshots = boolOption false;
-    scrub = boolOption false;
+    scrub = boolOption true;
     hostId = strOption "";
     pools = listOfOption (lib.types.str) [ ];
     arc = {
