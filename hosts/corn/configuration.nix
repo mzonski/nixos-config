@@ -56,16 +56,6 @@ delib.host {
             };
           };
         };
-        vnets = {
-          enable = true;
-          interface = "enp113s0";
-          defaultVlan = "home";
-          defaultOctet = 50;
-          vlans = {
-            home.macAddress = "00:00:00:00:00:01";
-            vpn.macAddress = "00:00:00:00:00:02";
-          };
-        };
       };
 
       services.coolercontrol = {
@@ -106,6 +96,16 @@ delib.host {
       };
 
       services.nginx.enable = true;
+
+      homelab.networking = {
+        enable = true;
+        defaultVlan = "home";
+        defaultOctet = 50;
+        vlans = {
+          home.macAddress = "00:00:00:00:00:01";
+          vpn.macAddress = "00:00:00:00:00:02";
+        };
+      };
     };
 
   nixos = {

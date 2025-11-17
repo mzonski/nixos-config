@@ -17,6 +17,8 @@ delib.module {
       jq # JSON pretty printer and manipulator
       powertop # check energy consumption per program
       tldr # quick man
+
+      tcpdump
     ];
   };
 }

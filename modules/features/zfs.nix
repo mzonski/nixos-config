@@ -48,16 +48,14 @@ module {
     {
       assertions = [
         {
-          assertion = cfg.hostId != "";
-          message = "features.zfs.hostId must not be empty";
+          assertion = config.networking.hostId != "";
+          message = "config.networking.hostId must not be empty";
         }
         {
           assertion = cfg.pools != [ ] || !cfg.scrub;
           message = "features.zfs.pools must be specified when scrub is enabled";
         }
       ];
-
-      networking.hostId = cfg.hostId;
 
       boot.kernelPackages =
         let

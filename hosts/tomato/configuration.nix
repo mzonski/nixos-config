@@ -37,7 +37,6 @@ delib.host {
       docker.enable = true;
       zfs = {
         enable = true;
-        hostId = "d79af5c1";
         pools = [ "HOME" ];
         arc = {
           min = 4;
@@ -51,17 +50,18 @@ delib.host {
           }
         ];
       };
-      vnets = {
-        enable = true;
-        interface = "enp3s0";
-        defaultVlan = "home";
-        defaultOctet = 3;
-        vlans = {
-          home.macAddress = "00:00:00:00:01:01";
-          vpn.macAddress = "00:00:00:00:01:02";
-        };
+    };
+
+    homelab.networking = {
+      enable = true;
+      defaultVlan = "home";
+      defaultOctet = 3;
+      vlans = {
+        home.macAddress = "00:00:00:00:01:01";
+        vpn.macAddress = "00:00:00:00:01:02";
       };
     };
+
     services = {
       network-share-server = {
         enable = true;

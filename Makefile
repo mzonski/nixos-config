@@ -85,6 +85,13 @@ edit-secrets-%:
 	sops hosts/$*/secrets.yaml
 	sops updatekeys hosts/$*/secrets.yaml
 
+rotate-secrets-%:
+	sops -d hosts/$*/secrets.yaml > hosts/$*/secrets.decrypted.yaml
+	rm hosts/$*/secrets.yaml
+	mv hosts/$*/secrets.decrypted.yaml hosts/$*/secrets.yaml
+	sops -e hosts/$*/secrets.yaml > hosts/$*/secrets.encrypted.yaml
+	rm hosts/$*/secrets.yaml
+	mv hosts/$*/secrets.encrypted.yaml hosts/$*/secrets.yaml
 
 deploy-%:
 	@echo "Deploying new configuration..."

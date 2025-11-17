@@ -2,6 +2,7 @@
   delib,
   host,
   lib,
+  config,
   ...
 }:
 let
@@ -18,7 +19,6 @@ let
     allowNull
     ;
   inherit (lib)
-    mkIf
     mkMerge
     imap0
     concatStringsSep
@@ -30,14 +30,11 @@ let
   inherit (builtins)
     toString
     attrNames
+    substring
+    hashString
     ;
 
   networkConfig = {
-    lan = {
-      vlanId = 0;
-      octet = 0;
-      prefixLength = 24;
-    };
     home = {
       vlanId = 101;
       octet = 1;
@@ -66,14 +63,13 @@ let
   };
 
   validVlans = attrNames networkConfig;
-
 in
 module {
-  name = "features.vnets";
+  name = "homelab.networking";
 
   options = moduleOptions {
     enable = boolOption false;
-    interface = noDefault (strOption null);
+    physicalInterfaceName = strOption "phys0";
     vlans = attrsOfOption (submodule {
       options = {
         lastOctet = allowNull (intOption null);
@@ -82,7 +78,6 @@ module {
     }) { };
     defaultOctet = allowNull (intOption null);
     defaultVlan = noDefault (enumOption (validVlans) null);
-    disableBridgeFiltering = boolOption true;
   };
 
   nixos.ifEnabled =
@@ -105,10 +100,39 @@ module {
 
       networking = {
         hostName = host.name;
+        hostId = (substring 0 8 (hashString "md5" host.name));
         networkmanager.enable = false;
-        useNetworkd = true;
+        useNetworkd = lib.mkForce true;
         useDHCP = false;
       };
+
+      sops =
+        let
+          macAddressSopsSecret = "${cfg.physicalInterfaceName}_mac_address";
+        in
+        {
+          secrets.${macAddressSopsSecret} = {
+            sopsFile = host.secretsFile;
+            owner = "root";
+            group = "root";
+          };
+          templates."network_${cfg.physicalInterfaceName}_link" = {
+            content = ''
+              [Match]
+              PermanentMACAddress=${config.sops.placeholder.${macAddressSopsSecret}}
+
+              [Link]
+              Name=${cfg.physicalInterfaceName}
+            '';
+            owner = "root";
+            group = "root";
+            path = "/etc/systemd/network/10-${cfg.physicalInterfaceName}.link";
+          };
+        };
+
+      systemd.tmpfiles.rules = [
+        "z ${config.sops.templates."network_${cfg.physicalInterfaceName}_link".path} 0755 root root - -"
+      ];
 
       systemd.network =
         let
@@ -120,8 +144,8 @@ module {
           getCidrIp =
             vlanName: lastOctet:
             "${getSubnetIp vlanName lastOctet}/${toString networkConfig.${vlanName}.prefixLength}";
-          getVlanInterfaceName = vlanName: "vlan${toString (getVlanId vlanName)}";
-          getBridgeInterfaceName = vlanName: "br${toString (getVlanId vlanName)}";
+          getVlanInterfaceName = vlanName: "vlan-${vlanName}";
+          getBridgeInterfaceName = vlanName: "br-${vlanName}";
 
           genAllVlanNames = vlans: map (vlanName: (getVlanInterfaceName vlanName)) vlans;
           isPrimaryVlan = vlanName: defaultVlan: vlanName == defaultVlan;
@@ -135,14 +159,14 @@ module {
               bridgeInterfaceName = getBridgeInterfaceName vlanName;
             in
             {
-              "10-${vlanInterfaceName}" = {
+              "15-${vlanInterfaceName}" = {
                 netdevConfig = {
                   Kind = "vlan";
                   Name = vlanInterfaceName;
                 };
                 vlanConfig.Id = getVlanId vlanName;
               };
-              "15-${bridgeInterfaceName}" = {
+              "16-${bridgeInterfaceName}" = {
                 netdevConfig = {
                   Kind = "bridge";
                   Name = bridgeInterfaceName;
@@ -165,33 +189,50 @@ module {
                 linkConfig.RequiredForOnline = getRequiredForOnline vlanName cfg.defaultVlan;
               };
 
-              "40-${bridgeInterfaceName}" = {
-                matchConfig.Name = bridgeInterfaceName;
-                address = [
-                  (getCidrIp vlanName (if vlanCfg.lastOctet != null then vlanCfg.lastOctet else cfg.defaultOctet))
-                ];
-                dns = [ Gateway ];
-                routes = [
-                  {
-                    inherit Gateway;
-                    Table = vlanId;
-                  }
-                  {
-                    inherit Gateway;
-                  }
-                ];
-                routingPolicyRules = [
-                  {
-                    Table = vlanId;
-                    From = getCidrIp vlanName 0;
-                    Priority = if (isPrimaryVlan vlanName cfg.defaultVlan) then 100 else 101 + idx;
-                  }
-                ];
-                linkConfig = {
-                  MACAddress = vlanCfg.macAddress;
-                  RequiredForOnline = getRequiredForOnline vlanName cfg.defaultVlan;
+              "40-${bridgeInterfaceName}" =
+                let
+                  subnetCidrIp = getCidrIp vlanName 0;
+                  lastOctet = if vlanCfg.lastOctet != null then vlanCfg.lastOctet else cfg.defaultOctet;
+                  ipAddress = getSubnetIp vlanName lastOctet;
+                in
+                {
+                  matchConfig.Name = bridgeInterfaceName;
+                  address = [
+                    (getCidrIp vlanName lastOctet)
+                  ];
+                  dns = [ Gateway ];
+                  routes = [
+                    {
+                      Destination = subnetCidrIp;
+                      Scope = "link";
+                      Table = vlanId;
+                    }
+                    {
+                      inherit Gateway;
+                      Table = vlanId;
+                    }
+                    {
+                      inherit Gateway;
+                      Metric = 100;
+                    }
+                  ];
+                  routingPolicyRules = [
+                    {
+                      Table = vlanId;
+                      To = ipAddress;
+                      Priority = if (isPrimaryVlan vlanName cfg.defaultVlan) then 100 else 200 + idx;
+                    }
+                    {
+                      Table = vlanId;
+                      From = ipAddress;
+                      Priority = if (isPrimaryVlan vlanName cfg.defaultVlan) then 101 else 201 + idx;
+                    }
+                  ];
+                  linkConfig = {
+                    MACAddress = vlanCfg.macAddress;
+                    RequiredForOnline = getRequiredForOnline vlanName cfg.defaultVlan;
+                  };
                 };
-              };
             };
         in
         {
@@ -200,8 +241,8 @@ module {
           networks = lib.foldl' (a: b: a // b) { } (
             [
               {
-                "30-${cfg.interface}" = {
-                  matchConfig.Name = cfg.interface;
+                "20-${cfg.physicalInterfaceName}" = {
+                  matchConfig.Name = cfg.physicalInterfaceName;
                   vlan = genAllVlanNames allVlans;
                   linkConfig.RequiredForOnline = "no";
                 };
@@ -210,13 +251,5 @@ module {
             ++ (imap0 (idx: vlanName: generateNetworkVlan idx vlanName) allVlans)
           );
         };
-
-      boot.kernel.sysctl = mkIf cfg.disableBridgeFiltering {
-        "net.ipv4.conf.all.rp_filter" = 2;
-        "net.ipv4.conf.default.rp_filter" = 2;
-        "net.bridge.bridge-nf-call-iptables" = 0;
-        "net.bridge.bridge-nf-call-ip6tables" = 0;
-        "net.bridge.bridge-nf-call-arptables" = 0;
-      };
     };
 }
