@@ -27,6 +27,7 @@ module {
       programs.firefox = {
         enable = true;
         package = pkgs.firefox;
+        nativeMessagingHosts = [ pkgs.gnomeExtensions.gsconnect ];
         profiles.default = {
           search = {
             force = true;
@@ -48,6 +49,7 @@ module {
             ublock-origin
             sponsorblock
             darkreader
+            gsconnect
           ];
 
           bookmarks = { };
@@ -153,6 +155,7 @@ module {
                   "urlbar-container"
                   "downloads-button"
                   "ublock0_raymondhill_net-browser-action"
+                  "gsconnect_andyholmes_github_io-browser-action"
                   "_testpilot-containers-browser-action"
                   "reset-pbm-toolbar-button"
                   "unified-extensions-button"

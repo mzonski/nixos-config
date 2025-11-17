@@ -33,6 +33,7 @@ let
       lilypad
       cronomix
       clipboard-history
+      gsconnect
       #tophat
       #paperwm
       #rounded-window-corners-reborn
@@ -43,6 +44,10 @@ let
 in
 module {
   name = "programs.gnome";
+
+  nixos.ifEnabled = {
+    networking.firewall.allowedTCPPorts = [ 1716 ]; # gsconnect
+  };
 
   home.ifEnabled = {
     home.packages = gnomeExtensions ++ (with pkgs; [ gnome-shell-extensions ]);
