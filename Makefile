@@ -34,6 +34,10 @@ system:
 	@echo "Switching NixOS configuration..."
 	sudo nixos-rebuild switch --flake $(FLAKE)#$(HOSTNAME)
 
+system-revert:
+	@echo "Switching to previous NixOS configuration..."
+	sudo nixos-rebuild switch --flake $(FLAKE)#$(HOSTNAME) --rollback
+
 sysboot:
 	@echo "Switching NixOS configuration..."
 	sudo nixos-rebuild boot --flake $(FLAKE)#$(HOSTNAME)
