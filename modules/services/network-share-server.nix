@@ -150,6 +150,7 @@ module {
               "netbios name" = host.name;
 
               "wins support" = "yes";
+              "domain master" = "yes";
               "local master" = "yes";
               "preferred master" = "yes";
               "os level" = "65";
