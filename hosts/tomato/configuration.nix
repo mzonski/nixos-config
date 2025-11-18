@@ -130,6 +130,7 @@ delib.host {
       nginx.enable = true;
       grafana.enable = true;
       postgres.enable = true;
+      pocket-id.enable = true;
     };
   };
 
