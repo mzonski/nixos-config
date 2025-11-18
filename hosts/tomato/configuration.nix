@@ -48,6 +48,11 @@ delib.host {
             passwordSopsKey = "personal_dataset_password";
             sopsFile = ./secrets.yaml;
           }
+          {
+            dataset = "HOME/Databases";
+            passwordSopsKey = "personal_dataset_password";
+            sopsFile = ./secrets.yaml;
+          }
         ];
       };
     };
@@ -124,6 +129,7 @@ delib.host {
       qbittorrent.enable = true;
       nginx.enable = true;
       grafana.enable = true;
+      postgres.enable = true;
     };
   };
 
