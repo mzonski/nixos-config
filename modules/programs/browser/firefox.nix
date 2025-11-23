@@ -14,7 +14,7 @@ module {
   options.programs.firefox = {
     enable = boolOption host.isDesktop;
     firefoxProfiles = boolOption false;
-    rememberPasswords = boolOption true;
+    rememberPasswords = boolOption false;
   };
 
   home.ifEnabled =
