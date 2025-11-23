@@ -53,6 +53,7 @@ module {
           '';
           owner = "qbittorrent";
           group = "nas-torrents";
+          path = "${cfg.profileDir}/password.conf";
         };
       };
 
@@ -60,12 +61,14 @@ module {
         serviceConfig = {
           UMask = "0002";
           ExecStartPre = pkgs.writeShellScript "insert-qbittorrent-password" ''
+            chmod 744 ${configLocation}
             ${pkgs.gnused}/bin/sed -i '/# BEGIN PASSWORD INSERT/,/# END PASSWORD INSERT/d' ${configLocation}
             ${pkgs.gnused}/bin/sed -i '/^WebUI\\Password_PBKDF2=/d' ${configLocation}
 
             echo "# BEGIN PASSWORD INSERT" >> ${configLocation}
             cat ${config.sops.templates.qbittorrent-password-config.path} >> ${configLocation}
             echo "# END PASSWORD INSERT" >> ${configLocation}
+            chmod 744 ${configLocation}
           '';
         };
       };
@@ -76,7 +79,7 @@ module {
 
         openFirewall = true;
         torrentingPort = cfg.port;
-        webuiPort = 8081;
+        webuiPort = cfg.uiPort;
         profileDir = cfg.profileDir + "/";
 
         user = "qbittorrent";
@@ -104,7 +107,7 @@ module {
               DefaultSavePath = cfg.downloadsDir;
               ExcludedFileNames = "";
               GlobalMaxRatio = 0;
-              Interface = "br102";
+              Interface = "br-vpn";
               InterfaceAddress = "10.0.2.3";
               InterfaceName = "br102";
               Port = cfg.port;
