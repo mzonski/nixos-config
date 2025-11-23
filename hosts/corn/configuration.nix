@@ -120,7 +120,8 @@ delib.host {
 
     #boot.readOnlyNixStore = false;
 
-    boot.kernelPackages = pkgs.linuxPackages_latest;
+    #boot.kernelPackages = pkgs.linuxPackages_latest;
+    boot.kernelPackages = pkgs.linuxPackages_zen;
     boot.loader.systemd-boot.windows."11".efiDeviceHandle = "HD1e";
 
     services.tumbler.enable = true; # Enable thumbnail service
