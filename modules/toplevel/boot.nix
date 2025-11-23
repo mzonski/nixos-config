@@ -23,6 +23,7 @@ delib.module {
           enable = true;
           consoleMode = if host.isDesktop then "1" else "keep";
 
+          memtest86.enable = true;
           edk2-uefi-shell.enable = false;
 
           # extraInstallCommands = ''
