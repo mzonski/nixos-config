@@ -30,7 +30,11 @@ delib.host {
         swapSize = "32G";
       };
       logitech.enable = true;
-
+      battery-threshold = {
+        enable = true;
+        threshold = 60;
+        batteryId = "BAT0";
+      };
     };
 
     features = {
