@@ -128,7 +128,7 @@ delib.host {
       coolercontrol.enable = true;
       qbittorrent.enable = true;
       nginx.enable = true;
-      grafana.enable = true;
+      grafana.enable = false;
       postgres.enable = true;
       pocket-id.enable = true;
       gitea.enable = true;
