@@ -21,6 +21,7 @@ delib.module {
 
         systemd-boot = {
           enable = true;
+          consoleMode = if host.isDesktop then "1" else "keep";
 
           edk2-uefi-shell.enable = false;
 
