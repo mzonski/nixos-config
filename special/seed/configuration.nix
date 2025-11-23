@@ -55,7 +55,7 @@ delib.host {
 
     networking = {
       hostName = lib.mkForce config.isoImage.isoBaseName;
-      firewall.enable = false;
+      firewall.enable = lib.mkForce false;
     };
     networking.useDHCP = lib.mkForce false;
 
