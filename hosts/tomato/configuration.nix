@@ -132,6 +132,7 @@ delib.host {
       postgres.enable = true;
       pocket-id.enable = true;
       gitea.enable = true;
+      vaultwarden.enable = true;
     };
   };
 
