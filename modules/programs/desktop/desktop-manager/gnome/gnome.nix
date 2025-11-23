@@ -28,6 +28,11 @@ module {
       services.xserver.enable = true;
       services.xserver.desktopManager.gnome.enable = true;
 
+      systemd.services.display-manager = {
+        after = [ "network-online.target" ];
+        wants = [ "network-online.target" ];
+      };
+
       services.gnome = mkIf cfg.fullInstall {
         core-os-services.enable = true;
         core-shell.enable = true;
