@@ -131,6 +131,7 @@ delib.host {
       grafana.enable = true;
       postgres.enable = true;
       pocket-id.enable = true;
+      gitea.enable = true;
     };
   };
 
