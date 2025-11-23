@@ -57,6 +57,7 @@ delib.host {
       };
     };
 
+    homelab.enable = true;
     homelab.networking = {
       enable = true;
       defaultVlan = "home";

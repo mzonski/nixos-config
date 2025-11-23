@@ -97,6 +97,7 @@ delib.host {
 
       services.nginx.enable = true;
 
+      homelab.enable = true;
       homelab.networking = {
         enable = true;
         defaultVlan = "home";

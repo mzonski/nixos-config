@@ -13,6 +13,7 @@ let
     assertEnabled
     allowNull
     boolOption
+    isHomelabEnabled
     ;
   inherit (lib) mkIf;
   inherit (lib.attrsets) filterAttrs mapAttrsToList;
@@ -33,7 +34,7 @@ module {
     let
       filterByDbType = type: filterAttrs (name: dbCfg: dbCfg.type == type) cfg;
     in
-    mkIf (cfg != { }) {
+    mkIf (isHomelabEnabled myconfig && cfg != { }) {
       assertions = [
         (assertEnabled myconfig "services.postgres.enable")
       ];

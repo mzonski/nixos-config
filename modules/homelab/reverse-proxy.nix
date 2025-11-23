@@ -15,6 +15,7 @@ let
     assertEnabled
     allowNull
     intOption
+    isHomelabEnabled
     ;
   inherit (lib) mkIf mapAttrs' nameValuePair;
   inherit (builtins) toString;
@@ -36,7 +37,7 @@ module {
     let
       homelabHostDomain = "${host.name}.${myconfig.homelab.domain}";
     in
-    mkIf (cfg != { }) {
+    mkIf (isHomelabEnabled myconfig && cfg != { }) {
       assertions = [
         (assertEnabled myconfig "services.nginx.enable")
       ];

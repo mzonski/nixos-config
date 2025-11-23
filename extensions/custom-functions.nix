@@ -18,5 +18,6 @@ delib.extension {
 
     assertEnabled = config: pathStr: assertEnabled' config pathStr null;
 
+    isHomelabEnabled = myconfig: myconfig.homelab.enable;
   };
 }
