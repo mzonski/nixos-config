@@ -12,6 +12,10 @@ module {
 
   options = singleEnableOption false;
 
+  nixos.ifEnabled = {
+    programs.ghidra.enable = true;
+  };
+
   home.ifEnabled =
     { myconfig, ... }:
     let
