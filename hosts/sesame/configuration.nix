@@ -2,7 +2,7 @@
   delib,
   inputs,
   system,
-  lib,
+  pkgs,
   ...
 }:
 delib.host {
@@ -56,6 +56,7 @@ delib.host {
   nixos = {
     nixpkgs.hostPlatform = system;
     system.stateVersion = "25.05";
+    boot.kernelPackages = pkgs.linuxPackages_zen;
 
     imports = [
       inputs.nixos-hardware.nixosModules.common-cpu-intel
