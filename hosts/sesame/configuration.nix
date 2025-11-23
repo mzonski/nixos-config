@@ -29,6 +29,8 @@ delib.host {
         ];
         swapSize = "32G";
       };
+      logitech.enable = true;
+
     };
 
     features = {
@@ -58,14 +60,13 @@ delib.host {
 
     boot.readOnlyNixStore = false;
 
-    networking.firewall.enable = false;
-
     services.tumbler.enable = true;
-
     services.libinput.enable = true;
     services.openssh.enable = true;
     services.printing.enable = true;
     security.polkit.enable = true;
+
+    hardware.i2c.enable = true;
   };
 
   home = {
