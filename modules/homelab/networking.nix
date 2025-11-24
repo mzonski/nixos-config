@@ -213,7 +213,7 @@ module {
                     }
                     {
                       inherit Gateway;
-                      Metric = 100;
+                      Metric = if (isPrimaryVlan vlanName cfg.defaultVlan) then 100 else 200 + idx;
                     }
                   ];
                   routingPolicyRules = [
