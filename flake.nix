@@ -69,6 +69,11 @@
     my-pc-rgb = {
       url = "github:mzonski/my-pc-rgb";
     };
+
+    asus-numberpad-driver = {
+      url = "github:asus-linux-drivers/asus-numberpad-driver/bff288313bfc2bc75b808f8953397e9f132b4360";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
