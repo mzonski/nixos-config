@@ -5,7 +5,12 @@
   ...
 }:
 let
-  inherit (delib) module boolOption;
+  inherit (delib)
+    module
+    boolOption
+    package
+    listOfOption
+    ;
   inherit (lib) mkIf;
 in
 module {
@@ -16,6 +21,7 @@ module {
     fullInstall = boolOption false;
     noUserSessionFreeze.enable = boolOption false;
     freezeOnNvidiaSuspend.enable = boolOption false;
+    extensions = listOfOption (package) [ ];
   };
 
   myconfig.ifEnabled = {

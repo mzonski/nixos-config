@@ -6,7 +6,12 @@
   ...
 }:
 let
-  inherit (delib) boolOption module;
+  inherit (delib)
+    boolOption
+    module
+    listOfOption
+    str
+    ;
 in
 module {
   name = "programs.firefox";
@@ -15,10 +20,11 @@ module {
     enable = boolOption host.isDesktop;
     firefoxProfiles = boolOption false;
     rememberPasswords = boolOption false;
+    navBarEntries = listOfOption (str) [ ];
   };
 
   home.ifEnabled =
-    { cfg, ... }:
+    { myconfig, cfg, ... }:
     let
       inherit (builtins) toJSON;
       inherit (lib) mkDefault genAttrs;
@@ -27,7 +33,6 @@ module {
       programs.firefox = {
         enable = true;
         package = pkgs.firefox;
-        nativeMessagingHosts = [ pkgs.gnomeExtensions.gsconnect ];
         profiles.default = {
           search = {
             force = true;
@@ -49,7 +54,6 @@ module {
             ublock-origin
             sponsorblock
             darkreader
-            gsconnect
           ];
 
           bookmarks = { };
@@ -155,11 +159,11 @@ module {
                   "urlbar-container"
                   "downloads-button"
                   "ublock0_raymondhill_net-browser-action"
-                  "gsconnect_andyholmes_github_io-browser-action"
                   "_testpilot-containers-browser-action"
                   "reset-pbm-toolbar-button"
                   "unified-extensions-button"
-                ];
+                ]
+                ++ cfg.navBarEntries;
                 toolbar-menubar = [ "menubar-items" ];
                 unified-extensions-area = [ ];
                 widget-overflow-fixed-list = [ ];

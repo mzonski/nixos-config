@@ -74,6 +74,8 @@ delib.host {
       programs.gnome.fullInstall = true;
       programs.gnome.freezeOnNvidiaSuspend.enable = true;
 
+      programs.gsconnect.enable = true;
+
       hardware.network.restart-after-suspend = {
         enable = true;
         networkInterface = "enp113s0";

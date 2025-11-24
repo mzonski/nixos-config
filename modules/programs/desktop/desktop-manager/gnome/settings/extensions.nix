@@ -33,7 +33,6 @@ let
       lilypad
       cronomix
       clipboard-history
-      gsconnect
       #tophat
       #paperwm
       #rounded-window-corners-reborn
@@ -45,38 +44,36 @@ in
 module {
   name = "programs.gnome";
 
-  nixos.ifEnabled = {
-    networking.firewall.allowedTCPPorts = [ 1716 ]; # gsconnect
-  };
+  home.ifEnabled =
+    { cfg, ... }:
+    {
+      home.packages = cfg.extensions ++ gnomeExtensions ++ (with pkgs; [ gnome-shell-extensions ]);
 
-  home.ifEnabled = {
-    home.packages = gnomeExtensions ++ (with pkgs; [ gnome-shell-extensions ]);
-
-    dconf = {
-      enable = true;
-      settings = {
-        "org/gnome/shell" = {
-          disable-user-extensions = false;
-          enabled-extensions = [
-            "apps-menu@gnome-shell-extensions.gcampax.github.com"
-            "drive-menu@gnome-shell-extensions.gcampax.github.com"
-            "places-menu@gnome-shell-extensions.gcampax.github.com"
-            "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
-            "system-monitor@gnome-shell-extensions.gcampax.github.com"
-            "user-theme@gnome-shell-extensions.gcampax.github.com"
-          ]
-          ++ (map (ext: ext.extensionUuid) gnomeExtensions);
-        };
-        # Enable and configure pop-shell
-        # (see https://github.com/pop-os/shell/blob/master_jammy/scripts/configure.sh)
-        "org/gnome/shell/extensions/pop-shell" = {
-          active-hint = true;
-          active-hint-border-radius = 1;
-          gap-inner = 2;
-          gap-outer = 0;
-          hint-color-rgba = "rgba(203, 166, 247, 1)";
+      dconf = {
+        enable = true;
+        settings = {
+          "org/gnome/shell" = {
+            disable-user-extensions = false;
+            enabled-extensions = [
+              "apps-menu@gnome-shell-extensions.gcampax.github.com"
+              "drive-menu@gnome-shell-extensions.gcampax.github.com"
+              "places-menu@gnome-shell-extensions.gcampax.github.com"
+              "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
+              "system-monitor@gnome-shell-extensions.gcampax.github.com"
+              "user-theme@gnome-shell-extensions.gcampax.github.com"
+            ]
+            ++ (map (ext: ext.extensionUuid) (gnomeExtensions ++ cfg.extensions));
+          };
+          # Enable and configure pop-shell
+          # (see https://github.com/pop-os/shell/blob/master_jammy/scripts/configure.sh)
+          "org/gnome/shell/extensions/pop-shell" = {
+            active-hint = true;
+            active-hint-border-radius = 1;
+            gap-inner = 2;
+            gap-outer = 0;
+            hint-color-rgba = "rgba(203, 166, 247, 1)";
+          };
         };
       };
     };
-  };
 }
