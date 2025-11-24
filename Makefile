@@ -46,6 +46,14 @@ bootloader:
 	@echo "Switching NixOS configuration..."
 	sudo nixos-rebuild boot --install-bootloader --flake $(FLAKE)#$(HOSTNAME)
 
+bootloader-update-%:
+	@echo "Updating bootloader on remote machine..."
+	nixos-rebuild boot --install-bootloader  \
+    --flake ".#$*" \
+    --target-host "$(USERNAME)@$*" \
+    --build-host localhost \
+    --use-remote-sudo
+
 seed-iso:
 	@echo "Generating Seed ISO..."
 	export SSH_PRIVATE_HOST=$$(sops -d --extract '["ssh_private_seed"]' ./shared-secrets.yaml) && \
