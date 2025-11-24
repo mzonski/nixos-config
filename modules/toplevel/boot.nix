@@ -5,12 +5,27 @@
   pkgs,
   ...
 }:
-delib.module {
+
+let
+  inherit (delib)
+    module
+    moduleOptions
+    boolOption
+    strOption
+    allowNull
+    ;
+  inherit (lib) optionalString;
+in
+module {
   name = "boot";
 
-  options = delib.singleEnableOption (!host.isMinimal);
+  options = moduleOptions {
+    enable = boolOption (!host.isMinimal);
+    windowsDiskId = allowNull (strOption null);
+  };
 
   nixos.ifEnabled =
+    { cfg, ... }:
     let
       inherit (lib) mkDefault;
     in
@@ -19,17 +34,28 @@ delib.module {
         efi.canTouchEfiVariables = mkDefault true;
         timeout = 3;
 
-        systemd-boot = {
+        grub = {
           enable = true;
-          consoleMode = if host.isDesktop then "1" else "keep";
-
-          memtest86.enable = true;
-          edk2-uefi-shell.enable = false;
-
-          # extraInstallCommands = ''
-          #   ${pkgs.coreutils}/bin/rm -f /boot/EFI/BOOT/BOOTX64.EFI
-          #   [ -d /boot/EFI/BOOT ] && ${pkgs.coreutils}/bin/rmdir /boot/EFI/BOOT || true
-          # '';
+          device = "nodev";
+          efiSupport = true;
+          font = "${pkgs.local.apple-fonts}/share/fonts/opentype/SF-Mono-Semibold.otf";
+          fontSize = mkDefault 32;
+          backgroundColor = "#000000";
+          splashImage = null;
+          extraEntries =
+            optionalString (cfg.windowsDiskId != null) ''
+              menuentry "Windows 11" {
+                insmod part_gpt
+                insmod fat
+                search --no-floppy --fs-uuid --set=root ${cfg.windowsDiskId}
+                chainloader /efi/Microsoft/Boot/bootmgfw.efi
+              }
+            ''
+            + ''
+              menuentry "UEFI Firmware" {
+                fwsetup
+              }
+            '';
         };
       };
     };

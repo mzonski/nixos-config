@@ -19,6 +19,7 @@ delib.host {
     { myconfig, ... }:
     {
       admin.username = "zonni";
+      boot.windowsDiskId = "0A13-7DD7";
 
       hardware = {
         audio.enable = true;
@@ -125,6 +126,8 @@ delib.host {
     #boot.kernelPackages = pkgs.linuxPackages_latest;
     boot.kernelPackages = pkgs.linuxPackages_zen;
     boot.loader.systemd-boot.windows."11".efiDeviceHandle = "HD1e";
+    boot.loader.grub.fontSize = 64;
+    boot.loader.grub.memtest86.enable = true;
 
     services.tumbler.enable = true; # Enable thumbnail service
 
