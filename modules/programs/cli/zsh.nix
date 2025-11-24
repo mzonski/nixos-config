@@ -140,6 +140,10 @@ module {
           else
             [[ ! -f ~/.p10k-tty.zsh ]] || source ~/.p10k-tty.zsh
           fi
+
+          textedit() {
+            nohup gnome-text-editor "$@" &>/dev/null & disown
+          }
         '';
       }; # TODO: FIX EDITOR
 
