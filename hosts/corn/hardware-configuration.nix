@@ -29,6 +29,10 @@ delib.host {
       ];
       initrd.kernelModules = [ ];
 
+      kernelParams = [
+        "mem_sleep_default=deep"
+      ];
+
       blacklistedKernelModules = [ ];
       kernelModules = [
         "kvm-amd"
