@@ -35,7 +35,7 @@ module {
       protocol = enumOption [ "http" "https" ] "http";
       subdomain = allowNull (strOption null);
       port = noDefault (intOption null);
-      protected = boolOption true;
+      requireAuth = boolOption true;
     };
   }) { };
 

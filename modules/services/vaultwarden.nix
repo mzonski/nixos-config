@@ -33,6 +33,7 @@ module {
       homelab.reverse-proxy.${serviceName} = {
         port = cfg.uiPort;
         subdomain = "vault";
+        requireAuth = false;
       };
       user.groups = [ serviceName ];
     };

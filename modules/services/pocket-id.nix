@@ -34,7 +34,7 @@ module {
       homelab.reverse-proxy.${username} = {
         port = cfg.port;
         subdomain = "oidc";
-        protected = false;
+        requireAuth = false;
       };
       user.groups = [ username ];
     };

@@ -34,6 +34,7 @@ module {
       homelab.reverse-proxy.${username} = {
         port = cfg.uiPort;
         subdomain = "git";
+        requireAuth = false;
       };
       user.groups = [ username ];
     };
