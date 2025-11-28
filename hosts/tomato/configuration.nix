@@ -134,6 +134,7 @@ delib.host {
       pocket-id.enable = true;
       gitea.enable = true;
       vaultwarden.enable = true;
+      tinyauth.enable = true;
     };
   };
 

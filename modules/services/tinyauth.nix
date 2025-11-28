@@ -1,0 +1,112 @@
+{
+  delib,
+  pkgs,
+  host,
+  config,
+  ...
+}:
+let
+  inherit (delib)
+    module
+    moduleOptions
+    boolOption
+    strOption
+    intOption
+    ;
+  username = "tinyauth";
+in
+module {
+  name = "services.tinyauth";
+
+  options = moduleOptions {
+    enable = boolOption false;
+    dataDir = strOption "/nas/database/${username}";
+    domain = strOption "https://auth.tomato.local.zonni.pl";
+    port = intOption 8086;
+  };
+
+  myconfig.ifEnabled =
+    { cfg, ... }:
+    {
+      homelab.reverse-proxy.${username} = {
+        port = cfg.port;
+        subdomain = "auth";
+        protected = false;
+      };
+      user.groups = [ username ];
+    };
+
+  nixos.always.imports = [
+    ./../../nixos-modules/tinyauth.nix
+  ];
+
+  nixos.ifEnabled =
+    { myconfig, cfg, ... }:
+    let
+      userId = 988;
+      groupId = 983;
+    in
+    {
+
+      sops =
+        let
+          sopsConfig = {
+            sopsFile = host.secretsFile;
+            owner = username;
+            group = username;
+          };
+        in
+        {
+          secrets.tinyauth_pocket_id_client_id = sopsConfig;
+          secrets.tinyauth_pocket_id_client_secret = sopsConfig;
+          secrets.tinyauth_google_client_id = sopsConfig;
+          secrets.tinyauth_google_secret = sopsConfig;
+          templates.tinyauth-config = {
+            content = ''
+              PROVIDERS_POCKETID_CLIENT_ID=${config.sops.placeholder.tinyauth_pocket_id_client_id}
+              PROVIDERS_POCKETID_CLIENT_SECRET=${config.sops.placeholder.tinyauth_pocket_id_client_secret}
+              PROVIDERS_GOOGLE_CLIENT_ID=${config.sops.placeholder.tinyauth_google_client_id}
+              PROVIDERS_GOOGLE_CLIENT_SECRET=${config.sops.placeholder.tinyauth_google_secret}
+            '';
+
+            owner = username;
+            group = username;
+          };
+        };
+
+      users.users.${username} = {
+        extraGroups = [ "db" ];
+        uid = userId;
+      };
+      users.groups.${username}.gid = groupId;
+
+      services.tinyauth = {
+        enable = true;
+        package = pkgs.local.tinyauth;
+        inherit (cfg) dataDir;
+        environmentFile = config.sops.templates.tinyauth-config.path;
+
+        user = username;
+        group = username;
+
+        settings = {
+          ADDRESS = "0.0.0.0";
+          APP_TITLE = "Homelab";
+          APP_URL = cfg.domain;
+          DATABASE_PATH = "${cfg.dataDir}/tinyauth.db";
+          DISABLE_ANALYTICS = true;
+          LOG_LEVEL = "debug";
+          PORT = cfg.port;
+          RESOURCES_DIR = "${cfg.dataDir}/resources";
+          SECURE_COOKIE = false;
+
+          PROVIDERS_POCKETID_AUTH_URL = "${myconfig.services.pocket-id.domain}/authorize";
+          PROVIDERS_POCKETID_TOKEN_URL = "${myconfig.services.pocket-id.domain}/api/oidc/token";
+          PROVIDERS_POCKETID_USER_INFO_URL = "${myconfig.services.pocket-id.domain}/api/oidc/userinfo";
+          PROVIDERS_POCKETID_REDIRECT_URL = "${cfg.domain}/api/oauth/callback/pocketid";
+          PROVIDERS_POCKETID_SCOPES = "openid email profile groups";
+          PROVIDERS_POCKETID_NAME = "Passkey";
+        };
+      };
+    };
+}

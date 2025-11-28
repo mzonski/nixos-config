@@ -149,7 +149,7 @@ module {
               Username = homeManagerUser;
               CSRFProtection = false;
               HostHeaderValidation = false;
-              LocalHostAuth = true;
+              LocalHostAuth = false;
               ReverseProxySupportEnabled = true;
               TrustedReverseProxiesList = "0.0.0.0/24";
               SecureCookie = false;

@@ -22,6 +22,7 @@ module {
     enable = boolOption false;
     dbDir = strOption "/nas/database/${username}";
     port = intOption 8083;
+    domain = strOption "https://oidc.tomato.local.zonni.pl";
   };
 
   myconfig.ifEnabled =
@@ -32,7 +33,8 @@ module {
       };
       homelab.reverse-proxy.${username} = {
         port = cfg.port;
-        subdomain = "auth";
+        subdomain = "oidc";
+        protected = false;
       };
       user.groups = [ username ];
     };
@@ -42,14 +44,12 @@ module {
   ];
 
   nixos.ifEnabled =
-    { myconfig, cfg, ... }:
+    { cfg, ... }:
     let
       userId = 991;
       groupId = 986;
     in
-
     {
-
       sops =
         let
           sopsConfig = {
@@ -79,7 +79,7 @@ module {
 
         # https://pocket-id.org/docs/configuration/environment-variables#overriding-the-ui-configuration
         settings = {
-          APP_URL = "https://auth.${host.name}.${myconfig.homelab.domain}/";
+          APP_URL = cfg.domain;
           TRUST_PROXY = true;
 
           MAXMIND_LICENSE_KEY_FILE = config.sops.secrets.maxmind_license_key.path;
@@ -105,7 +105,7 @@ module {
           # UI CONFIG OPTIONS
           ALLOW_USER_SIGNUPS = "disabled";
 
-          APP_NAME = "Homelab Auth";
+          APP_NAME = "Homelab OIDC";
         };
       };
     };
