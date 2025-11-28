@@ -21,7 +21,7 @@ module {
   options = moduleOptions {
     enable = boolOption false;
     dataDir = strOption "/nas/database/${username}";
-    domain = strOption "https://auth.tomato.local.zonni.pl";
+    domain = strOption "https://auth.zonni.pl";
     port = intOption 8086;
   };
 
@@ -32,6 +32,8 @@ module {
         port = cfg.port;
         subdomain = "auth";
         requireAuth = false;
+        root = true;
+        public = true;
       };
       user.groups = [ username ];
     };
@@ -90,12 +92,12 @@ module {
         group = username;
 
         settings = {
-          ADDRESS = "0.0.0.0";
+          ADDRESS = "127.0.0.1";
           APP_TITLE = "Homelab";
           APP_URL = cfg.domain;
           DATABASE_PATH = "${cfg.dataDir}/tinyauth.db";
           DISABLE_ANALYTICS = true;
-          LOG_LEVEL = "debug";
+          LOG_LEVEL = "info";
           PORT = cfg.port;
           RESOURCES_DIR = "${cfg.dataDir}/resources";
           SECURE_COOKIE = false;
