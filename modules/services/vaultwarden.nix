@@ -34,6 +34,7 @@ module {
         port = cfg.uiPort;
         subdomain = "vault";
         requireAuth = false;
+        root = true;
       };
       user.groups = [ serviceName ];
     };
@@ -97,7 +98,7 @@ module {
         dbBackend = "postgresql";
         environmentFile = config.sops.templates.vaultwarden_env.path;
         config = {
-          DOMAIN = "https://vault.${host.name}.${myconfig.homelab.domain}";
+          DOMAIN = "https://vault.${myconfig.homelab.rootDomain}";
 
           SIGNUPS_ALLOWED = false;
           # LOG_LEVEL = "debug";
