@@ -22,13 +22,20 @@ module {
         "gsconnect_andyholmes_github_io-browser-action"
       ];
 
-      xdg.mime.recommended =
+      xdg.mime =
         let
-          launcher = "org.gnome.Shell.Extensions.GSConnect.desktop";
+          assoc =
+            let
+              launcher = "org.gnome.Shell.Extensions.GSConnect.desktop;";
+            in
+            {
+              "x-scheme-handler/sms" = [ launcher ];
+              "x-scheme-handler/tel" = [ launcher ];
+            };
         in
         {
-          "x-scheme-handler/sms" = [ launcher ];
-          "x-scheme-handler/tel" = [ launcher ];
+          associations = assoc;
+          recommended = assoc;
         };
     };
 
