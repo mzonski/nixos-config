@@ -22,7 +22,7 @@ module {
     enable = boolOption false;
     dbDir = strOption "/nas/database/${username}";
     port = intOption 8083;
-    domain = strOption "https://oidc.tomato.local.zonni.pl";
+    domain = strOption "https://oidc.zonni.pl";
   };
 
   myconfig.ifEnabled =
@@ -35,6 +35,8 @@ module {
         port = cfg.port;
         subdomain = "oidc";
         requireAuth = false;
+        root = true;
+        public = true;
       };
       user.groups = [ username ];
     };
