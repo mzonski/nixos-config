@@ -37,6 +37,10 @@ module {
       user.groups = [ username ];
     };
 
+  nixos.always.imports = [
+    ./../../nixos-modules/pocket-id-nixos.nix
+  ];
+
   nixos.ifEnabled =
     { myconfig, cfg, ... }:
     let
