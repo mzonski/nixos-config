@@ -25,6 +25,7 @@ module {
     uiPort = intOption 8081;
     profileDir = strOption "/var/lib/qBittorrent";
     downloadsDir = strOption "/nas/media/Torrents";
+    defaultNetwork = strOption "br-vpn";
   };
 
   myconfig.ifEnabled =
@@ -33,6 +34,7 @@ module {
       homelab.reverse-proxy.qbittorrent = {
         port = cfg.uiPort;
         subdomain = "torrent";
+        root = true;
       };
     };
 
@@ -59,6 +61,10 @@ module {
 
       systemd.services.qbittorrent = {
         serviceConfig = {
+          RestrictNetworkInterfaces = [
+            "lo"
+            "${cfg.defaultNetwork}"
+          ];
           UMask = "0002";
           ExecStartPre = pkgs.writeShellScript "insert-qbittorrent-password" ''
             chmod 744 ${configLocation}
@@ -109,7 +115,7 @@ module {
               GlobalMaxRatio = 0;
               Interface = "br-vpn";
               InterfaceAddress = "10.0.2.3";
-              InterfaceName = "br102";
+              InterfaceName = cfg.defaultNetwork;
               Port = cfg.port;
               QueueingSystemEnabled = true;
               SSL.Port = 42719;
