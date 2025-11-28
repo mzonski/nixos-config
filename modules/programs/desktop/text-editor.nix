@@ -14,9 +14,18 @@ module {
     {
       "text/plain" = [ launcher ];
       "text/markdown" = [ launcher ];
-      "text/x-python" = [ launcher ];
       "text/json" = [ launcher ];
-      "application/octet-stream" = [ launcher ];
+      "application/json" = [ launcher ];
+      "text/yaml" = [ launcher ];
+      "text/javascript" = [ launcher ];
+      "text/x-c++src" = [ launcher ];
+      "text/x-chdr" = [ launcher ];
+      "text/x-rpm-spec" = [ launcher ];
+      "text/x-python" = [ launcher ];
+      "text/x-makefile" = [ launcher ];
+      "application/x-tiled-tsx" = [ launcher ]; # typescript .tsx
+      "text/vnd.trolltech.linguist" = [ launcher ]; # typescript .ts
       "application/x-desktop" = [ launcher ];
+      "application/octet-stream" = [ launcher ];
     };
 }
