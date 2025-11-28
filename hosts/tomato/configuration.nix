@@ -34,7 +34,8 @@ delib.host {
 
     features = {
       virt-manager.enable = false;
-      docker.enable = true;
+      docker.enable = false;
+
       zfs = {
         enable = true;
         pools = [ "HOME" ];
