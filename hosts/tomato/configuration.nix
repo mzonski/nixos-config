@@ -135,6 +135,8 @@ delib.host {
       gitea.enable = true;
       vaultwarden.enable = true;
       tinyauth.enable = true;
+      cloudflared.enable = true;
+      cloudflared.tunnelId = "768b4452-ed2d-4651-a824-641514e83a62";
     };
   };
 
