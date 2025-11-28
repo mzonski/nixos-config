@@ -56,7 +56,7 @@ module {
       getDomain =
         serviceName: options:
         "${if options.subdomain != null then options.subdomain else serviceName}.${rootDomain}";
-      getUpstreamUrl = options: "${options.protocol}://${options.ip}:${toString options.port}/";
+      getUpstreamUrl = options: "${options.protocol}://${options.ip}:${toString options.port}";
     in
     mkIf (isHomelabEnabled myconfig && cfg != { }) {
       assertions = [
@@ -96,7 +96,7 @@ module {
 
           locations = {
             "/" = {
-              proxyPass = "${options.protocol}://${options.ip}:${toString options.port}/";
+              proxyPass = "${(getUpstreamUrl options)}/";
               proxyWebsockets = true;
               extraConfig = mkIf isTinyauthEnabled ''
                 auth_request /tinyauth;
