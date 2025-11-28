@@ -12,6 +12,7 @@ module {
   options.homelab = {
     enable = boolOption false;
     domain = strOption "local.zonni.pl";
+    rootDomain = strOption "zonni.pl";
   };
 
   nixos.ifEnabled = {

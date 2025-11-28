@@ -23,6 +23,9 @@ let
     mapAttrs'
     nameValuePair
     optionalAttrs
+    any
+    attrValues
+    filterAttrs
     ;
   inherit (builtins) toString;
 in
@@ -36,49 +39,74 @@ module {
       subdomain = allowNull (strOption null);
       port = noDefault (intOption null);
       requireAuth = boolOption true;
+      root = boolOption false;
+      public = boolOption false;
     };
   }) { };
 
   nixos.always =
     { myconfig, cfg, ... }:
     let
+      tinyAuthCfg = myconfig.services.tinyauth;
+      cloudflaredCfg = myconfig.services.cloudflared;
       homelabHostDomain = "${host.name}.${myconfig.homelab.domain}";
+      inherit (myconfig.homelab) rootDomain;
+
+      publicServices = filterAttrs (serviceName: options: options.root && options.public) cfg;
+      getDomain =
+        serviceName: options:
+        "${if options.subdomain != null then options.subdomain else serviceName}.${rootDomain}";
+      getUpstreamUrl = options: "${options.protocol}://${options.ip}:${toString options.port}/";
     in
     mkIf (isHomelabEnabled myconfig && cfg != { }) {
       assertions = [
         (assertEnabled myconfig "services.nginx.enable")
       ];
 
-      security.acme.certs."${homelabHostDomain}" = {
-        domain = homelabHostDomain;
-        extraDomainNames = [ "*.${homelabHostDomain}" ];
+      security.acme.certs = {
+        "${homelabHostDomain}" = {
+          domain = homelabHostDomain;
+          extraDomainNames = [ "*.${homelabHostDomain}" ];
+        };
+      }
+      // optionalAttrs (any (options: options.root) (attrValues cfg)) {
+        "${rootDomain}" = {
+          domain = "${rootDomain}";
+          extraDomainNames = [ "*.${rootDomain}" ];
+        };
+      };
 
+      services.cloudflared.tunnels = mkIf cloudflaredCfg.enable {
+        "${cloudflaredCfg.tunnelId}" = {
+          ingress = mapAttrs' (
+            serviceName: options: nameValuePair (getDomain serviceName options) (getUpstreamUrl options)
+          ) publicServices;
+        };
       };
 
       services.nginx.virtualHosts = mapAttrs' (
         serviceName: options:
         let
-          serverName = "${
-            if options.subdomain != null then options.subdomain else serviceName
-          }.${homelabHostDomain}";
+          hostDomain = if options.root then "${rootDomain}" else "${homelabHostDomain}";
+          isTinyauthEnabled = tinyAuthCfg.enable && options.requireAuth;
         in
-        nameValuePair serverName {
+        nameValuePair (getDomain serviceName options) {
           forceSSL = true;
-          useACMEHost = homelabHostDomain;
+          useACMEHost = hostDomain;
 
           locations = {
             "/" = {
               proxyPass = "${options.protocol}://${options.ip}:${toString options.port}/";
               proxyWebsockets = true;
-              extraConfig = mkIf (myconfig.services.tinyauth.enable && options.protected) ''
+              extraConfig = mkIf isTinyauthEnabled ''
                 auth_request /tinyauth;
                 error_page 401 = @tinyauth_login;
               '';
             };
           }
-          // optionalAttrs (myconfig.services.tinyauth.enable && options.protected) {
+          // optionalAttrs isTinyauthEnabled {
             "/tinyauth" = {
-              proxyPass = "http://127.0.0.1:${toString myconfig.services.tinyauth.port}/api/auth/nginx";
+              proxyPass = "http://127.0.0.1:${toString tinyAuthCfg.port}/api/auth/nginx";
               extraConfig = ''
                 internal;
                 proxy_pass_request_body off;
@@ -90,7 +118,7 @@ module {
             };
 
             "@tinyauth_login" = {
-              return = "302 ${myconfig.services.tinyauth.domain}/login?redirect_uri=$scheme://$http_host$request_uri";
+              return = "302 ${tinyAuthCfg.domain}/login?redirect_uri=$scheme://$http_host$request_uri";
             };
           };
         }
