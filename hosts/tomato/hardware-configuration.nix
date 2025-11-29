@@ -46,6 +46,11 @@ delib.host {
         vfat = true;
         xfs = true;
       };
+
+      loader = {
+        efi.canTouchEfiVariables = false;
+        grub.efiInstallAsRemovable = true;
+      };
     };
 
     # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
