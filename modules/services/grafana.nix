@@ -40,6 +40,7 @@ module {
         requireAuth = false;
       };
       homelab.users.monitoring = [ serviceName ];
+      homelab.users.auth = [ serviceName ];
     };
 
   nixos.ifEnabled =
@@ -140,7 +141,7 @@ module {
                 httpHeaderName1 = "Authorization";
               };
               secureJsonData = {
-                httpHeaderValue1 = "Token $__file{${config.sops.secrets.influxdb_grafana_token.path}}";
+                httpHeaderValue1 = "Token $__file{${config.sops.secrets.influxdb_grafana_read_token.path}}";
               };
             })
           ];

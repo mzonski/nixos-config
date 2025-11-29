@@ -61,7 +61,7 @@ module {
         {
           secrets.influxdb_admin_password = sopsConfig;
           secrets.influxdb_admin_token = sopsConfig;
-          secrets.influxdb_pfsense_token = sopsConfig;
+          secrets.influxdb_pfsense_write_token = sopsConfig;
         };
 
       systemd.tmpfiles.rules = [
@@ -86,7 +86,7 @@ module {
         enable = true;
         settings = {
           http-bind-address = "127.0.0.1:${toString cfg.uiPort}";
-          log-level = "debug";
+          log-level = "info";
           reporting-disabled = true;
 
           storage-cache-max-memory-size = 1073741824; # 1GB

@@ -10,6 +10,14 @@ let
     module
     boolOption
     ;
+
+  defaultSopsConfig = {
+    sopsFile = host.secretsFile;
+    mode = "0440";
+  };
+
+  mkSecrets =
+    group: secretNames: lib.genAttrs secretNames (_: defaultSopsConfig // { inherit group; });
 in
 module {
   name = "homelab.secrets";
@@ -17,6 +25,7 @@ module {
   options = moduleOptions (
     { parent, ... }:
     {
+      enable = boolOption parent.enable;
       haveAnyAuthUser = boolOption (parent.users.auth != [ ]);
       haveAnyMonitoringUser = boolOption (parent.users.monitoring != [ ]);
     }
@@ -24,21 +33,11 @@ module {
 
   nixos.ifEnabled =
     { cfg, ... }:
-    let
-      defaultSopsConfig = {
-        sopsFile = host.secretsFile;
-        mode = "0440";
-      };
-
-      mkSecrets =
-        group: secretNames: lib.genAttrs secretNames (_: defaultSopsConfig // { inherit group; });
-    in
     {
       sops.secrets =
         (lib.optionalAttrs cfg.haveAnyMonitoringUser (
           mkSecrets "monitoring" [
             "influxdb_grafana_read_token"
-            "influxdb_grafana_password"
           ]
         ))
         // (lib.optionalAttrs cfg.haveAnyAuthUser (

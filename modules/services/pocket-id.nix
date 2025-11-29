@@ -40,6 +40,7 @@ module {
       };
       user.groups = [ serviceName ];
       homelab.users.db = [ serviceName ];
+      homelab.users.auth = [ serviceName ];
     };
 
   nixos.always.imports = [

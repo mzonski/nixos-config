@@ -36,6 +36,6 @@ module {
       users.groups.auth.gid = 3002;
       users.groups.db.members = cfg.users.db;
       users.groups.monitoring.members = cfg.users.monitoring;
-      users.groups.monitoring.auth = cfg.users.authorization;
+      users.groups.auth.members = cfg.users.auth;
     };
 }
