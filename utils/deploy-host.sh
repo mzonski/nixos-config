@@ -60,6 +60,6 @@ sudo nix run github:numtide/nixos-anywhere -- \
     --build-on local \
     --phases kexec,disko,install
 
-sudo ssh root@seed 'bootctl --path=/mnt/boot install && reboot'
+sudo ssh root@seed 'reboot'
 
 retry_with_backoff ssh "${USERNAME}@${HOSTNAME}" "(sudo systemctl stop display-manager.service || true) && sudo chown ${USERNAME}:${USERNAME} /home/${USERNAME}/.ssh && sudo reboot"
