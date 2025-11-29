@@ -37,15 +37,15 @@ module {
         root = true;
       };
       user.groups = [ serviceName ];
+      homelab.users.db = [ serviceName ];
     };
 
   nixos.ifEnabled =
     { myconfig, cfg, ... }:
-    let
-      userId = 989;
-      groupId = 984;
-    in
     {
+      users.users.${serviceName}.uid = 989;
+      users.groups.${serviceName}.gid = 984;
+
       sops =
         let
           sopsConfig = {
@@ -64,6 +64,7 @@ module {
           secrets.smtp_username = sopsConfig;
           secrets.smtp_password = sopsConfig;
           templates.vaultwarden_env = {
+            inherit (sopsConfig) owner group;
             content = ''
               ADMIN_TOKEN=${config.sops.placeholder.vaultwarden_admin_token}
               PUSH_INSTALLATION_ID=${config.sops.placeholder.vaultwarden_installation_id}
@@ -75,16 +76,8 @@ module {
               SMTP_USERNAME=${config.sops.placeholder.smtp_username}
               SMTP_PASSWORD=${config.sops.placeholder.smtp_password}
             '';
-            owner = serviceName;
-            group = serviceName;
           };
         };
-      users.users.${serviceName} = {
-        group = serviceName;
-        extraGroups = [ "db" ];
-        uid = userId;
-      };
-      users.groups.${serviceName}.gid = groupId;
 
       systemd.services.vaultwarden.serviceConfig = {
         ReadWritePaths = [ cfg.serviceDir ];

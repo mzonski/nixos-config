@@ -15,6 +15,7 @@ let
     intOption
     moduleOptions
     ;
+  serviceName = "postgres";
 in
 module {
   name = "services.postgres";
@@ -22,13 +23,13 @@ module {
   options = moduleOptions {
     enable = boolOption false;
     port = intOption 5432;
-    filesDir = strOption "/nas/database/postgres";
+    filesDir = strOption "/nas/database/${serviceName}";
   };
 
-  myconfig.ifEnabled.user.groups = [
-    "postgres"
-    "db"
-  ];
+  myconfig.ifEnabled = {
+    user.groups = [ serviceName ];
+    homelab.users.db = [ serviceName ];
+  };
 
   nixos.ifEnabled =
     { myconfig, cfg, ... }:
@@ -38,14 +39,13 @@ module {
     in
     {
       networking.firewall.allowedTCPPorts = [ cfg.port ];
-      users.users.postgres.extraGroups = [ "db" ];
 
       sops =
         let
           sopsConfig = {
             sopsFile = host.secretsFile;
-            owner = "postgres";
-            group = "postgres";
+            owner = serviceName;
+            group = serviceName;
           };
         in
         {
@@ -158,7 +158,7 @@ module {
 
         serviceConfig = {
           Type = "oneshot";
-          User = "postgres";
+          User = serviceName;
           RemainAfterExit = true;
         };
 

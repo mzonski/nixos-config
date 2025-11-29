@@ -13,14 +13,14 @@ let
     strOption
     intOption
     ;
-  username = "tinyauth";
+  serviceName = "tinyauth";
 in
 module {
   name = "services.tinyauth";
 
   options = moduleOptions {
     enable = boolOption false;
-    dataDir = strOption "/nas/database/${username}";
+    dataDir = strOption "/nas/database/${serviceName}";
     domain = strOption "https://auth.zonni.pl";
     port = intOption 8086;
   };
@@ -28,14 +28,16 @@ module {
   myconfig.ifEnabled =
     { cfg, ... }:
     {
-      homelab.reverse-proxy.${username} = {
+      homelab.reverse-proxy.${serviceName} = {
         port = cfg.port;
         subdomain = "auth";
         requireAuth = false;
         root = true;
         public = true;
       };
-      user.groups = [ username ];
+      user.groups = [ serviceName ];
+      homelab.users.db = [ serviceName ];
+      homelab.users.auth = [ serviceName ];
     };
 
   nixos.always.imports = [
@@ -44,43 +46,31 @@ module {
 
   nixos.ifEnabled =
     { myconfig, cfg, ... }:
-    let
-      userId = 988;
-      groupId = 983;
-    in
     {
+      users.users.${serviceName}.uid = 988;
+      users.groups.${serviceName}.gid = 983;
 
       sops =
         let
           sopsConfig = {
             sopsFile = host.secretsFile;
-            owner = username;
-            group = username;
+            owner = serviceName;
+            group = serviceName;
           };
         in
         {
           secrets.tinyauth_pocket_id_client_id = sopsConfig;
           secrets.tinyauth_pocket_id_client_secret = sopsConfig;
-          secrets.tinyauth_google_client_id = sopsConfig;
-          secrets.tinyauth_google_secret = sopsConfig;
           templates.tinyauth-config = {
+            inherit (sopsConfig) owner group;
             content = ''
               PROVIDERS_POCKETID_CLIENT_ID=${config.sops.placeholder.tinyauth_pocket_id_client_id}
               PROVIDERS_POCKETID_CLIENT_SECRET=${config.sops.placeholder.tinyauth_pocket_id_client_secret}
-              PROVIDERS_GOOGLE_CLIENT_ID=${config.sops.placeholder.tinyauth_google_client_id}
-              PROVIDERS_GOOGLE_CLIENT_SECRET=${config.sops.placeholder.tinyauth_google_secret}
+              PROVIDERS_GOOGLE_CLIENT_ID=${config.sops.placeholder.oidc_google_client_id}
+              PROVIDERS_GOOGLE_CLIENT_SECRET=${config.sops.placeholder.oidc_google_secret}
             '';
-
-            owner = username;
-            group = username;
           };
         };
-
-      users.users.${username} = {
-        extraGroups = [ "db" ];
-        uid = userId;
-      };
-      users.groups.${username}.gid = groupId;
 
       services.tinyauth = {
         enable = true;
@@ -88,8 +78,8 @@ module {
         inherit (cfg) dataDir;
         environmentFile = config.sops.templates.tinyauth-config.path;
 
-        user = username;
-        group = username;
+        user = serviceName;
+        group = serviceName;
 
         settings = {
           ADDRESS = "127.0.0.1";

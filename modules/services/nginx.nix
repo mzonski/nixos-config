@@ -32,10 +32,7 @@ module {
       };
 
       networking = {
-        firewall.allowedTCPPorts = [
-          80
-          443
-        ];
+        firewall.allowedTCPPorts = [ 443 ];
       };
 
       users.users.nginx.extraGroups = [ "acme" ];

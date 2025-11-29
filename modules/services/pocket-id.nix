@@ -13,14 +13,14 @@ let
     strOption
     intOption
     ;
-  username = "pocket-id";
+  serviceName = "pocket-id";
 in
 module {
   name = "services.pocket-id";
 
   options = moduleOptions {
     enable = boolOption false;
-    dbDir = strOption "/nas/database/${username}";
+    dbDir = strOption "/nas/database/${serviceName}";
     port = intOption 8083;
     domain = strOption "https://oidc.zonni.pl";
   };
@@ -28,17 +28,18 @@ module {
   myconfig.ifEnabled =
     { cfg, ... }:
     {
-      homelab.db.${username} = {
+      homelab.db.${serviceName} = {
         type = "postgres";
       };
-      homelab.reverse-proxy.${username} = {
+      homelab.reverse-proxy.${serviceName} = {
         port = cfg.port;
         subdomain = "oidc";
         requireAuth = false;
         root = true;
         public = true;
       };
-      user.groups = [ username ];
+      user.groups = [ serviceName ];
+      homelab.users.db = [ serviceName ];
     };
 
   nixos.always.imports = [
@@ -47,28 +48,22 @@ module {
 
   nixos.ifEnabled =
     { cfg, ... }:
-    let
-      userId = 991;
-      groupId = 986;
-    in
     {
+      users.users.${serviceName}.uid = 991;
+      users.groups.${serviceName}.gid = 986;
+
       sops =
         let
           sopsConfig = {
             sopsFile = host.secretsFile;
-            owner = username;
-            group = username;
+            owner = serviceName;
+            group = serviceName;
           };
         in
         {
           secrets.pocket_id_encryption_key = sopsConfig;
           secrets.maxmind_license_key = sopsConfig;
         };
-      users.users.${username} = {
-        extraGroups = [ "db" ];
-        uid = userId;
-      };
-      users.groups.${username}.gid = groupId;
 
       services.pocket-id-nixos = {
         enable = true;
@@ -86,8 +81,8 @@ module {
 
           MAXMIND_LICENSE_KEY_FILE = config.sops.secrets.maxmind_license_key.path;
 
-          PUID = userId;
-          PGID = groupId;
+          PUID = config.users.users.${serviceName}.uid;
+          PGID = config.users.groups.${serviceName}.gid;
 
           DB_PROVIDER = "postgres";
           DB_CONNECTION_STRING = "postgres://pocket-id@/pocket-id";

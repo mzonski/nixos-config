@@ -12,72 +12,64 @@ let
     strOption
     intOption
     ;
-  username = "gitea";
+  serviceName = "gitea";
 in
 module {
   name = "services.gitea";
 
   options = moduleOptions {
     enable = boolOption false;
-    dbDir = strOption "/nas/database/${username}";
+    dbDir = strOption "/nas/database/${serviceName}";
     uiPort = intOption 8084;
-    sshClonePort = intOption 22;
   };
 
   myconfig.ifEnabled =
     { cfg, ... }:
     {
-      homelab.db.${username} = {
+      homelab.db.${serviceName} = {
         type = "postgres";
       };
-      homelab.reverse-proxy.${username} = {
+      homelab.reverse-proxy.${serviceName} = {
         port = cfg.uiPort;
         subdomain = "git";
         requireAuth = false;
       };
-      user.groups = [ username ];
+      user.groups = [ serviceName ];
+      homelab.users.db = [ serviceName ];
     };
 
   nixos.ifEnabled =
     { myconfig, cfg, ... }:
-    let
-      userId = 990;
-      groupId = 985;
-    in
     {
-      networking.firewall.allowedTCPPorts = [ cfg.sshClonePort ];
+      users.users.${serviceName}.uid = 990;
+      users.groups.${serviceName}.gid = 985;
+
       sops =
         let
           sopsConfig = {
             sopsFile = host.secretsFile;
-            owner = username;
-            group = username;
+            owner = serviceName;
+            group = serviceName;
           };
         in
         {
           secrets.gitea_camo_hmac = sopsConfig;
           # secrets.maxmind_license_key = sopsConfig;
         };
-      users.users.${username} = {
-        group = username;
-        extraGroups = [ "db" ];
-        uid = userId;
-      };
-      users.groups.${username}.gid = groupId;
 
       services.gitea = {
         enable = true;
         stateDir = cfg.dbDir;
-        user = username;
-        group = username;
+        user = serviceName;
+        group = serviceName;
         database = {
           createDatabase = false;
           type = "postgres";
           socket = "/run/postgresql";
           host = "127.0.0.1";
           port = myconfig.services.postgres.port;
-          name = username;
-          user = username;
+          name = serviceName;
+          user = serviceName;
         };
         captcha.enable = false;
         dump.enable = false;
@@ -118,7 +110,7 @@ module {
               HTTP_PORT = cfg.uiPort;
               DOMAIN = "git.${host.name}.${myconfig.homelab.domain}";
               ROOT_URL = domain;
-              SSH_PORT = cfg.sshClonePort;
+              SSH_PORT = 22;
               LANDING_PAGE = "login";
             };
             security = {
