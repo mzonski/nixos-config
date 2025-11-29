@@ -41,6 +41,28 @@ module {
         listenAddress = "127.0.0.1";
         port = cfg.uiPort;
         globalConfig.scrape_interval = "10s";
+
+        scrapeConfigs = [
+          {
+            job_name = "node";
+            static_configs = [
+              {
+                targets = [ "localhost:9100" ];
+              }
+            ];
+          }
+        ];
+
+        exporters.node = {
+          enable = true;
+          port = 9100;
+          enabledCollectors = [
+            "systemd"
+            "processes"
+            "nfs"
+            "nfsd"
+          ];
+        };
       };
     };
 }
