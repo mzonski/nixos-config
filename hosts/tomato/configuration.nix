@@ -130,7 +130,7 @@ delib.host {
       coolercontrol.enable = true;
       qbittorrent.enable = true;
       nginx.enable = true;
-      grafana.enable = false;
+      grafana.enable = true;
       postgres.enable = true;
       pocket-id.enable = true;
       gitea.enable = true;
@@ -138,6 +138,8 @@ delib.host {
       tinyauth.enable = true;
       cloudflared.enable = true;
       cloudflared.tunnelId = "768b4452-ed2d-4651-a824-641514e83a62";
+      prometheus.enable = true;
+      influxdb.enable = true;
     };
   };
 
