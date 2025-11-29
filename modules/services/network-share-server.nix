@@ -206,8 +206,9 @@ module {
                 allOptions = [
                   "rw"
                   "sync"
-                  "subtree_check"
+                  "no_subtree_check"
                   "no_root_squash"
+                  "fsid=${toString (builtins.hashString "md5" name)}"
                 ]
                 ++ shareCfg.nfsExtraConfig;
                 optionsStr = lib.concatStringsSep "," allOptions;
