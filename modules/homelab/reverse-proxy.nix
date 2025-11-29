@@ -54,8 +54,8 @@ module {
 
       publicServices = filterAttrs (serviceName: options: options.root && options.public) cfg;
       getDomain =
-        serviceName: options:
-        "${if options.subdomain != null then options.subdomain else serviceName}.${rootDomain}";
+        domain: serviceName: options:
+        "${if options.subdomain != null then options.subdomain else serviceName}.${domain}";
       getUpstreamUrl = options: "${options.protocol}://${options.ip}:${toString options.port}";
     in
     mkIf (isHomelabEnabled myconfig && cfg != { }) {
@@ -79,7 +79,8 @@ module {
       services.cloudflared.tunnels = mkIf cloudflaredCfg.enable {
         "${cloudflaredCfg.tunnelId}" = {
           ingress = mapAttrs' (
-            serviceName: options: nameValuePair (getDomain serviceName options) (getUpstreamUrl options)
+            serviceName: options:
+            nameValuePair (getDomain rootDomain serviceName options) (getUpstreamUrl options)
           ) publicServices;
         };
       };
@@ -90,7 +91,7 @@ module {
           hostDomain = if options.root then "${rootDomain}" else "${homelabHostDomain}";
           isTinyauthEnabled = tinyAuthCfg.enable && options.requireAuth;
         in
-        nameValuePair (getDomain serviceName options) {
+        nameValuePair (getDomain hostDomain serviceName options) {
           forceSSL = true;
           useACMEHost = hostDomain;
 
