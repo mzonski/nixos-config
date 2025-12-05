@@ -54,12 +54,15 @@ module {
             WebUI\Password_PBKDF2="${config.sops.placeholder.qbittorrent_password}"
           '';
           owner = "qbittorrent";
-          group = "nas-torrents";
+          group = "qbittorrent";
           path = "${cfg.profileDir}/password.conf";
         };
       };
 
       systemd.services.qbittorrent = {
+        after = [ "zfs.target" ];
+        requires = [ "zfs.target" ];
+
         serviceConfig = {
           RestrictNetworkInterfaces = [
             "lo"
@@ -89,7 +92,7 @@ module {
         profileDir = cfg.profileDir + "/";
 
         user = "qbittorrent";
-        group = "nas-torrents";
+        group = "qbittorrent";
 
         extraArgs = [ "--confirm-legal-notice" ];
 

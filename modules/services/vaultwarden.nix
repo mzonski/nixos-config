@@ -79,9 +79,17 @@ module {
           };
         };
 
-      systemd.services.vaultwarden.serviceConfig = {
-        ReadWritePaths = [ cfg.serviceDir ];
-        ReadOnlyPaths = [ config.sops.templates.vaultwarden_env.path ];
+      systemd.tmpfiles.rules = [
+        "d ${cfg.serviceDir} 0770 ${serviceName} ${serviceName} - -"
+      ];
+
+      systemd.services.vaultwarden = {
+        after = [ "postgresql.service" ];
+        requires = [ "postgresql.service" ];
+        serviceConfig = {
+          ReadWritePaths = [ cfg.serviceDir ];
+          ReadOnlyPaths = [ config.sops.templates.vaultwarden_env.path ];
+        };
       };
 
       # https://discourse.nixos.org/t/nullmailer-and-systemd-services/41225/5

@@ -66,6 +66,11 @@ module {
           secrets.maxmind_license_key = sopsConfig;
         };
 
+      systemd.services.pocket-id = {
+        after = [ "postgresql.service" ];
+        requires = [ "postgresql.service" ];
+      };
+
       services.pocket-id-nixos = {
         enable = true;
         package = pkgs.unstable.pocket-id;

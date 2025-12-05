@@ -34,6 +34,11 @@ module {
   nixos.ifEnabled =
     { myconfig, cfg, ... }:
     {
+      systemd.services.prometheus = {
+        after = [ "zfs.target" ];
+        requires = [ "zfs.target" ];
+      };
+
       services.${serviceName} = {
         enable = true;
         webExternalUrl = cfg.domainUrl;

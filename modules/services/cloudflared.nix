@@ -78,8 +78,7 @@ module {
       systemd.services = mapAttrs' (
         name: _:
         nameValuePair "cloudflared-tunnel-${name}" {
-          after = [ "sops-nix.service" ];
-          wants = [ "sops-nix.service" ];
+          requires = [ "run-secrets.d.mount" ];
         }
       ) config.services.cloudflared.tunnels;
     };

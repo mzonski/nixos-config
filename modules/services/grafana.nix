@@ -67,8 +67,8 @@ module {
         };
 
       systemd.services.grafana = {
-        after = [ "sops-nix.service" ];
-        wants = [ "sops-nix.service" ];
+        after = [ "postgresql.service" ];
+        requires = [ "postgresql.service" ];
       };
 
       systemd.tmpfiles.rules = [

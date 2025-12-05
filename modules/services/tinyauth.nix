@@ -72,6 +72,11 @@ module {
           };
         };
 
+      systemd.services.tinyauth = {
+        after = [ "zfs.target" ];
+        requires = [ "zfs.target" ];
+      };
+
       services.tinyauth = {
         enable = true;
         package = pkgs.local.tinyauth;

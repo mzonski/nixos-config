@@ -57,6 +57,11 @@ module {
           # secrets.maxmind_license_key = sopsConfig;
         };
 
+      systemd.services.gitea = {
+        after = [ "postgresql.service" ];
+        requires = [ "postgresql.service" ];
+      };
+
       services.gitea = {
         enable = true;
         stateDir = cfg.dbDir;

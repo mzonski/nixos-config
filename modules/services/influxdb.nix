@@ -4,7 +4,6 @@
   host,
   homeManagerUser,
   config,
-  pkgs,
   ...
 }:
 let
@@ -74,8 +73,8 @@ module {
       };
 
       systemd.services.influxdb2 = {
-        after = [ "sops-nix.service" ];
-        wants = [ "sops-nix.service" ];
+        after = [ "zfs.target" ];
+        requires = [ "zfs.target" ];
         serviceConfig = {
           User = username;
           Group = username;

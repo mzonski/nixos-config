@@ -91,6 +91,11 @@ module {
           '';
       };
 
+      systemd.services.samba-nmbd = {
+        after = [ "zfs.target" ];
+        requires = [ "zfs.target" ];
+      };
+
       services.samba =
         let
           mkPublicShare =
@@ -186,6 +191,11 @@ module {
           addresses = true;
           workstation = true;
         };
+      };
+
+      systemd.services.nfs-server = {
+        after = [ "zfs.target" ];
+        requires = [ "zfs.target" ];
       };
 
       services.nfs = {

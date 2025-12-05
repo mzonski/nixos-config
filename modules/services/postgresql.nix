@@ -54,6 +54,17 @@ module {
           secrets.postgres_crt = sopsConfig;
         };
 
+      systemd.tmpfiles.rules = [
+        "d ${cfg.filesDir} 0700 ${serviceName} ${serviceName} - -"
+        "d ${dataDir} 0700 ${serviceName} ${serviceName} - -"
+        "d ${logDir} 0700 ${serviceName} ${serviceName} - -"
+      ];
+
+      systemd.services.postgresql = {
+        after = [ "zfs.target" ];
+        requires = [ "zfs.target" ];
+      };
+
       services.postgresql = {
         enable = true;
         enableJIT = false;
@@ -70,6 +81,7 @@ module {
           "--allow-group-access"
         ];
 
+        ensureDatabases = [ homeManagerUser ];
         ensureUsers = [
           {
             name = homeManagerUser;
@@ -154,6 +166,7 @@ module {
       systemd.services.postgresql-password-setup = {
         description = "Set PostgreSQL user passwords";
         after = [ "postgresql.service" ];
+        requires = [ "postgresql.service" ];
         wantedBy = [ "multi-user.target" ];
 
         serviceConfig = {
