@@ -7,13 +7,13 @@
   ...
 }:
 let
-  version = "4.0.1";
+  version = "4.1.0";
 
   src = fetchFromGitHub {
     owner = "steveiliop56";
     repo = "tinyauth";
     tag = "v${version}";
-    hash = "sha256-73hyCp3TYavc37kP5rsup97NQ1iVdkouFnEppFyzOzw=";
+    hash = "sha256-v/Wf3bLoDHcGmlmL9hLbtt/tBuTRAN0SDFmON82Nn0I=";
   };
 
   generatedBunNix = runCommand "tinyauth-bun-nix" { } ''
@@ -47,7 +47,7 @@ buildGoModule {
     "-X tinyauth/internal/config.Version=${version}"
   ];
 
-  vendorHash = "sha256-rL3j681V1wtkU/Q7BrTlTRX9Lztv75/925RqhB9V+/I=";
+  vendorHash = "sha256-2sHZZ0negYHBIVzFqtRS/AUe67rrS0jcLb1iWEecMl4=";
 
   meta = {
     mainProgram = "tinyauth";
