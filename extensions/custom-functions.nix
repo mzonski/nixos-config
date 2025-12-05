@@ -19,5 +19,9 @@ delib.extension {
     assertEnabled = config: pathStr: assertEnabled' config pathStr null;
 
     isHomelabEnabled = myconfig: myconfig.homelab.enable;
+
+    strings = {
+      ensureTrailingSlash = path: lib.strings.normalizePath "${lib.removeSuffix "/" path}/";
+    };
   };
 }
