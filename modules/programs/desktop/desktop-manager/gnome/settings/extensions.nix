@@ -18,6 +18,14 @@ let
     '';
   });
 
+  cronomix = pkgs.gnomeExtensions.cronomix.overrideAttrs (oldAttrs: {
+    postInstall = (oldAttrs.postInstall or "") + ''
+      metadata_file="$out/share/gnome-shell/extensions/cronomix@zagortenay333/metadata.json"
+      ${pkgs.jq}/bin/jq '.["shell-version"] = ["49"]' "$metadata_file" > "$metadata_file.tmp"
+      mv "$metadata_file.tmp" "$metadata_file"
+    '';
+  });
+
   gnomeExtensions =
     with pkgs;
     [
@@ -31,7 +39,6 @@ let
       emoji-copy
       gtk4-desktop-icons-ng-ding
       lilypad
-      cronomix
       clipboard-history
       #tophat
       #paperwm
@@ -39,7 +46,10 @@ let
       #wintile-windows-10-window-tiling-for-gnome
       #workspaces-indicator-by-open-apps
     ])
-    ++ [ pop-shell-extension ];
+    ++ [
+      pop-shell-extension
+      cronomix
+    ];
 in
 module {
   name = "programs.gnome";
