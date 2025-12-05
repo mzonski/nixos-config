@@ -22,6 +22,7 @@ module {
   options = moduleOptions {
     enable = boolOption false;
     port = intOption 8080;
+    dataDir = strOption "/nas/database/${serviceName}";
     domain = strOption "";
     domainUrl = strOption "";
   };
@@ -33,14 +34,20 @@ module {
         domain = "${serviceName}.${myconfig.homelab.rootDomain}";
         domainUrl = "https://${serviceName}.${myconfig.homelab.rootDomain}";
       };
-
-      homelab.reverse-proxy.grafana = {
-        port = cfg.port;
-        root = true;
-        requireAuth = false;
+      homelab = {
+        db.${serviceName} = {
+          type = "postgres";
+        };
+        reverse-proxy.${serviceName} = {
+          port = cfg.port;
+          root = true;
+          requireAuth = false;
+        };
+        users.db = [ serviceName ];
+        users.monitoring = [ serviceName ];
+        users.auth = [ serviceName ];
       };
-      homelab.users.monitoring = [ serviceName ];
-      homelab.users.auth = [ serviceName ];
+
     };
 
   nixos.ifEnabled =
@@ -59,9 +66,25 @@ module {
           secrets.grafana_pocket_id_client_secret = sopsConfig;
         };
 
+      systemd.services.grafana = {
+        after = [ "sops-nix.service" ];
+        wants = [ "sops-nix.service" ];
+      };
+
+      systemd.tmpfiles.rules = [
+        "d ${cfg.dataDir} 0770 ${serviceName} ${serviceName} - -"
+      ];
+
       services.grafana = {
         enable = true;
+        dataDir = cfg.dataDir;
         settings = {
+          database = {
+            type = "postgres";
+            host = "127.0.0.1:5432";
+            name = serviceName;
+            user = serviceName;
+          };
           server = {
             http_addr = "127.0.0.1";
             http_port = 8080;
@@ -70,6 +93,7 @@ module {
           };
           auth = {
             disable_login_form = true;
+            oauth_allow_insecure_email_lookup = true;
           };
 
           "auth.basic".enabled = false;
@@ -137,7 +161,7 @@ module {
               editable = false;
               jsonData = {
                 httpMode = "GET";
-                dbName = "pfsense";
+                dbName = "pfSense";
                 httpHeaderName1 = "Authorization";
               };
               secureJsonData = {
