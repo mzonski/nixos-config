@@ -34,6 +34,8 @@ module {
       users.groups.db.gid = 3000;
       users.groups.monitoring.gid = 3001;
       users.groups.auth.gid = 3002;
+      users.groups.nas-files.gid = 2001;
+      users.groups.nas-torrents.gid = 2002;
       users.groups.db.members = cfg.users.db;
       users.groups.monitoring.members = cfg.users.monitoring;
       users.groups.auth.members = cfg.users.auth;

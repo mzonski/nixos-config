@@ -54,7 +54,7 @@ module {
             WebUI\Password_PBKDF2="${config.sops.placeholder.qbittorrent_password}"
           '';
           owner = "qbittorrent";
-          group = "qbittorrent";
+          group = "nas-torrents";
           path = "${cfg.profileDir}/password.conf";
         };
       };
@@ -92,7 +92,7 @@ module {
         profileDir = cfg.profileDir + "/";
 
         user = "qbittorrent";
-        group = "qbittorrent";
+        group = "nas-torrents";
 
         extraArgs = [ "--confirm-legal-notice" ];
 
