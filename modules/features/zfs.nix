@@ -116,15 +116,13 @@ module {
           {
             ${serviceName} = {
               description = "Load ZFS encryption key for ${dataset}";
-              requires = [
-                "run-secrets.d.mount"
-                "zfs-import.target"
-              ];
-
-              wantedBy = [ "multi-user.target" ];
+              requires = [ "run-secrets.d.mount" ];
+              after = [ "zfs-mount.service" ];
+              wantedBy = [ "zfs.target" ];
 
               serviceConfig = {
                 Type = "oneshot";
+                RemainAfterExit = true;
                 ExecStart = "${writeShellScript (serviceName) ''
                   if ${pkgs.zfs}/bin/zfs get -H -o value keystatus ${dataset} | grep -wq "available"; then
                     echo "Encryption key already loaded for ${dataset}"
