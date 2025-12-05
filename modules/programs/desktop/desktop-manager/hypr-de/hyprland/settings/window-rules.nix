@@ -74,6 +74,7 @@ module {
       jetbrains = {
         v2 = [
           "noinitialfocus,class:^(jetbrains-toolbox)$,floating:1"
+          # test it when hyprland will be once again DE (if ever lol): noinitialfocus, class:(jetbrains-)(.*), title:win.*, initialTitle:win.*, floating:1
           # Find in files
           "noinitialfocus,class:^(jetbrains-)(.*),title:^$,initialTitle:^$,floating:1"
           "center,class:^(jetbrains-)(.*),title:^$,initialTitle:^$,floating:1"
