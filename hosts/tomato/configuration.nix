@@ -38,6 +38,7 @@ delib.host {
 
       zfs = {
         enable = true;
+        snapshots = true;
         pools = [ "HOME" ];
         arc = {
           min = 4;
