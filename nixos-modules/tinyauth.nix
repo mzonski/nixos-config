@@ -297,6 +297,7 @@ in
           ExecStart = getExe cfg.package;
           Restart = "always";
           EnvironmentFile = [ settingsFile ] ++ optional (cfg.environmentFile != null) cfg.environmentFile;
+          SyslogIdentifier = "tinyauth";
 
           # Hardening
           AmbientCapabilities = "";
