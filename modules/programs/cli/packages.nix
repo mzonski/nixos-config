@@ -19,6 +19,7 @@ delib.module {
       tldr # quick man
 
       tcpdump
+      dig # DNS lookup utility
     ];
   };
 }
