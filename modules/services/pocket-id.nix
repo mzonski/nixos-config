@@ -77,8 +77,8 @@ module {
 
         dataDir = cfg.dbDir;
 
-        user = username;
-        group = username;
+        user = serviceName;
+        group = serviceName;
 
         # https://pocket-id.org/docs/configuration/environment-variables#overriding-the-ui-configuration
         settings = {
