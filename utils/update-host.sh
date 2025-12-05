@@ -14,4 +14,4 @@ nixos-rebuild switch \
     --flake ".#${HOSTNAME}" \
     --target-host "${USERNAME}@${HOSTNAME}" \
     --build-host localhost \
-    --use-remote-sudo
+    --sudo

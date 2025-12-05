@@ -116,6 +116,7 @@ delib.module {
     {
       programs.ssh = {
         enable = true;
+        enableDefaultConfig = false;
 
         matchBlocks =
           lib.genAttrs hostnames (hostname: {

@@ -54,7 +54,7 @@ delib.host {
       enable32Bit = true;
       extraPackages = with pkgs; [
         nvidia-vaapi-driver # remove 25.05?
-        vaapiVdpau
+        libva-vdpau-driver
         libvdpau-va-gl
         libva1
         libGL

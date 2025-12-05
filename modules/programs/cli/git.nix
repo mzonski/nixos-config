@@ -16,11 +16,21 @@ module {
   options = singleEnableOption true;
 
   home.ifEnabled = {
+    programs.delta = {
+      enable = true;
+      options = {
+        navigate = true;
+        light = false;
+        side-by-side = true;
+        line-numbers = true;
+      };
+    };
+
     programs.git = {
       enable = true;
       package = pkgs.git;
 
-      extraConfig = {
+      settings = {
         core = {
           editor = "nano"; # TODO: Use config variable
           whitespace = "fix,-indent-with-non-tab,trailing-space,cr-at-eol";
@@ -33,16 +43,21 @@ module {
         init.defaultBranch = "main";
         branch.sort = "committerdate";
         rerere.enabled = true;
-      };
 
-      aliases = {
-        unstage = "reset HEAD --";
-        last = "log -1 HEAD";
-        lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
-        amend = "commit --amend";
-        undo = "reset --soft HEAD^";
-        stashall = "stash save --include-untracked";
-        pushall = "!git remote | xargs -L1 git push --all";
+        alias = {
+          unstage = "reset HEAD --";
+          last = "log -1 HEAD";
+          lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
+          amend = "commit --amend";
+          undo = "reset --soft HEAD^";
+          stashall = "stash save --include-untracked";
+          pushall = "!git remote | xargs -L1 git push --all";
+        };
+
+        user = {
+          name = "Maciej Zonski";
+          email = "me@zonni.pl";
+        };
       };
 
       ignores = [
@@ -53,16 +68,6 @@ module {
         "node_modules"
         "Thumbs.db"
       ];
-
-      delta = {
-        enable = true;
-        options = {
-          navigate = true;
-          light = false;
-          side-by-side = true;
-          line-numbers = true;
-        };
-      };
 
       lfs.enable = true;
 

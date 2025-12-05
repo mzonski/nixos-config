@@ -27,7 +27,7 @@ module {
     nix.gc = {
       automatic = true;
       persistent = true;
-      frequency = "weekly";
+      dates = "weekly";
       options = "--delete-old";
     };
   };

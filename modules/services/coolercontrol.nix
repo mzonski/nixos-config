@@ -102,7 +102,6 @@ module {
     { cfg, ... }:
     {
       programs.coolercontrol.enable = false;
-      programs.coolercontrol.nvidiaSupport = false;
 
       environment.systemPackages = mkIf host.isDesktop [
         pkgs.coolercontrol.coolercontrol-gui

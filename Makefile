@@ -52,7 +52,7 @@ bootloader-update-%:
     --flake ".#$*" \
     --target-host "$(USERNAME)@$*" \
     --build-host localhost \
-    --use-remote-sudo
+    --sudo
 
 seed-iso:
 	@echo "Generating Seed ISO..."

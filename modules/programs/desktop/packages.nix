@@ -21,7 +21,7 @@ delib.module {
       ];
       fonts = with pkgs; [
         roboto
-        vistafonts
+        vista-fonts
         textfonts
         font-awesome
         local.apple-fonts
@@ -75,7 +75,7 @@ delib.module {
           pciutils # peek/edit PCI devices config
           clinfo
           libglvnd
-          glxinfo
+          mesa-demos
           vulkan-tools
           lshw
 
@@ -88,7 +88,7 @@ delib.module {
 
           ## ENCRYPTION/SIGNING
           opensc # Smart card utilities and libraries
-          pcsctools # PC/SC tools for smart card operations
+          pcsc-tools # PC/SC tools for smart card operations
           ccid # Smart card driver
           yubikey-manager # Main CLI tool for YubiKey management (ykman)
           yubioath-flutter # Yubico Desktop Authenticator

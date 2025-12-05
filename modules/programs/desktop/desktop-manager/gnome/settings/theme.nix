@@ -5,6 +5,7 @@
 }:
 let
   inherit (delib) module;
+  inherit (builtins) toString;
 in
 module {
   name = "programs.gnome";
@@ -18,8 +19,8 @@ module {
       dconf = {
         settings = {
           "org/gnome/desktop/interface" = {
-            monospace-font-name = fonts.monospace.name;
-            font-name = fonts.sans.name;
+            monospace-font-name = "${fonts.monospace.name} ${toString fonts.monospace.size}";
+            font-name = "${fonts.sans.name} ${toString fonts.sans.size}";
             color-scheme = "prefer-dark";
             scaling-factor = lib.gvariant.mkUint32 2;
           };

@@ -10,9 +10,11 @@ delib.module {
   nixos.always =
     { myconfig, ... }:
     {
-      systemd.extraConfig = lib.mkIf (host.isDesktop or host.isMinimal) ''
-        DefaultTimeoutStopSec=15s
-        DefaultTimeoutStartSec=15s
-      '';
+      systemd.settings = lib.mkIf (host.isDesktop or host.isMinimal) {
+        Manager = {
+          DefaultTimeoutStopSec = "15s";
+          DefaultTimeoutStartSec = "15s";
+        };
+      };
     };
 }

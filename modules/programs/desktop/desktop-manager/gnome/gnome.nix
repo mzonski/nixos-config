@@ -32,7 +32,7 @@ module {
     { cfg, ... }:
     {
       services.xserver.enable = true;
-      services.xserver.desktopManager.gnome.enable = true;
+      services.desktopManager.gnome.enable = true;
 
       systemd.services.display-manager = {
         after = [ "network-online.target" ];
@@ -43,7 +43,7 @@ module {
         core-os-services.enable = true;
         core-shell.enable = true;
         core-apps.enable = true;
-        core-developer-tools.enable = true;
+        core-developer-tools.enable = false;
         games.enable = false;
       };
 

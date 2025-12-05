@@ -16,7 +16,7 @@ delib.host {
   type = "minimal";
 
   homeManagerSystem = system;
-  home.home.stateVersion = "25.05";
+  home.home.stateVersion = "25.11";
 
   myconfig = {
     admin.username = homeManagerUser;
@@ -30,7 +30,7 @@ delib.host {
     boot.loader.systemd-boot.enable = lib.mkForce false;
 
     nixpkgs.hostPlatform = system;
-    system.stateVersion = "25.05";
+    system.stateVersion = "25.11";
 
     imports = [
       (modulesPath + "/installer/cd-dvd/installation-cd-base.nix")
@@ -102,12 +102,6 @@ delib.host {
         config.sops.secrets.ssh_public_zonni.path
         config.sops.secrets.ssh_public_corn.path
       ]);
-    };
-  };
-
-  home = {
-    programs.ssh = {
-      enable = true;
     };
   };
 }

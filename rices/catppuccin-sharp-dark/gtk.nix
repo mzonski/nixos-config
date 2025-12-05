@@ -1,8 +1,4 @@
-{
-  pkgs,
-  delib,
-  ...
-}:
+{ pkgs, delib, ... }:
 let
   themeName = "Colloid-Purple-Dark-Compact-Catppuccin";
   iconThemeName = "Papirus-Dark";
@@ -25,6 +21,13 @@ let
           ${oldAttrs.preInstall or ""}
           cp -f ${./assets/_colloid-theme-variables.scss} src/sass/_variables.scss
         '';
+        src = pkgs.fetchFromGitHub {
+          owner = "vinceliuice";
+          repo = "colloid-gtk-theme";
+          rev = "50b015a9616aa40761dd6a825c103bd5867b1a66";
+          hash = "sha256-3PCDrZ+7PQGi4n/3XY1ikeOjbYgZ1+anihZm9raW3CM=";
+        };
+
       });
 
   cursorTheme = {
@@ -70,8 +73,6 @@ delib.rice {
 
       dconf.settings = {
         "org/gnome/desktop/interface" = {
-          monospace-font-name = cfg.fonts.monospace.name;
-          font-name = cfg.fonts.sans.name;
           color-scheme = "prefer-dark";
           accent-color = "purple";
         };

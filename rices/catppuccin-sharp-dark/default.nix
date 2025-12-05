@@ -14,7 +14,7 @@ delib.rice {
     sans = {
       name = "Fira Sans Book";
       package = pkgs.fira;
-      size = 14;
+      size = 10;
     };
     emoji = {
       name = "Noto Color Emoji";

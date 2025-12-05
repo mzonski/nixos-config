@@ -18,6 +18,7 @@ delib.rice {
 
       kitty.enable = true;
       zsh-syntax-highlighting.enable = true;
+      vscode.profiles.default.enable = false;
 
       gtk = {
         enable = false;

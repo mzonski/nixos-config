@@ -25,10 +25,6 @@ delib.host {
       enable32Bit = true;
     };
 
-    hardware.amdgpu = {
-      amdvlk.enable = true;
-      amdvlk.support32Bit.enable = true;
-      initrd.enable = true;
-    };
+    hardware.amdgpu.initrd.enable = true;
   };
 }

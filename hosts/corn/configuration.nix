@@ -13,7 +13,7 @@ delib.host {
   secretsFile = ./secrets.yaml;
 
   homeManagerSystem = system;
-  home.home.stateVersion = "25.05";
+  home.home.stateVersion = "25.11";
 
   myconfig =
     { myconfig, ... }:
@@ -114,7 +114,7 @@ delib.host {
 
   nixos = {
     nixpkgs.hostPlatform = system;
-    system.stateVersion = "25.05";
+    system.stateVersion = "25.11";
     hardware.enableRedistributableFirmware = true;
 
     imports = [
@@ -156,11 +156,6 @@ delib.host {
     programs = {
       bash.enable = true;
       bat.enable = true;
-
-      git = {
-        userName = "Maciej Zonski";
-        userEmail = "me@zonni.pl";
-      };
     };
   };
 }
