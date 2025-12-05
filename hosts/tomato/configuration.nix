@@ -69,6 +69,8 @@ delib.host {
       };
     };
 
+    programs.web.it-tools.enable = true;
+
     services = {
       network-share-server = {
         enable = true;
