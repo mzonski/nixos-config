@@ -131,6 +131,10 @@ module {
           "org/gnome/nautilus/icon-view" = {
             default-zoom-level = "small";
           };
+
+          "org/gnome/desktop/wm/preferences" = {
+            button-layout = ":minimize,maximize,close";
+          };
         };
       };
     };
