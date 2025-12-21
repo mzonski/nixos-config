@@ -61,6 +61,8 @@ module {
         yelp
         gnome-tour
         devhelp
+        showtime
+        baobab
       ];
     };
 
