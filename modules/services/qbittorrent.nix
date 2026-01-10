@@ -162,6 +162,9 @@ module {
               ReverseProxySupportEnabled = true;
               TrustedReverseProxiesList = "0.0.0.0/24";
               SecureCookie = false;
+
+              AlternativeUIEnabled = true;
+              RootFolder = "${pkgs.vuetorrent}/share/vuetorrent";
             };
           };
         };
