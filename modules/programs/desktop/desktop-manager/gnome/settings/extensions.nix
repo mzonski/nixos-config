@@ -27,11 +27,7 @@ let
   });
 
   gnomeExtensions =
-    with pkgs;
-    [
-      systemdrebootmenuext
-    ]
-    ++ (with pkgs.gnomeExtensions; [
+    (with pkgs.gnomeExtensions; [
       appindicator
       color-picker
       caffeine
