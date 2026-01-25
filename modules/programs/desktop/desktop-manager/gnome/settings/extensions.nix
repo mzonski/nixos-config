@@ -43,7 +43,7 @@ let
       #workspaces-indicator-by-open-apps
     ])
     ++ [
-      pop-shell-extension
+      # pop-shell-extension
       cronomix
     ];
 in
