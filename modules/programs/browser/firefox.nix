@@ -130,6 +130,10 @@ module {
             "identity.fxaccounts.enabled" = mkDefault cfg.firefoxProfiles;
             # Toggle "save password" prompt
             "signon.rememberSignons" = mkDefault cfg.rememberPasswords;
+            "services.sync.prefs.sync.signon.autofillForms" = mkDefault cfg.rememberPasswords;
+            "signon.autofillForms.autocompleteOff" = mkDefault (!cfg.rememberPasswords);
+            "signon.autofillForms" = mkDefault cfg.rememberPasswords;
+            "signon.generation.enabled" = mkDefault cfg.rememberPasswords;
 
             # Harden
             "privacy.trackingprotection.enabled" = true;
