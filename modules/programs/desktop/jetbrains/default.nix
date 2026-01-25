@@ -44,7 +44,7 @@ module {
   home.ifEnabled = {
     home.packages = with pkgs.jetbrains; [
       webstorm
-      pycharm-professional
+      pycharm
       rust-rover
       datagrip
       clion
