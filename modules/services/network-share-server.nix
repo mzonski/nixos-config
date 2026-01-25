@@ -75,11 +75,12 @@ module {
           mode = "0400";
           owner = "root";
           group = "root";
+          restartUnits = [ "samba-smbd.service" ];
         };
       };
 
-      system.activationScripts.init_smbpasswd = {
-        text =
+      systemd.services.samba-smbd = {
+        postStart =
           let
             defaultSambaPasswordPath = config.sops.secrets.samba_password.path;
             adminUsername = homeManagerUser;
