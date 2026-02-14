@@ -7,7 +7,7 @@
   addDriverRunpath,
   python3Packages,
   liquidctl,
-  ...
+  protobuf,
 }:
 
 {
@@ -15,25 +15,23 @@
   src,
   meta,
 }:
+
 rustPlatform.buildRustPackage {
   pname = "coolercontrold";
   inherit version src;
   sourceRoot = "${src.name}/coolercontrold";
 
-  cargoHash = "sha256-teKMz6ruTSwQ76dMXoupS3D7n1ashfHPpxMGo3Qm6FI=";
+  cargoHash = "sha256-5YYodScAAs6ERVbj+irvyNS9IOkVaBHR4DCXTrrtyVI=";
 
-  buildInputs = [
-    libdrm
-  ];
+  buildInputs = [ libdrm ];
 
   nativeBuildInputs = [
+    protobuf
     addDriverRunpath
     python3Packages.wrapPython
   ];
 
-  pythonPath = [
-    liquidctl
-  ];
+  pythonPath = [ liquidctl ];
 
   postPatch = ''
     # copy the frontend static resources to a directory for embedding
@@ -54,7 +52,7 @@ rustPlatform.buildRustPackage {
   postFixup = ''
     addDriverRunpath "$out/bin/coolercontrold"
 
-    buildPythonPath "$pythonPath"
+    buildPythonPath "''${pythonPath[*]}"
     wrapProgram "$out/bin/coolercontrold" \
       --prefix PATH : $program_PATH \
       --prefix PYTHONPATH : $program_PYTHONPATH
