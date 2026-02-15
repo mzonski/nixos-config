@@ -1,6 +1,7 @@
 {
   delib,
   pkgs,
+  homeconfig,
   ...
 }:
 
@@ -43,5 +44,13 @@ module {
     in
     {
       home.packages = node22 ++ python312 ++ kubernetes;
+
+      xdg.configFile."npm/npmrc".text = ''
+        update-notifier=false
+      '';
+
+      home.sessionVariables = {
+        NPM_CONFIG_USERCONFIG = "${homeconfig.home.homeDirectory}/.config/npm/npmrc";
+      };
     };
 }
