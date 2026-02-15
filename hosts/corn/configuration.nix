@@ -143,13 +143,6 @@ delib.host {
     services.scx.scheduler = "scx_rusty";
 
     hardware.i2c.enable = true;
-
-    services.udev.packages = [
-      (pkgs.writeTextDir "etc/udev/rules.d/45-asus-peripherals.rules" (''
-        # ASUS ROG RYUJIN III EXTREME
-        SUBSYSTEM=="hidraw", ATTRS{idVendor}=="0b05", ATTRS{idProduct}=="1bcb", MODE="0666", OWNER="zonni"
-      ''))
-    ];
   };
 
   home = {

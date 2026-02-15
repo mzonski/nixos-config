@@ -41,7 +41,7 @@ module {
 
       boot.extraModulePackages = [ config.boot.kernelPackages.kvmfr ];
       services.udev.extraRules = ''
-        SUBSYSTEM=="kvmfr", OWNER="${username}", GROUP="${qemuGroupName}", MODE="0660"
+        SUBSYSTEM=="kvmfr", GROUP="${qemuGroupName}", MODE="0660"
       '';
 
       environment.systemPackages = with pkgs; [

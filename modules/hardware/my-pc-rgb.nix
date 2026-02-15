@@ -48,10 +48,10 @@ module {
       services.udev.packages = [
         (pkgs.writeTextDir "etc/udev/rules.d/45-my-pc-rgb-devices.rules" ''
           # ASUS AURA LED Controller
-          SUBSYSTEM=="usb", ATTR{idVendor}=="0b05", ATTR{idProduct}=="19af", MODE="0666", OWNER="zonni"
+          SUBSYSTEM=="usb", ATTR{idVendor}=="0b05", ATTR{idProduct}=="19af", TAG+="uaccess"
 
           # Corsair Lighting Node Core
-          SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1b1c", ATTRS{idProduct}=="0c1a", MODE="0666", OWNER="zonni"
+          SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1b1c", ATTRS{idProduct}=="0c1a", TAG+="uaccess"
         '')
       ];
     };
