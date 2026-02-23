@@ -76,11 +76,6 @@ delib.host {
       programs.gnome.freezeOnNvidiaSuspend.enable = true;
 
       programs.gsconnect.enable = true;
-
-      hardware.network.restart-after-suspend = {
-        enable = true;
-        networkInterface = "enp113s0";
-      };
       hardware.deepcool-digital-linux.enable = false;
       hardware.my-pc-rgb.enable = true;
 
