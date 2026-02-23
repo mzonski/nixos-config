@@ -80,9 +80,13 @@ module {
             (sdk_8_0.overrideAttrs sdkOverride)
           ]
         );
+
+      other = with pkgs.unstable; [
+        claude-code
+      ];
     in
     {
-      home.packages = node22 ++ python312 ++ kubernetes ++ [ dotnet-full ];
+      home.packages = node22 ++ python312 ++ kubernetes ++ other ++ [ dotnet-full ];
 
       xdg.configFile."npm/npmrc".text = ''
         update-notifier=false
