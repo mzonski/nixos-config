@@ -43,6 +43,14 @@ delib.host {
           enable = true;
           bridge.enable = false;
           bridge.externalInterface = "enp113s0";
+          allowedDevices = [
+            "/dev/dri/card0"
+            "/dev/dri/renderD128"
+            "/dev/dri/card1"
+            "/dev/dri/renderD129"
+            "/dev/nvidia0"
+            "/dev/nvidiactl"
+          ];
           vfio-passtrough = {
             enable = true;
             devices = {

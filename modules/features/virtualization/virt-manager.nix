@@ -1,14 +1,20 @@
-{ pkgs, delib, ... }:
+{
+  pkgs,
+  lib,
+  delib,
+  ...
+}:
 let
   inherit (delib)
     module
     packageOption
-    noNullDefault
     allowNull
     noDefault
     strOption
     intOption
     boolOption
+    listOfOption
+    str
     ;
   qemuGroupName = "qemu-libvirtd";
 in
@@ -27,6 +33,8 @@ module {
       bridgeInterface = strOption "br0";
       externalInterface = strOption "enp3s0";
     };
+
+    allowedDevices = listOfOption str [ ];
 
     vfio-passtrough = {
       enable = boolOption false;
@@ -77,23 +85,47 @@ module {
         win-spice
       ];
 
+      users.users.qemu-libvirtd = {
+        extraGroups = [
+          "video"
+          "render"
+        ];
+      };
+
       virtualisation = {
         libvirtd = {
           enable = true;
           qemu = {
-            package = pkgs.qemu_kvm;
+            package = pkgs.qemu_full;
             runAsRoot = true;
             swtpm.enable = true;
-            # ovmf.enable = true;
-            # ovmf.packages = [ pkgs.OVMFFull.fd ];
-            verbatimConfig = ''
-              user = "${username}"
-              group = "${qemuGroupName}"
-              gl = 1
-              egl_headless = 1
-              spice_gl = 1
-              display_gl = 1
-            '';
+            verbatimConfig =
+              let
+                cgroupAcls = [
+                  "/dev/null"
+                  "/dev/full"
+                  "/dev/zero"
+                  "/dev/random"
+                  "/dev/urandom"
+                  "/dev/ptmx"
+                  "/dev/kvm"
+                  "/dev/rtc"
+                  "/dev/hpet"
+                ]
+                ++ cfg.allowedDevices;
+              in
+              ''
+                user = "${username}"
+                group = "${qemuGroupName}"
+                gl = 1
+                egl_headless = 1
+                spice_gl = 1
+                display_gl = 1
+
+                cgroup_device_acl = [
+                  ${lib.concatMapStringsSep ",\n  " (d: "\"${d}\"") cgroupAcls}
+                ]
+              '';
           };
         };
         spiceUSBRedirection.enable = true;

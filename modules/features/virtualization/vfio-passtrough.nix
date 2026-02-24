@@ -14,10 +14,13 @@ in
 module {
   name = "features.virt-manager.vfio-passtrough";
 
+  myconfig.ifEnabled = {
+    features.virt-manager.allowedDevices = [ kvmfrDevice ];
+  };
+
   nixos.ifEnabled =
     { cfg, myconfig, ... }:
     let
-      inherit (myconfig.admin) username;
       dgpuDevices = with cfg.devices; [
         dgpu-video
         dgpu-audio
@@ -47,20 +50,5 @@ module {
       environment.systemPackages = with pkgs; [
         looking-glass-client
       ];
-
-      virtualisation.libvirtd.qemu.verbatimConfig = ''
-        cgroup_device_acl = [
-          "/dev/null",
-          "/dev/full",
-          "/dev/zero",
-          "/dev/random",
-          "/dev/urandom",
-          "/dev/ptmx",
-          "/dev/kvm",
-          "/dev/rtc",
-          "/dev/hpet",
-          "${kvmfrDevice}",
-        ]
-      '';
     };
 }
