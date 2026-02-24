@@ -111,6 +111,7 @@ module {
         shellAliases = {
           ls = if stdenv.isLinux then "ls --color" else "ls -G";
           cdgit = "cd ~/git";
+          cdnix = "cd ~/git/nixos-config";
           watch = "watch ";
           gpgbye = "gpg-connect-agent updatestartuptty /bye";
           print_path = "echo $PATH | tr ':' '\n' | sort";
