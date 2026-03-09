@@ -46,8 +46,8 @@ in
         This can be used to securely store tokens and secrets outside of the world-readable Nix store.
 
         Example contents of the file:
-        USERS=admin:$$2a$$10$$...
-        PROVIDERS_GOOGLE_CLIENT_SECRET=your-secret
+        TINYAUTH_AUTH_USERS=admin:$$2a$$10$$...
+        TINYAUTH_OAUTH_PROVIDERS_GOOGLE_CLIENTSECRET=your-secret
       '';
       default = null;
       example = "/var/lib/secrets/tinyauth";
@@ -58,55 +58,372 @@ in
         freeformType = format.type;
 
         options = {
-          ADDRESS = mkOption {
+          # General Configuration
+          TINYAUTH_APPURL = mkOption {
             type = str;
             description = ''
-              Address to bind the server to.
-            '';
-            default = "0.0.0.0";
-          };
-
-          PORT = mkOption {
-            type = port;
-            description = ''
-              Port to run the server on.
-            '';
-            default = 3000;
-          };
-
-          APP_URL = mkOption {
-            type = str;
-            description = ''
-              The Tinyauth URL. This is required.
+              The base URL where the app is hosted.
             '';
             example = "https://auth.example.com";
           };
 
-          APP_TITLE = mkOption {
-            type = str;
-            description = ''
-              Title of the app.
-            '';
-            default = "Tinyauth";
-          };
-
-          DATABASE_PATH = mkOption {
+          # Database Configuration
+          TINYAUTH_DATABASE_PATH = mkOption {
             type = path;
             description = ''
-              Path to the SQLite database file.
+              The path to the database, including file name.
             '';
             default = "/var/lib/tinyauth/tinyauth.db";
           };
 
-          LOG_LEVEL = mkOption {
+          # Analytics Configuration
+          TINYAUTH_ANALYTICS_ENABLED = mkOption {
+            type = bool;
+            description = ''
+              Enable periodic anonymous version information collection (heartbeat).
+
+              When enabled, Tinyauth sends anonymous version information every 12 hours
+              to get insights on usage. The collected information includes:
+              - Tinyauth version
+              - Instance UUID (generated with UUID v4 from the app URL)
+              - Time of the request
+            '';
+            default = true;
+          };
+
+          # Resources Configuration
+          TINYAUTH_RESOURCES_ENABLED = mkOption {
+            type = bool;
+            description = ''
+              Enable the resources server.
+            '';
+            default = true;
+          };
+
+          TINYAUTH_RESOURCES_PATH = mkOption {
+            type = path;
+            description = ''
+              The directory where resources are stored (e.g., background image).
+            '';
+            default = "/var/lib/tinyauth/resources";
+          };
+
+          # Server Configuration
+          TINYAUTH_SERVER_PORT = mkOption {
+            type = port;
+            description = ''
+              The port on which the server listens.
+            '';
+            default = 3000;
+          };
+
+          TINYAUTH_SERVER_ADDRESS = mkOption {
+            type = str;
+            description = ''
+              The address on which the server listens.
+            '';
+            default = "0.0.0.0";
+          };
+
+          TINYAUTH_SERVER_SOCKETPATH = mkOption {
+            type = str;
+            description = ''
+              The path to the Unix socket. Leave empty to disable.
+            '';
+            default = "";
+          };
+
+          # Authentication Configuration
+          TINYAUTH_AUTH_IP_ALLOW = mkOption {
+            type = str;
+            description = ''
+              List of allowed IPs or CIDR ranges (global).
+            '';
+            default = "";
+          };
+
+          TINYAUTH_AUTH_IP_BLOCK = mkOption {
+            type = str;
+            description = ''
+              List of blocked IPs or CIDR ranges (global).
+            '';
+            default = "";
+          };
+
+          TINYAUTH_AUTH_USERS = mkOption {
+            type = str;
+            description = ''
+              Comma-separated list of users (username:hashed_password).
+            '';
+            default = "";
+          };
+
+          TINYAUTH_AUTH_USERSFILE = mkOption {
+            type = str;
+            description = ''
+              Path to the users file.
+            '';
+            default = "";
+          };
+
+          TINYAUTH_AUTH_SECURECOOKIE = mkOption {
+            type = bool;
+            description = ''
+              Enable secure cookies (send cookie over secure connection only).
+            '';
+            default = false;
+          };
+
+          TINYAUTH_AUTH_SESSIONEXPIRY = mkOption {
+            type = int;
+            description = ''
+              Session expiry time in seconds.
+            '';
+            default = 86400;
+          };
+
+          TINYAUTH_AUTH_SESSIONMAXLIFETIME = mkOption {
+            type = int;
+            description = ''
+              Maximum session lifetime in seconds (0 to disable).
+            '';
+            default = 0;
+          };
+
+          TINYAUTH_AUTH_LOGINTIMEOUT = mkOption {
+            type = int;
+            description = ''
+              Login timeout in seconds after max retries reached (0 to disable).
+            '';
+            default = 300;
+          };
+
+          TINYAUTH_AUTH_LOGINMAXRETRIES = mkOption {
+            type = int;
+            description = ''
+              Maximum login retries before timeout (0 to disable).
+            '';
+            default = 3;
+          };
+
+          TINYAUTH_AUTH_TRUSTEDPROXIES = mkOption {
+            type = str;
+            description = ''
+              Comma-separated list of trusted proxy addresses
+              for correct client IP detection.
+            '';
+            default = "";
+            example = "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16";
+          };
+
+          # ACLs Configuration
+          #
+          # Per-app access control lists are dynamic and use the freeformType
+          # to allow arbitrary TINYAUTH_APPS_[NAME]_* keys. Examples:
+          #
+          #   TINYAUTH_APPS_MYAPP_CONFIG_DOMAIN = "myapp.example.com";
+          #   TINYAUTH_APPS_MYAPP_USERS_ALLOW = "alice,bob";
+          #   TINYAUTH_APPS_MYAPP_USERS_BLOCK = "eve";
+          #   TINYAUTH_APPS_MYAPP_OAUTH_WHITELIST = "group1";
+          #   TINYAUTH_APPS_MYAPP_OAUTH_GROUPS = "admins";
+          #   TINYAUTH_APPS_MYAPP_IP_ALLOW = "10.0.0.0/8";
+          #   TINYAUTH_APPS_MYAPP_IP_BLOCK = "192.168.1.1";
+          #   TINYAUTH_APPS_MYAPP_IP_BYPASS = "172.16.0.0/12";
+          #   TINYAUTH_APPS_MYAPP_RESPONSE_HEADERS = "X-Custom: value";
+          #   TINYAUTH_APPS_MYAPP_RESPONSE_BASICAUTH_USERNAME = "user";
+          #   TINYAUTH_APPS_MYAPP_RESPONSE_BASICAUTH_PASSWORD = "pass";
+          #   TINYAUTH_APPS_MYAPP_RESPONSE_BASICAUTH_PASSWORDFILE = "/run/secrets/pass";
+          #   TINYAUTH_APPS_MYAPP_PATH_ALLOW = "/public,/health";
+          #   TINYAUTH_APPS_MYAPP_PATH_BLOCK = "/admin";
+          #   TINYAUTH_APPS_MYAPP_LDAP_GROUPS = "cn=admins,ou=groups,dc=example,dc=com";
+          #
+          # These are handled by the freeformType and do not need explicit
+          # option declarations.
+
+          # OAuth Configuration
+          TINYAUTH_OAUTH_WHITELIST = mkOption {
+            type = str;
+            description = ''
+              Comma-separated list of allowed OAuth domains.
+            '';
+            default = "";
+            example = "user@example.com,admin@example.com";
+          };
+
+          TINYAUTH_OAUTH_AUTOREDIRECT = mkOption {
+            type = str;
+            description = ''
+              The OAuth provider to use for automatic redirection.
+            '';
+            default = "";
+            example = "google";
+          };
+
+          # Per-provider OAuth settings are dynamic and use the freeformType
+          # to allow arbitrary TINYAUTH_OAUTH_PROVIDERS_[NAME]_* keys.
+          # Examples:
+          #
+          #   TINYAUTH_OAUTH_PROVIDERS_GOOGLE_CLIENTID = "...";
+          #   TINYAUTH_OAUTH_PROVIDERS_GOOGLE_CLIENTSECRET = "...";
+          #   TINYAUTH_OAUTH_PROVIDERS_GOOGLE_CLIENTSECRETFILE = "/run/secrets/oauth";
+          #   TINYAUTH_OAUTH_PROVIDERS_GOOGLE_SCOPES = "openid,email,profile";
+          #   TINYAUTH_OAUTH_PROVIDERS_GOOGLE_REDIRECTURL = "https://auth.example.com/callback";
+          #   TINYAUTH_OAUTH_PROVIDERS_GOOGLE_AUTHURL = "https://...";
+          #   TINYAUTH_OAUTH_PROVIDERS_GOOGLE_TOKENURL = "https://...";
+          #   TINYAUTH_OAUTH_PROVIDERS_GOOGLE_USERINFOURL = "https://...";
+          #   TINYAUTH_OAUTH_PROVIDERS_GOOGLE_INSECURE = false;
+          #   TINYAUTH_OAUTH_PROVIDERS_GOOGLE_NAME = "Google";
+          #
+          # Note: Using "google" or "github" as provider names triggers
+          # automatic filling of auth URLs and scopes. You only need to
+          # provide the client ID and secret.
+
+          # OIDC Configuration
+          TINYAUTH_OIDC_PRIVATEKEYPATH = mkOption {
+            type = path;
+            description = ''
+              Path to the private key file, including file name.
+            '';
+            default = "/var/lib/tinyauth/tinyauth_oidc_key";
+          };
+
+          TINYAUTH_OIDC_PUBLICKEYPATH = mkOption {
+            type = path;
+            description = ''
+              Path to the public key file, including file name.
+            '';
+            default = "/var/lib/tinyauth/tinyauth_oidc_key.pub";
+          };
+
+          # Per-client OIDC settings are dynamic and use the freeformType
+          # to allow arbitrary TINYAUTH_OIDC_CLIENTS_[NAME]_* keys.
+          # Examples:
+          #
+          #   TINYAUTH_OIDC_CLIENTS_MYAPP_CLIENTID = "...";
+          #   TINYAUTH_OIDC_CLIENTS_MYAPP_CLIENTSECRET = "...";
+          #   TINYAUTH_OIDC_CLIENTS_MYAPP_CLIENTSECRETFILE = "/run/secrets/oidc";
+          #   TINYAUTH_OIDC_CLIENTS_MYAPP_TRUSTEDREDIRECTURIS = "https://app.example.com/callback";
+          #   TINYAUTH_OIDC_CLIENTS_MYAPP_NAME = "My App";
+
+          # UI Configuration
+          TINYAUTH_UI_TITLE = mkOption {
+            type = str;
+            description = ''
+              The title of the UI.
+            '';
+            default = "Tinyauth";
+          };
+
+          TINYAUTH_UI_FORGOTPASSWORDMESSAGE = mkOption {
+            type = str;
+            description = ''
+              Message displayed on the forgot password page.
+            '';
+            default = "You can change your password by changing the configuration.";
+          };
+
+          TINYAUTH_UI_BACKGROUNDIMAGE = mkOption {
+            type = str;
+            description = ''
+              Path to the background image.
+            '';
+            default = "/background.jpg";
+          };
+
+          TINYAUTH_UI_WARNINGSENABLED = mkOption {
+            type = bool;
+            description = ''
+              Enable UI warnings.
+            '';
+            default = true;
+          };
+
+          # LDAP Configuration
+          TINYAUTH_LDAP_ADDRESS = mkOption {
+            type = str;
+            description = ''
+              LDAP server address.
+            '';
+            default = "";
+            example = "ldaps://ldap.example.com:636";
+          };
+
+          TINYAUTH_LDAP_BINDDN = mkOption {
+            type = str;
+            description = ''
+              Bind DN for LDAP authentication.
+            '';
+            default = "";
+            example = "cn=admin,dc=example,dc=com";
+          };
+
+          TINYAUTH_LDAP_BINDPASSWORD = mkOption {
+            type = str;
+            description = ''
+              Bind password for LDAP authentication.
+            '';
+            default = "";
+          };
+
+          TINYAUTH_LDAP_BASEDN = mkOption {
+            type = str;
+            description = ''
+              Base DN for LDAP searches.
+            '';
+            default = "";
+            example = "dc=example,dc=com";
+          };
+
+          TINYAUTH_LDAP_INSECURE = mkOption {
+            type = bool;
+            description = ''
+              Allow insecure LDAP connections.
+            '';
+            default = false;
+          };
+
+          TINYAUTH_LDAP_SEARCHFILTER = mkOption {
+            type = str;
+            description = ''
+              LDAP search filter.
+
+              Note: For Windows LDAP, use: (&(sAMAccountName=%s))
+            '';
+            default = "(uid=%s)";
+          };
+
+          TINYAUTH_LDAP_AUTHCERT = mkOption {
+            type = str;
+            description = ''
+              Certificate for mTLS authentication.
+            '';
+            default = "";
+          };
+
+          TINYAUTH_LDAP_AUTHKEY = mkOption {
+            type = str;
+            description = ''
+              Certificate key for mTLS authentication.
+            '';
+            default = "";
+          };
+
+          TINYAUTH_LDAP_GROUPCACHETTL = mkOption {
+            type = int;
+            description = ''
+              Cache duration for LDAP group membership in seconds.
+            '';
+            default = 900;
+          };
+
+          # Logging Configuration
+          TINYAUTH_LOG_LEVEL = mkOption {
             type = enum [
               "trace"
               "debug"
               "info"
               "warn"
               "error"
-              "fatal"
-              "panic"
             ];
             description = ''
               Log level for the application.
@@ -117,110 +434,67 @@ in
             default = "info";
           };
 
-          DISABLE_ANALYTICS = mkOption {
+          TINYAUTH_LOG_JSON = mkOption {
             type = bool;
             description = ''
-              Disable anonymous version collection (heartbeat).
-
-              When enabled, Tinyauth sends anonymous version information every 12 hours
-              to get insights on usage. The collected information includes:
-              - Tinyauth version
-              - Instance UUID (generated with UUID v4 from the app URL)
-              - Time of the request
+              Enable JSON formatted logs.
             '';
             default = false;
           };
 
-          DISABLE_RESOURCES = mkOption {
+          TINYAUTH_LOG_STREAMS_HTTP_ENABLED = mkOption {
             type = bool;
             description = ''
-              Disable the resources server.
+              Enable the HTTP log stream.
+            '';
+            default = true;
+          };
+
+          TINYAUTH_LOG_STREAMS_HTTP_LEVEL = mkOption {
+            type = str;
+            description = ''
+              Log level for the HTTP stream. Leave empty to use global level.
+            '';
+            default = "";
+          };
+
+          TINYAUTH_LOG_STREAMS_APP_ENABLED = mkOption {
+            type = bool;
+            description = ''
+              Enable the app log stream.
+            '';
+            default = true;
+          };
+
+          TINYAUTH_LOG_STREAMS_APP_LEVEL = mkOption {
+            type = str;
+            description = ''
+              Log level for the app stream. Leave empty to use global level.
+            '';
+            default = "";
+          };
+
+          TINYAUTH_LOG_STREAMS_AUDIT_ENABLED = mkOption {
+            type = bool;
+            description = ''
+              Enable the audit log stream.
             '';
             default = false;
           };
 
-          RESOURCES_DIR = mkOption {
-            type = path;
+          TINYAUTH_LOG_STREAMS_AUDIT_LEVEL = mkOption {
+            type = enum [
+              ""
+              "trace"
+              "debug"
+              "info"
+              "warn"
+              "error"
+            ];
             description = ''
-              Path to a directory containing custom resources (e.g., background image).
-            '';
-            default = "/var/lib/tinyauth/resources";
-          };
-
-          BACKGROUND_IMAGE = mkOption {
-            type = str;
-            description = ''
-              Background image URL for the login page.
-            '';
-            default = "/background.jpg";
-          };
-
-          SECURE_COOKIE = mkOption {
-            type = bool;
-            description = ''
-              Send cookie over secure connection only.
-            '';
-            default = false;
-          };
-
-          SESSION_EXPIRY = mkOption {
-            type = int;
-            description = ''
-              Session (cookie) expiration time in seconds.
-            '';
-            default = 86400;
-          };
-
-          LOGIN_MAX_RETRIES = mkOption {
-            type = int;
-            description = ''
-              Maximum login attempts before timeout (0 to disable).
-            '';
-            default = 5;
-          };
-
-          LOGIN_TIMEOUT = mkOption {
-            type = int;
-            description = ''
-              Login timeout in seconds after max retries reached (0 to disable).
-            '';
-            default = 300;
-          };
-
-          FORGOT_PASSWORD_MESSAGE = mkOption {
-            type = str;
-            description = ''
-              Message to show on the forgot password page.
+              Log level for the audit stream. Leave empty to use global level.
             '';
             default = "";
-          };
-
-          TRUSTED_PROXIES = mkOption {
-            type = str;
-            description = ''
-              Comma-separated list of trusted proxies (IP addresses or CIDRs)
-              for correct client IP detection.
-            '';
-            default = "";
-            example = "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16";
-          };
-
-          OAUTH_AUTO_REDIRECT = mkOption {
-            type = str;
-            description = ''
-              Auto redirect to the specified OAuth provider.
-            '';
-            default = "";
-            example = "google";
-          };
-
-          OAUTH_WHITELIST = mkOption {
-            type = str;
-            description = ''
-              Comma-separated list of email addresses to whitelist when using OAuth.
-            '';
-            default = "";
-            example = "user@example.com,admin@example.com";
           };
         };
       };
@@ -233,8 +507,8 @@ in
         See the [configuration documentation](https://tinyauth.app/docs/configuration)
         for supported values.
 
-        Note: Sensitive values like USERS and OAuth client secrets should be
-        provided via `environmentFile` instead.
+        Note: Sensitive values like TINYAUTH_AUTH_USERS and OAuth client secrets
+        should be provided via `environmentFile` instead.
       '';
     };
 
@@ -261,21 +535,31 @@ in
 
   config = mkIf cfg.enable {
     warnings =
-      optional (cfg.settings ? USERS)
-        "config.services.tinyauth.settings.USERS will be stored as plaintext in the Nix store. Use config.services.tinyauth.environmentFile instead."
+      optional (cfg.settings ? TINYAUTH_AUTH_USERS && cfg.settings.TINYAUTH_AUTH_USERS != "")
+        "config.services.tinyauth.settings.TINYAUTH_AUTH_USERS will be stored as plaintext in the Nix store. Use config.services.tinyauth.environmentFile instead."
       ++
-        optional (cfg.settings ? USERS_FILE)
-          "config.services.tinyauth.settings.USERS_FILE will be stored as plaintext in the Nix store. Use config.services.tinyauth.environmentFile instead."
+        optional (cfg.settings ? TINYAUTH_AUTH_USERSFILE && cfg.settings.TINYAUTH_AUTH_USERSFILE != "")
+          "config.services.tinyauth.settings.TINYAUTH_AUTH_USERSFILE will be stored as plaintext in the Nix store. Use config.services.tinyauth.environmentFile instead."
       ++
         optional
-          (builtins.any (name: lib.hasPrefix "PROVIDERS_" name && lib.hasSuffix "_CLIENT_SECRET" name) (
-            builtins.attrNames cfg.settings
-          ))
-          "OAuth client secrets in config.services.tinyauth.settings will be stored as plaintext in the Nix store. Use config.services.tinyauth.environmentFile instead.";
+          (cfg.settings ? TINYAUTH_LDAP_BINDPASSWORD && cfg.settings.TINYAUTH_LDAP_BINDPASSWORD != "")
+          "config.services.tinyauth.settings.TINYAUTH_LDAP_BINDPASSWORD will be stored as plaintext in the Nix store. Use config.services.tinyauth.environmentFile instead."
+      ++
+        optional
+          (builtins.any (
+            name: lib.hasPrefix "TINYAUTH_OAUTH_PROVIDERS_" name && lib.hasSuffix "_CLIENTSECRET" name
+          ) (builtins.attrNames cfg.settings))
+          "OAuth client secrets in config.services.tinyauth.settings will be stored as plaintext in the Nix store. Use config.services.tinyauth.environmentFile instead."
+      ++
+        optional
+          (builtins.any (
+            name: lib.hasPrefix "TINYAUTH_OIDC_CLIENTS_" name && lib.hasSuffix "_CLIENTSECRET" name
+          ) (builtins.attrNames cfg.settings))
+          "OIDC client secrets in config.services.tinyauth.settings will be stored as plaintext in the Nix store. Use config.services.tinyauth.environmentFile instead.";
 
     systemd.tmpfiles.rules = [
       "d ${cfg.dataDir} 0755 ${cfg.user} ${cfg.group}"
-      "d ${cfg.settings.RESOURCES_DIR} 0755 ${cfg.user} ${cfg.group}"
+      "d ${cfg.settings.TINYAUTH_RESOURCES_PATH} 0755 ${cfg.user} ${cfg.group}"
     ];
 
     systemd.services = {
@@ -322,7 +606,6 @@ in
           ProtectProc = "invisible";
           ProtectSystem = "strict";
           ReadWritePaths = [ cfg.dataDir ];
-          # ReadPaths = [ "/nix/store/ja2sqp0bqvkf7q5wp0jp24sbd11cdwa2-tinyauth-4.0.1/bin/tinyauth" ];
           RemoveIPC = true;
           RestrictAddressFamilies = [
             "AF_UNIX"

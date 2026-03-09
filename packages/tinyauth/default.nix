@@ -7,13 +7,14 @@
   ...
 }:
 let
-  version = "4.1.0";
+  version = "5.0.2";
 
   src = fetchFromGitHub {
     owner = "steveiliop56";
     repo = "tinyauth";
     tag = "v${version}";
-    hash = "sha256-v/Wf3bLoDHcGmlmL9hLbtt/tBuTRAN0SDFmON82Nn0I=";
+    hash = "sha256-i074facoWTg7+c9OdGhcOEknP/GZ6st0IIdwwvHC7IQ=";
+    fetchSubmodules = true;
   };
 
   generatedBunNix = runCommand "tinyauth-bun-nix" { } ''
@@ -27,6 +28,8 @@ in
 buildGoModule {
   pname = "tinyauth";
   inherit version src;
+
+  subPackages = [ "cmd/tinyauth" ];
 
   nativeBuildInputs = [
     bun
@@ -47,7 +50,7 @@ buildGoModule {
     "-X tinyauth/internal/config.Version=${version}"
   ];
 
-  vendorHash = "sha256-2sHZZ0negYHBIVzFqtRS/AUe67rrS0jcLb1iWEecMl4=";
+  vendorHash = "sha256-cTUUjrMOtcxK8/S0h2DNZez5ELRTaSgCqo3k/tQ3584=";
 
   meta = {
     mainProgram = "tinyauth";

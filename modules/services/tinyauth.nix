@@ -64,45 +64,40 @@ module {
           templates.tinyauth-config = {
             inherit (sopsConfig) owner group;
             content = ''
-              PROVIDERS_POCKETID_CLIENT_ID=${config.sops.placeholder.tinyauth_pocket_id_client_id}
-              PROVIDERS_POCKETID_CLIENT_SECRET=${config.sops.placeholder.tinyauth_pocket_id_client_secret}
-              PROVIDERS_GOOGLE_CLIENT_ID=${config.sops.placeholder.oidc_google_client_id}
-              PROVIDERS_GOOGLE_CLIENT_SECRET=${config.sops.placeholder.oidc_google_secret}
+              TINYAUTH_OAUTH_PROVIDERS_POCKETID_CLIENTID=${config.sops.placeholder.tinyauth_pocket_id_client_id}
+              TINYAUTH_OAUTH_PROVIDERS_POCKETID_CLIENTSECRET=${config.sops.placeholder.tinyauth_pocket_id_client_secret}
+              TINYAUTH_OAUTH_PROVIDERS_GOOGLE_CLIENTID=${config.sops.placeholder.oidc_google_client_id}
+              TINYAUTH_OAUTH_PROVIDERS_GOOGLE_CLIENTSECRET=${config.sops.placeholder.oidc_google_secret}
             '';
           };
         };
-
       systemd.services.tinyauth = {
         after = [ "zfs.target" ];
         requires = [ "zfs.target" ];
       };
-
       services.tinyauth = {
         enable = true;
         package = pkgs.local.tinyauth;
         inherit (cfg) dataDir;
         environmentFile = config.sops.templates.tinyauth-config.path;
-
         user = serviceName;
         group = serviceName;
-
         settings = {
-          ADDRESS = "127.0.0.1";
-          APP_TITLE = "Homelab";
-          APP_URL = cfg.domain;
-          DATABASE_PATH = "${cfg.dataDir}/tinyauth.db";
-          DISABLE_ANALYTICS = true;
-          LOG_LEVEL = "info";
-          PORT = cfg.port;
-          RESOURCES_DIR = "${cfg.dataDir}/resources";
-          SECURE_COOKIE = false;
-
-          PROVIDERS_POCKETID_AUTH_URL = "${myconfig.services.pocket-id.domain}/authorize";
-          PROVIDERS_POCKETID_TOKEN_URL = "${myconfig.services.pocket-id.domain}/api/oidc/token";
-          PROVIDERS_POCKETID_USER_INFO_URL = "${myconfig.services.pocket-id.domain}/api/oidc/userinfo";
-          PROVIDERS_POCKETID_REDIRECT_URL = "${cfg.domain}/api/oauth/callback/pocketid";
-          PROVIDERS_POCKETID_SCOPES = "openid email profile groups";
-          PROVIDERS_POCKETID_NAME = "Passkey";
+          TINYAUTH_SERVER_ADDRESS = "127.0.0.1";
+          TINYAUTH_SERVER_PORT = cfg.port;
+          TINYAUTH_APPURL = cfg.domain;
+          TINYAUTH_UI_TITLE = "Homelab";
+          TINYAUTH_DATABASE_PATH = "${cfg.dataDir}/tinyauth.db";
+          TINYAUTH_ANALYTICS_ENABLED = false;
+          TINYAUTH_LOG_LEVEL = "info";
+          TINYAUTH_RESOURCES_PATH = "${cfg.dataDir}/resources";
+          TINYAUTH_AUTH_SECURECOOKIE = false;
+          TINYAUTH_OAUTH_PROVIDERS_POCKETID_AUTHURL = "${myconfig.services.pocket-id.domain}/authorize";
+          TINYAUTH_OAUTH_PROVIDERS_POCKETID_TOKENURL = "${myconfig.services.pocket-id.domain}/api/oidc/token";
+          TINYAUTH_OAUTH_PROVIDERS_POCKETID_USERINFOURL = "${myconfig.services.pocket-id.domain}/api/oidc/userinfo";
+          TINYAUTH_OAUTH_PROVIDERS_POCKETID_REDIRECTURL = "${cfg.domain}/api/oauth/callback/pocketid";
+          TINYAUTH_OAUTH_PROVIDERS_POCKETID_SCOPES = "openid email profile groups";
+          TINYAUTH_OAUTH_PROVIDERS_POCKETID_NAME = "Passkey";
         };
       };
     };
