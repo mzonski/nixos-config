@@ -113,6 +113,12 @@ reboot-%:
 	@echo "Rebooting remote machine..."
 	ssh $(USERNAME)@$* "sudo reboot"
 
+
+build-%:
+	@echo "Generating system for $(USERNAME)@$*..."
+	nixos-rebuild build --target-host $(USERNAME)@$* --flake ".#$*" --build-host localhost
+
+
 help:
 	@echo "Available targets:"
 	@echo "  all     - Run both home and system targets (default)"
