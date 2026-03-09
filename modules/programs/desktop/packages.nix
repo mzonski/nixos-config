@@ -65,6 +65,7 @@ delib.module {
           mate.atril # Document viewer
           unstable.furmark # GPU benchmark
           unstable.mission-center
+          element-desktop # Matrix client
 
           # CONSOLE / TUI
           nurl # Generate Nix fetcher calls from repository URLs
