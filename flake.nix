@@ -66,12 +66,12 @@
     };
 
     asus-numberpad-driver = {
-      url = "github:asus-linux-drivers/asus-numberpad-driver/bff288313bfc2bc75b808f8953397e9f132b4360";
+      url = "github:asus-linux-drivers/asus-numberpad-driver";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     bun2nix = {
-      url = "github:nix-community/bun2nix?tag=2.0.1";
+      url = "github:nix-community/bun2nix";
       inputs.systems.follows = "systems";
     };
   };
