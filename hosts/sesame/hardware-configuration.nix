@@ -40,6 +40,8 @@ delib.host {
     boot.kernelParams = [
       "mem_sleep_default=deep"
       "resume_offset=533760"
+
+      "usbcore.quirks=0451:8142:g" # Texas Instruments, Inc. TUSB8041 (LG 27UL850W USB Hub with webcam); USB_QUIRK_DELAY_INIT
     ];
 
     # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
