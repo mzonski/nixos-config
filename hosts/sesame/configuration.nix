@@ -89,8 +89,15 @@ delib.host {
       SuspendKeyIgnoreInhibited = true;
       HibernateKeyIgnoreInhibited = true;
 
+      IdleAction = "sleep";
+      IdleActionSec = toString (10 * 60); # after 10 minutes after screen blank computer goes to sleep (15m since idle)
+
       SleepOperation = "suspend-then-hibernate suspend hibernate";
     };
+
+    systemd.sleep.extraConfig = ''
+      HibernateDelaySec=${toString (15 * 60)}
+    ''; # after 15 minut since sleep laptop hibernates (30m since idle)
 
     services.upower.ignoreLid = true;
   };
@@ -99,6 +106,16 @@ delib.host {
     programs = {
       bash.enable = true;
       bat.enable = true;
+    };
+
+    dconf.settings = {
+      "org/gnome/desktop/session" = {
+        idle-delay = 5 * 60; # after 5 minutes on idle screen goes blank
+      };
+      "org/gnome/settings-daemon/plugins/power" = {
+        sleep-inactive-ac-type = "nothing";
+        sleep-inactive-battery-type = "nothing";
+      };
     };
   };
 }
