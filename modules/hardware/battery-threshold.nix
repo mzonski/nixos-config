@@ -1,5 +1,6 @@
 {
   delib,
+  pkgs,
   ...
 }:
 let
@@ -27,17 +28,10 @@ module {
       thresholdFile = "/sys/class/power_supply/${cfg.batteryId}/charge_control_end_threshold";
     in
     {
-      systemd.services.set-battery-charge-threshold = {
-        after = [ "multi-user.target" ];
-        wantedBy = [ "multi-user.target" ];
-
-        serviceConfig.Type = "oneshot";
-        script = ''
-          if [ -f "${thresholdFile}" ]; then
-            echo "${threshold}" > "${thresholdFile}"
-            echo "Battery charge threshold set to ${threshold}%"
-          fi
-        '';
-      };
+      services.udev.packages = [
+        (pkgs.writeTextDir "etc/udev/rules.d/60-battery-charge-threshold.rules" ''
+          SUBSYSTEM=="power_supply", KERNEL=="${cfg.batteryId}", RUN+="${pkgs.bash}/bin/sh -c 'echo ${threshold} > ${thresholdFile}'"
+        '')
+      ];
     };
 }
