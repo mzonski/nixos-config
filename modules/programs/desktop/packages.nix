@@ -66,6 +66,7 @@ delib.module {
           unstable.furmark # GPU benchmark
           unstable.mission-center
           element-desktop # Matrix client
+          unstable.nixpkgs-review
 
           # CONSOLE / TUI
           nurl # Generate Nix fetcher calls from repository URLs
