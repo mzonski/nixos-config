@@ -30,6 +30,13 @@ module {
     in
     mkMerge [
       {
+        # Razer Kiyo Pro Ultra crashes on GET_DEF probe/commit request; Applied UVC_QUIRK_PROBE_DEF
+        # check this later: https://lore.kernel.org/linux-usb/20260322034015.3629056-1-jp@jphein.com/T/#t
+        boot.extraModprobeConfig = ''
+          options uvcvideo quirks=0x100
+        '';
+      }
+      {
         environment.systemPackages = with pkgs; [
           cameractrls-gtk4
           webcamoid
