@@ -51,6 +51,10 @@ delib.host {
     programs.chrome.enable = true;
     programs.gnome.enable = true;
     programs.jetbrains.enable = false;
+    programs.utils.mitmproxy = {
+      enable = true;
+      interface = "wlo1";
+    };
   };
 
   nixos = {
