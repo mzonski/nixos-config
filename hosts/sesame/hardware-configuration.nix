@@ -36,8 +36,10 @@ delib.host {
     ];
     boot.extraModulePackages = [ config.boot.kernelPackages.acpi_call ];
 
+    boot.resumeDevice = "/dev/disk/by-uuid/b51f575b-d615-4455-be6b-4593b77f354e";
     boot.kernelParams = [
       "mem_sleep_default=deep"
+      "resume_offset=533760"
     ];
 
     # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
