@@ -45,7 +45,7 @@ delib.host {
       virt-manager.enable = false;
       docker.enable = false;
       windows-data-partition.enable = false;
-      vpnclient.enable = true;
+      vpnclient.enable = false;
     };
 
     programs.chrome.enable = true;
@@ -66,8 +66,6 @@ delib.host {
       inputs.nixos-hardware.nixosModules.common-cpu-intel
       inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
     ];
-
-    boot.readOnlyNixStore = false;
 
     services.tumbler.enable = true;
     services.libinput.enable = true;
