@@ -59,6 +59,25 @@ module {
         };
       };
 
+      systemd.services.chown-torrents = {
+        description = "Fix ownership of torrent directories";
+        requires = [ "qbittorrent.service" ];
+        after = [ "qbittorrent.service" ];
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStart = "${pkgs.findutils}/bin/find ${cfg.downloadsDir} -mindepth 1 -maxdepth 1 -type d ! -name \"_temp\" ! -name \"_auto_add\" -exec ${pkgs.coreutils}/bin/chown -R ${homeManagerUser}:nas-files {} +";
+        };
+      };
+
+      systemd.timers.chown-torrents = {
+        description = "Run chown-torrents daily";
+        wantedBy = [ "timers.target" ];
+        timerConfig = {
+          OnCalendar = "daily";
+          Persistent = true;
+        };
+      };
+
       systemd.services.qbittorrent = {
         after = [ "zfs.target" ];
         requires = [ "zfs.target" ];
