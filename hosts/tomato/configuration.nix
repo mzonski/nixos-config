@@ -91,7 +91,6 @@ delib.host {
             type = "public";
             writeList = [
               "@nas-files"
-              "@nas-torrents"
               "zonni"
             ];
             nfsExtraConfig = [ "async" ];
