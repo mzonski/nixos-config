@@ -72,6 +72,25 @@ delib.host {
     security.polkit.enable = true;
 
     hardware.i2c.enable = true;
+
+    services.logind.settings.Login = {
+      HandleLidSwitch = "sleep";
+      HandleLidSwitchExternalPower = "sleep";
+      HandleLidSwitchDocked = "sleep";
+
+      HandlePowerKey = "poweroff";
+      HandlePowerKeyLongPress = "poweroff";
+
+      InhibitDelayMaxSec = 5;
+      LidSwitchIgnoreInhibited = true;
+      PowerKeyIgnoreInhibited = false;
+      SuspendKeyIgnoreInhibited = true;
+      HibernateKeyIgnoreInhibited = true;
+
+      SleepOperation = "suspend-then-hibernate suspend hibernate";
+    };
+
+    services.upower.ignoreLid = true;
   };
 
   home = {
