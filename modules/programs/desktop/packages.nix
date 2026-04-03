@@ -114,6 +114,10 @@ delib.module {
           ## MAINTENANCE
           bleachbit # Program to clean your computer
           qdirstat # Visualise used disk space
+
+          ## BENCHMARK
+          unstable.unigine-heaven
+          stress-ng
         ]
         ++ partitioning
         ++ fonts;
