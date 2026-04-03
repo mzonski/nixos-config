@@ -62,7 +62,7 @@
     };
 
     my-pc-rgb = {
-      url = "github:mzonski/my-pc-rgb";
+      url = "github:mzonski/my-pc-rgb/dev";
     };
 
     asus-numberpad-driver = {
