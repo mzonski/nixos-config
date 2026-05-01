@@ -34,12 +34,16 @@ module {
         pkgs.node-glob
       ];
 
-      python312 = [
-        pkgs.python312
-        pkgs.python312Packages.pip
-        pkgs.python312Packages.packaging
-        pkgs.python312Packages.requests
-        pkgs.python312Packages.xmltodict
+      python = [
+        (pkgs.python312.withPackages (
+          ps: with ps; [
+            xmltodict
+            requests
+            packaging
+            pyyaml
+            capstone
+          ]
+        ))
       ];
 
       script = ''
@@ -86,7 +90,7 @@ module {
       ];
     in
     {
-      home.packages = node22 ++ python312 ++ kubernetes ++ other ++ [ dotnet-full ];
+      home.packages = node22 ++ python ++ kubernetes ++ other ++ [ dotnet-full ];
 
       xdg.configFile."npm/npmrc".text = ''
         update-notifier=false
