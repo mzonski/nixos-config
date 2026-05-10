@@ -17,6 +17,14 @@ delib.host {
       (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
+    systemd.sleep.extraConfig = ''
+      AllowSuspend=yes
+      AllowHibernation=no
+      AllowSuspendThenHibernate=no
+      AllowHybridSleep=no
+      SuspendState=mem
+    '';
+
     boot = {
       initrd.availableKernelModules = [
         "xhci_pci"
