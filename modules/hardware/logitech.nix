@@ -1,20 +1,11 @@
-{
-  delib,
-  lib,
-  pkgs,
-  ...
-}:
+{ delib, pkgs, ... }:
 let
-  inherit (delib) module boolOption;
-  inherit (lib) mkIf;
+  inherit (delib) module singleEnableOption;
 in
 module {
   name = "hardware.logitech";
 
-  options.hardware.logitech = {
-    enable = boolOption false;
-    disablePowerWakeupEvents = boolOption true;
-  };
+  options = singleEnableOption false;
 
   nixos.ifEnabled =
     { cfg, ... }:
@@ -22,10 +13,9 @@ module {
       hardware.logitech.wireless.enableGraphical = true;
       hardware.logitech.wireless.enable = true;
 
-      services.udev.extraRules = mkIf cfg.disablePowerWakeupEvents (''
-        # Disable power wakeup events for Logitech, Inc. Logi Bolt Receiver
-        ACTION=="add", SUBSYSTEM=="usb", DRIVERS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c548", ATTR{power/wakeup}="disabled"
-      '');
+      boot.kernelParams = [
+        "usbhid.quirks=0x046d:0xc548:0x00000400" # Logitech Bolt; HID_QUIRK_ALWAYS_POLL
+      ];
 
       services.system76-scheduler.assignments."games".matchers = [
         "\"${pkgs.solaar}/bin/.solaar-wrapped\""
