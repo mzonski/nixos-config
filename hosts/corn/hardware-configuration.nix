@@ -31,7 +31,7 @@ delib.host {
 
       kernelParams = [
         "mem_sleep_default=deep"
-        "nvme_core.quirks=0x144d:0xa810:0x08" # (NVME_QUIRK_DELAY_BEFORE_CHK_RDY)
+        "nvme_core.quirks=0x144d:0xa810:0x408" # (NVME_QUIRK_DELAY_BEFORE_CHK_RDY + NVME_QUIRK_SIMPLE_SUSPEND)
       ];
 
       blacklistedKernelModules = [ ];
