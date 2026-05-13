@@ -50,6 +50,13 @@ delib.host {
           kernel = config.boot.kernelPackages.kernel;
         })
       ];
+
+      kernelPatches = [
+        {
+          name = "amd-800-usb3.x-xhci-reset-on-resume";
+          patch = ./amd-800-usb-3.x-xhci-reset-on-resume.patch;
+        }
+      ];
     };
 
     # boot.kernelParams = [
