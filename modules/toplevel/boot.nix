@@ -39,8 +39,7 @@ module {
           device = "nodev";
           efiSupport = true;
           efiInstallAsRemovable = mkDefault false;
-          font = "${pkgs.local.apple-fonts}/share/fonts/opentype/SF-Mono-Semibold.otf";
-          fontSize = mkDefault 32;
+          fontSize = mkDefault 24;
           backgroundColor = "#000000";
           splashImage = null;
           extraEntries =
