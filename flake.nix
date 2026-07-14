@@ -74,6 +74,8 @@
       url = "github:nix-community/bun2nix";
       inputs.systems.follows = "systems";
     };
+
+    speedtest-exporter.url = "git+ssh://gitea@git.tomato.local.zonni.pl/zonni/speedtest-exporter.git";
   };
 
   outputs =
