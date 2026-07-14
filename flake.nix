@@ -76,6 +76,8 @@
     };
 
     speedtest-exporter.url = "git+ssh://gitea@git.tomato.local.zonni.pl/zonni/speedtest-exporter.git";
+
+    usb-sniffer.url = "git+ssh://gitea@git.tomato.local.zonni.pl/zonni/usb-sniffer.git";
   };
 
   outputs =
