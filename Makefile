@@ -54,6 +54,14 @@ bootloader-update-%:
     --build-host localhost \
     --sudo
 
+boot-update-%:
+	@echo "Updating boot on remote machine..."
+	nixos-rebuild boot  \
+    --flake ".#$*" \
+    --target-host "$(USERNAME)@$*" \
+    --build-host localhost \
+    --sudo
+
 seed-iso:
 	@echo "Generating Seed ISO..."
 	export SSH_PRIVATE_HOST=$$(sops -d --extract '["ssh_private_seed"]' ./shared-secrets.yaml) && \
