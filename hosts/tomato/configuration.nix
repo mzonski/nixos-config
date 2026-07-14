@@ -11,7 +11,7 @@ delib.host {
   secretsFile = ./secrets.yaml;
 
   homeManagerSystem = system;
-  home.home.stateVersion = "25.11";
+  home.home.stateVersion = "26.05";
 
   myconfig = {
     admin.username = "zonni";
@@ -143,12 +143,13 @@ delib.host {
       prometheus.enable = true;
       influxdb.enable = true;
       uptime-kuma.enable = true;
+      speedtest-exporter.enable = true;
     };
   };
 
   nixos = {
     nixpkgs.hostPlatform = system;
-    system.stateVersion = "25.11";
+    system.stateVersion = "26.05";
 
     imports = [
       "${inputs.nixos-hardware}/common/cpu/intel/alder-lake/default.nix"

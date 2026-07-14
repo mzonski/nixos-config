@@ -52,7 +52,21 @@ module {
             job_name = "node";
             static_configs = [
               {
-                targets = [ "localhost:9100" ];
+                targets = [
+                  "localhost:9100"
+                ];
+              }
+            ];
+          }
+          {
+            job_name = "speedtest";
+            scrape_interval = "5m";
+            scrape_timeout = "60s";
+            static_configs = [
+              {
+                targets = [
+                  "localhost:9798"
+                ];
               }
             ];
           }

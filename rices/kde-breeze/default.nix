@@ -1,9 +1,7 @@
 { pkgs, delib, ... }:
 delib.rice {
-  name = "catppuccin-sharp-dark";
+  name = "kde-breeze";
   inherits = [ "homelab" ];
-
-  wallpaper = ./assets/wallpaper.png;
 
   fonts = {
     monospace = {

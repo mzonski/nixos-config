@@ -21,23 +21,23 @@ module {
     soundcardPciId = strOption "";
   };
 
-  nixos.always = {
-
-    imports = [
-      inputs.musnix.nixosModules.musnix
-    ];
-  };
+  # nixos.always = {
+  #   imports = [
+  #     # musnix.url = "github:musnix/musnix";
+  #     inputs.musnix.nixosModules.musnix
+  #   ];
+  # };
 
   nixos.ifEnabled =
     { cfg, ... }:
     {
-      musnix.enable = false;
-      musnix.soundcardPciId = if cfg.soundcardPciId != "" then cfg.soundcardPciId else "01:00.1";
+      # musnix.enable = false;
+      # musnix.soundcardPciId = if cfg.soundcardPciId != "" then cfg.soundcardPciId else "01:00.1";
 
-      musnix.kernel = mkIf (cfg.rtos.enable) {
-        realtime = true;
-        packages = pkgs.linuxPackages_rt;
-      };
+      # musnix.kernel = mkIf (cfg.rtos.enable) {
+      #   realtime = true;
+      #   # packages = pkgs.linuxPackages_rt;
+      # };
 
       boot = {
         kernel.sysctl = {

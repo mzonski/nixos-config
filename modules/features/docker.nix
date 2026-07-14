@@ -1,4 +1,4 @@
-{ delib, ... }:
+{ delib, pkgs, ... }:
 
 let
   inherit (delib) module singleEnableOption;
@@ -16,6 +16,11 @@ module {
       inherit (myconfig.admin) username;
     in
     {
+      users.groups.docker = { };
+      boot.kernel.sysctl."net.ipv4.ip_forward" = "1";
+
+      boot.kernelParams = [ "cgroup_enable=cpuset" ];
+
       virtualisation.docker = {
         storageDriver = "btrfs"; # TODO: condition?
         rootless = {
@@ -34,6 +39,8 @@ module {
           log-opts.max-size = "10m";
           log-opts.max-file = "10";
         };
+
+        extraPackages = with pkgs; [ nftables ];
       };
     };
 }

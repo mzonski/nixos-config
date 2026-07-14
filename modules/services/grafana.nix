@@ -62,6 +62,7 @@ module {
           };
         in
         {
+          secrets.grafana_secret_key = sopsConfig;
           secrets.grafana_pocket_id_client_id = sopsConfig;
           secrets.grafana_pocket_id_client_secret = sopsConfig;
         };
@@ -79,6 +80,8 @@ module {
         enable = true;
         dataDir = cfg.dataDir;
         settings = {
+          security.secret_key = "$__file{${config.sops.secrets.grafana_secret_key.path}}";
+
           database = {
             type = "postgres";
             host = "127.0.0.1:5432";

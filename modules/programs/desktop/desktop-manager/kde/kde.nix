@@ -14,5 +14,12 @@ module {
   nixos.ifEnabled = {
     services.desktopManager.plasma6.enable = true;
     services.desktopManager.plasma6.enableQt5Integration = true;
+
+    services.dbus.implementation = "dbus";
+
+    systemd.services.display-manager = {
+      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
+    };
   };
 }

@@ -2,17 +2,16 @@
   description = "My Home NixOS configuration flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     systems.url = "github:nix-systems/default-linux";
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
-    nixgl.url = "github:guibou/nixGL";
 
     sops-nix = {
       url = "github:mic92/sops-nix";
@@ -24,10 +23,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nil-ls.url = "github:oxalica/nil";
-
     catppuccin = {
-      url = "github:catppuccin/nix/bc6d2b7b57dd29389538f8c4465e408c07187404";
+      url = "github:catppuccin/nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -49,15 +46,10 @@
     };
 
     disko.url = "github:nix-community/disko";
-    musnix.url = "github:musnix/musnix";
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
 
     piavpn = {
       url = "github:mzonski/piavpn-nixos";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    deepcool-digital-linux = {
-      url = "github:mzonski/deepcool-digital-linux";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

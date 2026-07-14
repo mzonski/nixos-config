@@ -52,8 +52,6 @@ module {
             "_netdev"
             "noauto"
           ];
-          TimeoutSec = "15s";
-          TimeoutStopSec = "10s";
         };
         what = mount.resource;
         where = mount.target;
@@ -65,7 +63,6 @@ module {
         wantedBy = [ "multi-user.target" ];
         automountConfig = {
           TimeoutIdleSec = "15min";
-          DeviceTimeoutSec = "15s";
         };
         where = mount.target;
       }) cfg.mounts;

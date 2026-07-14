@@ -23,18 +23,19 @@ module {
         wifi_ssid_hex = { };
       };
 
-      sops.templates.systemd-network-wifi = {
-        content = ''
-          wifi_ssid=${config.sops.placeholder.wifi_ssid}
-          wifi_psk=${config.sops.placeholder.wifi_psk}
-        '';
-        path = "/etc/wifi.conf";
-      };
+      # sops.templates.systemd-network-wifi = {
+      #   content = ''
+      #     wifi_ssid=${config.sops.placeholder.wifi_ssid}
+      #     wifi_psk=${config.sops.placeholder.wifi_psk}
+      #   '';
+      #   path = "/etc/wifi.conf";
+      # };
 
-      networking.wireless = {
-        secretsFile = config.sops.templates.systemd-network-wifi.path;
-        networks."ext:wifi_ssid".psk = "ext:wifi_psk";
-      };
+      ## TODO: Condition
+      # networking.wireless = {
+      #   secretsFile = config.sops.templates.systemd-network-wifi.path;
+      #   networks."ext:wifi_ssid".psk = "ext:wifi_psk";
+      # };
 
       sops.templates.network-manager-home-wifi = {
         content = lib.generators.toINI { } {

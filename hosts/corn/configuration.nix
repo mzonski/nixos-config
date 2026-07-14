@@ -8,12 +8,12 @@
 }:
 delib.host {
   name = "corn";
-  rice = "catppuccin-sharp-dark";
+  rice = "kde-breeze";
   type = "desktop";
   secretsFile = ./secrets.yaml;
 
   homeManagerSystem = system;
-  home.home.stateVersion = "25.11";
+  home.home.stateVersion = "26.05";
 
   myconfig =
     { myconfig, ... }:
@@ -23,22 +23,16 @@ delib.host {
 
       hardware = {
         audio.enable = true;
-        bluetooth.enable = false;
+        bluetooth.enable = true;
         block.defaultScheduler = "kyber";
         block.defaultSchedulerRotational = "bfq";
         logitech.enable = true;
       };
 
       features = {
-        autologin.enable = false;
-        autologin.session = "Hyprland";
         gaming.enable = true;
         general-development.enable = true;
         docker.enable = true;
-        windows-data-partition.enable = false;
-        windows-data-partition.diskUuid = "1E08506F08504843";
-        low-latency.enable = true;
-        vpnclient.enable = false;
         virt-manager = {
           enable = true;
           bridge.enable = false;
@@ -52,7 +46,7 @@ delib.host {
             "/dev/nvidiactl"
           ];
           vfio-passtrough = {
-            enable = true;
+            enable = false;
             devices = {
               dgpu-video = "10de:2b85";
               dgpu-audio = "10de:22e8";
@@ -75,16 +69,11 @@ delib.host {
       };
 
       programs.chrome.enable = true;
-      programs.gdm.enable = lib.mkForce true;
-      programs.sddm.enable = lib.mkForce false;
-      programs.hyprland.enable = false;
-      programs.hyprland.source = "stable";
-      programs.gnome.enable = true;
-      programs.gnome.fullInstall = true;
-      programs.gnome.freezeOnNvidiaSuspend.enable = true;
+      programs.kde.enable = true;
 
-      programs.gsconnect.enable = true;
-      hardware.deepcool-digital-linux.enable = false;
+      programs.desktop.thunar.enable = false;
+      programs.desktop.pcmanfm.enable = false;
+
       hardware.my-pc-rgb.enable = true;
 
       services.network-share-client = {
@@ -117,7 +106,7 @@ delib.host {
 
   nixos = {
     nixpkgs.hostPlatform = system;
-    system.stateVersion = "25.11";
+    system.stateVersion = "26.05";
     hardware.enableRedistributableFirmware = true;
 
     imports = [
@@ -127,9 +116,9 @@ delib.host {
     #boot.readOnlyNixStore = false;
 
     #boot.kernelPackages = pkgs.linuxPackages_latest;
-    boot.kernelPackages = pkgs.linuxPackages_zen;
-    boot.loader.systemd-boot.windows."11".efiDeviceHandle = "HD1e";
-    boot.loader.grub.fontSize = 64;
+    #boot.kernelPackages = pkgs.linuxPackages_zen;
+
+    boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-bore-lto-x86_64-v4;
     boot.loader.grub.memtest86.enable = true;
 
     services.tumbler.enable = true; # Enable thumbnail service
@@ -143,7 +132,7 @@ delib.host {
     security.polkit.enable = true;
 
     services.scx.enable = true;
-    services.scx.scheduler = "scx_rusty";
+    services.scx.scheduler = "scx_bpfland";
 
     hardware.i2c.enable = true;
   };

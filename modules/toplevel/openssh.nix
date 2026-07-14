@@ -60,7 +60,7 @@ delib.module {
 
           StreamLocalBindUnlink = "yes";
           GatewayPorts = "clientspecified";
-          AcceptEnv = "WAYLAND_DISPLAY";
+          #AcceptEnv = "WAYLAND_DISPLAY";
           X11Forwarding = true;
         };
 
@@ -118,19 +118,33 @@ delib.module {
         enable = true;
         enableDefaultConfig = false;
 
-        matchBlocks =
+        settings =
           lib.genAttrs hostnames (hostname: {
-            inherit hostname;
-            user = homeManagerUser;
-            identityFile = "~/.ssh/id_ed25519";
+            HostName = hostname;
+            User = homeManagerUser;
+            IdentityFile = "~/.ssh/id_ed25519";
           })
           // {
             "seed" = {
-              hostname = "seed";
-              user = "nixos";
-              identityFile = "~/.ssh/id_ed25519";
+              HostName = "seed";
+              User = "nixos";
+              IdentityFile = "~/.ssh/id_ed25519";
             };
           };
+
+        # matchBlocks =
+        #   lib.genAttrs hostnames (hostname: {
+        #     inherit hostname;
+        #     user = homeManagerUser;
+        #     identityFile = "~/.ssh/id_ed25519";
+        #   })
+        #   // {
+        #     "seed" = {
+        #       hostname = "seed";
+        #       user = "nixos";
+        #       identityFile = "~/.ssh/id_ed25519";
+        #     };
+        #   };
 
       };
     };

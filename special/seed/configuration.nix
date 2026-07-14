@@ -16,34 +16,53 @@ delib.host {
   type = "minimal";
 
   homeManagerSystem = system;
-  home.home.stateVersion = "25.11";
+  home.home.stateVersion = "26.05";
 
   myconfig = {
     admin.username = homeManagerUser;
   };
 
   nixos = {
+    image.baseName = lib.mkForce "seed";
     isoImage.isoBaseName = lib.mkForce "seed";
 
-    boot.readOnlyNixStore = false;
+    boot.nixStoreMountOpts = [
+      "rw"
+      "nodev"
+      "nosuid"
+    ];
+
     boot.loader.timeout = lib.mkForce 10;
     boot.loader.systemd-boot.enable = lib.mkForce false;
 
     nixpkgs.hostPlatform = system;
-    system.stateVersion = "25.11";
+    system.stateVersion = "26.05";
 
     imports = [
       (modulesPath + "/installer/cd-dvd/installation-cd-base.nix")
       (modulesPath + "/profiles/qemu-guest.nix")
     ];
 
-    boot.initrd.postMountCommands = ''
-      mkdir -p /mnt-root/etc/ssh
-      echo "${(requireEnvVar "SSH_PRIVATE_HOST" + "\n")}" > /mnt-root/etc/ssh/ssh_host_ed25519_key
-      echo "${(requireEnvVar "SSH_PUBLIC_HOST" + "\n")}" > /mnt-root/etc/ssh/ssh_host_ed25519_key.pub
-      chmod 600 /mnt-root/etc/ssh/ssh_host_ed25519_key
-      chmod 644 /mnt-root/etc/ssh/ssh_host_ed25519_key.pub
-    '';
+    boot.initrd.systemd.services.seed-ssh-host-keys = {
+      wantedBy = [ "initrd.target" ];
+      after = [ "sysroot.mount" ];
+      before = [ "initrd-switch-root.target" ];
+      unitConfig.DefaultDependencies = false;
+      unitConfig.RequiresMountsFor = [ "/sysroot" ];
+      serviceConfig.Type = "oneshot";
+      script = ''
+            mkdir -p /sysroot/etc/ssh
+            umask 077
+            cat > /sysroot/etc/ssh/ssh_host_ed25519_key <<'EOF'
+        ${requireEnvVar "SSH_PRIVATE_HOST"}
+        EOF
+            cat > /sysroot/etc/ssh/ssh_host_ed25519_key.pub <<'EOF'
+        ${requireEnvVar "SSH_PUBLIC_HOST"}
+        EOF
+            chmod 600 /sysroot/etc/ssh/ssh_host_ed25519_key
+            chmod 644 /sysroot/etc/ssh/ssh_host_ed25519_key.pub
+      '';
+    };
 
     services.openssh = {
       settings.PermitRootLogin = lib.mkForce "yes";

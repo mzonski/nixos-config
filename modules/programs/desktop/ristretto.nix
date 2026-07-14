@@ -14,7 +14,7 @@ module {
 
   home.ifEnabled = {
     home.packages = with pkgs; [
-      xfce.ristretto # Decent image viewer
+      ristretto # Decent image viewer
     ];
 
     xdg.mimeApps.defaultApplications = {

@@ -9,17 +9,12 @@ module {
   options = singleEnableOption false;
 
   nixos.ifEnabled = {
+    users.users.sddm.autoSubUidGidRange = true;
+
     services.displayManager.sddm = {
       enable = true;
       wayland.enable = true;
       autoNumlock = true;
-
-      # theme = "";
-      # settings = { };
-      # wayland.compositor = "weston";
-
-      # package = pkgs.kdePackages.sddm;
-      # extraPackages = [ ];
     };
   };
 }

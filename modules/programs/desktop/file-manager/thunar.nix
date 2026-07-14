@@ -15,18 +15,18 @@ module {
 
   home.ifEnabled =
     let
-      thunarPlugins = with pkgs.xfce; [
+      thunarPlugins = with pkgs; [
         thunar-volman
         thunar-archive-plugin
       ];
     in
     {
       home.packages =
-        with pkgs.xfce;
+        with pkgs;
         [
           (thunar.override { inherit thunarPlugins; })
         ]
-        ++ (with pkgs.mate; [
+        ++ (with pkgs; [
           engrampa
         ]);
     };

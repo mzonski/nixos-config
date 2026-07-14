@@ -89,7 +89,7 @@ module {
       boot.zfs = {
         forceImportRoot = false;
         forceImportAll = false;
-        allowHibernation = false;
+        unsafeAllowHibernation = false;
 
         extraPools = cfg.pools;
         requestEncryptionCredentials = false;

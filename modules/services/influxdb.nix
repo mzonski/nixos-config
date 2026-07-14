@@ -69,6 +69,7 @@ module {
 
       fileSystems."/var/lib/influxdb2" = {
         device = cfg.serviceDir;
+        fsType = "none";
         options = [ "bind" ];
       };
 

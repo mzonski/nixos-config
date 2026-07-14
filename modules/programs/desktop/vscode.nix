@@ -22,14 +22,14 @@ module {
           unstable.vscodium
 
           nil # Nix LSP
-          nixfmt-rfc-style # Nix formatter
+          nixfmt # Nix formatter
           nvd # Differ
           nix-diff # Differ, more detailed
           nix-output-monitor
         ]
       );
 
-      programs.vscode = {
+      programs.vscodium = {
         enable = true;
         package = pkgs.unstable.vscodium;
 
@@ -73,8 +73,8 @@ module {
             git.autofetch = true;
             makefile.configureOnOpen = false;
 
-            "editor.fontFamily" =
-              "${myconfig.rice.fonts.monospace.name}, 'Droid Sans Mono', 'monospace', monospace";
+            # "editor.fontFamily" =
+            #   "${myconfig.rice.fonts.monospace.name}, 'Droid Sans Mono', 'monospace', monospace";
 
             "workbench.colorTheme" = "Catppuccin Mocha";
             "workbench.iconTheme" = "catppuccin-mocha";

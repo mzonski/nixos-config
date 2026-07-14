@@ -1,14 +1,14 @@
 {
   lib,
-  stdenv,
-  fetchFromGitHub,
   kernel,
+  fetchFromGitHub,
   ...
 }:
 let
-  version = "0.1.1-custom";
+  version = "0.2.0-custom";
+  isClang = kernel.stdenv.cc.isClang or false;
 in
-stdenv.mkDerivation {
+kernel.stdenv.mkDerivation {
   name = "asus_rog_ryujin";
   version = version;
 
@@ -32,6 +32,10 @@ stdenv.mkDerivation {
   makeFlags = [
     "KERNELRELEASE=${kernel.modDirVersion}"
     "KDIR=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
+  ]
+  ++ lib.optionals isClang [
+    "LLVM=1"
+    "CC=clang"
   ];
 
   installPhase = ''

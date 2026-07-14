@@ -12,12 +12,6 @@ module {
     {
       hardware.logitech.wireless.enableGraphical = true;
       hardware.logitech.wireless.enable = true;
-
-      boot.kernelParams = [
-        "usbhid.quirks=0x046d:0xc548:0x00000400" # Logitech Bolt; HID_QUIRK_ALWAYS_POLL
-        "usbcore.quirks=046d:c548:be" # Logitech Bolt; USB_QUIRK_RESET + USB_QUIRK_RESET_RESUME
-      ];
-
       services.system76-scheduler.assignments."games".matchers = [
         "\"${pkgs.solaar}/bin/.solaar-wrapped\""
       ];
@@ -27,7 +21,7 @@ module {
     systemd.user.services.solaar = {
       Unit = {
         Description = "Solaar - Logitech Unifying Receiver configuration tool";
-        After = [ "graphical-session.target" ];
+        After = "display-manager.service";
       };
       Install = {
         WantedBy = [ "default.target" ];

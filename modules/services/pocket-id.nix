@@ -43,10 +43,6 @@ module {
       homelab.users.auth = [ serviceName ];
     };
 
-  nixos.always.imports = [
-    ./../../nixos-modules/pocket-id-nixos.nix
-  ];
-
   nixos.ifEnabled =
     { cfg, ... }:
     {
@@ -71,9 +67,9 @@ module {
         requires = [ "postgresql.service" ];
       };
 
-      services.pocket-id-nixos = {
+      services.pocket-id = {
         enable = true;
-        package = pkgs.unstable.pocket-id;
+        #package = pkgs.unstable.pocket-id;
 
         dataDir = cfg.dbDir;
 
@@ -90,10 +86,8 @@ module {
           PUID = config.users.users.${serviceName}.uid;
           PGID = config.users.groups.${serviceName}.gid;
 
-          DB_PROVIDER = "postgres";
           DB_CONNECTION_STRING = "postgres://pocket-id@/pocket-id";
 
-          KEYS_STORAGE = "database";
           ENCRYPTION_KEY_FILE = config.sops.secrets.pocket_id_encryption_key.path;
 
           GEOLITE_DB_PATH = "${cfg.dbDir}/GeoLite2-City.mmdb";

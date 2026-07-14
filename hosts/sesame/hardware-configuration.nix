@@ -36,10 +36,12 @@ delib.host {
     ];
     boot.extraModulePackages = [ config.boot.kernelPackages.acpi_call ];
 
-    boot.resumeDevice = "/dev/disk/by-uuid/b51f575b-d615-4455-be6b-4593b77f354e";
+    # konfiguracja hibernacji nie byla jednak deklaratywnie zrobiona
+    # boot.resumeDevice = "/dev/disk/by-uuid/b51f575b-d615-4455-be6b-4593b77f354e";
+
     boot.kernelParams = [
       "mem_sleep_default=deep"
-      "resume_offset=533760"
+      #"resume_offset=533760"
 
       "usbcore.quirks=0451:8142:g" # Texas Instruments, Inc. TUSB8041 (LG 27UL850W USB Hub with webcam); USB_QUIRK_DELAY_INIT
     ];
@@ -49,6 +51,8 @@ delib.host {
     # still possible to use this option, but it's recommended to use it in conjunction
     # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
     networking.useDHCP = lib.mkDefault true;
+    networking.networkmanager.enable = true;
+
     # networking.interfaces.br0.useDHCP = lib.mkDefault true;
     # networking.interfaces.enp3s0.useDHCP = lib.mkDefault true;
     # networking.interfaces.wlp4s0.useDHCP = lib.mkDefault true;

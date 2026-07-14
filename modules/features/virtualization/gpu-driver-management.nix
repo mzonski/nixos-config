@@ -1,5 +1,4 @@
-{ delib, ... }:
-
+{ delib, pkgs, ... }:
 let
   inherit (delib) module;
 in
@@ -16,7 +15,9 @@ module {
         description = "Switch GPU driver to VFIO";
         serviceConfig = {
           Type = "oneshot";
+          ExecStartPre = "${pkgs.systemd}/bin/systemctl stop my-pc-rgb";
           ExecStart = "${gpu-to-vfio}/bin/gpu-to-vfio";
+          ExecStartPost = "${pkgs.systemd}/bin/systemctl start my-pc-rgb";
           User = "root";
           RemainAfterExit = false;
         };
@@ -28,7 +29,9 @@ module {
         description = "Switch GPU driver to NVIDIA";
         serviceConfig = {
           Type = "oneshot";
+          ExecStartPre = "${pkgs.systemd}/bin/systemctl stop my-pc-rgb";
           ExecStart = "${gpu-to-nvidia}/bin/gpu-to-nvidia";
+          ExecStartPost = "${pkgs.systemd}/bin/systemctl start my-pc-rgb";
           User = "root";
           RemainAfterExit = false;
         };

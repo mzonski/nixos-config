@@ -4,6 +4,7 @@
   homeManagerUser,
   config,
   host,
+  lib,
   ...
 }:
 
@@ -65,7 +66,7 @@ module {
         after = [ "qbittorrent.service" ];
         serviceConfig = {
           Type = "oneshot";
-          ExecStart = "${pkgs.findutils}/bin/find ${cfg.downloadsDir} -mindepth 1 -maxdepth 1 -type d ! -name \"_temp\" ! -name \"_auto_add\" -exec ${pkgs.coreutils}/bin/chown -R ${homeManagerUser}:nas-files {} +";
+          ExecStart = "${pkgs.findutils}/bin/find ${cfg.downloadsDir} -mindepth 1 -maxdepth 1 ! -name \"_temp\" ! -name \"_auto_add\" -exec ${pkgs.coreutils}/bin/chown -R ${homeManagerUser}:nas-files {} +";
         };
       };
 
@@ -88,16 +89,18 @@ module {
             "${cfg.defaultNetwork}"
           ];
           UMask = "0002";
-          ExecStartPre = pkgs.writeShellScript "insert-qbittorrent-password" ''
-            chmod 744 ${configLocation}
-            ${pkgs.gnused}/bin/sed -i '/# BEGIN PASSWORD INSERT/,/# END PASSWORD INSERT/d' ${configLocation}
-            ${pkgs.gnused}/bin/sed -i '/^WebUI\\Password_PBKDF2=/d' ${configLocation}
+          ExecStartPre = lib.mkAfter [
+            (pkgs.writeShellScript "insert-qbittorrent-password" ''
+              chmod 744 ${configLocation}
+              ${pkgs.gnused}/bin/sed -i '/# BEGIN PASSWORD INSERT/,/# END PASSWORD INSERT/d' ${configLocation}
+              ${pkgs.gnused}/bin/sed -i '/^WebUI\\Password_PBKDF2=/d' ${configLocation}
 
-            echo "# BEGIN PASSWORD INSERT" >> ${configLocation}
-            cat ${config.sops.templates.qbittorrent-password-config.path} >> ${configLocation}
-            echo "# END PASSWORD INSERT" >> ${configLocation}
-            chmod 744 ${configLocation}
-          '';
+              echo "# BEGIN PASSWORD INSERT" >> ${configLocation}
+              cat ${config.sops.templates.qbittorrent-password-config.path} >> ${configLocation}
+              echo "# END PASSWORD INSERT" >> ${configLocation}
+              chmod 744 ${configLocation}
+            '')
+          ];
         };
       };
 

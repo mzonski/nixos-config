@@ -32,6 +32,7 @@ module {
     {
       programs.firefox = {
         enable = true;
+        configPath = ".mozilla/firefox";
         package = pkgs.firefox;
         profiles.default = {
           search = {
@@ -54,6 +55,7 @@ module {
             ublock-origin
             sponsorblock
             darkreader
+            plasma-integration
           ];
 
           bookmarks = { };

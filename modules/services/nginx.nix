@@ -27,7 +27,7 @@ module {
         defaults = {
           email = "me@zonni.pl";
           dnsProvider = "cloudflare";
-          credentialsFile = config.sops.templates.acme-config.path;
+          environmentFile = config.sops.templates.acme-config.path;
         };
       };
 

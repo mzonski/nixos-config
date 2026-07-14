@@ -24,7 +24,7 @@ delib.module {
         vista-fonts
         textfonts
         font-awesome
-        local.apple-fonts
+        # local.apple-fonts
       ];
     in
     {
@@ -49,7 +49,7 @@ delib.module {
 
           ## PRODUCTIVITY
           qbittorrent-enhanced
-          xfce.xfburn # Image burner
+          xfburn # Image burner
           unstable.code-cursor-fhs
           libreoffice-fresh
 
@@ -62,7 +62,7 @@ delib.module {
 
           ## MISC
           prismlauncher # minecraft
-          mate.atril # Document viewer
+          atril # Document viewer
           unstable.furmark # GPU benchmark
           unstable.mission-center
           element-desktop # Matrix client
@@ -87,6 +87,7 @@ delib.module {
           gptfdisk # partitioning tools: cgdisk fixparts gdisk sgdisk
           ddrescue # data recovery tool
           efibootmgr
+          uefitool
 
           ## ENCRYPTION/SIGNING
           opensc # Smart card utilities and libraries

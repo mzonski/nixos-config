@@ -112,6 +112,7 @@ rec {
     rebind_device_pci_id=$(get_pci_address_from_device_id "${deviceId}")
     if ! [ -e "/sys/bus/pci/drivers/${driverTo}/$rebind_device_pci_id" ]; then
       echo "$rebind_device_pci_id" | tee /sys/bus/pci/drivers/${driverFrom}/unbind
+      echo "${driverTo}" | tee /sys/bus/pci/devices/$rebind_device_pci_id/driver_override
       echo "$rebind_device_pci_id" | tee /sys/bus/pci/drivers/${driverTo}/bind
     fi
 

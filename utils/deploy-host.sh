@@ -62,4 +62,6 @@ sudo nix run github:numtide/nixos-anywhere -- \
 
 sudo ssh root@seed 'reboot'
 
+# Future me: Here disconnect external network card
+
 retry_with_backoff ssh "${USERNAME}@${HOSTNAME}" "(sudo systemctl stop display-manager.service || true) && sudo chown ${USERNAME}:${USERNAME} /home/${USERNAME}/.ssh && sudo reboot"

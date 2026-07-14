@@ -17,13 +17,13 @@ delib.host {
       (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-    systemd.sleep.extraConfig = ''
-      AllowSuspend=yes
-      AllowHibernation=no
-      AllowSuspendThenHibernate=no
-      AllowHybridSleep=no
-      SuspendState=mem
-    '';
+    # systemd.sleep.extraConfig = ''
+    #   AllowSuspend=yes
+    #   AllowHibernation=no
+    #   AllowSuspendThenHibernate=no
+    #   AllowHybridSleep=no
+    #   SuspendState=mem
+    # '';
 
     boot = {
       initrd.availableKernelModules = [
@@ -39,7 +39,7 @@ delib.host {
 
       kernelParams = [
         "mem_sleep_default=deep"
-        "nvme_core.quirks=0x144d:0xa810:0x408" # (NVME_QUIRK_DELAY_BEFORE_CHK_RDY + NVME_QUIRK_SIMPLE_SUSPEND)
+        #"nvme_core.quirks=0x144d:0xa810:0x408" # (NVME_QUIRK_DELAY_BEFORE_CHK_RDY + NVME_QUIRK_SIMPLE_SUSPEND)
       ];
 
       blacklistedKernelModules = [ ];
@@ -51,9 +51,6 @@ delib.host {
       ];
 
       extraModulePackages = [
-        (pkgs.callPackage ../../kernel-packages/asus-ec-sensors {
-          kernel = config.boot.kernelPackages.kernel;
-        })
         (pkgs.callPackage ../../kernel-packages/asus_rog_ryujin {
           kernel = config.boot.kernelPackages.kernel;
         })

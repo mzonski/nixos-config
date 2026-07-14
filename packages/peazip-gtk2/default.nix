@@ -1,17 +1,6 @@
 {
-  stdenv,
-  lib,
-  fetchFromGitHub,
-  fpc,
-  lazarus,
-  xorg,
-  runCommand,
+
   _7zz,
-  archiver,
-  brotli,
-  upx,
-  zpaq,
-  zstd,
   gtk2,
   gdk-pixbuf,
   glib,
@@ -19,18 +8,30 @@
   cairo,
   atk,
   makeWrapper,
+  stdenv,
+  lib,
+  fetchFromGitHub,
+  fpc,
+  lazarus,
+  libx11,
+  runCommand,
+  brotli,
+  upx,
+  zpaq,
+  zstd,
+  writableTmpDirAsHomeHook,
   ...
 }:
 
 stdenv.mkDerivation rec {
   pname = "peazip-gtk2";
-  version = "10.2.0";
+  version = "11.1.0";
 
   src = fetchFromGitHub {
     owner = "peazip";
     repo = "PeaZip";
     rev = version;
-    hash = "sha256-TyfLqT9VNSViJOWwM3KgL2tvCZE14bLlT/6DgF9IAOE=";
+    hash = "sha256-PuY+68+7XxsWylS6skhNF40o+Qt26RwmVxVTLmGXIn0=";
   };
   sourceRoot = "${src.name}/peazip-sources";
 
@@ -45,7 +46,7 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
-    xorg.libX11
+    libx11
     gtk2
     gdk-pixbuf
     glib
@@ -80,7 +81,6 @@ stdenv.mkDerivation rec {
     wrapProgram $out/lib/peazip/peazip --prefix PATH : ${
       lib.makeBinPath [
         _7z
-        archiver
         brotli
         upx
         zpaq

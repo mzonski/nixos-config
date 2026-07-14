@@ -27,7 +27,7 @@ module {
       );
 
       peazip = (
-        pkgs.local.peazip-gtk2.override {
+        pkgs.peazip.override {
           _7zz = _7zz;
         }
       );

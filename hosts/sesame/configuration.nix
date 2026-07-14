@@ -7,11 +7,11 @@
 }:
 delib.host {
   name = "sesame";
-  rice = "catppuccin-sharp-dark";
+  rice = "kde-breeze";
   type = "desktop";
 
   homeManagerSystem = system;
-  home.home.stateVersion = "25.11";
+  home.home.stateVersion = "26.05";
 
   myconfig = {
     admin.username = "zonni";
@@ -38,8 +38,6 @@ delib.host {
     };
 
     features = {
-      autologin.enable = false;
-      autologin.session = "gnome";
       gaming.enable = false;
       general-development.enable = false;
       virt-manager.enable = false;
@@ -49,17 +47,18 @@ delib.host {
     };
 
     programs.chrome.enable = true;
-    programs.gnome.enable = true;
+    programs.kde.enable = true;
     programs.jetbrains.enable = false;
+
     programs.utils.mitmproxy = {
-      enable = true;
+      enable = false;
       interface = "wlo1";
     };
   };
 
   nixos = {
     nixpkgs.hostPlatform = system;
-    system.stateVersion = "25.11";
+    system.stateVersion = "26.05";
     boot.kernelPackages = pkgs.linuxPackages_zen;
 
     imports = [
@@ -75,31 +74,31 @@ delib.host {
 
     hardware.i2c.enable = true;
 
-    services.logind.settings.Login = {
-      HandleLidSwitch = "sleep";
-      HandleLidSwitchExternalPower = "sleep";
-      HandleLidSwitchDocked = "sleep";
+    # services.logind.settings.Login = {
+    #   HandleLidSwitch = "sleep";
+    #   HandleLidSwitchExternalPower = "sleep";
+    #   HandleLidSwitchDocked = "sleep";
 
-      HandlePowerKey = "poweroff";
-      HandlePowerKeyLongPress = "poweroff";
+    #   HandlePowerKey = "poweroff";
+    #   HandlePowerKeyLongPress = "poweroff";
 
-      InhibitDelayMaxSec = 5;
-      LidSwitchIgnoreInhibited = true;
-      PowerKeyIgnoreInhibited = false;
-      SuspendKeyIgnoreInhibited = true;
-      HibernateKeyIgnoreInhibited = true;
+    #   InhibitDelayMaxSec = 5;
+    #   LidSwitchIgnoreInhibited = true;
+    #   PowerKeyIgnoreInhibited = false;
+    #   SuspendKeyIgnoreInhibited = true;
+    #   HibernateKeyIgnoreInhibited = true;
 
-      IdleAction = "sleep";
-      IdleActionSec = toString (10 * 60); # after 10 minutes after screen blank computer goes to sleep (15m since idle)
+    #   IdleAction = "sleep";
+    #   IdleActionSec = toString (10 * 60); # after 10 minutes after screen blank computer goes to sleep (15m since idle)
 
-      SleepOperation = "suspend-then-hibernate suspend hibernate";
-    };
+    #   SleepOperation = "suspend-then-hibernate suspend hibernate";
+    # };
 
-    systemd.sleep.extraConfig = ''
-      HibernateDelaySec=${toString (15 * 60)}
-    ''; # after 15 minut since sleep laptop hibernates (30m since idle)
+    # systemd.sleep.extraConfig = ''
+    #   HibernateDelaySec=${toString (15 * 60)}
+    # ''; # after 15 minut since sleep laptop hibernates (30m since idle)
 
-    services.upower.ignoreLid = true;
+    # services.upower.ignoreLid = true;
   };
 
   home = {
@@ -108,14 +107,14 @@ delib.host {
       bat.enable = true;
     };
 
-    dconf.settings = {
-      "org/gnome/desktop/session" = {
-        idle-delay = 5 * 60; # after 5 minutes on idle screen goes blank
-      };
-      "org/gnome/settings-daemon/plugins/power" = {
-        sleep-inactive-ac-type = "nothing";
-        sleep-inactive-battery-type = "nothing";
-      };
-    };
+    # dconf.settings = {
+    #   "org/gnome/desktop/session" = {
+    #     idle-delay = 5 * 60; # after 5 minutes on idle screen goes blank
+    #   };
+    #   "org/gnome/settings-daemon/plugins/power" = {
+    #     sleep-inactive-ac-type = "nothing";
+    #     sleep-inactive-battery-type = "nothing";
+    #   };
+    # };
   };
 }

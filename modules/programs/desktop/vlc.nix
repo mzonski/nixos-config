@@ -15,7 +15,7 @@ let
     vlc
     ;
 
-  SCALE_FACTOR = "1.6"; # TODO: SCALE sync
+  SCALE_FACTOR = "1.0"; # TODO: SCALE sync
 
   vlcWrapper = writeShellScript "vlc-wrapper" ''
     env QT_SCALE_FACTOR=${SCALE_FACTOR} ${pkgs.vlc}/bin/vlc "$@"

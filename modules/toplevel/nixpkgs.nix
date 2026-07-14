@@ -1,9 +1,4 @@
-{
-  delib,
-  lib,
-  inputs,
-  ...
-}:
+{ delib, ... }:
 let
   # TODO: /root/.config/nixpkgs/config.nix
   files."nixpkgs/config.nix".text = ''
@@ -21,9 +16,6 @@ delib.module {
     environment.variables = variables;
     nixpkgs.config = {
       allowUnfree = true;
-      permittedInsecurePackages = [
-        "archiver-3.5.1"
-      ];
     };
   };
   home.always = {
