@@ -71,10 +71,6 @@ delib.host {
 
       programs.chrome.enable = true;
       programs.kde.enable = true;
-
-      programs.desktop.thunar.enable = false;
-      programs.desktop.pcmanfm.enable = false;
-
       hardware.my-pc-rgb.enable = true;
 
       services.network-share-client = {
