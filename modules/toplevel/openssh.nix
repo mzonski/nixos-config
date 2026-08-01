@@ -23,7 +23,6 @@ delib.module {
       otherMachineHostNames = lib.filter (hostname: hostname != config.networking.hostName) hostnames;
     in
     {
-
       sops.secrets = {
         "ssh_private_zonni" = {
           path = "/home/${homeManagerUser}/.ssh/id_ed25519";
@@ -89,12 +88,17 @@ delib.module {
                   HostName seed
                   User root
                   IdentityFile ${machineKeyFile}
+
+                Host tomato
+                  User gitea
+                  IdentityFile ${machineKeyFile}
               ''
             ]
           );
         in
         {
           extraConfig = extraHostConfig + ''
+
             Host seed
               HostName seed
               User nixos
@@ -128,6 +132,13 @@ delib.module {
             "seed" = {
               HostName = "seed";
               User = "nixos";
+              IdentityFile = "~/.ssh/id_ed25519";
+            };
+          }
+          // {
+            "gitea" = {
+              HostName = "git.tomato.local.zonni.pl";
+              User = "gitea";
               IdentityFile = "~/.ssh/id_ed25519";
             };
           };
