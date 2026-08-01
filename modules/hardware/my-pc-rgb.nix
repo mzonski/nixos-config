@@ -16,21 +16,22 @@ module {
   nixos.ifEnabled =
     { cfg, ... }:
     {
-      systemd.services.my-pc-rgb = {
-        description = "My PC RGB Background Service";
-        wantedBy = [ "multi-user.target" ];
-        conflicts = [
-          "suspend.target"
-          "poweroff.target"
-          "reboot.target"
-          "shutdown.target"
-        ];
 
+      systemd.services.my-pc-rgb = {
+        description = "RGB lighting";
+
+        wantedBy = [
+          "multi-user.target"
+          #"sleep.target"
+        ];
+        after = [
+          "multi-user.target"
+          #"sleep.target"
+          #"systemd-udev-settle.service"
+        ];
         serviceConfig = {
-          Type = "simple";
+          Type = "oneshot";
           ExecStart = "${inputs.my-pc-rgb.packages.${system}.default}/bin/my-pc-rgb";
-          Restart = "on-failure";
-          RestartSec = "10s";
         };
       };
 
@@ -49,9 +50,6 @@ module {
         (pkgs.writeTextDir "etc/udev/rules.d/45-my-pc-rgb-devices.rules" ''
           # ASUS AURA LED Controller
           SUBSYSTEM=="usb", ATTR{idVendor}=="0b05", ATTR{idProduct}=="19af", TAG+="uaccess"
-
-          # Corsair Lighting Node Core
-          SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1b1c", ATTRS{idProduct}=="0c1a", TAG+="uaccess"
         '')
       ];
     };
