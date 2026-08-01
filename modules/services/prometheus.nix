@@ -47,13 +47,14 @@ module {
         port = cfg.uiPort;
         globalConfig.scrape_interval = "10s";
 
+        # TODO: Refactor
         scrapeConfigs = [
           {
             job_name = "node";
             static_configs = [
               {
                 targets = [
-                  "localhost:9100"
+                  "tomato:9100"
                 ];
               }
             ];
@@ -61,11 +62,35 @@ module {
           {
             job_name = "speedtest";
             scrape_interval = "5m";
-            scrape_timeout = "60s";
+            scrape_timeout = "5m";
             static_configs = [
               {
                 targets = [
-                  "localhost:9798"
+                  "tomato:9798"
+                ];
+              }
+            ];
+          }
+          {
+            job_name = "smart";
+            scrape_interval = "1h";
+            scrape_timeout = "1h";
+            static_configs = [
+              {
+                targets = [
+                  "tomato:${toString myconfig.services.smartctl-exporter.port}"
+                ];
+              }
+            ];
+          }
+          {
+            job_name = "corn_win";
+            scrape_interval = "5m";
+            scrape_timeout = "5m";
+            static_configs = [
+              {
+                targets = [
+                  "corn:9100"
                 ];
               }
             ];
