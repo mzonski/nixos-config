@@ -71,7 +71,7 @@ delib.host {
 
       programs.chrome.enable = true;
       programs.kde.enable = true;
-      hardware.my-pc-rgb.enable = true;
+      hardware.my-pc-rgb.enable = false;
 
       services.network-share-client = {
         enable = true;
