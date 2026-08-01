@@ -3,8 +3,8 @@ let
   generateNixpkgsConfig = cudaEnabled: {
     files."nixpkgs/config.nix".text = ''
       {
+        cudaSupport = ${if cudaEnabled then "true" else "false"};
         allowUnfree = true;
-        cudaSupport = ${toString cudaEnabled};
       }
     '';
     variables."NIXPKGS_ALLOW_UNFREE" = 1;
@@ -22,7 +22,7 @@ delib.module {
       nixpkgsConfig = generateNixpkgsConfig cudaEnabled;
     in
     {
-      environment.variables = nixpkgsConfig;
+      environment.variables = nixpkgsConfig.variables;
       nixpkgs.config = {
         allowUnfree = true;
         cudaSupport = cudaEnabled;
