@@ -92,6 +92,12 @@ module {
                   content = {
                     type = "btrfs";
                     extraArgs = [ "-f" ];
+                    postCreateHook = ''
+                      MNTPOINT=$(mktemp -d)
+                      mount "/dev/disk/by-partlabel/disk-main-nixos" "$MNTPOINT" -o subvol=/
+                      trap 'umount "$MNTPOINT"; rm -rf "$MNTPOINT"' EXIT
+                      btrfs quota enable "$MNTPOINT"
+                    '';
                     subvolumes = {
                       "/root" = {
                         mountpoint = "/";
