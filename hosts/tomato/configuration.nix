@@ -144,6 +144,7 @@ delib.host {
       influxdb.enable = true;
       uptime-kuma.enable = true;
       speedtest-exporter.enable = true;
+      smartctl-exporter.enable = true;
     };
   };
 
