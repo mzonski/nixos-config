@@ -39,24 +39,24 @@ system-revert:
 	sudo nixos-rebuild switch --flake $(FLAKE)#$(HOSTNAME) --rollback
 
 sysboot:
-	@echo "Switching NixOS configuration..."
+	@echo "Building new boot NixOS configuration..."
 	sudo nixos-rebuild boot --flake $(FLAKE)#$(HOSTNAME)
 
-bootloader:
-	@echo "Switching NixOS configuration..."
-	sudo nixos-rebuild boot --install-bootloader --flake $(FLAKE)#$(HOSTNAME)
-
-bootloader-update-%:
-	@echo "Updating bootloader on remote machine..."
-	nixos-rebuild boot --install-bootloader  \
+sysboot-%:
+	@echo "Building new boot NixOS configuration for remote machine..."
+	nixos-rebuild boot  \
     --flake ".#$*" \
     --target-host "$(USERNAME)@$*" \
     --build-host localhost \
     --sudo
 
-boot-update-%:
-	@echo "Updating boot on remote machine..."
-	nixos-rebuild boot  \
+bootloader:
+	@echo "Switching NixOS configuration..."
+	sudo nixos-rebuild boot --install-bootloader --flake $(FLAKE)#$(HOSTNAME)
+
+bootloader-%:
+	@echo "Updating bootloader on remote machine..."
+	nixos-rebuild boot --install-bootloader  \
     --flake ".#$*" \
     --target-host "$(USERNAME)@$*" \
     --build-host localhost \
