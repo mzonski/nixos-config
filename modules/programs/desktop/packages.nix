@@ -50,7 +50,6 @@ delib.module {
           ## PRODUCTIVITY
           qbittorrent-enhanced
           xfburn # Image burner
-          unstable.code-cursor-fhs
           libreoffice-fresh
 
           ## ENGINERING
