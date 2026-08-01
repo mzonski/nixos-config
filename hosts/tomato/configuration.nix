@@ -145,6 +145,7 @@ delib.host {
       uptime-kuma.enable = true;
       speedtest-exporter.enable = true;
       smartctl-exporter.enable = true;
+      hydra.enable = true;
     };
   };
 
