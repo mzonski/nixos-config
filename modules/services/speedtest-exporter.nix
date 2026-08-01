@@ -3,6 +3,7 @@ let
   inherit (delib)
     module
     boolOption
+    intOption
     moduleOptions
     ;
   serviceName = "speedtest-exporter";
@@ -12,6 +13,7 @@ module {
 
   options = moduleOptions {
     enable = boolOption false;
+    port = intOption 9798;
   };
 
   nixos.always = {
@@ -22,8 +24,8 @@ module {
     { myconfig, cfg, ... }:
     {
       services.speedtest-exporter = {
+        inherit (cfg) port;
         enable = true;
-        port = 9798;
         cacheDuration = 5 * 60;
         openFirewall = true;
       };
