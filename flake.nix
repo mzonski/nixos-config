@@ -10,16 +10,29 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    systems.url = "github:nix-systems/default-linux";
-    nixos-hardware.url = "github:nixos/nixos-hardware/master";
+    denix = {
+      url = "github:yunfachi/denix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
+
+    disko.url = "github:nix-community/disko";
 
     sops-nix = {
       url = "github:mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    firefox-addons = {
-      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+    nixos-hardware.url = "github:nixos/nixos-hardware/master";
+    my-pc-rgb.url = "github:mzonski/my-pc-rgb/dev";
+
+    asus-numberpad-driver = {
+      url = "github:asus-linux-drivers/asus-numberpad-driver";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-cachyos-kernel = {
+      url = "github:xddxdd/nix-cachyos-kernel/release";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -28,16 +41,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland.url = "github:hyprwm/Hyprland";
-    hyprland-plugins = {
-      url = "github:hyprwm/hyprland-plugins";
-      inputs.hyprland.follows = "hyprland";
-    };
-
-    denix = {
-      url = "github:yunfachi/denix";
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
     };
 
     flake-programs-sqlite = {
@@ -45,31 +51,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    disko.url = "github:nix-community/disko";
-    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
-
-    piavpn = {
-      url = "github:mzonski/piavpn-nixos";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    my-pc-rgb = {
-      url = "github:mzonski/my-pc-rgb/dev";
-    };
-
-    asus-numberpad-driver = {
-      url = "github:asus-linux-drivers/asus-numberpad-driver";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    bun2nix = {
-      url = "github:nix-community/bun2nix";
-      inputs.systems.follows = "systems";
-    };
-
-    speedtest-exporter.url = "git+ssh://gitea@git.tomato.local.zonni.pl/zonni/speedtest-exporter.git";
-
-    usb-sniffer.url = "git+ssh://gitea@git.tomato.local.zonni.pl/zonni/usb-sniffer.git";
+    speedtest-exporter.url = "git+ssh://gitea@tomato/zonni/speedtest-exporter.git";
+    usb-sniffer.url = "git+ssh://gitea@tomato/zonni/usb-sniffer.git";
   };
 
   outputs =
