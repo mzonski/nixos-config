@@ -115,7 +115,7 @@ delib.host {
     #boot.kernelPackages = pkgs.linuxPackages_latest;
     #boot.kernelPackages = pkgs.linuxPackages_zen;
 
-    boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-bore-lto-x86_64-v4;
+    boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-x86_64-v4;
     boot.loader.grub.memtest86.enable = true;
 
     services.tumbler.enable = true; # Enable thumbnail service
