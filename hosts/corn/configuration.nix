@@ -30,6 +30,7 @@ delib.host {
       };
 
       features = {
+        ai.enable = true;
         gaming.enable = true;
         general-development.enable = true;
         docker.enable = true;
