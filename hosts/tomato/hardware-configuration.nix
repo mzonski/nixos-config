@@ -37,11 +37,6 @@ delib.host {
       extraModprobeConfig = ''
         options it87 force_id=0x8613
       '';
-      extraModulePackages = [
-        (pkgs.callPackage ../../kernel-packages/it87 {
-          kernel = config.boot.kernelPackages.kernel;
-        })
-      ];
       supportedFilesystems = {
         vfat = true;
         xfs = true;
