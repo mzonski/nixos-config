@@ -9,7 +9,7 @@ module {
 
   myconfig.ifEnabled.xdg.mime.recommended =
     let
-      launcher = "org.gnome.TextEditor.desktop";
+      launcher = "org.kde.kate.desktop";
     in
     {
       "text/plain" = [ launcher ];
