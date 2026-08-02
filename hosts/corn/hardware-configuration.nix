@@ -17,13 +17,14 @@ delib.host {
       (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-    # systemd.sleep.extraConfig = ''
-    #   AllowSuspend=yes
-    #   AllowHibernation=no
-    #   AllowSuspendThenHibernate=no
-    #   AllowHybridSleep=no
-    #   SuspendState=mem
-    # '';
+    systemd.sleep.settings.Sleep = {
+      AllowSuspend = "yes";
+      AllowHibernation = "no";
+      AllowSuspendThenHibernate = "no";
+      AllowHybridSleep = "no";
+      SuspendState = "mem";
+      MemorySleepMode = "deep";
+    };
 
     boot = {
       initrd.availableKernelModules = [
