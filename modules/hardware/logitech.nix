@@ -14,6 +14,8 @@ module {
       hardware.logitech.wireless.enable = true;
       services.system76-scheduler.assignments."games".matchers = [
         "\"${pkgs.solaar}/bin/.solaar-wrapped\""
+        "\"${pkgs.solaar}/bin/solaar-cli\""
+        "\"${pkgs.solaar}/bin/solaar\""
       ];
     };
 
