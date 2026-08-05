@@ -25,55 +25,32 @@ delib.host {
     boot.blacklistedKernelModules = [ "nouveau" ];
 
     environment.systemPackages = with pkgs; [
-      #libva-utils
       vdpauinfo
-
       nvtopPackages.nvidia
       nvitop
     ];
-
-    environment.variables = {
-      #MESA_VK_DEVICE_SELECT_FORCE_DEFAULT_DEVICE = "1";
-      #MESA_LOADER_DRIVER_OVERRIDE = "nvidia";
-
-      #LIBVA_DRIVER_NAME = "nvidia";
-      #GBM_BACKEND = "nvidia-drm";
-      #__GLX_VENDOR_LIBRARY_NAME = "nvidia";
-      #NVD_BACKEND = "direct";
-
-      #__NV_PRIME_RENDER_OFFLOAD = 1;
-      #_NV_PRIME_RENDER_OFFLOAD_PROVIDER = "NVIDIA-G0";
-      #__VK_LAYER_NV_optimus = "NVIDIA_only";
-    };
-
-    #environment.sessionVariables = {
-    #  VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
-    #};
 
     hardware.graphics = {
       enable = true;
       enable32Bit = true;
       extraPackages = with pkgs; [
-        nvidia-vaapi-driver # remove 25.05?
-        #libva-vdpau-driver
         libvdpau-va-gl
-        #libva1
         libGL
-
         egl-wayland
       ];
     };
 
     hardware.nvidia = {
+      open = true;
+      videoAcceleration = true;
+      gsp.enable = true;
       modesetting.enable = true;
 
-      powerManagement.enable = true;
-      powerManagement.finegrained = true;
-      open = true;
-
-      forceFullCompositionPipeline = false;
-      gsp.enable = true;
-      # videoAcceleration = true; # 25.05?
+      powerManagement = {
+        enable = true;
+        finegrained = true;
+        kernelSuspendNotifier = true;
+      };
 
       prime = {
         offload.enable = true;
@@ -95,9 +72,5 @@ delib.host {
         persistencedSha256 = "sha256-aXmD2VY1RLlgAnlHhOUMWzvMyhI6JTClcFLm4imF/mA=";
       };
     };
-  };
-
-  home = {
-    dconf.settings."org/gnome/mutter".experimental-features = [ "kms-modifiers" ];
   };
 }
