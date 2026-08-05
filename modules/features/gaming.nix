@@ -23,6 +23,7 @@ module {
       gamescopeSession.enable = true;
       extraCompatPackages = with pkgs; [
         unstable.proton-ge-bin
+        local.proton-cachyos-native
       ];
     };
 
