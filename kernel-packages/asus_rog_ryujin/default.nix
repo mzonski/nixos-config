@@ -5,7 +5,7 @@
   ...
 }:
 let
-  version = "0.2.0-custom";
+  version = "0.3.0";
   isClang = kernel.stdenv.cc.isClang or false;
 in
 kernel.stdenv.mkDerivation {
@@ -14,10 +14,10 @@ kernel.stdenv.mkDerivation {
 
   #src = /home/zonni/git/asus_rog_ryujin_iii_extreme-hwmon;
   src = fetchFromGitHub {
-    owner = "mzonski";
-    repo = "asus_rog_ryujin_iii_extreme-hwmon";
-    rev = "99902647cbc0691a9f3d639c44624cc9beab9bc0";
-    sha256 = "sha256-ZyDgwcpKL//P8g6FRIqmK2qZcfIiqD2terF8K9C0koU=";
+    owner = "aleksamagicka";
+    repo = "asus_rog_ryujin-hwmon";
+    rev = "4b9fccb83e8903392226ea8988b4a1c1062a3381";
+    sha256 = "sha256-464PlFHSTo/os5LvVIMvFby8tJixeV0FzyNnSDSJrOo=";
   };
 
   hardeningDisable = [ "pic" ];
@@ -26,7 +26,6 @@ kernel.stdenv.mkDerivation {
 
   postPatch = ''
     substituteInPlace Makefile --replace-warn "make W=1 C=1" "make"
-    substituteInPlace drivers/hwmon/asus_rog_ryujin.c --replace-warn "MODULE_DESCRIPTION(\"Hwmon driver for Asus ROG Ryujin III EXTREME AIO cooler\");" "MODULE_DESCRIPTION(\"Hwmon driver for Asus ROG Ryujin III EXTREME AIO cooler (${version})\");"
   '';
 
   makeFlags = [
