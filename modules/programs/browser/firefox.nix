@@ -74,6 +74,7 @@ module {
             "browser.shell.checkDefaultBrowser" = false;
             "browser.shell.defaultBrowserCheckCount" = 1;
             "browser.startup.homepage_override.mstone" = "ignore";
+            "browser.startup.page" = 3;
             "browser.uitour.enabled" = false;
             "startup.homepage_override_url" = "";
             "trailhead.firstrun.didSeeAboutWelcome" = true;
