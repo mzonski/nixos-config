@@ -129,7 +129,7 @@ delib.host {
     security.polkit.enable = true;
 
     services.scx.enable = true;
-    services.scx.scheduler = "scx_bpfland";
+    services.scx.scheduler = "scx_lavd";
 
     hardware.i2c.enable = true;
   };
