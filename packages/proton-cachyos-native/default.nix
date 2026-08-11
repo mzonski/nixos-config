@@ -7,13 +7,13 @@
 stdenv.mkDerivation rec {
   baseVersion = "11.0";
   releaseVersion = "20260703";
-  hashVersion = "sha256-OpdzM7IxE+7qJayJc1daCGjLtgH2otHys88BBYsYW3g=";
+  hashVersion = "sha256-J2JsL9N0wsCFfD/ycazQznxdbDex5lGgYbgddJXc8VA=";
 
   name = "proton-cachyos-native";
   version = "${baseVersion}-${releaseVersion}";
 
   src = fetchurl {
-    url = "https://mirror.cachyos.org/repo/x86_64/cachyos/${name}-1:${baseVersion}.${releaseVersion}-1-x86_64.pkg.tar.zst";
+    url = "https://mirror.cachyos.org/repo/x86_64/cachyos/${name}-1:${baseVersion}.${releaseVersion}-2-x86_64.pkg.tar.zst";
     hash = hashVersion;
   };
 
