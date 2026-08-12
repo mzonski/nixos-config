@@ -63,7 +63,6 @@ delib.module {
           prismlauncher # minecraft
           atril # Document viewer
           unstable.furmark # GPU benchmark
-          unstable.mission-center
           element-desktop # Matrix client
           unstable.nixpkgs-review
 
