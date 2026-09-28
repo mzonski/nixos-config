@@ -17,5 +17,9 @@ module {
       enable = true;
       port = 8081;
     };
+
+    environment.systemPackages = with pkgs; [
+      alpaca
+    ];
   };
 }
