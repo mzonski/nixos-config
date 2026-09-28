@@ -23,7 +23,6 @@ module {
       gamescopeSession.enable = true;
       extraCompatPackages = with pkgs; [
         unstable.proton-ge-bin
-        local.proton-cachyos-native
       ];
     };
 
@@ -32,6 +31,7 @@ module {
     programs.gamemode.enable = true;
 
     hardware.xone.enable = true;
+    hardware.steam-hardware.enable = true;
 
     environment.sessionVariables = {
       # STEAM_FORCE_DESKTOPUI_SCALING = "1.6";
