@@ -1,4 +1,8 @@
-{ delib, pkgs, ... }:
+{
+  delib,
+  pkgs,
+  ...
+}:
 let
   inherit (delib) module singleEnableOption;
 in
@@ -17,6 +21,11 @@ module {
         "\"${pkgs.solaar}/bin/solaar-cli\""
         "\"${pkgs.solaar}/bin/solaar\""
       ];
+
+      services.udev.extraRules = ''
+        # Disable power wakeup events for Logitech, Inc. Logi Bolt Receiver
+        ACTION=="add", SUBSYSTEM=="usb", DRIVERS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c548", ATTR{power/wakeup}="disabled"
+      '';
     };
 
   home.ifEnabled = {
