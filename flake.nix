@@ -53,6 +53,7 @@
 
     speedtest-exporter.url = "git+ssh://gitea@tomato/zonni/speedtest-exporter.git";
     usb-sniffer.url = "git+ssh://gitea@tomato/zonni/usb-sniffer.git";
+    nix-claude-code.url = "github:ryoppippi/nix-claude-code";
   };
 
   outputs =

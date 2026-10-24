@@ -85,7 +85,7 @@ module {
           ]
         );
 
-      other = with pkgs.unstable; [
+      other = with pkgs; [
         claude-code
       ];
     in
