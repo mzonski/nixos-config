@@ -2,11 +2,13 @@
   delib,
   pkgs,
   homeconfig,
+  lib,
   ...
 }:
 
 let
   inherit (delib) module singleEnableOption;
+  nodePkg = pkgs.nodejs_22;
 in
 module {
   name = "features.general-development";
@@ -26,12 +28,12 @@ module {
         pkgs.unstable.kubernetes-helm
       ];
 
-      node22 = [
+      node = [
         pkgs.yarn
-        pkgs.pnpm
-        pkgs.nodejs_22
+        pkgs.unstable.pnpm
         pkgs.node-gyp
         pkgs.node-glob
+        nodePkg
       ];
 
       python = [
@@ -87,19 +89,40 @@ module {
 
       other = with pkgs; [
         claude-code
+        unstable.opencode
       ];
+
+      npmRegistryLocation = "${homeconfig.home.homeDirectory}/.local/share/.npm-registry";
+      npmConfigFile = "npm/npmrc";
+      pnpmRoot = "${homeconfig.home.homeDirectory}/.local/share/pnpm";
     in
     {
-      home.packages = node22 ++ python ++ kubernetes ++ other ++ [ dotnet-full ];
+      home.packages = node ++ python ++ kubernetes ++ other ++ [ dotnet-full ];
 
-      xdg.configFile."npm/npmrc".text = ''
-        update-notifier=false
-      '';
+      xdg.configFile."${npmConfigFile}".text = lib.generators.toINIWithGlobalSection { } {
+        globalSection = {
+          prefix = npmRegistryLocation;
+          update-notifier = false;
+          fund = false;
+        };
+      };
 
-      home.sessionPath = [ "${homeconfig.home.homeDirectory}/.dotnet/tools/" ];
+      home.sessionPath = [
+        "${homeconfig.home.homeDirectory}/.dotnet/tools/"
+        "${npmRegistryLocation}/bin"
+        "${pnpmRoot}/bin"
+      ];
 
       home.sessionVariables = {
-        NPM_CONFIG_USERCONFIG = "${homeconfig.home.homeDirectory}/.config/npm/npmrc";
+        NPM_CONFIG_USERCONFIG = "${homeconfig.xdg.configHome}/${npmConfigFile}";
+        NODE_PATH = nodePkg;
+
+        PNPM_CONFIG_GLOBAL_DIR = "${pnpmRoot}/global";
+        PNPM_CONFIG_GLOBAL_BIN_DIR = "${pnpmRoot}/bin";
+        PNPM_CONFIG_STATE_DIR = "${pnpmRoot}/state";
+        PNPM_CONFIG_CACHE_DIR = "${pnpmRoot}/cache";
+        PNPM_CONFIG_UPDATE_NOTIFIER = "false";
+
         DOTNET_ROOT = "${dotnet-full}/share/dotnet";
         DOTNET_PATH = "${dotnet-full}/bin/dotnet";
         DOTNET_CLI_TELEMETRY_OPTOUT = "true";
