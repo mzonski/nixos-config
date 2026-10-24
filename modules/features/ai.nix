@@ -10,7 +10,7 @@ module {
   nixos.ifEnabled = {
     services.ollama = {
       enable = true;
-      package = pkgs.ollama-cuda;
+      package = pkgs.unstable.ollama-cuda;
     };
 
     services.open-webui = {
