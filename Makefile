@@ -33,6 +33,7 @@ home:
 system:
 	@echo "Switching NixOS configuration..."
 	sudo nixos-rebuild switch --flake $(FLAKE)#$(HOSTNAME)
+	sync
 
 system-revert:
 	@echo "Switching to previous NixOS configuration..."
