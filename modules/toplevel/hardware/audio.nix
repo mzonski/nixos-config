@@ -31,6 +31,7 @@ module {
       environment.systemPackages = with pkgs; [
         pavucontrol
         pamixer
+        pulseaudio
       ];
 
       services.pipewire = {
