@@ -60,9 +60,6 @@ module {
           secrets.vaultwarden_installation_key = sopsConfig;
           secrets.yubikey_client_id = sopsConfig;
           secrets.yubikey_secret_key = sopsConfig;
-          secrets.smtp_host = sopsConfig;
-          secrets.smtp_username = sopsConfig;
-          secrets.smtp_password = sopsConfig;
           templates.vaultwarden_env = {
             inherit (sopsConfig) owner group;
             content = ''
@@ -71,10 +68,6 @@ module {
               PUSH_INSTALLATION_KEY=${config.sops.placeholder.vaultwarden_installation_key}
               YUBICO_CLIENT_ID=${config.sops.placeholder.yubikey_client_id}
               YUBICO_SECRET_KEY=${config.sops.placeholder.yubikey_secret_key}
-              SMTP_HOST=${config.sops.placeholder.smtp_host}
-              SMTP_FROM=${config.sops.placeholder.smtp_username}
-              SMTP_USERNAME=${config.sops.placeholder.smtp_username}
-              SMTP_PASSWORD=${config.sops.placeholder.smtp_password}
             '';
           };
         };
@@ -120,6 +113,11 @@ module {
           PUSH_IDENTITY_URI = "https://identity.bitwarden.eu";
 
           INVITATION_ORG_NAME = "Homelab Vault";
+
+          SMTP_HOST = "127.0.0.1";
+          SMTP_PORT = 25;
+          SMTP_SECURITY = "off";
+          SMTP_FROM = "vault@${myconfig.homelab.rootDomain}";
           SMTP_FROM_NAME = "Homelab Vault";
         };
       };
