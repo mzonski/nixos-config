@@ -43,7 +43,7 @@ delib.module {
           };
 
         mimeApps = {
-          enable = true;
+          enable = false;
 
           defaultApplications = cfg.mime.recommended;
           associations.added = cfg.mime.associations;

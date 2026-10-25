@@ -156,7 +156,6 @@ module {
         desktopEntries = hiddenDesktopEntries;
 
         mimeApps = {
-          enable = true;
           defaultApplications = createDefaultApps allMimeTypes "peazip.desktop";
           associations.added =
             (createAssociations allArchiveMimeTypes archiveExtractionApps)
