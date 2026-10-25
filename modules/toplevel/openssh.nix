@@ -47,7 +47,7 @@ delib.module {
             owner = "root";
             group = "root";
           };
-        }) otherMachineHostNames
+        }) hostnames
       );
 
       services.openssh = {
