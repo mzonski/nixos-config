@@ -1,6 +1,7 @@
 {
   delib,
   config,
+  pkgs,
   host,
   ...
 }:
@@ -40,6 +41,9 @@ module {
 
   nixos.ifEnabled =
     { myconfig, cfg, ... }:
+    let
+      gitDomain = "git.${host.name}.${myconfig.homelab.domain}";
+    in
     {
       users.users.${serviceName}.uid = 990;
       users.groups.${serviceName}.gid = 985;
@@ -55,11 +59,74 @@ module {
         {
           secrets.gitea_camo_hmac = sopsConfig;
           # secrets.maxmind_license_key = sopsConfig;
+          secrets.gitea_runner_token = {
+            sopsFile = host.secretsFile;
+          };
+          secrets.ssh_private_gitea_ci = {
+            owner = serviceName;
+            group = serviceName;
+          };
+          templates."${serviceName}-runner-known-hosts".content = ''
+            ${gitDomain},127.0.0.1 ${config.sops.placeholder."ssh_public_${host.name}"}
+          '';
         };
 
       systemd.services.gitea = {
         after = [ "postgresql.service" ];
         requires = [ "postgresql.service" ];
+      };
+
+      nix.settings.allowed-users = [ "gitea-runner" ];
+
+      systemd.services."gitea-runner-${serviceName}" = {
+        serviceConfig.LoadCredential = [
+          "ssh_key:${config.sops.secrets.ssh_private_gitea_ci.path}"
+          "known_hosts:${config.sops.templates."${serviceName}-runner-known-hosts".path}"
+        ];
+        environment = {
+          GIT_SSH_COMMAND = "${pkgs.openssh}/bin/ssh -i %d/ssh_key -o IdentitiesOnly=yes -o GlobalKnownHostsFile=%d/known_hosts";
+          GIT_CONFIG_SYSTEM = pkgs.writeText "gitea-runner-gitconfig" ''
+            [user]
+              name = ci
+              email = ci@zonni.pl
+            [url "gitea@127.0.0.1:"]
+              insteadOf = http://127.0.0.1:${toString cfg.uiPort}/
+          '';
+        };
+      };
+
+      services.gitea-actions-runner.instances.${serviceName} = {
+        enable = true;
+        name = "${host.name}-runner";
+        url = "http://127.0.0.1:${toString cfg.uiPort}";
+        tokenFile = config.sops.secrets.gitea_runner_token.path;
+        labels = [ "native:host" ];
+        hostPackages = with pkgs; [
+          bash
+          coreutils
+          curl
+          gawk
+          git
+          gnused
+          nodejs
+          openssh
+          wget
+          nix
+        ];
+        settings = {
+          log.level = "info";
+          runner = {
+            capacity = 2;
+            timeout = "3h";
+            shutdown_timeout = "5s";
+            insecure = false;
+            fetch_timeout = "5s";
+            fetch_interval = "2s";
+          };
+          cache = {
+            enabled = true;
+          };
+        };
       };
 
       services.gitea = {
@@ -84,7 +151,7 @@ module {
         camoHmacKeyFile = config.sops.secrets.gitea_camo_hmac.path;
         settings =
           let
-            domain = "https://git.${host.name}.${myconfig.homelab.domain}/";
+            domain = "https://${gitDomain}/";
           in
           {
             repository = {
@@ -113,7 +180,7 @@ module {
             };
             server = {
               HTTP_PORT = cfg.uiPort;
-              DOMAIN = "git.${host.name}.${myconfig.homelab.domain}";
+              DOMAIN = gitDomain;
               ROOT_URL = domain;
               SSH_PORT = 22;
               LANDING_PAGE = "login";
@@ -124,8 +191,8 @@ module {
 
             service = {
               DISABLE_REGISTRATION = true;
-              ENABLE_BASIC_AUTHENTICATION = false;
-              ENABLE_PASSWORD_SIGNIN_FORM = false;
+              ENABLE_BASIC_AUTHENTICATION = true;
+              ENABLE_PASSWORD_SIGNIN_FORM = true;
               ENABLE_NOTIFY_MAIL = true;
             };
             mailer = {
@@ -133,7 +200,7 @@ module {
               PROTOCOL = "smtp";
               SMTP_ADDR = "127.0.0.1";
               SMTP_PORT = 25;
-              FROM = "gitea@git.${host.name}.${myconfig.homelab.domain}";
+              FROM = "gitea@${gitDomain}";
             };
             "service.explore" = {
               REQUIRE_SIGNIN_VIEW = true;
