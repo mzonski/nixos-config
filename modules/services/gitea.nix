@@ -126,7 +126,14 @@ module {
               DISABLE_REGISTRATION = true;
               ENABLE_BASIC_AUTHENTICATION = false;
               ENABLE_PASSWORD_SIGNIN_FORM = false;
-
+              ENABLE_NOTIFY_MAIL = true;
+            };
+            mailer = {
+              ENABLED = true;
+              PROTOCOL = "smtp";
+              SMTP_ADDR = "127.0.0.1";
+              SMTP_PORT = 25;
+              FROM = "gitea@git.${host.name}.${myconfig.homelab.domain}";
             };
             "service.explore" = {
               REQUIRE_SIGNIN_VIEW = true;
