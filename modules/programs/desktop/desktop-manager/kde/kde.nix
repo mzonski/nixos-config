@@ -1,4 +1,4 @@
-{ delib, ... }:
+{ delib, pkgs, ... }:
 let
   inherit (delib) module singleEnableOption;
 in
@@ -21,5 +21,9 @@ module {
       after = [ "network-online.target" ];
       wants = [ "network-online.target" ];
     };
+
+    environment.systemPackages = with pkgs; [
+      kdotool
+    ];
   };
 }
