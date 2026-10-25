@@ -146,6 +146,7 @@ delib.host {
       speedtest-exporter.enable = true;
       smartctl-exporter.enable = true;
       hydra.enable = true;
+      tailscale-server.enable = true;
     };
   };
 

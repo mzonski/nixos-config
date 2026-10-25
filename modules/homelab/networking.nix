@@ -10,6 +10,7 @@ let
     module
     moduleOptions
     boolOption
+    str
     strOption
     intOption
     submodule
@@ -17,6 +18,7 @@ let
     noDefault
     enumOption
     allowNull
+    listOfOption
     ;
   inherit (lib)
     mkMerge
@@ -63,6 +65,12 @@ let
   };
 
   validVlans = attrNames networkConfig;
+
+  getSubnetIp =
+    vlanName: lastOctet: "10.0.${toString networkConfig.${vlanName}.octet}.${toString lastOctet}";
+  getCidrIp =
+    vlanName: lastOctet:
+    "${getSubnetIp vlanName lastOctet}/${toString networkConfig.${vlanName}.prefixLength}";
 in
 module {
   name = "homelab.networking";
@@ -78,7 +86,16 @@ module {
     }) { };
     defaultOctet = allowNull (intOption null);
     defaultVlan = noDefault (enumOption (validVlans) null);
+    availableCidrIpSubnets = listOfOption str [ ];
   };
+
+  myconfig.ifEnabled =
+    { cfg, ... }:
+    {
+      homelab.networking.availableCidrIpSubnets = map (vlanName: getCidrIp vlanName 0) (
+        attrNames networkConfig
+      );
+    };
 
   nixos.ifEnabled =
     { cfg, ... }:
@@ -138,12 +155,7 @@ module {
         let
           allVlans = attrNames cfg.vlans;
           getVlanId = vlanName: networkConfig.${vlanName}.vlanId;
-          getSubnetIp =
-            vlanName: lastOctet: "10.0.${toString networkConfig.${vlanName}.octet}.${toString lastOctet}";
           getGatewayIp = vlanName: getSubnetIp vlanName 1;
-          getCidrIp =
-            vlanName: lastOctet:
-            "${getSubnetIp vlanName lastOctet}/${toString networkConfig.${vlanName}.prefixLength}";
           getVlanInterfaceName = vlanName: "vlan-${vlanName}";
           getBridgeInterfaceName = vlanName: "br-${vlanName}";
 
