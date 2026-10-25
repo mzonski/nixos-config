@@ -20,6 +20,7 @@ module {
 
     environment.systemPackages = with pkgs; [
       alpaca
+      mcp-nixos
     ];
   };
 }
