@@ -147,6 +147,14 @@ delib.host {
       smartctl-exporter.enable = true;
       hydra.enable = true;
       tailscale-server.enable = true;
+      smartd = {
+        enable = true;
+        devices = [
+          "/dev/sda"
+          "/dev/sdb"
+          "/dev/nvme0"
+        ];
+      };
     };
   };
 
