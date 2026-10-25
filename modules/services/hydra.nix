@@ -76,8 +76,10 @@ module {
         buildMachinesFiles = [ ];
         useSubstitutes = true;
         listenHost = "127.0.0.1";
+        smtpHost = "127.0.0.1";
 
         extraConfig = ''
+          email_notification = 1
           binary_cache_secret_key_file = ${config.sops.secrets.hydra_binary_cache_secret_private.path}
         '';
       };
