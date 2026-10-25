@@ -147,6 +147,7 @@ delib.host {
       smartctl-exporter.enable = true;
       hydra.enable = true;
       tailscale-server.enable = true;
+      postfix.enable = true;
       smartd = {
         enable = true;
         devices = [
