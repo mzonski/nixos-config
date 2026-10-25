@@ -1,5 +1,5 @@
 { inputs, delib, ... }:
 delib.overlayModule {
   name = "mcp-nixos";
-  overlay = inputs.mcp-nixos.overlays.default;
+  overlay = inputs.nixos-extra.overlays.mcp-nixos;
 }

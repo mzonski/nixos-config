@@ -109,7 +109,7 @@ delib.host {
     hardware.enableRedistributableFirmware = true;
 
     imports = [
-      inputs.nixos-hardware.nixosModules.common-pc-ssd
+      inputs.nixos-extra.nixosHardware.modules.common-pc-ssd
     ];
 
     #boot.readOnlyNixStore = false;

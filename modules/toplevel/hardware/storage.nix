@@ -44,7 +44,7 @@ module {
     swapSize = strOption "32G";
   };
 
-  nixos.always.imports = [ inputs.disko.nixosModules.disko ];
+  nixos.always.imports = [ inputs.nixos-extra.nixosModules.disko ];
 
   nixos.ifEnabled =
     { cfg, ... }:

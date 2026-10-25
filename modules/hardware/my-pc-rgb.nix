@@ -2,7 +2,6 @@
   delib,
   inputs,
   pkgs,
-  system,
   ...
 }:
 let
@@ -31,7 +30,7 @@ module {
         ];
         serviceConfig = {
           Type = "oneshot";
-          ExecStart = "${inputs.my-pc-rgb.packages.${system}.default}/bin/my-pc-rgb";
+          ExecStart = "${inputs.nixos-extra.packages.my-pc-rgb}/bin/my-pc-rgb";
         };
       };
 

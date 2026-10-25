@@ -2,5 +2,5 @@
 delib.overlayModule {
   enabled = true;
   name = "cachy-os-kernel";
-  overlay = inputs.nix-cachyos-kernel.overlays.default;
+  overlay = inputs.nixos-extra.overlays.nix-cachyos-kernel;
 }

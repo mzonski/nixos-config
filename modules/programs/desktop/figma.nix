@@ -9,7 +9,7 @@ module {
   options = singleEnableOption false;
 
   nixos.always = {
-    imports = [ inputs.figma-linux-next.nixosModules.default ];
+    imports = [ inputs.nixos-extra.nixosModules.figma-linux-next ];
 
   };
 

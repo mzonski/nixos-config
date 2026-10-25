@@ -43,7 +43,6 @@ delib.host {
       virt-manager.enable = false;
       docker.enable = false;
       windows-data-partition.enable = false;
-      vpnclient.enable = false;
     };
 
     programs.chrome.enable = true;
@@ -62,8 +61,8 @@ delib.host {
     boot.kernelPackages = pkgs.linuxPackages_zen;
 
     imports = [
-      inputs.nixos-hardware.nixosModules.common-cpu-intel
-      inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
+      inputs.nixos-extra.nixosHardware.modules.common-cpu-intel
+      inputs.nixos-extra.nixosHardware.modules.common-pc-laptop-ssd
     ];
 
     services.tumbler.enable = true;
