@@ -18,9 +18,14 @@ module {
       port = 8081;
     };
 
-    environment.systemPackages = with pkgs; [
-      alpaca
-      mcp-nixos
-    ];
+    environment.systemPackages =
+      with pkgs;
+      [
+        alpaca
+        mcp-nixos
+      ]
+      ++ (with pkgs.unstable; [
+        mcp-server-git
+      ]);
   };
 }
