@@ -198,6 +198,26 @@
         "type": "github"
       }
     },
+    "figma-linux-next": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791980583,
+        "narHash": "sha256-noXWtRnKWzpWeSD1+gIJ/7P8/29XaoN05IlCrdXELFw=",
+        "owner": "arximus88",
+        "repo": "figma-linux-next",
+        "rev": "13c501d6af237c849a45dde6ae6f11eec1252050",
+        "type": "github"
+      },
+      "original": {
+        "owner": "arximus88",
+        "repo": "figma-linux-next",
+        "type": "github"
+      }
+    },
     "firefox-addons": {
       "inputs": {
         "nixpkgs": [
@@ -1026,6 +1046,7 @@
         "catppuccin": "catppuccin",
         "denix": "denix",
         "disko": "disko",
+        "figma-linux-next": "figma-linux-next",
         "firefox-addons": "firefox-addons",
         "flake-programs-sqlite": "flake-programs-sqlite",
         "home-manager": "home-manager",

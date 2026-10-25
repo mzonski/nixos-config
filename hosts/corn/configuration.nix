@@ -72,6 +72,7 @@ delib.host {
 
       programs.chrome.enable = true;
       programs.kde.enable = true;
+      programs.desktop.figma.enable = true;
       hardware.my-pc-rgb.enable = false;
 
       services.network-share-client = {

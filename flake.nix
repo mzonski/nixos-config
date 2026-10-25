@@ -55,6 +55,11 @@
     usb-sniffer.url = "git+ssh://gitea@tomato/zonni/usb-sniffer.git";
     nix-claude-code.url = "github:ryoppippi/nix-claude-code";
     mcp-nixos.url = "github:utensils/mcp-nixos";
+
+    figma-linux-next = {
+      url = "github:arximus88/figma-linux-next";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
