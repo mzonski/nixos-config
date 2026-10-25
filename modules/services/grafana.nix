@@ -99,6 +99,13 @@ module {
             oauth_allow_insecure_email_lookup = true;
           };
 
+          smtp = {
+            enabled = true;
+            host = "127.0.0.1:25";
+            from_address = "grafana@${cfg.domain}";
+            startTLS_policy = "NoStartTLS";
+          };
+
           "auth.basic".enabled = false;
           "auth.passwordless".enabled = false;
           "auth.anonymous".enabled = false;
