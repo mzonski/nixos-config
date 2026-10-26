@@ -45,6 +45,7 @@ module {
       programs.vscodium = {
         enable = true;
         package = pkgs.unstable.vscodium;
+        mutableExtensionsDir = false;
 
         profiles.default = {
           extensions = with pkgs.vscode-extensions; [
@@ -57,10 +58,14 @@ module {
             eamodio.gitlens
             catppuccin.catppuccin-vsc
             catppuccin.catppuccin-vsc-icons
-            anthropic.claude-code
+            (anthropic.claude-code.overrideAttrs (old: {
+              postFixup = ''
+                ln -sf ${pkgs.lib.getExe pkgs.claude-code} \
+                  $out/share/vscode/extensions/anthropic.claude-code/resources/native-binary/claude
+              '';
+            }))
           ];
           userSettings = {
-            mutableExtensionsDir = false;
             enableExtensionUpdateCheck = false;
             enableUpdateCheck = false;
             editor = {
@@ -99,6 +104,9 @@ module {
             "catppuccin.customUIColors".mocha."statusBar.foreground" = "accent";
 
             "claudeCode.useTerminal" = true;
+
+            "window.titleBarStyle" = "custom";
+            "window.menuStyle" = "custom";
           };
           keybindings = [
             {
