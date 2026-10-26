@@ -81,8 +81,7 @@ module {
             nix.serverPath = "nil";
             nix.formatterPath = "nixfmt";
             nix.serverSettings.nil.formatting.command = [ "nixfmt" ];
-            # TODO: Remove this frikin message -_-
-            # nix.hiddenLanguageServerErrors = [ "Request textDocument/formatting failed." ];
+            nix.hiddenLanguageServerErrors = [ "textDocument/formatting" ];
 
             git.autofetch = true;
             makefile.configureOnOpen = false;
