@@ -16,6 +16,19 @@ module {
   home.ifEnabled =
     { myconfig, ... }:
     {
+      home.activation.vscodiumMutableUserSettings = {
+        after = [ "linkGeneration" ];
+        before = [ ];
+        data = ''
+          settingsFile="$HOME/.config/VSCodium/User/settings.json"
+          if [ -L "$settingsFile" ]; then
+            run cp "$settingsFile" "$settingsFile.new"
+            run chmod u+w "$settingsFile.new"
+            run mv "$settingsFile.new" "$settingsFile"
+          fi
+        '';
+      };
+
       home.packages = (
         with pkgs;
         [
