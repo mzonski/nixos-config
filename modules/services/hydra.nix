@@ -1,6 +1,7 @@
 {
   delib,
   config,
+  pkgs,
   host,
   ...
 }:
@@ -62,7 +63,9 @@ module {
           };
         in
         {
-          secrets.hydra_binary_cache_secret_private = sopsConfig;
+          secrets.hydra_binary_cache_secret_private = sopsConfig // {
+            mode = "0440";
+          };
           secrets.hydra_binary_cache_secret_public = sopsConfig // {
             mode = "0444";
           };
@@ -89,11 +92,25 @@ module {
         requires = [ "postgresql.service" ];
       };
 
+      systemd.services.hydra-evaluator = {
+        serviceConfig.LoadCredential = [
+          "ssh_key:${config.sops.secrets.ssh_private_gitea_ci.path}"
+          "known_hosts:${config.sops.templates."gitea-runner-known-hosts".path}"
+        ];
+        environment.GIT_SSH_COMMAND = "${pkgs.openssh}/bin/ssh -i %d/ssh_key -o IdentitiesOnly=yes -o GlobalKnownHostsFile=%d/known_hosts";
+      };
+
+      nix.settings.allowed-users = [
+        "hydra"
+        "hydra-www"
+      ];
+
       nix.settings.allowed-uris = [
         "github:"
         "git+https://github.com/"
         "git+ssh://github.com/"
         "git+ssh://tomato/"
+        "git+ssh://gitea@git.${host.name}.${myconfig.homelab.domain}/"
       ];
     };
 }
