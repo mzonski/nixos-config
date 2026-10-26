@@ -24,21 +24,6 @@ module {
     domainUrl = strOption "";
   };
 
-  nixos.always = { myconfig, cfg, ... }: {
-    nix.settings = {
-      substituters = [
-        myconfig.services.${serviceName}.domainUrl
-      ];
-      trusted-substituters = [
-        myconfig.services.${serviceName}.domainUrl
-      ];
-
-      trusted-public-keys = [
-        "hydra.zonni.pl:icN1z9gO7ekAyzVJ2vHQSqYgNrg+m4pbj/8h/SXwY5s="
-      ];
-    };
-  };
-
   myconfig.ifEnabled =
     { myconfig, cfg, ... }:
     {
