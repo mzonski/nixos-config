@@ -44,6 +44,7 @@ module {
             eamodio.gitlens
             catppuccin.catppuccin-vsc
             catppuccin.catppuccin-vsc-icons
+            anthropic.claude-code
           ];
           userSettings = {
             mutableExtensionsDir = false;
@@ -84,6 +85,8 @@ module {
             #window.titleBarStyle = if hyprlandEnabled then "native" else "custom";
 
             "catppuccin.customUIColors".mocha."statusBar.foreground" = "accent";
+
+            "claudeCode.useTerminal" = true;
           };
           keybindings = [
             {
