@@ -32,16 +32,16 @@ home:
 
 system:
 	@echo "Switching NixOS configuration..."
-	sudo nixos-rebuild switch --flake $(FLAKE)#$(HOSTNAME)
+	nixos-rebuild switch --sudo --flake $(FLAKE)#$(HOSTNAME)
 	sync
 
 system-revert:
 	@echo "Switching to previous NixOS configuration..."
-	sudo nixos-rebuild switch --flake $(FLAKE)#$(HOSTNAME) --rollback
+	nixos-rebuild switch --sudo --flake $(FLAKE)#$(HOSTNAME) --rollback
 
 sysboot:
 	@echo "Building new boot NixOS configuration..."
-	sudo nixos-rebuild boot --flake $(FLAKE)#$(HOSTNAME)
+	nixos-rebuild boot --sudo --flake $(FLAKE)#$(HOSTNAME)
 
 sysboot-%:
 	@echo "Building new boot NixOS configuration for remote machine..."
@@ -53,7 +53,7 @@ sysboot-%:
 
 bootloader:
 	@echo "Switching NixOS configuration..."
-	sudo nixos-rebuild boot --install-bootloader --flake $(FLAKE)#$(HOSTNAME)
+	nixos-rebuild boot --install-bootloader --sudo --flake $(FLAKE)#$(HOSTNAME)
 
 bootloader-%:
 	@echo "Updating bootloader on remote machine..."
