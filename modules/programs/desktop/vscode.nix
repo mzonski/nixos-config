@@ -72,13 +72,13 @@ module {
               formatOnSave = true;
               semanticHighlighting.enabled = true; # // we try to make semantic highlighting look good
               defaultFormatter = "esbenp.prettier-vscode";
+              minimap.enabled = false;
             };
             "[nix]".editor = {
               formatOnSave = true;
               defaultFormatter = "jnoortheen.nix-ide";
             };
             files.autoSave = "onFocusChange";
-            editor.minimap.enabled = false;
             #nixEnvSelector.nixFile = "${config.home.homeDirectory}/Projects/nixos-config/flake.nix";
             prettier.configPath = ".prettierrc";
 
@@ -103,7 +103,7 @@ module {
 
             "catppuccin.customUIColors".mocha."statusBar.foreground" = "accent";
 
-            "claudeCode.useTerminal" = true;
+            "claudeCode.preferredLocation" = "panel";
 
             "window.titleBarStyle" = "custom";
             "window.menuStyle" = "custom";
