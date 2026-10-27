@@ -229,16 +229,17 @@
     "firefox-addons": {
       "inputs": {
         "nixpkgs": [
+          "nixZpkgs",
           "nixpkgs"
         ]
       },
       "locked": {
         "dir": "pkgs/firefox-addons",
-        "lastModified": 1792728173,
-        "narHash": "sha256-Ky9DXNJOvxbK6GMGuTkQzHiC4dYOuyfOoFvKlBhWChU=",
+        "lastModified": 1793073767,
+        "narHash": "sha256-zL/9I57Uk9YZ3cRK7wqesMQ5DqzGAg+Flqc32XrSh4A=",
         "owner": "rycee",
         "repo": "nur-expressions",
-        "rev": "972a75a44c88022030bf2b52adf84fb31ea8bbd0",
+        "rev": "4e23b00003acb1e90bec84998185cd73e4d7487b",
         "type": "gitlab"
       },
       "original": {
@@ -727,6 +728,7 @@
         "catppuccin": "catppuccin",
         "disko": "disko",
         "figma-linux-next": "figma-linux-next",
+        "firefox-addons": "firefox-addons",
         "flake-programs-sqlite": "flake-programs-sqlite",
         "mcp-nixos": "mcp-nixos",
         "my-pc-rgb": "my-pc-rgb",
@@ -738,11 +740,11 @@
         "usb-sniffer": "usb-sniffer"
       },
       "locked": {
-        "lastModified": 1793130875,
-        "narHash": "sha256-WkJlUPpQjZA/n/U1qoNRubiSeu9KqKyiC5KCctYEZ+0=",
+        "lastModified": 1793134239,
+        "narHash": "sha256-3iTiV4dRjtG5hWqwmhXsk6Idr6ssc+y3owL4j3eVzj0=",
         "ref": "refs/heads/main",
-        "rev": "c84dad1bc4cfb555ea614523fcf72be88ec36c85",
-        "revCount": 8,
+        "rev": "f2b84cf6910fb0a029ff4a32c1e5f8dc31d210b9",
+        "revCount": 9,
         "type": "git",
         "url": "ssh://gitea@git.tomato.local.zonni.pl/ZONIA/nixZpkgs.git"
       },
@@ -1093,7 +1095,6 @@
     "root": {
       "inputs": {
         "denix": "denix",
-        "firefox-addons": "firefox-addons",
         "home-manager": "home-manager",
         "nixZpkgs": "nixZpkgs",
         "nixpkgs": [
