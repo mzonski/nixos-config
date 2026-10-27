@@ -736,15 +736,16 @@
         "nix-claude-code": "nix-claude-code",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_8",
+        "sops-nix": "sops-nix",
         "speedtest-exporter": "speedtest-exporter",
         "usb-sniffer": "usb-sniffer"
       },
       "locked": {
-        "lastModified": 1793134239,
-        "narHash": "sha256-3iTiV4dRjtG5hWqwmhXsk6Idr6ssc+y3owL4j3eVzj0=",
+        "lastModified": 1793134536,
+        "narHash": "sha256-Bs1pV6UyR0hB8aifVN9NbTouW1YKy/W+WtULN9l92Rk=",
         "ref": "refs/heads/main",
-        "rev": "f2b84cf6910fb0a029ff4a32c1e5f8dc31d210b9",
-        "revCount": 9,
+        "rev": "312376cc8ce7cbcb625c773d072f23b13bbbb1e0",
+        "revCount": 10,
         "type": "git",
         "url": "ssh://gitea@git.tomato.local.zonni.pl/ZONIA/nixZpkgs.git"
       },
@@ -1101,8 +1102,7 @@
           "nixZpkgs",
           "nixpkgs"
         ],
-        "nixpkgs-unstable": "nixpkgs-unstable",
-        "sops-nix": "sops-nix"
+        "nixpkgs-unstable": "nixpkgs-unstable"
       }
     },
     "rust-overlay": {
@@ -1131,15 +1131,16 @@
     "sops-nix": {
       "inputs": {
         "nixpkgs": [
+          "nixZpkgs",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1792655475,
-        "narHash": "sha256-4ChDjNgJM5uKwTuecLHxGlafAtoyKo5a7ip23J5IG3M=",
+        "lastModified": 1793052255,
+        "narHash": "sha256-Y/JIHTnMlOabDfyaSBubWGLDIVGihLEUuoMhFvQKaDo=",
         "owner": "mic92",
         "repo": "sops-nix",
-        "rev": "e80b8b733d8452a751a25d0063abc9683b6c8185",
+        "rev": "60182817ee048ac94b4c68ea76d5ef2e8aac730d",
         "type": "github"
       },
       "original": {

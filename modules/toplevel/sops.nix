@@ -15,7 +15,7 @@ delib.module {
       hostKeys = builtins.filter isEd25519 config.services.openssh.hostKeys;
     in
     {
-      imports = [ inputs.sops-nix.nixosModules.sops ];
+      imports = [ inputs.nixZpkgs.nixosModules.sops ];
 
       environment.systemPackages = [ pkgs.sops ];
 
