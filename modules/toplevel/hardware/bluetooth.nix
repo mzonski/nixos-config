@@ -23,10 +23,12 @@ module {
       captureScript = pkgs.writeShellScript "bt-suspend-capture" ''
         ${pkgs.bluez}/bin/bluetoothctl devices Connected 2>/dev/null \
           | ${pkgs.gawk}/bin/awk '/^Device/ { print $2 }' > ${stateFile} || true
+        ${pkgs.bluez}/bin/bluetoothctl power off || true
       '';
 
       reconnectScript = pkgs.writeShellScript "bt-resume-reconnect" ''
         set -u
+        ${pkgs.bluez}/bin/bluetoothctl power on || true
         [ -s ${stateFile} ] || exit 0
 
         for round in 1 2 3 4 5; do
@@ -68,24 +70,26 @@ module {
         };
       };
 
-      systemd.services.bluetooth-suspend-capture = lib.mkIf cfg.restoreConnectedState {
-        description = "Capture connected Bluetooth devices before sleep";
-        before = sleepTargets;
-        wantedBy = sleepTargets;
-        serviceConfig = {
-          Type = "oneshot";
-          ExecStart = captureScript;
+      systemd.services = lib.mkIf cfg.restoreConnectedState {
+        bluetooth-suspend-capture = {
+          description = "Capture connected Bluetooth devices before sleep";
+          before = sleepTargets;
+          wantedBy = sleepTargets;
+          serviceConfig = {
+            Type = "oneshot";
+            ExecStart = captureScript;
+          };
         };
-      };
 
-      systemd.services.bluetooth-resume-reconnect = lib.mkIf cfg.restoreConnectedState {
-        description = "Reconnect Bluetooth devices after resume";
-        after = sleepTargets;
-        wantedBy = sleepTargets;
-        serviceConfig = {
-          Type = "oneshot";
-          ExecStart = reconnectScript;
-          TimeoutStartSec = 180;
+        bluetooth-resume-reconnect = {
+          description = "Reconnect Bluetooth devices after resume";
+          after = sleepTargets;
+          wantedBy = sleepTargets;
+          serviceConfig = {
+            Type = "oneshot";
+            ExecStart = reconnectScript;
+            TimeoutStartSec = 180;
+          };
         };
       };
     };
