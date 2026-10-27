@@ -156,6 +156,10 @@ delib.host {
           "/dev/nvme0"
         ];
       };
+      public-files = {
+        enable = true;
+        dir = "/nas/files/Public";
+      };
     };
   };
 
