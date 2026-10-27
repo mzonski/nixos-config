@@ -30,7 +30,7 @@ module {
         ];
         serviceConfig = {
           Type = "oneshot";
-          ExecStart = "${inputs.nixos-extra.packages.my-pc-rgb}/bin/my-pc-rgb";
+          ExecStart = "${inputs.nixZpkgs.packages.my-pc-rgb}/bin/my-pc-rgb";
         };
       };
 

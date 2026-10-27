@@ -2,7 +2,11 @@
   description = "My Home NixOS configuration flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
+    nixZpkgs = {
+      url = "git+ssh://gitea@git.tomato.local.zonni.pl/ZONIA/nixZpkgs.git";
+    };
+
+    nixpkgs.follows = "nixZpkgs/nixpkgs";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
@@ -18,11 +22,6 @@
 
     sops-nix = {
       url = "github:mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nixos-extra = {
-      url = "git+ssh://gitea@git.tomato.local.zonni.pl/zonni/nixos-extra.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

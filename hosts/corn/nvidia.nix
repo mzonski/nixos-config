@@ -14,7 +14,7 @@ delib.host {
 
   nixos = {
     imports = [
-      inputs.nixos-extra.nixosHardware.modules.common-gpu-nvidia
+      inputs.nixZpkgs.nixosHardware.modules.common-gpu-nvidia
     ];
 
     boot.kernelParams = [

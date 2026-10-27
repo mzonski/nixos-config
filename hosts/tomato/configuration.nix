@@ -168,8 +168,8 @@ delib.host {
     system.stateVersion = "26.05";
 
     imports = [
-      "${inputs.nixos-extra.nixosHardware.path}/common/cpu/intel/alder-lake/default.nix"
-      inputs.nixos-extra.nixosHardware.modules.common-pc-ssd
+      "${inputs.nixZpkgs.nixosHardware.path}/common/cpu/intel/alder-lake/default.nix"
+      inputs.nixZpkgs.nixosHardware.modules.common-pc-ssd
     ];
 
     networking.firewall.enable = true;

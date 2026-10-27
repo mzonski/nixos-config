@@ -11,7 +11,7 @@ delib.module {
 
   nixos.always = {
     imports = [
-      inputs.nixos-extra.nixosModules.usb-sniffer
+      inputs.nixZpkgs.nixosModules.usb-sniffer
     ];
   };
 

@@ -38,7 +38,7 @@ delib.module {
   name = "nix";
 
   nixos.always = {
-    imports = [ inputs.nixos-extra.nixosModules.programs-sqlite ];
+    imports = [ inputs.nixZpkgs.nixosModules.programs-sqlite ];
   }
   // mkConfig {
     nix.package = lib.mkForce pkgs.nixVersions.stable;

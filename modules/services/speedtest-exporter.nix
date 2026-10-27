@@ -17,7 +17,7 @@ module {
   };
 
   nixos.always = {
-    imports = [ inputs.nixos-extra.nixosModules.speedtest-exporter ];
+    imports = [ inputs.nixZpkgs.nixosModules.speedtest-exporter ];
   };
 
   nixos.ifEnabled =

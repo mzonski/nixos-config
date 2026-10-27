@@ -3,7 +3,7 @@
     "asus-numberpad-driver": {
       "inputs": {
         "nixpkgs": [
-          "nixos-extra",
+          "nixZpkgs",
           "nixpkgs"
         ]
       },
@@ -24,24 +24,24 @@
     "cachix": {
       "inputs": {
         "devenv": [
-          "nixos-extra",
+          "nixZpkgs",
           "my-pc-rgb",
           "devenv"
         ],
         "flake-compat": [
-          "nixos-extra",
+          "nixZpkgs",
           "my-pc-rgb",
           "devenv",
           "flake-compat"
         ],
         "git-hooks": [
-          "nixos-extra",
+          "nixZpkgs",
           "my-pc-rgb",
           "devenv",
           "git-hooks"
         ],
         "nixpkgs": [
-          "nixos-extra",
+          "nixZpkgs",
           "my-pc-rgb",
           "devenv",
           "nixpkgs"
@@ -65,16 +65,16 @@
     "catppuccin": {
       "inputs": {
         "nixpkgs": [
-          "nixos-extra",
+          "nixZpkgs",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1792851666,
-        "narHash": "sha256-wDEAxTyksYFu9HVo8L6ozCRoW2k6QGlJkedujlY+VA4=",
+        "lastModified": 1793011355,
+        "narHash": "sha256-Nwt7keMo7rYq33UL4sk4YpD63Pbokr0lMU7hmVEtEPI=",
         "owner": "catppuccin",
         "repo": "nix",
-        "rev": "a08c7948f09cdd3c7f80f718b1d9b93eeaacca0c",
+        "rev": "96f08f364265c5ac66aa61f8f36946279e2c3b00",
         "type": "github"
       },
       "original": {
@@ -168,7 +168,7 @@
     "devshell": {
       "inputs": {
         "nixpkgs": [
-          "nixos-extra",
+          "nixZpkgs",
           "mcp-nixos",
           "nixpkgs"
         ]
@@ -208,7 +208,7 @@
     "figma-linux-next": {
       "inputs": {
         "nixpkgs": [
-          "nixos-extra",
+          "nixZpkgs",
           "nixpkgs"
         ]
       },
@@ -317,7 +317,7 @@
     "flake-parts_2": {
       "inputs": {
         "nixpkgs-lib": [
-          "nixos-extra",
+          "nixZpkgs",
           "my-pc-rgb",
           "devenv",
           "nixpkgs"
@@ -376,16 +376,16 @@
     "flake-programs-sqlite": {
       "inputs": {
         "nixpkgs": [
-          "nixos-extra",
+          "nixZpkgs",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1792942289,
-        "narHash": "sha256-udKaDUeLRaj7nTx8RknIAyojUh76GE+Zb8+s4wFqc1o=",
+        "lastModified": 1793023803,
+        "narHash": "sha256-+ujm+T/hYwyZC3PyTLg4t/vx+nQlsX6y7ecbbwFv9LQ=",
         "owner": "wamserma",
         "repo": "flake-programs-sqlite",
-        "rev": "55ebc257d0fb0de3ebaebb5f604f9d755ee4549a",
+        "rev": "35d10b98f21c57369e15de8910e605431a8ca4d6",
         "type": "github"
       },
       "original": {
@@ -431,14 +431,14 @@
     "git-hooks": {
       "inputs": {
         "flake-compat": [
-          "nixos-extra",
+          "nixZpkgs",
           "my-pc-rgb",
           "devenv",
           "flake-compat"
         ],
         "gitignore": "gitignore_2",
         "nixpkgs": [
-          "nixos-extra",
+          "nixZpkgs",
           "my-pc-rgb",
           "devenv",
           "nixpkgs"
@@ -483,7 +483,7 @@
     "gitignore_2": {
       "inputs": {
         "nixpkgs": [
-          "nixos-extra",
+          "nixZpkgs",
           "my-pc-rgb",
           "devenv",
           "git-hooks",
@@ -587,36 +587,36 @@
     "nix": {
       "inputs": {
         "flake-compat": [
-          "nixos-extra",
+          "nixZpkgs",
           "my-pc-rgb",
           "devenv",
           "flake-compat"
         ],
         "flake-parts": [
-          "nixos-extra",
+          "nixZpkgs",
           "my-pc-rgb",
           "devenv",
           "flake-parts"
         ],
         "git-hooks-nix": [
-          "nixos-extra",
+          "nixZpkgs",
           "my-pc-rgb",
           "devenv",
           "git-hooks"
         ],
         "nixpkgs": [
-          "nixos-extra",
+          "nixZpkgs",
           "my-pc-rgb",
           "devenv",
           "nixpkgs"
         ],
         "nixpkgs-23-11": [
-          "nixos-extra",
+          "nixZpkgs",
           "my-pc-rgb",
           "devenv"
         ],
         "nixpkgs-regression": [
-          "nixos-extra",
+          "nixZpkgs",
           "my-pc-rgb",
           "devenv"
         ]
@@ -641,7 +641,7 @@
         "flake-compat": "flake-compat_3",
         "flake-parts": "flake-parts_4",
         "nixpkgs": [
-          "nixos-extra",
+          "nixZpkgs",
           "nixpkgs"
         ]
       },
@@ -702,7 +702,7 @@
     "nix2container": {
       "inputs": {
         "nixpkgs": [
-          "nixos-extra",
+          "nixZpkgs",
           "my-pc-rgb",
           "nixpkgs"
         ]
@@ -721,16 +721,46 @@
         "type": "github"
       }
     },
+    "nixZpkgs": {
+      "inputs": {
+        "asus-numberpad-driver": "asus-numberpad-driver",
+        "catppuccin": "catppuccin",
+        "disko": "disko",
+        "figma-linux-next": "figma-linux-next",
+        "flake-programs-sqlite": "flake-programs-sqlite",
+        "mcp-nixos": "mcp-nixos",
+        "my-pc-rgb": "my-pc-rgb",
+        "nix-cachyos-kernel": "nix-cachyos-kernel",
+        "nix-claude-code": "nix-claude-code",
+        "nixos-hardware": "nixos-hardware",
+        "nixpkgs": "nixpkgs_8",
+        "speedtest-exporter": "speedtest-exporter",
+        "usb-sniffer": "usb-sniffer"
+      },
+      "locked": {
+        "lastModified": 1793130875,
+        "narHash": "sha256-WkJlUPpQjZA/n/U1qoNRubiSeu9KqKyiC5KCctYEZ+0=",
+        "ref": "refs/heads/main",
+        "rev": "c84dad1bc4cfb555ea614523fcf72be88ec36c85",
+        "revCount": 8,
+        "type": "git",
+        "url": "ssh://gitea@git.tomato.local.zonni.pl/ZONIA/nixZpkgs.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://gitea@git.tomato.local.zonni.pl/ZONIA/nixZpkgs.git"
+      }
+    },
     "nixd": {
       "inputs": {
         "flake-parts": [
-          "nixos-extra",
+          "nixZpkgs",
           "my-pc-rgb",
           "devenv",
           "flake-parts"
         ],
         "nixpkgs": [
-          "nixos-extra",
+          "nixZpkgs",
           "my-pc-rgb",
           "devenv",
           "nixpkgs"
@@ -749,38 +779,6 @@
         "owner": "nix-community",
         "repo": "nixd",
         "type": "github"
-      }
-    },
-    "nixos-extra": {
-      "inputs": {
-        "asus-numberpad-driver": "asus-numberpad-driver",
-        "catppuccin": "catppuccin",
-        "disko": "disko",
-        "figma-linux-next": "figma-linux-next",
-        "flake-programs-sqlite": "flake-programs-sqlite",
-        "mcp-nixos": "mcp-nixos",
-        "my-pc-rgb": "my-pc-rgb",
-        "nix-cachyos-kernel": "nix-cachyos-kernel",
-        "nix-claude-code": "nix-claude-code",
-        "nixos-hardware": "nixos-hardware",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "speedtest-exporter": "speedtest-exporter",
-        "usb-sniffer": "usb-sniffer"
-      },
-      "locked": {
-        "lastModified": 1792997783,
-        "narHash": "sha256-pdyoxFcvgwpceev6Gi7Kl5kGYjJliuk8TRhK6YfDSXM=",
-        "ref": "refs/heads/main",
-        "rev": "924b5f5e5c7d9fbaf845dc7fbd51340c77747893",
-        "revCount": 5,
-        "type": "git",
-        "url": "ssh://gitea@git.tomato.local.zonni.pl/zonni/nixos-extra.git"
-      },
-      "original": {
-        "type": "git",
-        "url": "ssh://gitea@git.tomato.local.zonni.pl/zonni/nixos-extra.git"
       }
     },
     "nixos-hardware": {
@@ -930,16 +928,16 @@
     },
     "nixpkgs_10": {
       "locked": {
-        "lastModified": 1792615934,
-        "narHash": "sha256-MlvRfa1O5Cqc2/a+gG+l9TSuowEoCKCmrJ1d9oAVm0I=",
-        "owner": "nixos",
+        "lastModified": 1777268161,
+        "narHash": "sha256-bxrdOn8SCOv8tN4JbTF/TXq7kjo9ag4M+C8yzzIRYbE=",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "da6dc0e7b26060f2f71ce3ef7088fb56ee44fa36",
+        "rev": "1c3fe55ad329cbcb28471bb30f05c9827f724c76",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
-        "ref": "nixos-26.05",
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -1042,27 +1040,27 @@
     },
     "nixpkgs_8": {
       "locked": {
-        "lastModified": 1771848320,
-        "narHash": "sha256-0MAd+0mun3K/Ns8JATeHT1sX28faLII5hVLq0L3BdZU=",
-        "owner": "NixOS",
+        "lastModified": 1792898606,
+        "narHash": "sha256-Mg3rRjsbMqhSMxop5PYMXos8SwAjejrxSgVThTvP9eg=",
+        "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "2fc6539b481e1d2569f25f8799236694180c0993",
+        "rev": "1f607aa79b6356ed45d3cd3c8079c196e79efa2c",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
+        "owner": "nixos",
+        "ref": "nixos-26.05",
         "repo": "nixpkgs",
         "type": "github"
       }
     },
     "nixpkgs_9": {
       "locked": {
-        "lastModified": 1777268161,
-        "narHash": "sha256-bxrdOn8SCOv8tN4JbTF/TXq7kjo9ag4M+C8yzzIRYbE=",
+        "lastModified": 1771848320,
+        "narHash": "sha256-0MAd+0mun3K/Ns8JATeHT1sX28faLII5hVLq0L3BdZU=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "1c3fe55ad329cbcb28471bb30f05c9827f724c76",
+        "rev": "2fc6539b481e1d2569f25f8799236694180c0993",
         "type": "github"
       },
       "original": {
@@ -1097,8 +1095,11 @@
         "denix": "denix",
         "firefox-addons": "firefox-addons",
         "home-manager": "home-manager",
-        "nixos-extra": "nixos-extra",
-        "nixpkgs": "nixpkgs_10",
+        "nixZpkgs": "nixZpkgs",
+        "nixpkgs": [
+          "nixZpkgs",
+          "nixpkgs"
+        ],
         "nixpkgs-unstable": "nixpkgs-unstable",
         "sops-nix": "sops-nix"
       }
@@ -1106,7 +1107,7 @@
     "rust-overlay": {
       "inputs": {
         "nixpkgs": [
-          "nixos-extra",
+          "nixZpkgs",
           "my-pc-rgb",
           "devenv",
           "nixpkgs"
@@ -1149,7 +1150,7 @@
     "speedtest-exporter": {
       "inputs": {
         "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs_8"
+        "nixpkgs": "nixpkgs_9"
       },
       "locked": {
         "lastModified": 1784881707,
@@ -1183,7 +1184,7 @@
     "treefmt-nix": {
       "inputs": {
         "nixpkgs": [
-          "nixos-extra",
+          "nixZpkgs",
           "my-pc-rgb",
           "devenv",
           "nixd",
@@ -1206,7 +1207,7 @@
     },
     "usb-sniffer": {
       "inputs": {
-        "nixpkgs": "nixpkgs_9"
+        "nixpkgs": "nixpkgs_10"
       },
       "locked": {
         "lastModified": 1784021606,

@@ -4,7 +4,7 @@ delib.host {
 
   nixos = {
     imports = [
-      inputs.nixos-extra.nixosModules.asus-numberpad-driver
+      inputs.nixZpkgs.nixosModules.asus-numberpad-driver
     ];
 
     systemd.services.asus-numberpad-driver = {
@@ -15,7 +15,7 @@ delib.host {
 
     hardware.asus-numberpad-driver = {
       enable = true;
-      package = inputs.nixos-extra.packages.asus-numberpad-driver;
+      package = inputs.nixZpkgs.packages.asus-numberpad-driver;
       layout = "up5401ea";
       wayland = true;
     };

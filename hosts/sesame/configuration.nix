@@ -61,8 +61,8 @@ delib.host {
     boot.kernelPackages = pkgs.linuxPackages_zen;
 
     imports = [
-      inputs.nixos-extra.nixosHardware.modules.common-cpu-intel
-      inputs.nixos-extra.nixosHardware.modules.common-pc-laptop-ssd
+      inputs.nixZpkgs.nixosHardware.modules.common-cpu-intel
+      inputs.nixZpkgs.nixosHardware.modules.common-pc-laptop-ssd
     ];
 
     services.tumbler.enable = true;

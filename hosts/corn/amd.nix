@@ -12,8 +12,8 @@ delib.host {
 
   nixos = {
     imports = [
-      inputs.nixos-extra.nixosHardware.modules.common-cpu-amd
-      inputs.nixos-extra.nixosHardware.modules.common-cpu-amd-raphael-igpu
+      inputs.nixZpkgs.nixosHardware.modules.common-cpu-amd
+      inputs.nixZpkgs.nixosHardware.modules.common-cpu-amd-raphael-igpu
     ];
 
     environment.systemPackages = with pkgs; [
