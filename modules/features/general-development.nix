@@ -8,7 +8,7 @@
 
 let
   inherit (delib) module singleEnableOption;
-  nodePkg = pkgs.nodejs_22;
+  nodePkg = pkgs.nodejs_26;
 in
 module {
   name = "features.general-development";
