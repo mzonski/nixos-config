@@ -3,6 +3,7 @@
   delib,
   pkgs,
   host,
+  homeManagerUser,
   ...
 }:
 
@@ -13,8 +14,16 @@ in
 module {
   name = "toplevel.gnupg";
 
+  myconfig.always.keys.gpg.${homeManagerUser} = "/run/secrets/gpg_public_${homeManagerUser}";
+
   nixos.always = {
+    sops.secrets."gpg_public_${homeManagerUser}" = {
+      owner = homeManagerUser;
+      mode = "0400";
+    };
+
     environment.shellInit = ''
+      [ -n "$TERM" ] || unset TERM
       export GPG_TTY="$(tty)"
       export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
       gpgconf --launch gpg-agent
