@@ -191,8 +191,8 @@ module {
 
             service = {
               DISABLE_REGISTRATION = true;
-              ENABLE_BASIC_AUTHENTICATION = true;
-              ENABLE_PASSWORD_SIGNIN_FORM = true;
+              ENABLE_BASIC_AUTHENTICATION = false;
+              ENABLE_PASSWORD_SIGNIN_FORM = false;
               ENABLE_NOTIFY_MAIL = true;
             };
             mailer = {
