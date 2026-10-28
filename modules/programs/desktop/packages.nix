@@ -50,7 +50,6 @@ delib.module {
           ## PRODUCTIVITY
           qbittorrent-enhanced
           xfburn # Image burner
-          libreoffice-fresh
 
           ## ENGINERING
           qcad
