@@ -42,7 +42,7 @@ module {
   };
 
   home.ifEnabled = {
-    home.packages = with pkgs.jetbrains; [
+    home.packages = with pkgs.unstable.jetbrains; [
       webstorm
       pycharm
       rust-rover
