@@ -126,6 +126,8 @@ module {
         DOTNET_ROOT = "${dotnet-full}/share/dotnet";
         DOTNET_PATH = "${dotnet-full}/bin/dotnet";
         DOTNET_CLI_TELEMETRY_OPTOUT = "true";
+
+        CLAUDE_CODE_EXECUTABLE = "${pkgs.claude-code.outPath}/bin/.claude-wrapped";
       };
     };
 }
