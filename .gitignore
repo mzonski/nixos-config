@@ -1,3 +1,7 @@
 result
 .*/
 !.github/
+!.claude/
+.claude/*
+!.claude/rules/
+!.claude/skills/
