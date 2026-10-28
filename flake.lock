@@ -8,11 +8,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792927449,
-        "narHash": "sha256-scKUNWlONwwM/2NOAHM7u8iEP2N0NUrksDbUtOQV4KI=",
+        "lastModified": 1793048605,
+        "narHash": "sha256-OWy+q4vP57v6v0SeSkDo2wmXsjhTFc4wE5vaI+CoTeU=",
         "owner": "asus-linux-drivers",
         "repo": "asus-numberpad-driver",
-        "rev": "b87ae8d5ae151cf359d39bae49a6150b7570c8ef",
+        "rev": "ae5b3293681abec518b728a88da17e5e118bd4ce",
         "type": "github"
       },
       "original": {
@@ -235,11 +235,11 @@
       },
       "locked": {
         "dir": "pkgs/firefox-addons",
-        "lastModified": 1793073767,
-        "narHash": "sha256-zL/9I57Uk9YZ3cRK7wqesMQ5DqzGAg+Flqc32XrSh4A=",
+        "lastModified": 1793160255,
+        "narHash": "sha256-F1waPip2dUnsWIHveBjgacmUVmSJZChnhShWGNmSoYo=",
         "owner": "rycee",
         "repo": "nur-expressions",
-        "rev": "4e23b00003acb1e90bec84998185cd73e4d7487b",
+        "rev": "ed9233d15254387c12c5c53939ce2162712cf5fb",
         "type": "gitlab"
       },
       "original": {
@@ -382,11 +382,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793023803,
-        "narHash": "sha256-+ujm+T/hYwyZC3PyTLg4t/vx+nQlsX6y7ecbbwFv9LQ=",
+        "lastModified": 1793153394,
+        "narHash": "sha256-d1JJhGyXicAGsR53W9aCvNW6oBPzwHZr4c1dT3qD9pQ=",
         "owner": "wamserma",
         "repo": "flake-programs-sqlite",
-        "rev": "35d10b98f21c57369e15de8910e605431a8ca4d6",
+        "rev": "c2bd6ea780ad56d0d674f6d3a1ab7bfda10979df",
         "type": "github"
       },
       "original": {
@@ -666,11 +666,11 @@
         "nixpkgs": "nixpkgs_6"
       },
       "locked": {
-        "lastModified": 1792991129,
-        "narHash": "sha256-iW6l5NREP1j6UcK9AWnBYh129POeg3mjq9QrRuRZowM=",
+        "lastModified": 1793127731,
+        "narHash": "sha256-imqVnIzOu2cp4DXhpC0tVP6h8HZAeNkqEfUDKraIceo=",
         "owner": "ryoppippi",
         "repo": "nix-claude-code",
-        "rev": "c2faef81cadaecb125d9f94164d63b43949aac2d",
+        "rev": "2a9c9406421f50f18d3a2daf4735e757de9fa34a",
         "type": "github"
       },
       "original": {
@@ -741,11 +741,11 @@
         "usb-sniffer": "usb-sniffer"
       },
       "locked": {
-        "lastModified": 1793134536,
-        "narHash": "sha256-Bs1pV6UyR0hB8aifVN9NbTouW1YKy/W+WtULN9l92Rk=",
+        "lastModified": 1793170447,
+        "narHash": "sha256-tIkMhtATbBkCMyZc6gU0tVtwk8zJTll0fhYcdgwaid0=",
         "ref": "refs/heads/main",
-        "rev": "312376cc8ce7cbcb625c773d072f23b13bbbb1e0",
-        "revCount": 10,
+        "rev": "92102b78a831234c5fd94cf7e49f1e2c23fbc44c",
+        "revCount": 11,
         "type": "git",
         "url": "ssh://gitea@git.tomato.local.zonni.pl/ZONIA/nixZpkgs.git"
       },
@@ -789,11 +789,11 @@
         "nixpkgs": "nixpkgs_7"
       },
       "locked": {
-        "lastModified": 1792697326,
-        "narHash": "sha256-2UBK0jdmPANGaeAIoVOZY+hSPB2Gy13ZuZeSxP3vF8k=",
+        "lastModified": 1793054847,
+        "narHash": "sha256-mhud3nRH8RoP0h9MydfkJ8mISpj+QE/S//wOt9bNgC0=",
         "owner": "nixos",
         "repo": "nixos-hardware",
-        "rev": "1b418b8f203e49a92f250f8babdd19af1b6f7a7f",
+        "rev": "8ba09466dc929acf5c8bb3e0cc40f472a7df3630",
         "type": "github"
       },
       "original": {
@@ -1043,11 +1043,11 @@
     },
     "nixpkgs_8": {
       "locked": {
-        "lastModified": 1792898606,
-        "narHash": "sha256-Mg3rRjsbMqhSMxop5PYMXos8SwAjejrxSgVThTvP9eg=",
+        "lastModified": 1793015021,
+        "narHash": "sha256-Ee5BWo8sh3pGt70QUdRajnaginqFmWvrtdBc4gJzhks=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "1f607aa79b6356ed45d3cd3c8079c196e79efa2c",
+        "rev": "718f670e845328e9c2cecdd832835712b2cbd065",
         "type": "github"
       },
       "original": {
