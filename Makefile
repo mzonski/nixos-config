@@ -92,6 +92,12 @@ seed-debug:
  	export SSH_PUBLIC_HOST=$$(sops -d --extract '["ssh_public_seed"]' ./shared-secrets.yaml) && \
 	nix build --impure .#nixosConfigurations.seed.config.system.build.toplevel
 
+graft-iso-%:
+	@echo "Generating Graft ISO for $*..."
+	export SSH_PRIVATE_HOST=$$(sops -d --extract '["ssh_private_$*"]' ./shared-secrets.yaml) && \
+	export SSH_PUBLIC_HOST=$$(sops -d --extract '["ssh_public_$*"]' ./shared-secrets.yaml) && \
+	nix build --impure .#nixosConfigurations.graft-$*.config.system.build.isoImage
+
 
 edit-secrets:
 	export SOPS_AGE_KEY=$(sudo ssh-to-age -private-key -i /etc/ssh/ssh_host_ed25519_key) && \

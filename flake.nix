@@ -55,10 +55,16 @@
               ;
           };
         };
+
+      denixHosts = mkConfigurations "nixos" "zonni" ./hosts;
+
+      mkGraft =
+        name:
+        denixHosts.${name}.extendModules { modules = denix.lib.umport { paths = [ ./special/graft ]; }; };
     in
     {
       nixosConfigurations =
-        (mkConfigurations "nixos" "zonni" ./hosts) // (mkConfigurations "nixos" "nixos" ./special/seed);
+        denixHosts // (mkConfigurations "nixos" "nixos" ./special/seed) // { graft-corn = mkGraft "corn"; };
       homeConfigurations = mkConfigurations "home" "zonni" ./hosts;
     };
 }
