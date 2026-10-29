@@ -92,6 +92,14 @@ delib.host {
 
       services.nginx.enable = true;
 
+      services.git-sync = {
+        enable = true;
+        repositories.nixZpkgs = {
+          path = "nixZpkgs";
+          uri = "ZONIA/nixZpkgs";
+        };
+      };
+
       homelab.enable = true;
       homelab.networking = {
         enable = true;
