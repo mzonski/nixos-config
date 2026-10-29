@@ -9,7 +9,7 @@ and `overlays/` to `denix.lib.configurations`, which auto-imports every `.nix` f
 - Verify a change (no sudo, applies nothing):
   `nix eval --raw .#nixosConfigurations.<host>.config.system.build.toplevel.drvPath`. Use
   `nixos-rebuild build --flake .#<host>` for a full build.
-- Format: `nixfmt --strict <file>`.
+- Format: `nixfmt <file>`.
 - Don't run `make system`, `make home`, `deploy-%`, `sysboot-%` or any `switch`/`boot` target unless asked. They change
   live machines. All targets are in `Makefile`.
 
