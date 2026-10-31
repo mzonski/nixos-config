@@ -40,6 +40,7 @@ delib.module {
           qpwgraph # Pipewire manager
           gnome-font-viewer
           kdiskmark
+          baobab
 
           # COMMUNICATION
           thunderbird
