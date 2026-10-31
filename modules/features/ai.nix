@@ -9,19 +9,19 @@ module {
 
   nixos.ifEnabled = {
     services.ollama = {
-      enable = true;
+      enable = false;
       package = pkgs.unstable.ollama-cuda;
     };
 
     services.open-webui = {
-      enable = true;
+      enable = false;
       port = 8081;
     };
 
     environment.systemPackages =
       with pkgs;
       [
-        alpaca
+        #alpaca
         mcp-nixos
       ]
       ++ (with pkgs.unstable; [
