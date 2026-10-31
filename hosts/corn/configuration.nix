@@ -126,6 +126,16 @@ delib.host {
     #boot.kernelPackages = pkgs.linuxPackages_latest;
     #boot.kernelPackages = pkgs.linuxPackages_zen;
 
+    boot.kernelPatches = [
+      {
+        name = "usb-pci-quirks-always-assert-xhci-os-ownership-v6";
+        patch = pkgs.fetchpatch {
+          url = "https://lore.kernel.org/all/179338900780.73175.16604680938007633313@gmail.com/raw";
+          hash = "sha256-ZVj79WDF1RCj7l+uqGlrm7gje8lLutDT1Cz7oU3KU6I=";
+        };
+      }
+    ];
+
     boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-x86_64-v4;
     boot.loader.grub.memtest86.enable = true;
 
