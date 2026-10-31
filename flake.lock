@@ -741,11 +741,11 @@
         "usb-sniffer": "usb-sniffer"
       },
       "locked": {
-        "lastModified": 1793431742,
-        "narHash": "sha256-3J0fBy6Yn9Zj/GkBjJaSfOxj6hHJuPd7OYLtlpt2oNQ=",
+        "lastModified": 1793446036,
+        "narHash": "sha256-RnSdGnkQ0hMMxhiG2gDUxWUjws5AwmRpcxKolpmJz6M=",
         "ref": "refs/heads/main",
-        "rev": "77b25d452eff589c620a8639eddddb437de5a5ee",
-        "revCount": 14,
+        "rev": "4e53243b699b9c2633d5fe015d0a057eb470f1ec",
+        "revCount": 15,
         "type": "git",
         "url": "ssh://gitea@git.tomato.local.zonni.pl/ZONIA/nixZpkgs.git"
       },
