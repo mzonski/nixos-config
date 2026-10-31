@@ -24,7 +24,7 @@ delib.host {
       hardware = {
         audio.enable = true;
         bluetooth.enable = true;
-        bluetooth.restoreConnectedState = true;
+        bluetooth.restoreConnectedState = false;
         block.defaultScheduler = "kyber";
         block.defaultSchedulerRotational = "bfq";
         logitech.enable = true;
