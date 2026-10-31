@@ -132,6 +132,12 @@ reboot-%:
 build-%:
 	@echo "Generating system for $(USERNAME)@$*..."
 	nixos-rebuild build --target-host $(USERNAME)@$* --flake ".#$*" --build-host localhost
+kernel:
+	make kernel-$(HOSTNAME)
+
+kernel-%:
+	@echo "Building kernel for $*..."
+	time systemd-inhibit nix build .#nixosConfigurations.$*.config.boot.kernelPackages.kernel
 
 
 help:
