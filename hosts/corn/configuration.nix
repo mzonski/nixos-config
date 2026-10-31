@@ -28,6 +28,7 @@ delib.host {
         block.defaultScheduler = "kyber";
         block.defaultSchedulerRotational = "bfq";
         logitech.enable = true;
+        astral-hwmon.enable = true;
       };
 
       features = {

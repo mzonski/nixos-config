@@ -55,6 +55,9 @@ delib.host {
         (pkgs.callPackage ../../kernel-packages/asus_rog_ryujin {
           kernel = config.boot.kernelPackages.kernel;
         })
+        (pkgs.callPackage ../../kernel-packages/astral_hwmon {
+          kernel = config.boot.kernelPackages.kernel;
+        })
       ];
     };
 
