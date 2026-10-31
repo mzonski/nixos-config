@@ -17,6 +17,8 @@ let
     intOption
     boolOption
     ;
+
+  coolercontrolPkg = pkgs.local.coolercontrol;
 in
 module {
   name = "services.coolercontrol";
@@ -104,13 +106,13 @@ module {
       programs.coolercontrol.enable = false;
 
       environment.systemPackages = mkIf host.isDesktop [
-        pkgs.coolercontrol.coolercontrol-gui
+        coolercontrolPkg.coolercontrol-gui
       ];
 
       networking.firewall.allowedTCPPorts = [ cfg.port ];
 
       systemd = {
-        packages = with pkgs.coolercontrol; [
+        packages = with coolercontrolPkg; [
           coolercontrold
         ];
 
@@ -122,7 +124,7 @@ module {
           serviceConfig = {
             # ExecStart = [
             #   ""
-            #   "${pkgs.coolercontrol.coolercontrold}/bin/coolercontrold --debug"
+            #   "${coolercontrolPkg.coolercontrold}/bin/coolercontrold --debug"
             # ];
             ExecStop = mkIf cfg.setModeOnTerminate.enable [
               (pkgs.writeShellScript "coolercontrol-shutdown" ''
