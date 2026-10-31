@@ -110,7 +110,15 @@ module {
               "hfp_ag"
             ];
           };
+          "monitor.bluez.rules" = [
+            {
+              matches = [ { "device.name" = "~bluez_card.*"; } ];
+              actions.update-props."bluez5.auto-connect" = [ "a2dp_sink" ];
+            }
+          ];
         };
       };
+
+      systemd.user.services.wireplumber.unitConfig.ConditionUser = mkIf bluetoothEnabled "!@system";
     };
 }
