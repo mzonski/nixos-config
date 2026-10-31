@@ -5,6 +5,7 @@
   ...
 }:
 let
+  # keep in sync with packages/astral-guard
   version = "0.3.1";
   isClang = kernel.stdenv.cc.isClang or false;
 in
