@@ -85,8 +85,8 @@ module {
           }
           {
             job_name = "corn_win";
-            scrape_interval = "5m";
-            scrape_timeout = "5m";
+            scrape_interval = "30s";
+            scrape_timeout = "10s";
             static_configs = [
               {
                 targets = [
