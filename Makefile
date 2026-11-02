@@ -6,6 +6,12 @@ SEED_SSH_ENV = \
 	export SSH_PRIVATE_HOST=$$(sops -d --extract '["ssh_private_$(1)"]' ./shared-secrets.yaml) && \
 	export SSH_PUBLIC_HOST=$$(sops -d --extract '["ssh_public_$(1)"]' ./shared-secrets.yaml)
 
+inhibit = systemd-inhibit \
+	--what=sleep:shutdown:idle:handle-lid-switch \
+	--mode=block \
+	--who="Nix" \
+	--why="$(1)"
+
 .DEFAULT_GOAL := help
 
 .PHONY: help all update clean \
@@ -33,12 +39,12 @@ clean: ## Remove old generations and collect garbage
 
 home: ## Build and switch home-manager configuration
 	@echo "Switching home-manager configuration..."
-	home-manager build --flake $(FLAKE)#$(USERNAME)@$(HOSTNAME)
-	home-manager switch --flake $(FLAKE)#$(USERNAME)@$(HOSTNAME)
+	$(call inhibit,Building home-manager configuration) home-manager build --flake $(FLAKE)#$(USERNAME)@$(HOSTNAME)
+	$(call inhibit,Switching home-manager configuration) home-manager switch --flake $(FLAKE)#$(USERNAME)@$(HOSTNAME)
 
 switch: ## Switch NixOS configuration
 	@echo "Switching NixOS configuration..."
-	nixos-rebuild switch --sudo --flake $(FLAKE)#$(HOSTNAME)
+	$(call inhibit,Switching NixOS configuration ($(HOSTNAME))) nixos-rebuild switch --sudo --flake $(FLAKE)#$(HOSTNAME)
 	sync
 
 switch-revert: ## Rollback to the previous NixOS configuration
@@ -47,11 +53,11 @@ switch-revert: ## Rollback to the previous NixOS configuration
 
 sysboot: ## Build NixOS configuration for next boot
 	@echo "Building new boot NixOS configuration..."
-	nixos-rebuild boot --sudo --flake $(FLAKE)#$(HOSTNAME)
+	$(call inhibit,Building boot NixOS configuration ($(HOSTNAME))) nixos-rebuild boot --sudo --flake $(FLAKE)#$(HOSTNAME)
 
 bootloader: ## Build NixOS configuration for next boot and reinstall bootloader
 	@echo "Installing bootloader and building new boot NixOS configuration..."
-	nixos-rebuild boot --install-bootloader --sudo --flake $(FLAKE)#$(HOSTNAME)
+	$(call inhibit,Installing bootloader ($(HOSTNAME))) nixos-rebuild boot --install-bootloader --sudo --flake $(FLAKE)#$(HOSTNAME)
 
 ##@ Builds
 
@@ -59,19 +65,19 @@ build: build-$(HOSTNAME) ## Build the system of this host
 
 build-%: ## Build the system of host %
 	@echo "Building system for $*..."
-	systemd-inhibit nix build .#nixosConfigurations.$*.config.system.build.toplevel
+	$(call inhibit,Building system for $*) nix build .#nixosConfigurations.$*.config.system.build.toplevel
 
 kernel: kernel-$(HOSTNAME) ## Build the kernel of this host
 
 kernel-%: ## Build the kernel of host %
 	@echo "Building kernel for $*..."
-	time systemd-inhibit nix build .#nixosConfigurations.$*.config.boot.kernelPackages.kernel
+	time $(call inhibit,Building kernel for $*) nix build .#nixosConfigurations.$*.config.boot.kernelPackages.kernel
 
 ##@ Remote machines
 
 sysboot-%: ## Build NixOS configuration for next boot on host %
 	@echo "Building new boot NixOS configuration for remote machine..."
-	nixos-rebuild boot \
+	$(call inhibit,Building boot NixOS configuration for $*) nixos-rebuild boot \
 		--flake ".#$*" \
 		--target-host "$(USERNAME)@$*" \
 		--build-host localhost \
@@ -79,7 +85,7 @@ sysboot-%: ## Build NixOS configuration for next boot on host %
 
 bootloader-%: ## Reinstall bootloader on host %
 	@echo "Updating bootloader on remote machine..."
-	nixos-rebuild boot --install-bootloader \
+	$(call inhibit,Installing bootloader on $*) nixos-rebuild boot --install-bootloader \
 		--flake ".#$*" \
 		--target-host "$(USERNAME)@$*" \
 		--build-host localhost \
@@ -87,11 +93,11 @@ bootloader-%: ## Reinstall bootloader on host %
 
 deploy-%: ## Deploy new configuration to host %
 	@echo "Deploying new configuration..."
-	./utils/deploy-host.sh $* $(USERNAME)
+	$(call inhibit,Deploying configuration to $*) ./utils/deploy-host.sh $* $(USERNAME)
 
 update-%: ## Update host %
 	@echo "Updating remote machine..."
-	./utils/update-host.sh $* $(USERNAME)
+	$(call inhibit,Updating $*) ./utils/update-host.sh $* $(USERNAME)
 
 reboot-%: ## Reboot host %
 	@echo "Rebooting remote machine..."
@@ -102,17 +108,17 @@ reboot-%: ## Reboot host %
 seed-iso: ## Generate the Seed ISO
 	@echo "Generating Seed ISO..."
 	$(call SEED_SSH_ENV,seed) && \
-	nix build --impure .#nixosConfigurations.seed.config.system.build.isoImage
+	$(call inhibit,Generating Seed ISO) nix build --impure .#nixosConfigurations.seed.config.system.build.isoImage
 
 build-seed: ## Build the Seed toplevel
 	@echo "Generating Seed ISO..."
 	$(call SEED_SSH_ENV,seed) && \
-	nix build --impure .#nixosConfigurations.seed.config.system.build.toplevel
+	$(call inhibit,Building Seed toplevel) nix build --impure .#nixosConfigurations.seed.config.system.build.toplevel
 
 burn-seed: ## Burn the Seed ISO to a USB drive
 	@echo "Burning Seed ISO..."
 	$(eval OUTPUT_DEVICE := $(shell udevadm info --name=/dev/sda | grep -q "ID_VENDOR=SanDisk" && udevadm info --name=/dev/sda | grep -q "ID_MODEL=Ultra" && echo "/dev/sda" || echo ""))
-	caligula burn result/iso/seed.iso -z none -s skip -f --root always $(if $(OUTPUT_DEVICE),-o $(OUTPUT_DEVICE))
+	$(call inhibit,Burning Seed ISO) caligula burn result/iso/seed.iso -z none -s skip -f --root always $(if $(OUTPUT_DEVICE),-o $(OUTPUT_DEVICE))
 
 test-seed: ## Boot the Seed ISO in a virtual machine
 	@echo "Starting virtual machine"
@@ -129,7 +135,7 @@ test-seed: ## Boot the Seed ISO in a virtual machine
 graft-iso-%: ## Generate the Graft ISO of host %
 	@echo "Generating Graft ISO for $*..."
 	$(call SEED_SSH_ENV,$*) && \
-	nix build --impure .#nixosConfigurations.graft-$*.config.system.build.isoImage
+	$(call inhibit,Generating Graft ISO for $*) nix build --impure .#nixosConfigurations.graft-$*.config.system.build.isoImage
 
 ##@ Secrets
 
