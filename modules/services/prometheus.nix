@@ -1,4 +1,9 @@
-{ delib, ... }:
+{
+  delib,
+  host,
+  config,
+  ...
+}:
 let
   inherit (delib)
     module
@@ -37,6 +42,19 @@ module {
       systemd.services.prometheus = {
         after = [ "zfs.target" ];
         requires = [ "zfs.target" ];
+      };
+
+      sops = {
+        secrets = {
+          tailscale_tailnet.sopsFile = host.secretsFile;
+          tailscale_oauth_client_id.sopsFile = host.secretsFile;
+          tailscale_oauth_client_secret.sopsFile = host.secretsFile;
+        };
+        templates.tailscale_exporter.content = ''
+          TAILSCALE_TAILNET=${config.sops.placeholder.tailscale_tailnet}
+          TAILSCALE_OAUTH_CLIENT_ID=${config.sops.placeholder.tailscale_oauth_client_id}
+          TAILSCALE_OAUTH_CLIENT_SECRET=${config.sops.placeholder.tailscale_oauth_client_secret}
+        '';
       };
 
       services.${serviceName} = {
@@ -95,7 +113,24 @@ module {
               }
             ];
           }
+          {
+            job_name = "tailscale";
+            scrape_interval = "1m";
+            static_configs = [
+              {
+                targets = [
+                  "tomato:${toString config.services.prometheus.exporters.tailscale.port}"
+                ];
+              }
+            ];
+          }
         ];
+
+        exporters.tailscale = {
+          enable = true;
+          package = pkgs.unstable.prometheus-tailscale-exporter;
+          environmentFile = config.sops.templates.tailscale_exporter.path;
+        };
 
         exporters.node = {
           enable = true;
