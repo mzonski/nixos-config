@@ -207,7 +207,6 @@ module {
             };
             cron = {
               ENABLED = true;
-              SCHEDULE = "0 4 * * 0";
             };
             i18n = {
               LANGS = "en-US,pl-PL";
