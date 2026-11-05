@@ -124,6 +124,16 @@ module {
               }
             ];
           }
+          {
+            job_name = "tailscale-client";
+            scrape_interval = "1m";
+            static_configs = [
+              {
+                targets = [ "100.100.100.100:80" ];
+                labels.tailscale_machine = host.name;
+              }
+            ];
+          }
         ];
 
         exporters.tailscale = {
