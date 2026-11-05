@@ -235,11 +235,11 @@
       },
       "locked": {
         "dir": "pkgs/firefox-addons",
-        "lastModified": 1793419353,
-        "narHash": "sha256-UiTaJe+0zJK9a+aUrsdG8AqtSkbV1ltkFYtZLBrozuE=",
+        "lastModified": 1793678573,
+        "narHash": "sha256-4Fk565Lb8NjMF+UMUCJ6hMCzOfqfLB7VzeOTXyZUnmY=",
         "owner": "rycee",
         "repo": "nur-expressions",
-        "rev": "cba186973c89f9d54df352a790484de3e72425cb",
+        "rev": "fc24eaa9c142e608b2158955eca049d9228fd463",
         "type": "gitlab"
       },
       "original": {
@@ -382,11 +382,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793402007,
-        "narHash": "sha256-tr3tec59oa506zbn6gg5jjpU7lfF5OjrtL5CvOX+ovc=",
+        "lastModified": 1793722797,
+        "narHash": "sha256-xtu2on2ry58+cRB3kBJlCPC9nLKM4llRLOwJdwgNFMk=",
         "owner": "wamserma",
         "repo": "flake-programs-sqlite",
-        "rev": "4a346724a81a7ad5958c83c63fbf72d73635252d",
+        "rev": "c23e2e24feeaf3ae42108d2245af82e720aa9833",
         "type": "github"
       },
       "original": {
@@ -666,11 +666,11 @@
         "nixpkgs": "nixpkgs_6"
       },
       "locked": {
-        "lastModified": 1793430095,
-        "narHash": "sha256-yoVut5M414gsQhsYzPn6GDzMN9QZK1GZ6IB/yyg5JvA=",
+        "lastModified": 1793671330,
+        "narHash": "sha256-HvjAjr6g394Vd6JMtjOcBXSe7GXbaOqXAcxUIC5OIOY=",
         "owner": "ryoppippi",
         "repo": "nix-claude-code",
-        "rev": "2b939700cb58c79a9889a2079f42ceef960cab80",
+        "rev": "90d2a4b543fd64481b44326093cb43c2953526c6",
         "type": "github"
       },
       "original": {
@@ -741,11 +741,11 @@
         "usb-sniffer": "usb-sniffer"
       },
       "locked": {
-        "lastModified": 1793448577,
-        "narHash": "sha256-YuHiktXzaKYqgJpNHigYJsjjkPktgrN70mpmfQgVF/A=",
+        "lastModified": 1793726490,
+        "narHash": "sha256-fvIN84htdn9VcJLjfDEGks0MKxguul5Y0Lm9T/Qjomg=",
         "ref": "refs/heads/main",
-        "rev": "7737b2f5aa9ab57a6c6a270d7d29cf071b2757da",
-        "revCount": 16,
+        "rev": "92d098806aae583874f7f48fd551fc4d27f5748e",
+        "revCount": 18,
         "type": "git",
         "url": "ssh://gitea@git.tomato.local.zonni.pl/ZONIA/nixZpkgs.git"
       },
@@ -1014,11 +1014,11 @@
     },
     "nixpkgs_6": {
       "locked": {
-        "lastModified": 1792773339,
-        "narHash": "sha256-rZLrzrC6i+jnTAlvPZHogKDulY7WWDEv9hJeHieO7Zw=",
+        "lastModified": 1793341285,
+        "narHash": "sha256-Y1CiZ4SoBUjLQyQM/pY+rS2dXD3CHLPstF0lmOc73D4=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "3ec636362e1816bc2f0888fa0fa2c69f1bc9e504",
+        "rev": "1c89083e451e891152365b799595cf7790a43325",
         "type": "github"
       },
       "original": {
@@ -1136,11 +1136,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793052255,
-        "narHash": "sha256-Y/JIHTnMlOabDfyaSBubWGLDIVGihLEUuoMhFvQKaDo=",
+        "lastModified": 1793657466,
+        "narHash": "sha256-GoOvpdsjO5hqZuO6T6ok9u6sJEjO0iPli2zRr9oNUNw=",
         "owner": "mic92",
         "repo": "sops-nix",
-        "rev": "60182817ee048ac94b4c68ea76d5ef2e8aac730d",
+        "rev": "b18e01ce148eb3efff5de2f2d3181ca53b2b2a54",
         "type": "github"
       },
       "original": {
