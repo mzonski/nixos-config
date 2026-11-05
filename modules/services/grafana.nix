@@ -63,8 +63,12 @@ module {
         in
         {
           secrets.grafana_secret_key = sopsConfig;
+          secrets.grafana_renderer_token = sopsConfig;
           secrets.grafana_pocket_id_client_id = sopsConfig;
           secrets.grafana_pocket_id_client_secret = sopsConfig;
+          templates.grafana-image-renderer-env.content = ''
+            AUTH_TOKEN=${config.sops.placeholder.grafana_renderer_token}
+          '';
         };
 
       systemd.services.grafana = {
@@ -76,11 +80,21 @@ module {
         "d ${cfg.dataDir} 0770 ${serviceName} ${serviceName} - -"
       ];
 
+      systemd.services.grafana-image-renderer.serviceConfig.EnvironmentFile =
+        config.sops.templates.grafana-image-renderer-env.path;
+
+      services.grafana-image-renderer = {
+        enable = true;
+        provisionGrafana = true;
+        settings.server.addr = "localhost:8092";
+      };
+
       services.grafana = {
         enable = true;
         dataDir = cfg.dataDir;
         settings = {
           security.secret_key = "$__file{${config.sops.secrets.grafana_secret_key.path}}";
+          rendering.renderer_token = "$__file{${config.sops.secrets.grafana_renderer_token.path}}";
 
           database = {
             type = "postgres";
