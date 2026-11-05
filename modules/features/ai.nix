@@ -23,6 +23,7 @@ module {
       [
         #alpaca
         mcp-nixos
+        local.mcp-grafana
       ]
       ++ (with pkgs.unstable; [
         mcp-server-git
