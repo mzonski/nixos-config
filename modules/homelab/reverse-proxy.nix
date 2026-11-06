@@ -41,6 +41,7 @@ module {
       requireAuth = boolOption true;
       root = boolOption false;
       public = boolOption false;
+      redirectToHttps = boolOption true;
     };
   }) { };
 
@@ -92,7 +93,8 @@ module {
           isTinyauthEnabled = tinyAuthCfg.enable && options.requireAuth;
         in
         nameValuePair (getDomain hostDomain serviceName options) {
-          forceSSL = true;
+          forceSSL = options.redirectToHttps;
+          addSSL = !options.redirectToHttps;
           useACMEHost = hostDomain;
 
           locations = {
