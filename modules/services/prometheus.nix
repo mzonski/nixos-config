@@ -2,6 +2,7 @@
   delib,
   host,
   config,
+  pkgs,
   ...
 }:
 let

@@ -20,6 +20,7 @@ module {
 
       services.tailscale = {
         enable = true;
+        package = pkgs.unstable.tailscale;
         useRoutingFeatures = "server";
         openFirewall = true;
         extraUpFlags = [
