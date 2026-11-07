@@ -24,6 +24,7 @@ module {
         #alpaca
         mcp-nixos
         local.mcp-grafana
+        playwright-mcp
       ]
       ++ (with pkgs.unstable; [
         mcp-server-git
