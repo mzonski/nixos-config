@@ -59,6 +59,7 @@ module {
       unstable.SDL2
       # GameBoy
       mgba
+      ryubing
     ];
 
     #system.activationScripts.steamCompatDataLink = ''ln -s ~/.steam/steam/steamapps/compatdata /mnt/data/Steam/steamapps/'';
