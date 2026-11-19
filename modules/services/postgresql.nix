@@ -91,6 +91,10 @@ module {
               superuser = true;
             };
           }
+          {
+            name = "postgres-exporter";
+            ensureClauses.login = true;
+          }
         ];
 
         authentication = ''
@@ -99,6 +103,7 @@ module {
           # Local connections
           local   all         postgres                                    peer
           local   all         ${homeManagerUser}                          peer
+          local   all         postgres-exporter                           peer
 
           # TCP/IP connections
           host    all         all                 127.0.0.1/32            scram-sha-256
@@ -161,6 +166,23 @@ module {
         wantedBy = [ "timers.target" ];
         partOf = [ "postgresql-log-cleanup.service" ];
         timerConfig.OnCalendar = "daily";
+      };
+
+      systemd.services.postgresql-exporter-setup = {
+        description = "Grant pg_monitor to the PostgreSQL exporter role";
+        after = [ "postgresql-setup.service" ];
+        requires = [ "postgresql-setup.service" ];
+        wantedBy = [ "multi-user.target" ];
+
+        serviceConfig = {
+          Type = "oneshot";
+          User = serviceName;
+          RemainAfterExit = true;
+        };
+
+        script = ''
+          ${config.services.postgresql.package}/bin/psql -c 'GRANT pg_monitor TO "postgres-exporter";'
+        '';
       };
 
       systemd.services.postgresql-password-setup = {

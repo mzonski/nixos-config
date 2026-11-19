@@ -135,6 +135,16 @@ module {
               }
             ];
           }
+          {
+            job_name = "postgres";
+            static_configs = [
+              {
+                targets = [
+                  "tomato:${toString config.services.prometheus.exporters.postgres.port}"
+                ];
+              }
+            ];
+          }
         ];
 
         exporters.tailscale = {
@@ -142,6 +152,12 @@ module {
           package = pkgs.unstable.prometheus-tailscale-exporter;
           environmentFile = config.sops.templates.tailscale_exporter.path;
         };
+
+        exporters.postgres = {
+          enable = true;
+          dataSourceName = "user=postgres-exporter host=/run/postgresql port=${toString myconfig.services.postgres.port} database=postgres";
+        };
+
 
         exporters.node = {
           enable = true;
