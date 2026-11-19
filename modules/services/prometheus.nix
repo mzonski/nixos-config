@@ -57,6 +57,7 @@ module {
           TAILSCALE_OAUTH_CLIENT_SECRET=${config.sops.placeholder.tailscale_oauth_client_secret}
         '';
       };
+      services.nginx.statusPage = true;
 
       services.${serviceName} = {
         enable = true;
@@ -145,6 +146,16 @@ module {
               }
             ];
           }
+          {
+            job_name = "nginx";
+            static_configs = [
+              {
+                targets = [
+                  "tomato:${toString config.services.prometheus.exporters.nginx.port}"
+                ];
+              }
+            ];
+          }
         ];
 
         exporters.tailscale = {
@@ -158,6 +169,9 @@ module {
           dataSourceName = "user=postgres-exporter host=/run/postgresql port=${toString myconfig.services.postgres.port} database=postgres";
         };
 
+        exporters.nginx = {
+          enable = true;
+        };
 
         exporters.node = {
           enable = true;
