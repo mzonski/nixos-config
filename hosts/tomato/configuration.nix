@@ -100,6 +100,11 @@ delib.host {
             path = "/nas/files";
             type = "protected";
             validUsers = [ "zonni" ];
+            # A zero group mask would cut off nginx's ACL entry on Public.
+            sambaExtraConfig = {
+              "create mask" = "0640";
+              "directory mask" = "0750";
+            };
           };
 
           personal = {

@@ -16,7 +16,6 @@ module {
     enable = boolOption false;
     dir = strOption "/nas/files/Public";
     uiPort = intOption 8091;
-    parentGroup = strOption "nas-files";
   };
 
   myconfig.ifEnabled =
@@ -34,7 +33,10 @@ module {
   nixos.ifEnabled =
     { cfg, ... }:
     {
-      users.users.nginx.extraGroups = [ cfg.parentGroup ];
+      systemd.tmpfiles.rules = [
+        "a+ ${builtins.dirOf cfg.dir} - - - - u:nginx:--x"
+        "A+ ${cfg.dir} - - - - u:nginx:r-X,d:u:nginx:r-X"
+      ];
 
       services.nginx.virtualHosts.${serviceName} = {
         listen = [
@@ -50,26 +52,6 @@ module {
           autoindex_localtime on;
           disable_symlinks on;
         '';
-      };
-
-      systemd.services.chmod-public-files = {
-        description = "Keep public files readable by nginx";
-        serviceConfig = {
-          Type = "oneshot";
-          ExecStart = [
-            "${pkgs.coreutils}/bin/chgrp -R ${cfg.parentGroup} ${cfg.dir}"
-            "${pkgs.coreutils}/bin/chmod -R g+rX ${cfg.dir}"
-          ];
-        };
-      };
-
-      systemd.timers.chmod-public-files = {
-        description = "Run chmod-public-files hourly";
-        wantedBy = [ "timers.target" ];
-        timerConfig = {
-          OnCalendar = "hourly";
-          Persistent = true;
-        };
       };
 
       systemd.services.nginx.unitConfig.RequiresMountsFor = cfg.dir;

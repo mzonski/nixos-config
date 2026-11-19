@@ -21,6 +21,7 @@ delib.module {
 
       tcpdump
       dig # DNS lookup utility
+      acl
     ];
   };
 }

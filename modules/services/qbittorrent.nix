@@ -16,6 +16,9 @@ let
     intOption
     strOption
     ;
+
+  user = "qbittorrent";
+  group = "nas-files";
 in
 module {
   name = "services.qbittorrent";
@@ -43,6 +46,13 @@ module {
     { cfg, ... }:
     let
       configLocation = "${cfg.profileDir}/qBittorrent/config/qBittorrent.conf";
+      tempDir = "${cfg.downloadsDir}/_temp";
+      entries = [
+        "g:${group}:rwX"
+        "u:${user}:rwX"
+        "u:${homeManagerUser}:rwX"
+      ];
+      acl = lib.concatStringsSep "," (entries ++ map (e: "d:${e}") entries);
     in
     {
       sops = {
@@ -54,30 +64,21 @@ module {
             [Preferences]
             WebUI\Password_PBKDF2="${config.sops.placeholder.qbittorrent_password}"
           '';
-          owner = "qbittorrent";
-          group = "nas-files";
+          owner = user;
+          inherit group;
           path = "${cfg.profileDir}/password.conf";
         };
       };
 
-      systemd.services.chown-torrents = {
-        description = "Fix ownership of torrent directories";
-        requires = [ "qbittorrent.service" ];
-        after = [ "qbittorrent.service" ];
-        serviceConfig = {
-          Type = "oneshot";
-          ExecStart = "${pkgs.findutils}/bin/find ${cfg.downloadsDir} -mindepth 1 -maxdepth 1 ! -name \"_temp\" ! -name \"_auto_add\" -exec ${pkgs.coreutils}/bin/chown -R ${homeManagerUser}:nas-files {} +";
-        };
-      };
-
-      systemd.timers.chown-torrents = {
-        description = "Run chown-torrents daily";
-        wantedBy = [ "timers.target" ];
-        timerConfig = {
-          OnCalendar = "daily";
-          Persistent = true;
-        };
-      };
+      # Owned by the parent's owner (not qbittorrent): systemd-tmpfiles refuses to
+      # chown/set ACLs across a zonni -> qbittorrent ownership change in the path.
+      # qbittorrent gets its access through the ACL instead.
+      systemd.tmpfiles.rules = [
+        "d ${cfg.downloadsDir} - ${homeManagerUser} ${group} - -"
+        "a+ ${cfg.downloadsDir} - - - - ${acl}"
+        "d ${tempDir} - ${homeManagerUser} ${group} - -"
+        "a+ ${tempDir} - - - - ${acl}"
+      ];
 
       systemd.services.qbittorrent = {
         after = [ "zfs.target" ];
@@ -113,8 +114,7 @@ module {
         webuiPort = cfg.uiPort;
         profileDir = cfg.profileDir + "/";
 
-        user = "qbittorrent";
-        group = "nas-files";
+        inherit user group;
 
         extraArgs = [ "--confirm-legal-notice" ];
 
@@ -145,7 +145,7 @@ module {
               QueueingSystemEnabled = true;
               SSL.Port = 42719;
               ShareLimitAction = "Stop";
-              TempPath = "${cfg.downloadsDir}/_temp";
+              TempPath = tempDir;
               TempPathEnabled = true;
             };
           };
