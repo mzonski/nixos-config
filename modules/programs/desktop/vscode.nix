@@ -16,6 +16,17 @@ module {
   home.ifEnabled =
     { myconfig, ... }:
     {
+      home.activation.vscodiumCleanUserSettings = {
+        after = [ ];
+        before = [ "checkLinkTargets" ];
+        data = ''
+          settingsFile="$HOME/.config/VSCodium/User/settings.json"
+          if [ -e "$settingsFile" ] && [ ! -L "$settingsFile" ]; then
+            run rm -f "$settingsFile" "$settingsFile.home_manager_backup"
+          fi
+        '';
+      };
+
       home.activation.vscodiumMutableUserSettings = {
         after = [ "linkGeneration" ];
         before = [ ];
@@ -104,6 +115,7 @@ module {
             "catppuccin.customUIColors".mocha."statusBar.foreground" = "accent";
 
             "claudeCode.preferredLocation" = "panel";
+            "claudeCode.hideOnboarding" = true;
 
             "window.titleBarStyle" = "custom";
             "window.menuStyle" = "custom";
