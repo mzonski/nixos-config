@@ -156,6 +156,16 @@ module {
               }
             ];
           }
+          {
+            job_name = "postfix";
+            static_configs = [
+              {
+                targets = [
+                  "tomato:${toString config.services.prometheus.exporters.postfix.port}"
+                ];
+              }
+            ];
+          }
         ];
 
         exporters.tailscale = {
@@ -171,6 +181,11 @@ module {
 
         exporters.nginx = {
           enable = true;
+        };
+
+        exporters.postfix = {
+          enable = true;
+          systemd.enable = true;
         };
 
         exporters.node = {
