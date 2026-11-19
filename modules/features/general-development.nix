@@ -44,6 +44,7 @@ module {
             packaging
             pyyaml
             capstone
+            pytest
           ]
         ))
       ];
