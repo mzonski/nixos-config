@@ -1,6 +1,8 @@
 {
   delib,
+  inputs,
   config,
+  lib,
   pkgs,
   host,
   ...
@@ -14,6 +16,7 @@ let
     intOption
     ;
   serviceName = "gitea";
+  mirrorName = "gitea-mirror";
 in
 module {
   name = "services.gitea";
@@ -22,6 +25,11 @@ module {
     enable = boolOption false;
     dbDir = strOption "/nas/database/${serviceName}";
     uiPort = intOption 8084;
+    mirror = {
+      enable = boolOption true;
+      dataDir = strOption "/nas/database/${mirrorName}";
+      port = intOption 8093;
+    };
   };
 
   myconfig.ifEnabled =
@@ -35,16 +43,50 @@ module {
         subdomain = "git";
         requireAuth = false;
       };
-      user.groups = [ serviceName ];
+      homelab.reverse-proxy.${mirrorName} = lib.mkIf cfg.mirror.enable {
+        port = cfg.mirror.port;
+        subdomain = "mirror-git";
+        requireAuth = false;
+      };
+      user.groups = [ serviceName ] ++ lib.optional cfg.mirror.enable mirrorName;
       homelab.users.db = [ serviceName ];
     };
+
+  nixos.always.imports = [ inputs.nixZpkgs.nixosModules.gitea-mirror ];
 
   nixos.ifEnabled =
     { myconfig, cfg, ... }:
     let
       gitDomain = "git.${host.name}.${myconfig.homelab.domain}";
+      mirrorDomain = "https://mirror-git.${host.name}.${myconfig.homelab.domain}";
     in
     {
+      users.users.${mirrorName} = lib.mkIf cfg.mirror.enable {
+        uid = 980;
+        group = mirrorName;
+      };
+      users.groups.${mirrorName} = lib.mkIf cfg.mirror.enable { gid = 980; };
+
+      systemd.services.${mirrorName} = lib.mkIf cfg.mirror.enable {
+        after = [ "zfs.target" ];
+        requires = [ "zfs.target" ];
+      };
+
+      services.${mirrorName} = lib.mkIf cfg.mirror.enable {
+        enable = true;
+        dataDir = cfg.mirror.dataDir;
+        user = mirrorName;
+        group = mirrorName;
+        host = "127.0.0.1";
+        inherit (cfg.mirror) port;
+        betterAuthUrl = mirrorDomain;
+        betterAuthTrustedOrigins = mirrorDomain;
+        mirrorIssueConcurrency = 1;
+        mirrorPullRequestConcurrency = 1;
+        environmentFile = config.sops.templates."${mirrorName}-env".path;
+        openFirewall = false;
+      };
+
       users.users.${serviceName}.uid = 990;
       users.groups.${serviceName}.gid = 985;
 
@@ -55,9 +97,22 @@ module {
             owner = serviceName;
             group = serviceName;
           };
+          mirrorSopsConfig = sopsConfig // {
+            owner = mirrorName;
+            group = mirrorName;
+          };
         in
         {
           secrets.gitea_camo_hmac = sopsConfig;
+          secrets.gitea_mirror_better_auth_secret = lib.mkIf cfg.mirror.enable mirrorSopsConfig;
+          secrets.gitea_mirror_encryption_secret = lib.mkIf cfg.mirror.enable mirrorSopsConfig;
+          templates."${mirrorName}-env" = lib.mkIf cfg.mirror.enable {
+            inherit (mirrorSopsConfig) owner group;
+            content = ''
+              BETTER_AUTH_SECRET=${config.sops.placeholder.gitea_mirror_better_auth_secret}
+              ENCRYPTION_SECRET=${config.sops.placeholder.gitea_mirror_encryption_secret}
+            '';
+          };
           # secrets.maxmind_license_key = sopsConfig;
           secrets.gitea_runner_token = {
             sopsFile = host.secretsFile;
