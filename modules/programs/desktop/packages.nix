@@ -28,8 +28,6 @@ delib.module {
       ];
     in
     {
-      fonts.fontconfig.enable = true;
-
       home.packages =
         with pkgs;
         [

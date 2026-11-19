@@ -29,18 +29,27 @@ delib.module {
         };
 
         defaultFonts = {
-          # serif = [ myconfig.rice.fonts.sans.name ];
-          # sansSerif = [ myconfig.rice.fonts.sans.name ];
-          # monospace = [ myconfig.rice.fonts.monospace.name ];
-          # emoji = [ myconfig.rice.fonts.emoji.name ];
+          serif = [ myconfig.rice.fonts.sans.name ];
+          sansSerif = [ myconfig.rice.fonts.sans.name ];
+          monospace = [ myconfig.rice.fonts.monospace.name ];
+          emoji = [ myconfig.rice.fonts.emoji.name ];
         };
       };
 
       environment.systemPackages = [
-        # myconfig.rice.fonts.monospace.package
-        # myconfig.rice.fonts.sans.package
-        # myconfig.rice.fonts.emoji.package
-        # myconfig.rice.cursor.package
+        myconfig.rice.fonts.monospace.package
+        myconfig.rice.fonts.sans.package
+        myconfig.rice.fonts.emoji.package
+        myconfig.rice.cursor.package
       ];
     };
+
+  home.ifEnabled = {
+    fonts.fontconfig = {
+      enable = true;
+      antialiasing = true;
+      hinting = "none";
+      subpixelRendering = "vertical-bgr";
+    };
+  };
 }

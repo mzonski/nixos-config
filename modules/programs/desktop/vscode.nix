@@ -102,8 +102,8 @@ module {
             git.autofetch = true;
             makefile.configureOnOpen = false;
 
-            # "editor.fontFamily" =
-            #   "${myconfig.rice.fonts.monospace.name}, 'Droid Sans Mono', 'monospace', monospace";
+            "editor.fontFamily" =
+              "${myconfig.rice.fonts.monospace.name}, 'Droid Sans Mono', 'monospace', monospace";
 
             "workbench.colorTheme" = "Catppuccin Mocha";
             "workbench.iconTheme" = "catppuccin-mocha";
