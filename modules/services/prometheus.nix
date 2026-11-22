@@ -75,6 +75,7 @@ module {
               {
                 targets = [
                   "tomato:9100"
+                  "corn:9100"
                 ];
               }
             ];
@@ -110,7 +111,7 @@ module {
             static_configs = [
               {
                 targets = [
-                  "corn:9100"
+                  "corn:9101"
                 ];
               }
             ];
