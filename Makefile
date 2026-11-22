@@ -44,7 +44,7 @@ home: ## Build and switch home-manager configuration
 
 switch: ## Switch NixOS configuration
 	@echo "Switching NixOS configuration..."
-	$(call inhibit,Switching NixOS configuration ($(HOSTNAME))) nixos-rebuild switch --sudo --flake $(FLAKE)#$(HOSTNAME)
+	$(call inhibit,Switching NixOS configuration ($(HOSTNAME))) nixos-rebuild switch --sudo --install-bootloader --flake $(FLAKE)#$(HOSTNAME)
 	sync
 
 switch-revert: ## Rollback to the previous NixOS configuration
