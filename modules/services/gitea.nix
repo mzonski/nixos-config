@@ -26,7 +26,7 @@ module {
     dbDir = strOption "/nas/database/${serviceName}";
     uiPort = intOption 8084;
     mirror = {
-      enable = boolOption true;
+      enable = boolOption false;
       dataDir = strOption "/nas/database/${mirrorName}";
       port = intOption 8093;
     };
