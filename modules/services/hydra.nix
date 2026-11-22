@@ -97,5 +97,9 @@ module {
         "git+ssh://tomato/"
         "git+ssh://gitea@git.${host.name}.${myconfig.homelab.domain}/"
       ];
+
+      nixpkgs.config.permittedInsecurePackages = [
+        "hydra-0-unstable-2026-03-13"
+      ];
     };
 }
