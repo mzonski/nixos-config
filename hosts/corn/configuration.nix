@@ -154,6 +154,17 @@ delib.host {
     services.scx.scheduler = "scx_lavd";
 
     hardware.i2c.enable = true;
+
+    # TODO: Refactor prometheus exporters...
+    services.prometheus.exporters.node = {
+      enable = true;
+      port = 9100;
+      openFirewall = true;
+      enabledCollectors = [
+        "systemd"
+        "processes"
+      ];
+    };
   };
 
   home = {
